@@ -19,7 +19,18 @@ export default defineConfig({
         },
         testTimeout: 30_000,
         coverage: {
-            reportsDirectory: '__reports__/coverage'
+            reportsDirectory: '__reports__/coverage',
+            exclude: [
+                'index.ts',
+                'main.ts',
+                '.d.ts',
+                '.mock.ts',
+                '.config.ts',
+                '__tests__',
+                '__mocks__',
+                '__fixtures__',
+                '__reports__'
+            ]
         } as C8Options
     },
     ...viteConfig
