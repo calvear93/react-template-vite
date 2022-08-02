@@ -20,6 +20,7 @@ export default defineConfig({
         testTimeout: 30_000,
         coverage: {
             reportsDirectory: '__reports__/coverage',
+            reporter: ['text', 'text-summary', 'lcov', 'cobertura', 'json'],
             exclude: [
                 'index.ts',
                 'main.tsx',
