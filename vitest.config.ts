@@ -22,7 +22,7 @@ export default defineConfig({
             reportsDirectory: '__reports__/coverage',
             exclude: [
                 'index.ts',
-                'main.ts',
+                'main.tsx',
                 '.d.ts',
                 '.mock.ts',
                 '.config.ts',
