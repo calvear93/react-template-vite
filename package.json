@@ -38,7 +38,7 @@
         "lint:fix": "eslint --fix src/**/*.{ts,tsx}",
         "stylelint": "stylelint src/**/*.{css,scss,sass}",
         "stylelint:fix": "stylelint src/**/*.{css,scss,sass}",
-        "_build": "tsc --project tsconfig.build.json & vite build"
+        "_build": "vite build"
     },
     "dependencies": {
         "@calvear/env": "^2.1.0",

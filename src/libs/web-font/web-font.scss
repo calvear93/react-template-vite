@@ -2,28 +2,9 @@
 // cdn: https://materialdesignicons.com/bootstrap
 
 @import 'https://fonts.googleapis.com/css2?family=Catamaran:wght@100;400&display=swap';
-@import 'https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css';
-@import 'materialdesignicons-animation';
+@import 'https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css';
+@import 'https://cdn.jsdelivr.net/npm/font-awesome-animation@1.1.1/font-awesome-animation.scss';
 
 body {
     font-family: 'Catamaran', sans-serif;
-}
-
-button.ui.icon.mdi {
-    margin: 0;
-    padding: .65em .5em;
-
-    i.mdi.icon {
-        font-size: 1.4em;
-    }
-}
-
-button.ui.icon {
-    &:disabled {
-        opacity: .2 !important;
-    }
-
-    &:hover:not(:disabled) {
-        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .2);
-    }
 }

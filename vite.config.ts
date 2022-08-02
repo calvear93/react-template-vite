@@ -8,6 +8,15 @@ import { createHtmlPlugin as html } from 'vite-plugin-html';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    server: {
+        open: true,
+        https: process.env.HTTPS === 'true',
+        port: +process.env.PORT!
+    },
+    build: {
+        sourcemap: process.env.GENERATE_SOURCEMAP === 'true',
+        minify: true
+    },
     plugins: [
         react(),
         tsconfigPaths(),

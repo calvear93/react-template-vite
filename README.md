@@ -1,4 +1,4 @@
-<h2 align="center"><b>React Skeleton</b></h2>
+<h2 align="center"><b>Vite React Skeleton</b></h2>
 <h3 align="center"><b>SPA</b></h3>
 
 <br />
@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  A JavaScript library for building user interfaces.
+  Vite skeleton for React with TypeScript.
 </p>
 
 <p align="center">
@@ -22,10 +22,10 @@
 <a href="https://reactjs.org/" target="_blank">React</a> is a library for
 building semantic components in a very easy way. It uses modern JavaScript, and supports <a
 href="http://www.typescriptlang.org" target="_blank">TypeScript</a>, and under
-the hood this skeleton uses <a href="https://create-react-app.dev/"
-target="_blank">Create React App</a>.
+the hood this skeleton uses <a href="https://vitejs.dev/"
+target="_blank">Vite</a>.
 
-### Easy SPA Webs using React CRA with TypeScript.
+### Easy SPA Webs using React Vite with TypeScript.
 
 Main feature are:
 
@@ -33,7 +33,6 @@ Main feature are:
 -   `eslint` with `prettier`
 -   `stylelint` for `css` and `sass`
 -   `react router` 6 with declarative routing handler
--   `service worker` ready
 -   `redux` ready using `@redux-toolkit`
 -   `docker` ready
 
@@ -50,12 +49,10 @@ Main feature are:
 │   │   │   └── assets.d.ts # assets and modules declaration
 │   │   ├── config/
 │   │   ├── components/ # shared components
-│   │   ├── hooks/ # shared hooks
-│   │   ├── styles/ # global styles
-│   │   ├── providers/ # adapters, api connections
-│   │   ├── slices/ # redux reducers and actions
 │   │   ├── layouts/ # app layouts and containers
 │   │   ├── pages/ # app pages, loaded in app/app.routes.ts
+│   │   ├── slices/ # redux reducers and actions
+│   │   ├── styles/ # global styles
 │   │   ├── App.tsx
 │   │   ├──  app.routes.ts # application routes
 │   │   ├──  App.store.tsx # redux
@@ -64,10 +61,9 @@ Main feature are:
 │   ├── libs/ # libraries shared with other apps
 │   │   └── router/ # routing using react router v6
 │   ├── env.d.ts # .env environment types declaration
-│   ├── assets.d.ts # assets types declaration
 │   ├── vendor.d.ts # providers types overriding
-│   ├── service-worker.ts
-│   └── index.tsx
+│   └── main.tsx
+├── index.html # entry SPA file
 ├── Dockerfile
 ├── tsconfig.json
 ├── webpack.config.js # webpack config (craco)
@@ -102,8 +98,7 @@ Main feature are:
 Project has 3 environments (infrastructure) base for project building.
 
 -   **dev (development)**: environment with breaking changes and new features.
--   **qa (quality assurance)**: environment for testing and quality assurance.
--   **prod (production)**: productive environment.
+-   **release (production)**: production environment.
 
 ## 🧪 **Executing**
 
@@ -211,9 +206,7 @@ use commands below:
 
 ## 🧮 **Built with**
 
--   [Create React App](https://github.com/facebook/create-react-app) - Official React SPA framework.
--   [env-cmd](https://github.com/toddbluhm/env-cmd) - NodeJS app's environment utility.
--   [craco](https://github.com/gsoft-inc/craco) - CRA webpack config injector.
+-   [Vite](https://vitejs.dev/) - Next generation frontend tooling.
 -   [Material Design Icons](https://materialdesignicons.com/)
 
 ---
