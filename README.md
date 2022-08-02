@@ -66,7 +66,6 @@ Main feature are:
 ├── index.html # entry SPA file
 ├── Dockerfile
 ├── tsconfig.json
-├── webpack.config.js # webpack config (craco)
 └── package.json
 ```
 
