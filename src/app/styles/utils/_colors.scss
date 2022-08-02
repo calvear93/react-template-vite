@@ -1,0 +1,29 @@
+/** How to use:
+    @import "colors";
+
+    .modal {
+        color: color(font);
+        background-color: color(background);
+    }
+*/
+
+$colors: (
+    // business
+    brand: #007a33,
+    primary: #00b2a9,
+    primary-light: #78ddd8,
+    secondary: #87adbd,
+    secondary-light: #9acadf,
+    success: #4caf50,
+    info: #0074f1,
+    warning: #fea900,
+    danger: #e62a3b,
+    background: #f4f6f9,
+    background-light: #ebeff2,
+    background-dark: #d2dae2,
+    background-hover: #bfd0db
+);
+
+@function color($key) {
+    @return map-get($colors, $key);
+}

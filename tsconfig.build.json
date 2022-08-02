@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "incremental": false,
+        "sourceMap": false,
+        "declaration": false,
+        "declarationMap": false
+    },
+    "exclude": [
+        "**/*.spec.ts",
+        "**/*.test.ts",
+        "**/__tests__",
+        "**/__mocks__",
+        "**/__fixtures__",
+        "vite.config.ts",
+        "jest.config.ts"
+    ]
+}

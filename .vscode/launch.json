@@ -1,0 +1,56 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug in Edge",
+			"type": "edge",
+			"request": "launch",
+			"url": "http://localhost:3001",
+			"webRoot": "${workspaceFolder}"
+		},
+		{
+			"name": "Debug in Chrome",
+			"type": "chrome",
+			"request": "launch",
+			"url": "http://localhost:3001",
+			"webRoot": "${workspaceFolder}"
+		},
+		{
+			"name": "Test",
+			"type": "node",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"sourceMaps": true,
+			"restart": true,
+			"disableOptimisticBPs": true,
+			"runtimeExecutable": "npm",
+			"runtimeArgs": [
+				"run",
+				"test:${input:environmentName}",
+				"--",
+				"${fileBasenameNoExtension}",
+				"--runInBand",
+				"-no-cache"
+			],
+			"skipFiles": [
+				"<node_internals>/**/*.js"
+			],
+			"protocol": "inspector",
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen"
+		}
+	],
+	"inputs": [
+		{
+			"id": "environmentName",
+			"type": "pickString",
+			"description": "Select execution environment",
+			"default": "dev",
+			"options": [
+				"dev",
+				"qa",
+				"prod"
+			]
+		}
+	]
+}

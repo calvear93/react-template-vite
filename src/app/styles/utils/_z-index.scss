@@ -1,0 +1,28 @@
+/** How to use:
+    @import "z-index";
+
+    .modal {
+        @include z-index(modal);
+    }
+*/
+
+$z-index: (
+    toast: 1000,
+    loader: 800,
+    tooltip: 600,
+    dropdown: 500,
+    modal: 200,
+    navigation: 100,
+    header: 80,
+    component: 50,
+    container: 10,
+    body: 1
+);
+
+@function z-index($key) {
+    @return map-get($z-index, $key);
+}
+
+@mixin z-index($key) {
+    z-index: z-index($key);
+}

@@ -1,0 +1,6 @@
+{
+    "expand": false,
+    "nullable": false,
+    "nestingDelimiter": "_",
+    "varPrefix": "VITE_APP_"
+}

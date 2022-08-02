@@ -1,0 +1,79 @@
+{
+    "editor.rulers": [80, 100],
+    "explorer.sortOrder": "type",
+    "explorer.incrementalNaming": "smart",
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
+    "explorer.fileNesting.patterns": {
+        "README*": "CHANGELOG*, LICENSE*",
+        "package.json": "package-lock.json, yarn.lock",
+        "tsconfig.json": "tsconfig.*.json",
+        ".eslintrc.json": ".eslintignore",
+        "*.ts": "${capture}.*",
+        "*.tsx": "${capture}.*",
+        "*.json": "${capture}.json",
+        "*.env.json": "${capture}.*.env.json"
+    },
+    "files.exclude": {
+        "**/*.log": true,
+        "**/*.map.js": true,
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.hg": true,
+        "**/.history/**": true,
+        "**/.svn": true,
+        "**/CVS": true,
+        "**/bower_components/**": true,
+        "**/node_modules/**": true,
+        "desktop.ini": true,
+        "folderico*.ico": true
+    },
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "[css]": {
+        "editor.defaultFormatter": "svipas.prettier-plus"
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "svipas.prettier-plus"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "css.lint.unknownAtRules": "ignore",
+    "scss.lint.unknownAtRules": "ignore",
+    "eslint.format.enable": true,
+    "eslint.useESLintClass": true,
+    "eslint.lintTask.enable": true,
+    "eslint.trace.server": "off",
+    "eslint.probe": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "json"
+    ],
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "stylelint.snippet": ["css", "less", "postcss", "scss", "sass"],
+    "stylelint.validate": ["css", "less", "postcss", "sass", "scss"],
+    "prettier.eslintIntegration": true,
+    "prettier.stylelintIntegration": true,
+    "prettier.useTabs": false
+}

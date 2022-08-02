@@ -1,0 +1,673 @@
+/**
+ * Material Design Icons animations v0.3.0.
+ * Ported from Font Awesome Animations.
+ * https://github.com/l-lin/font-awesome-animation
+ * http://l-lin.github.io/font-awesome-animation/
+ */
+
+[class*='mdi-anim-'] {
+    display: inline-block;
+}
+
+/* WRENCHING */
+@keyframes wrench {
+    0% {
+        transform: rotate(-12deg);
+    }
+
+    8% {
+        transform: rotate(12deg);
+    }
+
+    10% {
+        transform: rotate(24deg);
+    }
+
+    18% {
+        transform: rotate(-24deg);
+    }
+
+    20% {
+        transform: rotate(-24deg);
+    }
+
+    28% {
+        transform: rotate(24deg);
+    }
+
+    30% {
+        transform: rotate(24deg);
+    }
+
+    38% {
+        transform: rotate(-24deg);
+    }
+
+    40% {
+        transform: rotate(-24deg);
+    }
+
+    48% {
+        transform: rotate(24deg);
+    }
+
+    50% {
+        transform: rotate(24deg);
+    }
+
+    58% {
+        transform: rotate(-24deg);
+    }
+
+    60% {
+        transform: rotate(-24deg);
+    }
+
+    68% {
+        transform: rotate(24deg);
+    }
+
+    75%,
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.mdi-anim-wrench.animated,
+.mdi-anim-wrench.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-wrench {
+    animation: wrench 2.5s ease infinite;
+    transform-origin-x: 90%;
+    transform-origin-y: 35%;
+    transform-origin-z: initial;
+}
+
+.mdi-anim-wrench.animated.mdi-anim-fast,
+.mdi-anim-wrench.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-wrench.mdi-anim-fast {
+    animation: wrench 1.2s ease infinite;
+}
+
+.mdi-anim-wrench.animated.mdi-anim-slow,
+.mdi-anim-wrench.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-wrench.mdi-anim-slow {
+    animation: wrench 3.7s ease infinite;
+}
+
+/* BELL */
+@keyframes ring {
+    0% {
+        transform: rotate(-15deg);
+    }
+
+    2% {
+        transform: rotate(15deg);
+    }
+
+    4% {
+        transform: rotate(-18deg);
+    }
+
+    6% {
+        transform: rotate(18deg);
+    }
+
+    8% {
+        transform: rotate(-22deg);
+    }
+
+    10% {
+        transform: rotate(22deg);
+    }
+
+    12% {
+        transform: rotate(-18deg);
+    }
+
+    14% {
+        transform: rotate(18deg);
+    }
+
+    16% {
+        transform: rotate(-12deg);
+    }
+
+    18% {
+        transform: rotate(12deg);
+    }
+
+    20%,
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.mdi-anim-ring.animated,
+.mdi-anim-ring.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-ring {
+    animation: ring 2s ease infinite;
+    transform-origin-x: 50%;
+    transform-origin-y: 0;
+    transform-origin-z: initial;
+}
+
+.mdi-anim-ring.animated.mdi-anim-fast,
+.mdi-anim-ring.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-ring.mdi-anim-fast {
+    animation: ring 1s ease infinite;
+}
+
+.mdi-anim-ring.animated.mdi-anim-slow,
+.mdi-anim-ring.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-ring.mdi-anim-slow {
+    animation: ring 3s ease infinite;
+}
+
+/* VERTICAL */
+@keyframes vertical {
+    0% {
+        transform: translate(0, -3px);
+    }
+
+    4% {
+        transform: translate(0, 3px);
+    }
+
+    8% {
+        transform: translate(0, -3px);
+    }
+
+    12% {
+        transform: translate(0, 3px);
+    }
+
+    16% {
+        transform: translate(0, -3px);
+    }
+
+    20% {
+        transform: translate(0, 3px);
+    }
+
+    22%,
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.mdi-anim-vertical.animated,
+.mdi-anim-vertical.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-vertical {
+    animation: vertical 2s ease infinite;
+}
+
+.mdi-anim-vertical.animated.mdi-anim-fast,
+.mdi-anim-vertical.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-vertical.mdi-anim-fast {
+    animation: vertical 1s ease infinite;
+}
+
+.mdi-anim-vertical.animated.mdi-anim-slow,
+.mdi-anim-vertical.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-vertical.mdi-anim-slow {
+    animation: vertical 4s ease infinite;
+}
+
+/* HORIZONTAL */
+@keyframes horizontal {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    6% {
+        transform: translate(5px, 0);
+    }
+
+    12% {
+        transform: translate(0, 0);
+    }
+
+    18% {
+        transform: translate(5px, 0);
+    }
+
+    24% {
+        transform: translate(0, 0);
+    }
+
+    30% {
+        transform: translate(5px, 0);
+    }
+
+    36%,
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.mdi-anim-horizontal.animated,
+.mdi-anim-horizontal.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-horizontal {
+    animation: horizontal 2s ease infinite;
+}
+
+.mdi-anim-horizontal.animated.mdi-anim-fast,
+.mdi-anim-horizontal.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-horizontal.mdi-anim-fast {
+    animation: horizontal 1s ease infinite;
+}
+
+.mdi-anim-horizontal.animated.mdi-anim-slow,
+.mdi-anim-horizontal.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-horizontal.mdi-anim-slow {
+    animation: horizontal 3s ease infinite;
+}
+
+/* FLASHING */
+@keyframes flash {
+    0%,
+    100%,
+    50% {
+        opacity: 1;
+    }
+
+    25%,
+    75% {
+        opacity: 0;
+    }
+}
+
+.mdi-anim-flash.animated,
+.mdi-anim-flash.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-flash {
+    animation: flash 2s ease infinite;
+}
+
+.mdi-anim-flash.animated.mdi-anim-fast,
+.mdi-anim-flash.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-flash.mdi-anim-fast {
+    animation: flash 1s ease infinite;
+}
+
+.mdi-anim-flash.animated.mdi-anim-slow,
+.mdi-anim-flash.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-flash.mdi-anim-slow {
+    animation: flash 3s ease infinite;
+}
+
+/* BOUNCE */
+@keyframes bounce {
+    0%,
+    10%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-15px);
+    }
+
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+.mdi-anim-bounce.animated,
+.mdi-anim-bounce.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-bounce {
+    animation: bounce 2s ease infinite;
+}
+
+.mdi-anim-bounce.animated.mdi-anim-fast,
+.mdi-anim-bounce.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-bounce.mdi-anim-fast {
+    animation: bounce 1s ease infinite;
+}
+
+.mdi-anim-bounce.animated.mdi-anim-slow,
+.mdi-anim-bounce.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-bounce.mdi-anim-slow {
+    animation: bounce 3s ease infinite;
+}
+
+/* SPIN */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(359deg);
+    }
+}
+
+.mdi-anim-spin.animated,
+.mdi-anim-spin.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-spin {
+    animation: spin 1.5s linear infinite;
+}
+
+.mdi-anim-spin.animated.mdi-anim-fast,
+.mdi-anim-spin.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-spin.mdi-anim-fast {
+    animation: spin .7s linear infinite;
+}
+
+.mdi-anim-spin.animated.mdi-anim-slow,
+.mdi-anim-spin.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-spin.mdi-anim-slow {
+    animation: spin 2.2s linear infinite;
+}
+
+/* FLOAT */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.mdi-anim-float.animated,
+.mdi-anim-float.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-float {
+    animation: float 2s linear infinite;
+}
+
+.mdi-anim-float.animated.mdi-anim-fast,
+.mdi-anim-float.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-float.mdi-anim-fast {
+    animation: float 1s linear infinite;
+}
+
+.mdi-anim-float.animated.mdi-anim-slow,
+.mdi-anim-float.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-float.mdi-anim-slow {
+    animation: float 3s linear infinite;
+}
+
+/* PULSE */
+@keyframes pulse {
+    0% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(.8);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+.mdi-anim-pulse.animated,
+.mdi-anim-pulse.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-pulse {
+    animation: pulse 2s linear infinite;
+}
+
+.mdi-anim-pulse.animated.mdi-anim-fast,
+.mdi-anim-pulse.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-pulse.mdi-anim-fast {
+    animation: pulse 1s linear infinite;
+}
+
+.mdi-anim-pulse.animated.mdi-anim-slow,
+.mdi-anim-pulse.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-pulse.mdi-anim-slow {
+    animation: pulse 3s linear infinite;
+}
+
+/* SHAKE */
+.mdi-anim-shake.animated,
+.mdi-anim-shake.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-shake {
+    animation: wrench 2.5s ease infinite;
+}
+
+.mdi-anim-shake.animated.mdi-anim-fast,
+.mdi-anim-shake.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-shake.mdi-anim-fast {
+    animation: wrench 1.2s ease infinite;
+}
+
+.mdi-anim-shake.animated.mdi-anim-slow,
+.mdi-anim-shake.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-shake.mdi-anim-slow {
+    animation: wrench 3.7s ease infinite;
+}
+
+/* TADA */
+@keyframes tada {
+    0% {
+        transform: scale(1);
+    }
+
+    10%,
+    20% {
+        transform: scale(.9) rotate(-8deg);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: scale(1.3) rotate(8deg);
+    }
+
+    40%,
+    60% {
+        transform: scale(1.3) rotate(-8deg);
+    }
+
+    80%,
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+.mdi-anim-tada.animated,
+.mdi-anim-tada.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-tada {
+    animation: tada 2s linear infinite;
+}
+
+.mdi-anim-tada.animated.mdi-anim-fast,
+.mdi-anim-tada.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-tada.mdi-anim-fast {
+    animation: tada 1s linear infinite;
+}
+
+.mdi-anim-tada.animated.mdi-anim-slow,
+.mdi-anim-tada.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-tada.mdi-anim-slow {
+    animation: tada 3s linear infinite;
+}
+
+/* PASSING */
+@keyframes passing {
+    0% {
+        transform: translateX(-50%);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(50%);
+        opacity: 0;
+    }
+}
+
+.mdi-anim-passing.animated,
+.mdi-anim-passing.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-passing {
+    animation: passing 2s linear infinite;
+}
+
+.mdi-anim-passing.animated.mdi-anim-fast,
+.mdi-anim-passing.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-passing.mdi-anim-fast {
+    animation: passing 1s linear infinite;
+}
+
+.mdi-anim-passing.animated.mdi-anim-slow,
+.mdi-anim-passing.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-passing.mdi-anim-slow {
+    animation: passing 3s linear infinite;
+}
+
+/* PASSING REVERSE */
+
+@keyframes passing-reverse {
+    0% {
+        transform: translateX(50%);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-50%);
+        opacity: 0;
+    }
+}
+
+.mdi-anim-passing-reverse.animated,
+.mdi-anim-passing-reverse.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-passing-reverse {
+    animation: passing-reverse 2s linear infinite;
+}
+
+.mdi-anim-passing-reverse.animated.mdi-anim-fast,
+.mdi-anim-passing-reverse.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-passing-reverse.mdi-anim-fast {
+    animation: passing-reverse 1s linear infinite;
+}
+
+.mdi-anim-passing-reverse.animated.mdi-anim-slow,
+.mdi-anim-passing-reverse.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-passing-reverse.mdi-anim-slow {
+    animation: passing-reverse 3s linear infinite;
+}
+
+/* BURST */
+@keyframes burst {
+    0% {
+        opacity: .6;
+    }
+
+    50% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.mdi-anim-burst.animated,
+.mdi-anim-burst.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-burst {
+    animation: burst 2s infinite linear;
+}
+
+.mdi-anim-burst.animated.mdi-anim-fast,
+.mdi-anim-burst.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-burst.mdi-anim-fast {
+    animation: burst 1s infinite linear;
+}
+
+.mdi-anim-burst.animated.mdi-anim-slow,
+.mdi-anim-burst.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-burst.mdi-anim-slow {
+    animation: burst 3s infinite linear;
+}
+
+/* FALLING */
+@keyframes falling {
+    0% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(50%);
+        opacity: 0;
+    }
+}
+
+.mdi-anim-falling.animated,
+.mdi-anim-falling.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-falling {
+    animation: falling 2s linear infinite;
+}
+
+.mdi-anim-falling.animated.mdi-anim-fast,
+.mdi-anim-falling.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-falling.mdi-anim-fast {
+    animation: falling 1s linear infinite;
+}
+
+.mdi-anim-falling.animated.mdi-anim-slow,
+.mdi-anim-falling.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-falling.mdi-anim-slow {
+    animation: falling 3s linear infinite;
+}
+
+/* RISING */
+@keyframes rising {
+    0% {
+        transform: translateY(50%);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+}
+
+.mdi-anim-rising.animated,
+.mdi-anim-rising.animated-hover:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-rising {
+    animation: rising 2s linear infinite;
+}
+
+.mdi-anim-rising.animated.mdi-anim-fast,
+.mdi-anim-rising.animated-hover.mdi-anim-fast:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-rising.mdi-anim-fast {
+    animation: rising 1s linear infinite;
+}
+
+.mdi-anim-rising.animated.mdi-anim-slow,
+.mdi-anim-rising.animated-hover.mdi-anim-slow:hover,
+.mdi-anim-parent.animated-hover:hover > .mdi-anim-rising.mdi-anim-slow {
+    animation: rising 3s linear infinite;
+}

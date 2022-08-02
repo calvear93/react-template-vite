@@ -1,0 +1,33 @@
+# node modules
+node_modules
+**/node_modules
+npm-debug.log
+
+**/.git
+**/.DS_Store
+
+# docker files
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# config and documentation
+.vscode
+CHANGELOG.md
+README.md
+LICENSE.md
+
+# pipeline and cicd
+azure-pipelines.yml
+
+# artifacts
+**/dist
+**/build
+**/coverage
+**/__coverage__
+junit.xml
+
+.eslintignore
+.eslintcache
+.gitignore
+.prettierrc.json

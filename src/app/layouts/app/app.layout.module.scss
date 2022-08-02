@@ -1,0 +1,24 @@
+@import '../../../app/styles/utils';
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 100%;
+    overflow-wrap: break-word;
+
+    header {
+        position: sticky;
+        top: 0;
+        padding: .6em;
+        background-color: color(background-dark);
+
+        @include box-shadow(header);
+        @include z-index(header);
+    }
+
+    footer {
+        padding: .6em;
+        background-color: color(background-dark);
+    }
+}

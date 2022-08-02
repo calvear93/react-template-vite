@@ -1,0 +1,47 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "outDir": "dist",
+        "paths": {
+            "@router": ["libs/router"],
+            "@router/*": ["libs/router/*"],
+            "@libs/*": ["libs/libs/*"],
+            "@hooks/*": ["libs/hooks/*"],
+            "@web-font": ["libs/web-font/web-font.scss"]
+        },
+
+        "target": "es2018",
+        "module": "es2022",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+
+        "jsx": "react-jsx",
+        "lib": ["dom", "dom.iterable", "es2022"],
+        "typeRoots": ["node_modules/@types"],
+
+        "allowJs": true,
+        "checkJs": true,
+
+        "experimentalDecorators": false,
+        "emitDecoratorMetadata": false,
+
+        "composite": false,
+        "incremental": true,
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        "removeComments": true,
+
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "importHelpers": true,
+        "skipLibCheck": true,
+        "downlevelIteration": false,
+
+        "strict": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "strictPropertyInitialization": false
+    },
+    "include": ["src/**/*", "vite.config.ts", "vitest.config.ts"]
+}

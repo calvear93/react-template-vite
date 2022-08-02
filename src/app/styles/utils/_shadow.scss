@@ -1,0 +1,48 @@
+/** How to use:
+    @import "shadow";
+
+    .modal {
+        @include box-shadow(normal);
+        @include text-shadow(emphasis);
+    }
+*/
+
+$box-shadow: (
+    normal: 0 2px 4px rgba(9, 35, 66, .25),
+    header: 0 2px 10px rgba(9, 35, 66, .45),
+    button: 0 2px 4px 0 rgba(0, 0, 0, .1),
+    hover: 0 4px 8px 0 rgba(0, 0, 0, .1),
+    floating: 0 10px 32px -10px rgba(0, 0, 0, .75),
+    toast: (
+        0 2px 6px rgba(0, 0, 0, .1),
+        0 0 12px rgba(3, 45, 68, .1),
+    ),
+    focus: (
+        0 2px 16px rgba(0, 0, 0, .08),
+        0 0 24px rgba(3, 45, 68, .16),
+    ),
+    box: (
+        0 9px 16px rgba(0, 0, 0, .08),
+        0 0 56px rgba(3, 45, 68, .16),
+    )
+);
+
+@function box-shadow($key) {
+    @return map-get($box-shadow, $key);
+}
+
+@mixin box-shadow($key) {
+    box-shadow: box-shadow($key);
+}
+
+$text-shadow: (
+    emphasis: 2px 2px 10px rgba(150, 150, 150, 1),
+);
+
+@function text-shadow($key) {
+    @return map-get($text-shadow, $key);
+}
+
+@mixin text-shadow($key) {
+    text-shadow: text-shadow($key);
+}
