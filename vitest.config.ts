@@ -14,8 +14,7 @@ export default defineConfig({
         ],
         reporters: ['junit', 'verbose'],
         outputFile: {
-            junit: '__reports__/junit.json',
-            'vitest-sonar-reporter': '__reports__/sonar-report.xml'
+            junit: '__reports__/junit.json'
         },
         testTimeout: 30_000,
         coverage: {

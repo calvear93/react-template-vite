@@ -44,7 +44,7 @@ export const fetchSampleAsync = createAsyncThunk(
 
         if (response.status !== 200) throw new Error('An error has ocurred');
 
-        return await response.json();
+        return response.json();
     }
 );
 

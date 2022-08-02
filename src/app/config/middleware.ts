@@ -29,5 +29,5 @@ export function configureMiddleware(debug = false): Middleware[] {
 
     if (debug) middleware.push(configureLogger());
 
-    return middleware as Middleware[];
+    return middleware;
 }
