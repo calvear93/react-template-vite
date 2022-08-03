@@ -21,6 +21,8 @@
         "react",
         "redux",
         "spa",
+        "vite",
+        "vitest",
         "react-router"
     ],
     "scripts": {
