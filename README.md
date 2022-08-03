@@ -84,7 +84,7 @@ Main feature are:
 ```json
 {
     "PUBLIC_URL": "",
-    "BASE_PATH": "/"
+    "VITE_APP_BASE_PATH": "/"
 }
 ```
 
