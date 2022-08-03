@@ -8,6 +8,7 @@ import { createHtmlPlugin as html } from 'vite-plugin-html';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    base: process.env.VITE_APP_BASE_PATH,
     server: {
         open: true,
         https: process.env.HTTPS === 'true',

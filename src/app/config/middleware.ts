@@ -12,7 +12,7 @@ export function configureLogger(): Middleware {
         duration: true,
         timestamp: true,
         diff: true,
-        collapsed: (getState: any, action: PayloadAction<any>, logEntry: any) =>
+        collapsed: (_getState: any, _action: PayloadAction<any>, logEntry: any) =>
             !logEntry.error
     });
 }
