@@ -9,7 +9,7 @@ import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    base: process.env.VITE_APP_BASE_PATH,
+    base: process.env.VITE_APP_BASE_PATH + '/',
     server: {
         open: true,
         https: process.env.HTTPS === 'true',
