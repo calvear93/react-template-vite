@@ -5,6 +5,7 @@ import checker from 'vite-plugin-checker';
 import svg from 'vite-plugin-svgr';
 import stylelint from 'vite-plugin-stylelint';
 import { createHtmlPlugin as html } from 'vite-plugin-html';
+import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,6 +30,19 @@ export default defineConfig({
                 data: process.env
             },
             minify: true
+        }),
+        chunkSplitPlugin({
+            strategy: 'single-vendor',
+            customSplitting: {
+                'react-vendor': [
+                    'react',
+                    'react-dom',
+                    'redux',
+                    'react-redux',
+                    'react-router-dom'
+                ],
+                libs: [/src\/libs/]
+            }
         })
     ]
 });
