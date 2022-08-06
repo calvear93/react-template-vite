@@ -63,7 +63,7 @@ export function removeDiacritics(str: string): string {
     return str
         .toString()
         .normalize('NFD')
-        .replace(/[\p{Diacritic}|\u0142|\u0027]/gu, '');
+        .replace(/[\p{Diacritic}|\u0142\u0027]/gu, '');
 }
 
 /**

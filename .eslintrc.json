@@ -35,6 +35,8 @@
         "react-hooks",
         "prettier",
         "sonarjs",
+        "regexp",
+        "redos",
         "unicorn",
         "import",
         "promise",
@@ -49,6 +51,7 @@
         "plugin:prettier/recommended",
         "plugin:eslint-comments/recommended",
         "plugin:sonarjs/recommended",
+        "plugin:regexp/recommended",
         "plugin:testing-library/react"
     ],
     "rules": {
@@ -308,6 +311,7 @@
         "sonarjs/prefer-object-literal": "warn",
         "sonarjs/prefer-single-boolean-return": "warn",
         "sonarjs/prefer-while": "error",
+        "redos/no-vulnerable": "error",
         "sort-imports": "off",
         "sort-keys": ["off", "asc"],
         "space-before-blocks": "warn",
