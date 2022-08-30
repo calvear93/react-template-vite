@@ -1,5 +1,5 @@
 import { UserConfigExport } from 'vite';
-import { C8Options } from 'vitest';
+import { CoverageC8Options } from 'vitest';
 import { defineConfig } from 'vitest/config';
 import viteConfig from './vite.config';
 
@@ -31,7 +31,7 @@ export default defineConfig({
                 '__fixtures__',
                 '__reports__'
             ]
-        } as C8Options
+        } as CoverageC8Options
     },
     ...viteConfig
 } as UserConfigExport);
