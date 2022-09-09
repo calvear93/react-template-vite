@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { UserConfigExport } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
@@ -8,7 +8,7 @@ import { createHtmlPlugin as html } from 'vite-plugin-html';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default {
     base: process.env.VITE_APP_BASE_PATH,
     server: {
         open: true,
@@ -45,4 +45,4 @@ export default defineConfig({
             }
         })
     ]
-});
+} as UserConfigExport;

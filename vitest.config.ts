@@ -1,9 +1,8 @@
 import { UserConfigExport } from 'vite';
 import { CoverageC8Options } from 'vitest';
-import { defineConfig } from 'vitest/config';
 import viteConfig from './vite.config';
 
-export default defineConfig({
+export default {
     test: {
         globals: true,
         root: 'src',
@@ -34,4 +33,4 @@ export default defineConfig({
         } as CoverageC8Options
     },
     ...viteConfig
-} as UserConfigExport);
+} as UserConfigExport;
