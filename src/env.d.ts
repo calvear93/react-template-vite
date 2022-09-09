@@ -38,6 +38,12 @@ declare global {
 
     type millis = number;
 
+    type password = string;
+
+    type bytes = number;
+
+    type uuid = string;
+
     // Unix timestamp, number of seconds that have elapsed since January 1, 1970
     type epoch = seconds;
 
