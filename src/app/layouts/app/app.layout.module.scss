@@ -10,12 +10,12 @@
         top: 0;
         padding: .6em;
 
-        @apply bg-cool-gray-400 text-light-400 shadow-header shadow-gray-400 z-header;
+        @apply bg-cool-gray-400 text-light-400 shadow-md shadow-gray-400 z-header;
     }
 
     footer {
         padding: .6em;
 
-        @apply bg-cool-gray-200 shadow-floating z-header;
+        @apply bg-cool-gray-200 z-header;
     }
 }

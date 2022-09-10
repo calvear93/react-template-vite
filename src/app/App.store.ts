@@ -25,4 +25,4 @@ export type AppState = ReturnType<typeof AppStore.getState>;
 
 export type AppDispatch = typeof AppStore.dispatch;
 
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppDispatch = useDispatch;
