@@ -1,6 +1,7 @@
 import { UserConfigExport } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react';
+import css from 'vite-plugin-windicss';
 import checker from 'vite-plugin-checker';
 import svg from 'vite-plugin-svgr';
 import stylelint from 'vite-plugin-stylelint';
@@ -21,6 +22,7 @@ export default {
     },
     plugins: [
         react(),
+        css(),
         tsconfigPaths(),
         checker({ typescript: true }),
         svg(),
@@ -34,7 +36,7 @@ export default {
         chunkSplitPlugin({
             strategy: 'single-vendor',
             customSplitting: {
-                'react-vendor': [
+                react: [
                     'react',
                     'react-dom',
                     'redux',

@@ -1,5 +1,3 @@
-@import '../../../app/styles/utils';
-
 .layout {
     display: flex;
     flex-direction: column;
@@ -11,14 +9,13 @@
         position: sticky;
         top: 0;
         padding: .6em;
-        background-color: color(background-dark);
 
-        @include box-shadow(header);
-        @include z-index(header);
+        @apply bg-cool-gray-400 text-light-400 shadow-header shadow-gray-400 z-header;
     }
 
     footer {
         padding: .6em;
-        background-color: color(background-dark);
+
+        @apply bg-cool-gray-200 shadow-floating z-header;
     }
 }

@@ -67,23 +67,13 @@
         "function-no-unknown": [
             true,
             {
-                "ignoreFunctions": [
-                    "map-get",
-                    "box-shadow",
-                    "text-shadow",
-                    "z-index"
-                ]
+                "ignoreFunctions": ["map-get", "theme"]
             }
         ],
         "scss/function-no-unknown": [
             true,
             {
-                "ignoreFunctions": [
-                    "map-get",
-                    "box-shadow",
-                    "text-shadow",
-                    "z-index"
-                ]
+                "ignoreFunctions": ["map-get", "theme"]
             }
         ],
         "alpha-value-notation": "number",
