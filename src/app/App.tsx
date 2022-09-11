@@ -2,7 +2,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from '@router';
 import { AppStore } from 'app/App.store';
 import { AppRouter } from 'app/App.router';
-import '@web-font';
 import 'app/styles/app.scss';
 
 /**

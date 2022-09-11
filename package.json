@@ -1,7 +1,7 @@
 {
     "version": "0.0.1",
     "project": "<project-name>",
-    "name": "<app-name>",
+    "name": "2",
     "title": "<app-title>",
     "description": "<project-description>",
     "license": "MIT",
@@ -103,6 +103,7 @@
         "vite-plugin-html": "^3.2.0",
         "vite-plugin-stylelint": "^3.0.7",
         "vite-plugin-svgr": "^2.2.1",
+        "vite-plugin-webfont-dl": "^3.1.1",
         "vite-plugin-windicss": "^1.8.8",
         "vite-tsconfig-paths": "^3.5.0",
         "vitest": "^0.23.2",

@@ -7,8 +7,7 @@
             "@router/*": ["libs/router/*"],
             "@store": ["libs/redux/redux.init"],
             "@libs/*": ["libs/libs/*"],
-            "@hooks/*": ["libs/hooks/*"],
-            "@web-font": ["libs/web-font/web-font.scss"]
+            "@hooks/*": ["libs/hooks/*"]
         },
 
         "target": "es2018",

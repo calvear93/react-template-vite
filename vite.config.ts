@@ -2,6 +2,7 @@ import { UserConfigExport } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react';
 import css from 'vite-plugin-windicss';
+import fonts from 'vite-plugin-webfont-dl';
 import checker from 'vite-plugin-checker';
 import svg from 'vite-plugin-svgr';
 import stylelint from 'vite-plugin-stylelint';
@@ -27,6 +28,7 @@ export default {
         checker({ typescript: true }),
         svg(),
         stylelint(),
+        fonts(['https://fonts.googleapis.com/css2?family=Catamaran']),
         html({
             inject: {
                 data: process.env
@@ -42,8 +44,7 @@ export default {
                     'redux',
                     'react-redux',
                     'react-router-dom'
-                ],
-                libs: [/src\/libs/]
+                ]
             }
         })
     ]
