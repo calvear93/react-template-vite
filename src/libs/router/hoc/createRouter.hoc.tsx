@@ -17,7 +17,7 @@ type MetaModule = Record<
  */
 const discoverRouteModules = (): MetaModule => {
     const modules = import.meta.glob(
-        '/src/app/**/*.(page|layout).tsx'
+        '/src/app/**/*.(page|layout).(t|j)sx'
     ) as MetaModule;
 
     return Object.keys(modules).reduce((map, route) => {
