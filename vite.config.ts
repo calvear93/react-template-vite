@@ -41,9 +41,12 @@ export default {
                 react: [
                     'react',
                     'react-dom',
+                    'react-router-dom'
+                ],
+                redux: [
                     'redux',
                     'react-redux',
-                    'react-router-dom'
+                    '@reduxjs/toolkit'
                 ]
             }
         })
