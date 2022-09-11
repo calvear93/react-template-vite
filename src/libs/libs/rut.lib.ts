@@ -9,7 +9,7 @@
  *
  * @returns {string} check digit.
  */
-export function checkDigit(id: string): string {
+export const checkDigit = (id: string): string => {
     let sum = 0;
     let mul = 2;
 
@@ -30,7 +30,7 @@ export function checkDigit(id: string): string {
         default:
             return `${11 - result}`;
     }
-}
+};
 
 /**
  * Removes all dots and the hyphen.
@@ -39,9 +39,9 @@ export function checkDigit(id: string): string {
  *
  * @returns {string} cleaned id.
  */
-export function clean(rut?: string): string {
+export const clean = (rut?: string): string => {
     return rut ? rut.replace(/[.-]/g, '') : '';
-}
+};
 
 /**
  * Validates chilean Id.
@@ -50,7 +50,7 @@ export function clean(rut?: string): string {
  *
  * @returns {boolean} whether id is valid.
  */
-export function isValid(id?: string): boolean {
+export const isValid = (id?: string): boolean => {
     id = clean(id);
 
     if (id.length < 7) return false;
@@ -61,4 +61,4 @@ export function isValid(id?: string): boolean {
     const dvC = checkDigit(id.slice(0, Math.max(0, id.length - 1)));
 
     return dv === dvC;
-}
+};

@@ -11,9 +11,9 @@
  *
  * @returns {boolean} true if object is empty or null/undefined, false in otherwise.
  */
-export function isEmpty(obj: any | undefined): boolean {
+export const isEmpty = (obj: any | undefined): boolean => {
     return !obj || Object.keys(obj).length === 0;
-}
+};
 
 /**
  * Reduces a empty object to a undefined,
@@ -23,6 +23,6 @@ export function isEmpty(obj: any | undefined): boolean {
  *
  * @returns {object | undefined} object if is not null, undefined or empty, undefined in otherwise.
  */
-export function reduceEmptiness(obj: any | undefined): any | undefined {
+export const reduceEmptiness = (obj: any | undefined): any | undefined => {
     return isEmpty(obj) ? undefined : obj;
-}
+};

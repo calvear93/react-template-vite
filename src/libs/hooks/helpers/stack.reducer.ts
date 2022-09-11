@@ -26,7 +26,10 @@ export type StackStateAction<T> =
  *
  * @returns {T[]} current array state
  */
-export function stackReducer<T>(state: T[], action: StackStateAction<T>): T[] {
+export const stackReducer = <T>(
+    state: T[],
+    action: StackStateAction<T>
+): T[] => {
     switch (action.type) {
         // inserts and item to the top
         case 'push':
@@ -43,4 +46,4 @@ export function stackReducer<T>(state: T[], action: StackStateAction<T>): T[] {
         default:
             return state;
     }
-}
+};

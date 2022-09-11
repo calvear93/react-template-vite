@@ -13,6 +13,6 @@ export type Mock<T> = {
  *
  * @returns {T}
  */
-export function mock<T>(mockObj: Mock<T>): T {
+export const mock = <T>(mockObj: Mock<T>): T => {
     return mockObj as T;
-}
+};

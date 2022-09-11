@@ -37,10 +37,10 @@ export type UseStaticStateCallback<T> = T | ((value: T) => T);
  *
  * @returns {[T, Function]} static state and setter
  */
-export function useStaticState<T>(
+export const useStaticState = <T>(
     key: DictionaryKey,
     def?: T
-): [T | undefined, (value: T | UseStaticStateCallback<T>) => void] {
+): [T | undefined, (value: T | UseStaticStateCallback<T>) => void] => {
     const [state, setState] = useState<T>(States[key] ?? def);
 
     return [
@@ -59,7 +59,7 @@ export function useStaticState<T>(
             }
         }
     ];
-}
+};
 
 /**
  * Binds a complex state to react component.
@@ -69,9 +69,9 @@ export function useStaticState<T>(
  *
  * @returns {[T, Function]} state and setter
  */
-export function useDictionary<T>(
+export const useDictionary = <T>(
     def: Dictionary<T>
-): [Dictionary<T>, (key: DictionaryKey, value: T) => void] {
+): [Dictionary<T>, (key: DictionaryKey, value: T) => void] => {
     const [state, setState] = useState<Dictionary<T>>(def ?? {});
 
     return [
@@ -83,7 +83,7 @@ export function useDictionary<T>(
             }));
         }
     ];
-}
+};
 
 /**
  * Binds an array state to react component
@@ -104,7 +104,7 @@ export function useDictionary<T>(
  *
  * @returns {[T[], ArrayStateController<T>]} state and handler object
  */
-export function useArray<T>(def?: T[]): [T[], ArrayStateController<T>] {
+export const useArray = <T>(def?: T[]): [T[], ArrayStateController<T>] => {
     const [state, dispatch] = useReducer<Reducer<T[], ArrayStateAction<T>>>(
         arrayReducer,
         def ?? []
@@ -137,7 +137,7 @@ export function useArray<T>(def?: T[]): [T[], ArrayStateController<T>] {
             clear: () => dispatch({ type: 'clear' })
         }
     ];
-}
+};
 
 /**
  * Binds a queue [FIFO] state to react component
@@ -154,7 +154,7 @@ export function useArray<T>(def?: T[]): [T[], ArrayStateController<T>] {
  *
  * @returns {[T[], QueueStateController<T>]} state and handler object
  */
-export function useQueue<T>(def?: T[]): [T[], QueueStateController<T>] {
+export const useQueue = <T>(def?: T[]): [T[], QueueStateController<T>] => {
     const [state, dispatch] = useReducer<Reducer<T[], QueueStateAction<T>>>(
         queueReducer,
         def ?? []
@@ -178,7 +178,7 @@ export function useQueue<T>(def?: T[]): [T[], QueueStateController<T>] {
             clear: () => dispatch({ type: 'clear' })
         }
     ];
-}
+};
 
 /**
  * Binds a stack [LIFO] state to react component
@@ -195,7 +195,7 @@ export function useQueue<T>(def?: T[]): [T[], QueueStateController<T>] {
  *
  * @returns {[T[], StackStateController<T>]} state and handler object
  */
-export function useStack<T>(def?: T[]): [T[], StackStateController<T>] {
+export const useStack = <T>(def?: T[]): [T[], StackStateController<T>] => {
     const [state, dispatch] = useReducer<Reducer<T[], StackStateAction<T>>>(
         stackReducer,
         def ?? []
@@ -219,4 +219,4 @@ export function useStack<T>(def?: T[]): [T[], StackStateController<T>] {
             clear: () => dispatch({ type: 'clear' })
         }
     ];
-}
+};

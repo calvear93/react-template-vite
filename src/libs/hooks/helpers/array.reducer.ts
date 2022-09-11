@@ -54,7 +54,10 @@ export type ArrayStateAction<T> =
  *
  * @returns {T[]} current array state
  */
-export function arrayReducer<T>(state: T[], action: ArrayStateAction<T>): T[] {
+export const arrayReducer = <T>(
+    state: T[],
+    action: ArrayStateAction<T>
+): T[] => {
     switch (action.type) {
         // pushes a new element to end of the array
         case 'append': {
@@ -103,4 +106,4 @@ export function arrayReducer<T>(state: T[], action: ArrayStateAction<T>): T[] {
         default:
             return state;
     }
-}
+};

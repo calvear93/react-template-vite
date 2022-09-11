@@ -30,7 +30,7 @@ export const HttpMethod: any = {
  *
  * @param {AxiosError} error axios error object.
  */
-function errorMessageInterceptor(error: AxiosError) {
+const errorMessageInterceptor = (error: AxiosError) => {
     if (!error.response) {
         error.message = 'Connection error';
 
@@ -52,7 +52,7 @@ function errorMessageInterceptor(error: AxiosError) {
         default:
             error.message = `Request failed '${statusText}' [${status}]`;
     }
-}
+};
 
 /**
  * Creates a http client.
@@ -62,10 +62,10 @@ function errorMessageInterceptor(error: AxiosError) {
  *
  * @returns {AxiosInstance} axios http client.
  */
-export function createHttpClient(
+export const createHttpClient = (
     baseURL: string,
     headers: object
-): AxiosInstance {
+): AxiosInstance => {
     // creates an axios instance pre-configured.
     const client = axios.create({
         baseURL,
@@ -83,7 +83,7 @@ export function createHttpClient(
     });
 
     return client;
-}
+};
 
 /**
  * Http Status Codes.

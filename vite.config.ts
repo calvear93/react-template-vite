@@ -28,7 +28,9 @@ export default {
         checker({ typescript: true }),
         svg(),
         stylelint(),
-        fonts(['https://fonts.googleapis.com/css2?family=Catamaran']),
+        fonts([
+            'https://fonts.googleapis.com/css2?family=Catamaran&display=swap'
+        ]),
         html({
             inject: {
                 data: process.env
@@ -38,16 +40,8 @@ export default {
         chunkSplitPlugin({
             strategy: 'single-vendor',
             customSplitting: {
-                react: [
-                    'react',
-                    'react-dom',
-                    'react-router-dom'
-                ],
-                redux: [
-                    'redux',
-                    'react-redux',
-                    '@reduxjs/toolkit'
-                ]
+                react: ['react', 'react-dom', 'react-router-dom'],
+                redux: ['redux', 'react-redux', '@reduxjs/toolkit']
             }
         })
     ]

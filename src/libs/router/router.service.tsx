@@ -1,5 +1,6 @@
 import {
     RouteDefinition,
+    RoutePayload,
     RouteRenderComponent
 } from './interfaces/IRouteDefinition';
 
@@ -32,7 +33,7 @@ class RouterService {
      * @param {RouteDefinition[]} routesDefinition
      * @param {string} basePath
      * @param {RouteRenderComponent} parentLayout
-     * @param {RouteRenderComponent} parentPayload
+     * @param {RoutePayload} parentPayload
      *
      * @returns {RouteDefinition[]} flattened routes
      */
@@ -40,7 +41,7 @@ class RouterService {
         routesDefinition: RouteDefinition[],
         basePath: string,
         parentLayout?: RouteRenderComponent,
-        parentPayload?: RouteRenderComponent
+        parentPayload?: RoutePayload
     ): RouteDefinition[] {
         const routes = this._createRoutes(
             routesDefinition,
@@ -61,7 +62,7 @@ class RouterService {
      * @param {RouteDefinition[]} routesDefinition
      * @param {string} basePath
      * @param {RouteRenderComponent} parentLayout
-     * @param {RouteRenderComponent} parentPayload
+     * @param {RoutePayload} parentPayload
      * @param {RouteDefinition[]} [routes]
      *
      * @returns {RouteDefinition[]} flattened routes
@@ -70,7 +71,7 @@ class RouterService {
         routesDefinition: RouteDefinition[],
         basePath: string,
         parentLayout?: RouteRenderComponent,
-        parentPayload?: RouteRenderComponent,
+        parentPayload?: RoutePayload,
         routes: RouteDefinition[] = []
     ): RouteDefinition[] {
         for (const route of routesDefinition) {

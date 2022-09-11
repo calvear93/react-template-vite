@@ -1,16 +1,4 @@
 import { RouteDefinition } from '@router';
-import { lazy } from 'react';
-
-// layouts container
-const Layouts = {
-    App: lazy(() => import('app/layouts/app/App.layout'))
-};
-
-// pages container
-const Pages = {
-    Main: lazy(() => import('app/pages/main/Main.page')),
-    Detail: lazy(() => import('app/pages/detail/Detail.page'))
-};
 
 /**
  * Routes definition.
@@ -29,13 +17,13 @@ export const routes: Record<string, RouteDefinition[]> = {
         {
             path: '/',
             render: {
-                layout: Layouts.App,
+                layout: 'App.layout',
                 children: [
                     // root/home page
                     {
                         title: 'Home',
                         render: {
-                            child: Pages.Main
+                            child: 'Main.page'
                         }
                     },
                     // detail page
@@ -43,14 +31,14 @@ export const routes: Record<string, RouteDefinition[]> = {
                         path: 'detail',
                         title: 'Detail',
                         render: {
-                            child: Pages.Detail,
+                            child: 'Detail.page',
                             children: [
                                 // detail page with param
                                 {
                                     title: 'Detail Param',
                                     path: ':id', // /detail/:id
                                     render: {
-                                        child: Pages.Detail
+                                        child: 'Detail.page'
                                     }
                                 }
                             ]

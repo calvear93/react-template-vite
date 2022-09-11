@@ -26,7 +26,10 @@ export type QueueStateAction<T> =
  *
  * @returns {T[]} current array state
  */
-export function queueReducer<T>(state: T[], action: QueueStateAction<T>): T[] {
+export const queueReducer = <T>(
+    state: T[],
+    action: QueueStateAction<T>
+): T[] => {
     switch (action.type) {
         // enqueue an item
         case 'enqueue': {
@@ -46,4 +49,4 @@ export function queueReducer<T>(state: T[], action: QueueStateAction<T>): T[] {
         default:
             return state;
     }
-}
+};

@@ -1,4 +1,5 @@
 import { matchPath, useLocation } from 'react-router-dom';
+import { RoutePayload } from './interfaces/IRouteDefinition';
 import { routerService } from './router.service';
 
 /**
@@ -24,14 +25,14 @@ import { routerService } from './router.service';
  *
  * @returns {T} array with route payload and loaded boolean.
  */
-export function useRoutePayload<T>(): T {
+export const useRoutePayload = <T>(): RoutePayload<T> => {
     const { pathname } = useLocation();
     const { routes = [] } = routerService;
 
     return (
         routes.find((r) => r.path && matchPath(r.path, pathname))?.payload ?? {}
     );
-}
+};
 
 /**
  * Returns URL query parameters.
@@ -44,11 +45,11 @@ export function useRoutePayload<T>(): T {
  *
  * @returns {URLSearchParams} URL params handler.
  */
-export function useQueryParams(): URLSearchParams {
+export const useQueryParams = (): URLSearchParams => {
     const { search } = useLocation();
 
     return new URLSearchParams(search);
-}
+};
 
 /**
  * Returns URL hash value.
@@ -60,11 +61,11 @@ export function useQueryParams(): URLSearchParams {
  *
  * @returns {string} URL hash.
  */
-export function useHashValue(): string {
+export const useHashValue = (): string => {
     const { hash } = useLocation();
 
     return hash.slice(1);
-}
+};
 
 /**
  * Retrieves current path state.
@@ -73,8 +74,8 @@ export function useHashValue(): string {
  *
  * @returns {T} route state.
  */
-export function useRouteState<T>(): T {
+export const useRouteState = <T>(): T => {
     const { state } = useLocation();
 
     return state as T;
-}
+};

@@ -17,7 +17,7 @@ import {
  *
  * @returns {Middleware} redux logger middleware
  */
-export function configureLogger(): Middleware {
+const configureLogger = (): Middleware => {
     return createLogger({
         duration: true,
         timestamp: true,
@@ -28,7 +28,7 @@ export function configureLogger(): Middleware {
             logEntry: any
         ) => !logEntry.error
     });
-}
+};
 
 /**
  * Creates the middleware array.
@@ -37,13 +37,13 @@ export function configureLogger(): Middleware {
  *
  * @returns {Middleware[]}
  */
-function configureMiddleware(debug = false): Middleware[] {
+const configureMiddleware = (debug = false): Middleware[] => {
     const middleware: Middleware[] = [thunk];
 
     if (debug) middleware.push(configureLogger());
 
     return middleware;
-}
+};
 
 interface InitStoreConfig<R, S> {
     reducer: R;
@@ -64,7 +64,7 @@ interface InitStoreConfig<R, S> {
  *
  * @returns {EnhancedStore<S, AnyAction, Middleware<S>}
  */
-export function initStore<
+export const initStore = <
     R extends Record<string, Reducer<any, AnyAction>>,
     K extends keyof R,
     S extends {
@@ -79,7 +79,7 @@ export function initStore<
     S,
     AnyAction,
     Middleware<object, S, Dispatch<AnyAction>>[]
-> {
+> => {
     return configureStore<any, any, any>({
         middleware: configureMiddleware(devMode),
         devTools: devMode,
@@ -87,4 +87,4 @@ export function initStore<
         reducer,
         enhancers
     });
-}
+};

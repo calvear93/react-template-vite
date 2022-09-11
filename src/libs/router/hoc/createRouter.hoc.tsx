@@ -1,10 +1,37 @@
-import { Suspense, SuspenseProps } from 'react';
+import { ComponentType, lazy, Suspense, SuspenseProps } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { RouteChild } from '../components/RouteChild';
 import { RouteDefinition } from '../interfaces/IRouteDefinition';
 import { routerService } from '../router.service';
 
+type MetaModule = Record<
+    string,
+    () => Promise<{ default: ComponentType<any> }>
+>;
+
+/**
+ * Search for any matching module
+ * for route module lazy load.
+ *
+ * @returns {MetaModule}
+ */
+const discoverRouteModules = (): MetaModule => {
+    const modules = import.meta.glob(
+        '/src/app/**/*.(page|layout).tsx'
+    ) as MetaModule;
+
+    return Object.keys(modules).reduce((map, route) => {
+        const path = route.replace(/^.*[/\\]/, '').replace(/\.[^./]+$/, '');
+
+        map[path] = modules[route];
+
+        return map;
+    }, {} as MetaModule);
+};
+
 export interface RouterProps {
+    autodiscover?: boolean;
+
     routes: RouteDefinition[];
 
     loader?: SuspenseProps['fallback'];
@@ -57,11 +84,22 @@ export interface RouterProps {
  */
 export const createRouter = ({
     routes,
+    autodiscover,
     loader = 'Loading',
     fallback
 }: RouterProps): React.FC => {
+    const discovered = autodiscover ? discoverRouteModules() : undefined;
+
     const paths = routerService.createRoutes(routes, '/').map((route) => {
-        const { path } = route;
+        const { path, render } = route;
+
+        if (discovered) {
+            if (typeof render?.child === 'string')
+                render.child = lazy(discovered[render.child]);
+
+            if (typeof render?.layout === 'string')
+                render.layout = lazy(discovered[render.layout]);
+        }
 
         // renders the route
         return (

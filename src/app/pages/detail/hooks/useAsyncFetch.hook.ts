@@ -9,9 +9,9 @@ export const useAsyncFetch = (): [FetchSampleAsyncState, () => void] => {
     const dispatch = useDispatch();
     const state = useAsyncFetchSelector();
 
-    function triggerFetch() {
+    const triggerFetch = () => {
         dispatch(fetchSampleAsync());
-    }
+    };
 
     return [state, triggerFetch];
 };

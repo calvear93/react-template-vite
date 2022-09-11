@@ -1,6 +1,8 @@
 import { LazyExoticComponent } from 'react';
 
-export type RouteRenderComponent = React.FC | LazyExoticComponent<any>;
+export type RoutePayload<T = any> = Record<string, any> & T;
+
+export type RouteRenderComponent = React.FC | LazyExoticComponent<any> | string;
 
 export interface RouteRenderDefinition {
     child?: RouteRenderComponent;
@@ -17,5 +19,5 @@ export interface RouteDefinition {
 
     render?: RouteRenderDefinition;
 
-    payload?: any;
+    payload?: RoutePayload;
 }
