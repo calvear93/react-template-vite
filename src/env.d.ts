@@ -11,6 +11,7 @@ interface ImportMeta {
  * @summary environment variables schema
  */
 interface ImportMetaEnv {
+    // from NODE_ENV
     readonly MODE: 'development' | 'production' | 'test';
     readonly VITE_APP_ENV: 'dev' | 'qa' | 'prod';
 
