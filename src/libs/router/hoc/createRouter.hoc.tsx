@@ -1,4 +1,10 @@
-import { ComponentType, lazy, Suspense, SuspenseProps } from 'react';
+import {
+    ComponentType,
+    lazy,
+    LazyExoticComponent,
+    Suspense,
+    SuspenseProps
+} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { RouteChild } from '../components/RouteChild';
 import { RouteDefinition } from '../interfaces/IRouteDefinition';
@@ -9,13 +15,18 @@ type MetaModule = Record<
     () => Promise<{ default: ComponentType<any> }>
 >;
 
+type MetaLazyComponentModule = Record<
+    string,
+    LazyExoticComponent<ComponentType<any>>
+>;
+
 /**
  * Search for any matching module
  * for route module lazy load.
  *
- * @returns {MetaModule}
+ * @returns {MetaLazyComponentModule}
  */
-const discoverRouteModules = (): MetaModule => {
+const discoverRouteModules = (): MetaLazyComponentModule => {
     const modules = import.meta.glob(
         '/src/app/**/*.(page|layout).(t|j)sx'
     ) as MetaModule;
@@ -23,10 +34,10 @@ const discoverRouteModules = (): MetaModule => {
     return Object.keys(modules).reduce((map, route) => {
         const path = route.replace(/^.*[/\\]/, '').replace(/\.[^./]+$/, '');
 
-        map[path] = modules[route];
+        map[path] = lazy(modules[route]);
 
         return map;
-    }, {} as MetaModule);
+    }, {} as MetaLazyComponentModule);
 };
 
 export interface RouterProps {
@@ -88,17 +99,17 @@ export const createRouter = ({
     loader = 'Loading',
     fallback
 }: RouterProps): React.FC => {
-    const discovered = autodiscover ? discoverRouteModules() : undefined;
+    const modules = autodiscover ? discoverRouteModules() : undefined;
 
     const paths = routerService.createRoutes(routes, '/').map((route) => {
         const { path, render } = route;
 
-        if (discovered) {
+        if (modules) {
             if (typeof render?.child === 'string')
-                render.child = lazy(discovered[render.child]);
+                render.child = modules[render.child];
 
             if (typeof render?.layout === 'string')
-                render.layout = lazy(discovered[render.layout]);
+                render.layout = modules[render.layout];
         }
 
         // renders the route
