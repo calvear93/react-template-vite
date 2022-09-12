@@ -3,7 +3,7 @@ import { asyncSlice } from 'app/pages/detail/slices/async.slice';
 import { initStore } from '@store';
 
 const DEV =
-    import.meta.env.NODE_ENV !== 'test' &&
+    import.meta.env.MODE !== 'test' &&
     import.meta.env.VITE_APP_ENV !== 'prod';
 
 /**

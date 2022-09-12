@@ -11,9 +11,12 @@ interface ImportMeta {
  * @summary environment variables schema
  */
 interface ImportMetaEnv {
-    readonly NODE_ENV: 'development' | 'production' | 'test';
+    readonly MODE: 'development' | 'production' | 'test';
     readonly VITE_APP_ENV: 'dev' | 'qa' | 'prod';
-    readonly DEBUG?: string;
+
+    readonly DEV: 'true' | 'false';
+    readonly PROD: 'true' | 'false';
+    readonly SSR: 'true' | 'false';
 
     // SECTION: project info from package.json
     readonly VITE_APP_VERSION: string;
@@ -49,5 +52,3 @@ declare global {
 
     type AnyError = unknown;
 }
-
-export {};
