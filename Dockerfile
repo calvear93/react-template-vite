@@ -52,8 +52,8 @@ WORKDIR ${APP_DIR}
 # alpine security updates
 RUN apk --no-cache -U upgrade
 
-# installs http-server (https://www.npmjs.com/package/http-server)
-RUN npm install -g http-server@14.1.0
+# installs serve (https://www.npmjs.com/package/serve)
+RUN npm install -g serve@14.0.1
 RUN npm cache clean --force
 
 # non root user mode
@@ -61,10 +61,6 @@ RUN chown -R node:node ${APP_DIR}
 USER node
 
 # execs start command
-CMD ["http-server", "--port", "8080", "--proxy", "http://localhost:8080?", "--brotli", "--silent"]
+CMD ["serve", "-s", "-p", "8080"]
 
 EXPOSE 8080/tcp
-
-## if you want use "serve"
-# RUN npm install -g serve
-# ENTRYPOINT ["serve", "-s", "-p", "8080"]
