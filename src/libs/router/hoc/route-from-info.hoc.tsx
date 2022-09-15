@@ -63,6 +63,12 @@ export const routeFromInfo = (
     const render = wrapComponentWithLayout(Page, layout);
 
     return (
-        <Route key={routePath} path={routePath} element={render} {...config} />
+        <Route
+            id={routePath}
+            key={routePath}
+            path={routePath}
+            element={render}
+            {...config}
+        />
     );
 };

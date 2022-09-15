@@ -3,7 +3,7 @@ import { FC, LazyExoticComponent } from 'react';
 
 type RouteProps = Omit<
     Parameters<typeof Route>[0],
-    'path' | 'element' | 'children'
+    'id' | 'path' | 'element' | 'children'
 >;
 
 export type RouteComponent = FC | LazyExoticComponent<any>;

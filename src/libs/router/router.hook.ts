@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { matchPath, matchRoutes, useLocation } from 'react-router-dom';
+// import { RoutePayload } from './interfaces/IRouteDefinition';
+// import { routerService } from './router.service';
 
 /**
  * Sets page document title.
@@ -10,6 +12,40 @@ export const useDocumentTitle = (title: string): void => {
     useEffect(() => {
         document.title = title;
     }, [title]);
+};
+
+/**
+ * Returns current payload
+ * from routes definition.
+ *
+ * Children payload has higher
+ * priority over parents payload.
+ *
+ * @example
+ *  You should define payload in routes definition as:
+ *  {
+ *      ...,
+ *      path: '/main',
+ *      render: {
+ *          layout: Layouts.App,
+ *          child: Pages.Main,
+ *      },
+ *      payload: { ... }
+ *  }
+ *
+ * @dependency useLocation and matchPath from react-router.
+ *
+ * @returns {T} array with route payload and loaded boolean.
+ */
+export const useRoutePayload = <T>(): any => {
+    const { pathname } = useLocation();
+    // const { routes = [] } = routerService;
+
+    return { footer: {}, header: {} };
+
+    // return (
+    //     routes.find((r) => r.path && matchPath(r.path, pathname))?.payload ?? {}
+    // );
 };
 
 /**
