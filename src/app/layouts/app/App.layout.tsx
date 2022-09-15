@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import styles from './app.layout.module.scss';
@@ -24,4 +23,4 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
     </main>
 );
 
-export default memo(AppLayout);
+export default AppLayout;

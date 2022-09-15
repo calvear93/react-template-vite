@@ -1,4 +1,4 @@
-import { Link } from '@router';
+import { Link, Page } from '@router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { sampleSlice, useSampleSelector } from 'app/slices';
@@ -20,12 +20,12 @@ export const MainPage: React.FC = (): JSX.Element => {
     }, []);
 
     return (
-        <section className={styles.page}>
+        <Page title='Main Page' className={styles.page}>
             <Link to='/detail'>Go To Detail</Link>
             <Link to='/detail/123'>Go To Detail 123</Link>
             <h2>{import.meta.env.VITE_APP_ENV}</h2>
             <h3>{message}</h3>
-        </section>
+        </Page>
     );
 };
 

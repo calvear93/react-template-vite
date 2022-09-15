@@ -1,6 +1,18 @@
+import { useEffect } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
-import { RoutePayload } from './interfaces/IRouteDefinition';
-import { routerService } from './router.service';
+// import { RoutePayload } from './interfaces/IRouteDefinition';
+// import { routerService } from './router.service';
+
+/**
+ * Sets page document title.
+ *
+ * @param {string} title document title
+ */
+export const useDocumentTitle = (title: string): void => {
+    useEffect(() => {
+        document.title = title;
+    }, [title]);
+};
 
 /**
  * Returns current payload
@@ -25,13 +37,15 @@ import { routerService } from './router.service';
  *
  * @returns {T} array with route payload and loaded boolean.
  */
-export const useRoutePayload = <T>(): RoutePayload<T> => {
+export const useRoutePayload = <T>(): any => {
     const { pathname } = useLocation();
-    const { routes = [] } = routerService;
+    // const { routes = [] } = routerService;
 
-    return (
-        routes.find((r) => r.path && matchPath(r.path, pathname))?.payload ?? {}
-    );
+    return { footer: {}, header: {} };
+
+    // return (
+    //     routes.find((r) => r.path && matchPath(r.path, pathname))?.payload ?? {}
+    // );
 };
 
 /**

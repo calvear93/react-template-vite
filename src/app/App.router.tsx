@@ -4,7 +4,7 @@ import { routes } from 'app/app.routes';
 // creates a router
 const Router = createRouter({
     routes: routes.app,
-    autodiscover: true,
+    layout: 'App',
     loader: <h1>Loading</h1>,
     fallback: <h1>Not Found</h1>
 });

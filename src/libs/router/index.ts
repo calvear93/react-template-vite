@@ -1,7 +1,5 @@
-export * from './router.hook';
 export * from 'react-router-dom';
-export { createRouter } from './hoc/createRouter.hoc';
-export type {
-    RouteDefinition,
-    RouteRenderDefinition
-} from './interfaces/IRouteDefinition';
+export * from './router.hook';
+export * from './route.interface';
+export { Page } from './components/Page';
+export { createRouter } from './hoc/create-router.hoc';
