@@ -40,7 +40,8 @@ export default {
         chunkSplitPlugin({
             strategy: 'single-vendor',
             customSplitting: {
-                react: ['react', 'react-dom', 'react-router-dom'],
+                react: ['react', 'react-dom'],
+                router: ['react-router-dom', /src\/libs\/router/],
                 redux: ['redux', 'react-redux', '@reduxjs/toolkit']
             }
         })

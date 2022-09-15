@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useDocumentTitle } from '../router.hook';
 
 export interface PageProps extends React.HTMLAttributes<HTMLElement> {
     title: string;
@@ -17,9 +17,7 @@ export const Page: React.FC<PageProps> = ({
     ...attrs
 }): JSX.Element => {
     // sets up page tab title
-    useEffect(() => {
-        document.title = title ?? '';
-    }, [title]);
+    useDocumentTitle(title);
 
     return <section {...attrs}>{children}</section>;
 };

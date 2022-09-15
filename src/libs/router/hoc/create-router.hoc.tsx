@@ -38,10 +38,8 @@ const getRoutesComponents = (routes: RoutesInfoCollection): JSX.Element[] => {
         let render: Partial<RouteInfo>;
 
         if (isRouteInfo(routeInfo)) {
-            // if object, extracts path and info
             ({ path, ...render } = routeInfo);
         } else {
-            // if if path assigns it
             path = routeInfo;
             render = {};
         }
