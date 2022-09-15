@@ -71,6 +71,9 @@
                 "tabWidth": 4,
                 "trailingComma": "none",
                 "useTabs": false
+            },
+            {
+                "usePrettierrc": false
             }
         ],
         "@typescript-eslint/explicit-function-return-type": "off",
@@ -232,13 +235,7 @@
                 "checkFragmentShorthand": true
             }
         ],
-        "react/jsx-max-props-per-line": [
-            "warn",
-            {
-                "maximum": 3,
-                "when": "always"
-            }
-        ],
+        "react/jsx-max-props-per-line": "off",
         "react/jsx-no-comment-textnodes": "warn",
         "react/jsx-no-duplicate-props": "warn",
         "react/jsx-no-literals": "off",

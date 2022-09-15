@@ -1,4 +1,10 @@
+import { Route } from 'react-router-dom';
 import { FC, LazyExoticComponent } from 'react';
+
+type RouteProps = Omit<
+    Parameters<typeof Route>[0],
+    'path' | 'element' | 'children'
+>;
 
 export type RouteComponent = FC | LazyExoticComponent<any>;
 
@@ -18,6 +24,8 @@ export interface RouteInfo {
     page?: RouteComponent;
 
     layout?: RouteComponent | string;
+
+    config?: RouteProps;
 }
 
 /**

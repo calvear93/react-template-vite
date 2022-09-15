@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
-import { matchPath, useLocation } from 'react-router-dom';
-// import { RoutePayload } from './interfaces/IRouteDefinition';
-// import { routerService } from './router.service';
+import { useLocation } from 'react-router-dom';
 
 /**
  * Sets page document title.
@@ -12,57 +10,6 @@ export const useDocumentTitle = (title: string): void => {
     useEffect(() => {
         document.title = title;
     }, [title]);
-};
-
-/**
- * Returns current payload
- * from routes definition.
- *
- * Children payload has higher
- * priority over parents payload.
- *
- * @example
- *  You should define payload in routes definition as:
- *  {
- *      ...,
- *      path: '/main',
- *      render: {
- *          layout: Layouts.App,
- *          child: Pages.Main,
- *      },
- *      payload: { ... }
- *  }
- *
- * @dependency useLocation and matchPath from react-router.
- *
- * @returns {T} array with route payload and loaded boolean.
- */
-export const useRoutePayload = <T>(): any => {
-    const { pathname } = useLocation();
-    // const { routes = [] } = routerService;
-
-    return { footer: {}, header: {} };
-
-    // return (
-    //     routes.find((r) => r.path && matchPath(r.path, pathname))?.payload ?? {}
-    // );
-};
-
-/**
- * Returns URL query parameters.
- *
- * @example
- *  const { get } = useQueryParams();
- *  const name = get('name');
- *
- * @dependency useLocation from react-router-dom.
- *
- * @returns {URLSearchParams} URL params handler.
- */
-export const useQueryParams = (): URLSearchParams => {
-    const { search } = useLocation();
-
-    return new URLSearchParams(search);
 };
 
 /**

@@ -55,12 +55,14 @@ export const wrapComponentWithLayout = (
  */
 export const routeFromInfo = (
     name: string,
-    { path, layout, page }: RouteInfo
+    { path, layout, page, config }: RouteInfo
 ): JSX.Element => {
     const routePath = path as string;
     const Page = page ?? modules[`${name}.page`];
 
     const render = wrapComponentWithLayout(Page, layout);
 
-    return <Route key={routePath} path={routePath} element={render} />;
+    return (
+        <Route key={routePath} path={routePath} element={render} {...config} />
+    );
 };
