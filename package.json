@@ -39,7 +39,7 @@
         "lint": "eslint src/**/*.{ts,tsx}",
         "lint:fix": "eslint --fix src/**/*.{ts,tsx}",
         "stylelint": "stylelint src/**/*.{css,scss,sass}",
-        "stylelint:fix": "stylelint src/**/*.{css,scss,sass}",
+        "stylelint:fix": "stylelint --fix src/**/*.{css,scss,sass}",
         "_build": "vite build"
     },
     "dependencies": {

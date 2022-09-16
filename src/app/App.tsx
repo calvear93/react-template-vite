@@ -14,7 +14,7 @@ import 'app/styles/app.scss';
  */
 export const App: React.FC = (): JSX.Element => {
     return (
-        <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
             <Provider store={AppStore}>
                 <AppRouter />
             </Provider>

@@ -29,10 +29,7 @@ interface ImportMetaEnv {
 
     // SECTION: base config
     readonly PORT: string;
-    readonly PUBLIC_URL: string;
-    readonly VITE_APP_DEBUG: 'true' | 'false';
-    readonly VITE_APP_SERVICE_WORKER: 'true' | 'false';
-    readonly VITE_APP_BASE_PATH: string;
+    readonly BASE_URL: string;
 }
 
 declare global {

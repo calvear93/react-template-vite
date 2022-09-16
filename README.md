@@ -83,8 +83,7 @@ Main feature are:
 
 ```json
 {
-    "PUBLIC_URL": "",
-    "VITE_APP_BASE_PATH": "/"
+    "BASE_URL": "/"
 }
 ```
 
