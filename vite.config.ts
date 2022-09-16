@@ -9,9 +9,14 @@ import stylelint from 'vite-plugin-stylelint';
 import { createHtmlPlugin as html } from 'vite-plugin-html';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
+const basePath = (process.env.VITE_APP_BASE_PATH + '/').replace(
+    /([^:]\/)\/+/g,
+    '$1'
+);
+
 // https://vitejs.dev/config/
 export default {
-    base: process.env.VITE_APP_BASE_PATH,
+    base: basePath,
     server: {
         open: true,
         https: process.env.HTTPS === 'true',
