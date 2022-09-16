@@ -1,18 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { configureMiddleware } from '@store';
+import { initStore } from '@config';
 import { sampleSlice } from 'app/slices/sample.slice';
 import { asyncSlice } from 'app/pages/detail/slices/async.slice';
-
-const DEV =
-    import.meta.env.VITEST !== 'true' &&
-    import.meta.env.VITE_APP_ENV !== 'release';
 
 /**
  * Creates a redux store.
  */
-export const AppStore = configureStore({
-    middleware: configureMiddleware(),
-    devTools: DEV,
+export const AppStore = initStore({
     reducer: {
         [sampleSlice.name]: sampleSlice.reducer,
         [asyncSlice.name]: asyncSlice.reducer

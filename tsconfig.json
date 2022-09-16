@@ -3,9 +3,8 @@
         "baseUrl": "src",
         "outDir": "dist",
         "paths": {
+            "@config": ["config"],
             "@router": ["libs/router"],
-            "@router/*": ["libs/router/*"],
-            "@store": ["libs/redux/redux.init"],
             "@libs/*": ["libs/libs/*"],
             "@hooks/*": ["libs/hooks/*"]
         },
