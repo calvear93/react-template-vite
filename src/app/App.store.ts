@@ -3,7 +3,8 @@ import { asyncSlice } from 'app/pages/detail/slices/async.slice';
 import { initStore } from '@store';
 
 const DEV =
-    import.meta.env.MODE !== 'test' && import.meta.env.VITE_APP_ENV !== 'prod';
+    import.meta.env.VITEST !== 'true' &&
+    import.meta.env.VITE_APP_ENV !== 'prod';
 
 /**
  * Creates a redux store.

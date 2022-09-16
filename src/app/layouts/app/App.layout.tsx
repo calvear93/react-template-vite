@@ -15,11 +15,11 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
     children
 }): JSX.Element => (
     <main className={styles.layout}>
-        <Header />
+        <Header title='App' />
 
         {children}
 
-        <Footer />
+        <Footer text='Footer' />
     </main>
 );
 

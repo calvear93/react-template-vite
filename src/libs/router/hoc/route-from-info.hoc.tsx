@@ -1,9 +1,6 @@
 import { Route } from 'react-router-dom';
 import { RouteComponent, RouteInfo } from '../route.interface';
-import { discoverRouteModules } from '../utils/discover-modules';
-
-// pages and layouts components modules
-const modules = discoverRouteModules();
+import { routerService } from '../router.service';
 
 /**
  * Wraps a page with a layout if defined.
@@ -17,7 +14,7 @@ export const wrapElementWithLayout = (
     Element: JSX.Element | JSX.Element[],
     Layout?: RouteComponent | string
 ): JSX.Element | JSX.Element[] => {
-    if (typeof Layout === 'string') Layout = modules[`${Layout}.layout`];
+    if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
 
     return Layout ? <Layout>{Element}</Layout> : Element;
 };
@@ -34,7 +31,7 @@ export const wrapComponentWithLayout = (
     Component: RouteComponent,
     Layout?: RouteComponent | string
 ): JSX.Element => {
-    if (typeof Layout === 'string') Layout = modules[`${Layout}.layout`];
+    if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
 
     return Layout ? (
         <Layout>
@@ -58,7 +55,7 @@ export const routeFromInfo = (
     { path, layout, page, config }: RouteInfo
 ): JSX.Element => {
     const routePath = path as string;
-    const Page = page ?? modules[`${name}.page`];
+    const Page = page ?? routerService.getPage(name);
 
     const render = wrapComponentWithLayout(Page, layout);
 

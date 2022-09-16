@@ -1,7 +1,5 @@
-import { useRoutePayload } from '@router';
-
-interface FooterPayload {
-    footer?: { text: string };
+interface FooterProps {
+    text: string;
 }
 
 /**
@@ -9,8 +7,6 @@ interface FooterPayload {
  *
  * @returns {JSX.Element} footer component
  */
-export const Footer: React.FC = (): JSX.Element => {
-    // const { footer: { text } = {} } = useRoutePayload<FooterPayload>();
-
-    return <footer>f</footer>;
+export const Footer: React.FC<FooterProps> = ({ text }): JSX.Element => {
+    return <footer>{text}</footer>;
 };

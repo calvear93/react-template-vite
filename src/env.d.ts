@@ -11,12 +11,13 @@ interface ImportMeta {
  * @summary environment variables schema
  */
 interface ImportMetaEnv {
-    // from NODE_ENV
-    readonly MODE: 'development' | 'production' | 'test';
+    readonly NODE_ENV: 'development' | 'production' | 'test';
+    readonly MODE: NODE_ENV;
     readonly VITE_APP_ENV: 'dev' | 'qa' | 'prod';
 
     readonly DEV: 'true' | 'false';
     readonly PROD: 'true' | 'false';
+    readonly VITEST: 'true' | 'false';
     readonly SSR: 'true' | 'false';
 
     // SECTION: project info from package.json
