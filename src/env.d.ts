@@ -13,7 +13,7 @@ interface ImportMeta {
 interface ImportMetaEnv {
     readonly NODE_ENV: 'development' | 'production' | 'test';
     readonly MODE: NODE_ENV;
-    readonly VITE_APP_ENV: 'dev' | 'qa' | 'prod';
+    readonly VITE_APP_ENV: 'dev' | 'release';
 
     readonly DEV: 'true' | 'false';
     readonly PROD: 'true' | 'false';
