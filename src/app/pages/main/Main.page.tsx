@@ -1,6 +1,6 @@
 import { Link, Page } from '@router';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from 'app/App.store';
 import { sampleSlice, useSampleSelector } from 'app/slices';
 import styles from './main.page.module.scss';
 
@@ -12,7 +12,7 @@ const { sample: sampleAction } = sampleSlice.actions;
  * @returns {JSX.Element} main page
  */
 export const MainPage: React.FC = (): JSX.Element => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { message } = useSampleSelector();
 
     useEffect(() => {

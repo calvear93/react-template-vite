@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from 'app/App.store';
 import {
     fetchSampleAsync,
     FetchSampleAsyncState,
@@ -6,7 +6,7 @@ import {
 } from '../slices/async.slice';
 
 export const useAsyncFetch = (): [FetchSampleAsyncState, () => void] => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const state = useAsyncFetchSelector();
 
     const triggerFetch = () => {

@@ -56,13 +56,13 @@ type InitStoreConfig<S, A extends Action> = Omit<
 /**
  * Initializes a redux store using redux toolkit.
  *
- * @template S store state
  * @template A action
+ * @template S store state
  * @param {InitStoreConfig<S, A>}
  *
  * @returns {EnhancedStore<S, A, [ThunkMiddlewareFor<S>]>}
  */
-export const initStore = <S = any, A extends Action = AnyAction>({
+export const initStore = <A extends Action = AnyAction, S = any>({
     reducer,
     preloadedState,
     enhancers
