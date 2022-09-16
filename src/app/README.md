@@ -4,10 +4,19 @@
 
 App routes definition in `app.routes.ts`.
 
-You can define nested routes and reuse lazy loaded components, improving code
-splitting.
+You can use the name of the page or layout for
+the rote, and it will load lazily.
+In example, if you have App.layout.tsx and Main.page.tsx,
+you can define your route as
 
-Use `payload` property for add specific static info for your route.
+```javascript
+const routes = {
+    Main: {
+        path: '/',
+        layout: 'App'
+    }
+}
+```
 
 ## 2. Store (Redux)
 
@@ -22,4 +31,4 @@ Application shared layouts.
 
 ## 3. Pages
 
-Application pages, use `app.routes.ts` for import.
+Application pages.
