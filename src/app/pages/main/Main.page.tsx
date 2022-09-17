@@ -10,7 +10,7 @@ const detailPath = routes.app.Detail[0];
 const detailPathWithId = (id: number) =>
     generatePath(routes.app.Detail[1], { id });
 
-// store actions
+// redux actions
 const { sample: sampleAction } = sampleSlice.actions;
 
 /**

@@ -9,6 +9,7 @@ __reports__
 # artifacts
 /dist
 /build
+/dev-dist
 tsconfig.build.tsbuildinfo
 
 # Logs
