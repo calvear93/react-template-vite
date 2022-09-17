@@ -25,6 +25,10 @@ export interface RouteInfo {
 
     layout?: RouteComponent | string;
 
+    pageProps?: React.ComponentProps<any>;
+
+    layoutProps?: React.ComponentProps<any>;
+
     config?: RouteProps;
 }
 

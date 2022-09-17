@@ -30,11 +30,7 @@ export default {
         react(),
         css(),
         tsconfigPaths(),
-        checker({
-            typescript: true,
-            enableBuild: true,
-            eslint: { lintCommand: 'eslint src/**/*.{ts,tsx}' }
-        }),
+        checker({ typescript: true, enableBuild: true }),
         svg(),
         stylelint(),
         fonts([

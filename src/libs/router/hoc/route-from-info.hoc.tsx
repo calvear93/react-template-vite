@@ -7,16 +7,18 @@ import { routerService } from '../router.service';
  *
  * @param {JSX.Element | JSX.Element[]} Element
  * @param {RouteComponent | string} Layout
+ * @param {React.ComponentProps<any>} props layout props
  *
  * @returns {JSX.Element | JSX.Element[]}
  */
 export const wrapElementWithLayout = (
     Element: JSX.Element | JSX.Element[],
-    Layout?: RouteComponent | string
+    Layout?: RouteComponent | string,
+    props?: React.ComponentProps<any>
 ): JSX.Element | JSX.Element[] => {
     if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
 
-    return Layout ? <Layout>{Element}</Layout> : Element;
+    return Layout ? <Layout {...props}>{Element}</Layout> : Element;
 };
 
 /**
@@ -24,21 +26,25 @@ export const wrapElementWithLayout = (
  *
  * @param {RouteComponent} Component
  * @param {RouteComponent | string} Layout
+ * @param {React.ComponentProps<any>} componentProps
+ * @param {React.ComponentProps<any>} layoutProps
  *
  * @returns {JSX.Element}
  */
 export const wrapComponentWithLayout = (
     Component: RouteComponent,
-    Layout?: RouteComponent | string
+    Layout?: RouteComponent | string,
+    componentProps?: React.ComponentProps<any>,
+    layoutProps?: React.ComponentProps<any>
 ): JSX.Element => {
     if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
 
     return Layout ? (
-        <Layout>
-            <Component />
+        <Layout {...layoutProps}>
+            <Component {...componentProps} />
         </Layout>
     ) : (
-        <Component />
+        <Component {...componentProps} />
     );
 };
 
@@ -52,12 +58,17 @@ export const wrapComponentWithLayout = (
  */
 export const routeFromInfo = (
     name: string,
-    { path, layout, page, config }: RouteInfo
+    { path, layout, page, config, pageProps, layoutProps }: RouteInfo
 ): JSX.Element => {
     const routePath = path as string;
     const Page = page ?? routerService.getPage(name);
 
-    const render = wrapComponentWithLayout(Page, layout);
+    const render = wrapComponentWithLayout(
+        Page,
+        layout,
+        pageProps,
+        layoutProps
+    );
 
     return (
         <Route

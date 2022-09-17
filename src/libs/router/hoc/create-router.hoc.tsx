@@ -17,6 +17,8 @@ export interface RouterConfig {
     loader?: ReactNode;
 
     fallback?: JSX.Element;
+
+    layoutProps?: React.ComponentProps<any>;
 }
 
 /**
@@ -119,7 +121,8 @@ export const createRouter = ({
     routes,
     layout,
     loader = 'Loading',
-    fallback
+    fallback,
+    layoutProps
 }: RouterConfig): React.FC => {
     const paths = getRoutesComponents(routes);
 
@@ -130,7 +133,8 @@ export const createRouter = ({
 
             <Route path='*' element={fallback} />
         </Routes>,
-        layout
+        layout,
+        layoutProps
     );
 
     return (): JSX.Element => <Suspense fallback={loader}>{render}</Suspense>;
