@@ -5,8 +5,7 @@ export default {
         extend: {
             colors: {
                 brand: '#007a33',
-                primary: '#00b2a9',
-                'primary-light': '#78ddd8'
+                primary: '#00b2a9'
             },
             zIndex: {
                 toast: 1000,
