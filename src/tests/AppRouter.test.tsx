@@ -4,8 +4,7 @@ import { MemoryRouter } from '@router';
 import {
     render,
     screen,
-    waitFor,
-    waitForElementToBeRemoved
+    waitFor
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AppRouter } from 'app/App.router';
@@ -24,7 +23,7 @@ describe('App', () => {
         );
 
         // waits for lazy loading
-        await waitForElementToBeRemoved(() => screen.queryByText('Loading'));
+        await waitFor(() => screen.findByText('Go To Detail'));
     });
 
     test('has header (banner role) with content "App"', () => {
