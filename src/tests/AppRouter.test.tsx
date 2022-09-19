@@ -1,11 +1,7 @@
 import { beforeAll, describe, expect, test } from 'vitest';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from '@router';
-import {
-    render,
-    screen,
-    waitFor
-} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AppRouter } from 'app/App.router';
 import { AppStore } from 'app/App.store';
@@ -23,7 +19,9 @@ describe('App', () => {
         );
 
         // waits for lazy loading
-        await waitFor(() => screen.findByText('Go To Detail'));
+        await waitFor(() => screen.findByText('Go To Detail'), {
+            timeout: 2500
+        });
     });
 
     test('has header (banner role) with content "App"', () => {
