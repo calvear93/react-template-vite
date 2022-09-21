@@ -3,7 +3,7 @@
 ###
 
 # global variables
-ARG ALPINE=node:18.9.0-alpine
+ARG NODE=node:18.9.0-alpine
 ARG APP_DIR='/app/'
 
 
@@ -12,7 +12,7 @@ ARG APP_DIR='/app/'
 ##
 ## STAGE 1: node setup
 ##
-FROM ${ALPINE} AS builder
+FROM ${NODE} AS builder
 
 ARG APP_DIR
 ARG ENV
@@ -38,7 +38,7 @@ RUN npm run build:${ENV}
 ##
 ## STAGE 2: server setup
 ##
-FROM ${ALPINE}
+FROM ${NODE}
 
 ARG APP_DIR
 
