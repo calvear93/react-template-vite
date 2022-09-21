@@ -59,7 +59,8 @@ RUN npm cache clean --force
 RUN chown -R node:node ${APP_DIR}
 USER node
 
-# execs start command
-CMD ["serve", "-s", "-p", "8080"]
+# start command
+ENTRYPOINT ["serve"]
+CMD ["-s", "-p", "8080"]
 
 EXPOSE 8080/tcp
