@@ -1,5 +1,6 @@
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { ThunkMiddlewareFor } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
 import {
     Action,
     AnyAction,
@@ -9,7 +10,6 @@ import {
     Middleware,
     PayloadAction
 } from '@reduxjs/toolkit';
-import { ThunkMiddlewareFor } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
 
 const DEV =
     import.meta.env.VITEST !== 'true' &&
@@ -37,11 +37,15 @@ const configureLogger = (): Middleware => {
  * Creates the middleware array.
  *
  * @param {boolean} [debug] whether app is in debug mode
+ * @param {Middleware[]} [extraMiddlewares] other middlewares
  *
  * @returns {Middleware[]}
  */
-const configureMiddleware = (debug = false): Middleware[] => {
-    const middleware: Middleware[] = [thunk];
+const configureMiddleware = (
+    debug = false,
+    extraMiddlewares: Middleware[]
+): Middleware[] => {
+    const middleware: Middleware[] = [thunk, ...extraMiddlewares];
 
     if (debug) middleware.push(configureLogger());
 
@@ -51,7 +55,7 @@ const configureMiddleware = (debug = false): Middleware[] => {
 type InitStoreConfig<S, A extends Action> = Omit<
     ConfigureStoreOptions<S, A>,
     'middleware' | 'devTools'
->;
+> & { middlewares?: Middleware[] };
 
 /**
  * Initializes a redux store using redux toolkit.
@@ -65,10 +69,11 @@ type InitStoreConfig<S, A extends Action> = Omit<
 export const initStore = <A extends Action = AnyAction, S = any>({
     reducer,
     preloadedState,
-    enhancers
+    enhancers,
+    middlewares = []
 }: InitStoreConfig<S, A>): EnhancedStore<S, A, [ThunkMiddlewareFor<S>]> => {
     return configureStore<S, A, any>({
-        middleware: configureMiddleware(DEV),
+        middleware: configureMiddleware(DEV, middlewares),
         devTools: DEV,
         preloadedState,
         reducer,
