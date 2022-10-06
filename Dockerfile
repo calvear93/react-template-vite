@@ -1,32 +1,30 @@
 ###
-###   REACT SPA DOCKERFILE
+###   REACT SPA
 ###
 
 # global variables
-ARG NODE=node:18.10.0-alpine
+ARG ALPINE=node:18.10.0-alpine
+ARG NGINX=nginx:1.23.1-alpine
 ARG APP_DIR='/app/'
+ARG OUT_DIR='dist'
 
 
 
 
 ##
-## STAGE 1: node setup
+## STAGE 1: app build
 ##
-FROM ${NODE} AS builder
+FROM ${ALPINE} AS builder
 
 ARG APP_DIR
+ARG OUT_DIR
 ARG ENV
 
-# working directory setup
 WORKDIR ${APP_DIR}
 
-COPY package*.json ${APP_DIR}
-RUN npm ci
-
+# prepares source files
 COPY . ${APP_DIR}
-
-# CSP compatibility for avoid 'unsafe-inline'
-ENV INLINE_RUNTIME_CHUNK false
+RUN npm ci
 
 # builds the app
 ENV NODE_ENV production
@@ -34,33 +32,27 @@ RUN npm run build:${ENV}
 
 
 
-
 ##
-## STAGE 2: server setup
+## STAGE 2: static web server setup
 ##
-FROM ${NODE}
+FROM ${NGINX}
 
 ARG APP_DIR
+ARG OUT_DIR
 
-# retrieves build app
-COPY --from=builder ${APP_DIR}'dist' ${APP_DIR}
+# static assets dir
+WORKDIR /usr/share/nginx/html
 
-# working directory setup
-WORKDIR ${APP_DIR}
+# gets build app
+RUN rm -rf ./*
+COPY --from=builder ${APP_DIR}${OUT_DIR} .
+COPY --from=builder ${APP_DIR}'nginx.conf' /etc/nginx/conf.d/default.conf
 
 # alpine security updates
 RUN apk --no-cache -U upgrade
 
-# installs serve (https://www.npmjs.com/package/serve)
-RUN npm install -g serve@14.0.1
-RUN npm cache clean --force
-
-# non root user mode
-RUN chown -R node:node ${APP_DIR}
-USER node
-
 # start command
-ENTRYPOINT ["serve"]
-CMD ["-s", "-p", "8080"]
+ENTRYPOINT ["nginx"]
+CMD ["-g", "daemon off;"]
 
 EXPOSE 8080/tcp
