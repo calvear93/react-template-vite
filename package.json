@@ -31,32 +31,27 @@
         "preview": "env -e dev -m debug --log debug : vite preview",
         "start:dev": "env -e dev -m debug --log debug : vite",
         "start:release": "env -e release -m debug : vite",
-        "build:dev": "env -e dev -m build --log debug : npm run _build",
-        "build:release": "env -e release -m build : npm run _build",
+        "build:dev": "env -e dev -m build --log debug : npm run vite build",
+        "build:release": "env -e release -m build : npm run vite build",
         "build:start": "npx serve -s dist",
         "test:dev": "env -e dev -m test : vitest run",
         "test:release": "env -e release -m test : vitest",
         "test:coverage": "env -e dev -m debug : vitest run --coverage",
         "env:schema": "env schema -e dev -m build --ci",
         "lint": "eslint src/**/*.{ts,tsx}",
-        "lint:fix": "eslint --fix src/**/*.{ts,tsx}",
-        "stylelint": "stylelint src/**/*.{css,scss,sass}",
-        "stylelint:fix": "stylelint --fix src/**/*.{css,scss,sass}",
-        "_build": "vite build"
+        "stylelint": "stylelint src/**/*.{css,scss,sass}"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^1.8.5",
         "axios": "^1.1.2",
-        "clsx": "^1.2.1",
-        "date-fns": "^2.29.3",
-        "http-status-codes": "^2.2.0",
+        "immer": "^9.0.15",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-redux": "^8.0.4",
         "react-router-dom": "^6.4.2",
         "redux": "^4.2.0",
         "redux-logger": "^3.0.6",
-        "store2": "^2.14.2"
+        "redux-thunk": "^2.4.1"
     },
     "devDependencies": {
         "@calvear/env": "^2.2.2",

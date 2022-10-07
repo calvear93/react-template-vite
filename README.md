@@ -104,17 +104,17 @@ Project uses **npm scripts** for eases execution, testing and building.
 Many of these script run on a defined environment, specified after ':', and
 it environment may be 'dev', 'qa' or 'prod'.
 
-| Command               | Action                        |
-| --------------------- | ----------------------------- |
-| npm run start:`<env>` | executes the app              |
-| npm run build:`<env>` | build the app                 |
-| npm run test:`<env>`  | executes tests                |
-| npm run test:coverage | testing coverage report       |
-| npm run env:schema    | updates env JSON schema       |
-| npm run lint          | code format review            |
-| npm run lint:fix      | code format review/fix        |
-| npm run stylelint     | stylesheets format review     |
-| npm run stylelint:fix | stylesheets format review/fix |
+| Command                    | Action                        |
+| -------------------------- | ----------------------------- |
+| npm run start:`<env>`      | executes the app              |
+| npm run build:`<env>`      | build the app                 |
+| npm run test:`<env>`       | executes tests                |
+| npm run test:coverage      | testing coverage report       |
+| npm run env:schema         | updates env JSON schema       |
+| npm run lint               | code format review            |
+| npm run lint -- --fix      | code format review/fix        |
+| npm run stylelint          | stylesheets format review     |
+| npm run stylelint -- --fix | stylesheets format review/fix |
 
 ## ⚙️ **Commands**
 
