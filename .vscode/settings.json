@@ -12,7 +12,7 @@
         "*.ts": "${capture}.*",
         "*.tsx": "${capture}.*",
         "*.json": "${capture}.json",
-        "*.env.json": "${capture}.local.env.json",
+        "*.env.json": "${capture}.*.env.json"
     },
     "files.exclude": {
         "**/*.log": true,

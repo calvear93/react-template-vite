@@ -24,7 +24,7 @@ WORKDIR ${APP_DIR}
 
 # prepares source files
 COPY . ${APP_DIR}
-RUN npm ci
+RUN npm ci --ignore-scripts
 
 # builds the app
 ENV NODE_ENV production
@@ -46,7 +46,7 @@ WORKDIR /usr/share/nginx/html
 # gets build app
 RUN rm -rf ./*
 COPY --from=builder ${APP_DIR}${OUT_DIR} .
-COPY --from=builder ${APP_DIR}'nginx.conf' /etc/nginx/conf.d/default.conf
+COPY --from=builder ${APP_DIR}'nginx.conf' '/etc/nginx/conf.d/default.conf'
 
 # alpine security updates
 RUN apk --no-cache -U upgrade
