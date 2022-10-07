@@ -4,9 +4,7 @@
         "outDir": "dist",
         "paths": {
             "@config": ["config"],
-            "@router": ["libs/router"],
-            "@libs/*": ["libs/libs/*"],
-            "@hooks/*": ["libs/hooks/*"]
+            "@router": ["libs/router"]
         },
 
         "target": "es2018",
