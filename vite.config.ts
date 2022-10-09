@@ -3,7 +3,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react';
 import css from 'vite-plugin-windicss';
 import fonts from 'vite-plugin-webfont-dl';
-import checker from 'vite-plugin-checker';
+import { checker } from 'vite-plugin-checker';
 import svg from 'vite-plugin-svgr';
 import stylelint from 'vite-plugin-stylelint';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
