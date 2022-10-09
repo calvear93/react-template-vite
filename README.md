@@ -73,11 +73,11 @@ Main feature are:
 
 -   Replace globally these terms:
 
-    -   `<base-path>` web base path, i.e. web (for get /web/\*)
-    -   `<app-name>` app name, i.e. home-web
-    -   `<project-name>` project name, i.e. my-project
-    -   `<project-title>` project title, i.e. My Project
-    -   `<project-description>` project description, i.e. Web for show account info
+    -   `(((base-path)))` web base path, i.e. web (for get /web/\*)
+    -   `(((app-name)))` app name, i.e. home-web
+    -   `(((app-title)))` project name, i.e. my-project
+    -   `(((project-name)))` project title, i.e. My Project
+    -   `(((project-description)))` project description, i.e. Web for show account info
 
 -   Set up your `dev.local.env.json` with:
 

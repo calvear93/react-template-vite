@@ -9,10 +9,8 @@ ARG APP_DIR='/app/'
 ARG OUT_DIR='dist'
 
 
-
-
 ##
-## STAGE 1: app build
+## STAGE 1: build
 ##
 FROM ${ALPINE} AS builder
 
@@ -25,7 +23,6 @@ WORKDIR ${APP_DIR}
 # prepares source files
 COPY . ${APP_DIR}
 RUN npm ci --ignore-scripts
-
 # builds the app
 ENV NODE_ENV production
 RUN npm run build:${ENV}
@@ -33,25 +30,22 @@ RUN npm run build:${ENV}
 
 
 ##
-## STAGE 2: static web server setup
+## STAGE 2: exec
 ##
 FROM ${NGINX}
 
 ARG APP_DIR
 ARG OUT_DIR
-
 # static assets dir
-WORKDIR /usr/share/nginx/html
-
-# gets build app
+WORKDIR '/usr/share/nginx/html'
+# retrieves build app
 RUN rm -rf ./*
 COPY --from=builder ${APP_DIR}${OUT_DIR} .
 COPY --from=builder ${APP_DIR}'nginx.conf' '/etc/nginx/conf.d/default.conf'
-
 # alpine security updates
 RUN apk --no-cache -U upgrade
 
-# start command
+# exec command
 ENTRYPOINT ["nginx"]
 CMD ["-g", "daemon off;"]
 
