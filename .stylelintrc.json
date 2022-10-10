@@ -14,7 +14,8 @@
     "plugins": [
         "stylelint-scss",
         "stylelint-order",
-        "stylelint-config-rational-order/plugin"
+        "stylelint-config-rational-order/plugin",
+        "stylelint-declaration-block-no-ignored-properties"
     ],
     "extends": [
         "stylelint-config-standard",
@@ -161,6 +162,7 @@
                 "empty-line-between-groups": false
             }
         ],
+        "plugin/declaration-block-no-ignored-properties": true,
         "property-case": "lower",
         "scss/no-global-function-names": null,
         "selector-attribute-brackets-space-inside": "never",
