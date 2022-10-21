@@ -22,9 +22,8 @@
             "cwd": "${workspaceFolder}",
             "sourceMaps": true,
             "restart": true,
-            "runtimeExecutable": "npm",
+            "runtimeExecutable": "pnpm",
             "runtimeArgs": [
-                "run",
                 "test:${input:environmentName}",
                 "${fileBasenameNoExtension}"
             ],

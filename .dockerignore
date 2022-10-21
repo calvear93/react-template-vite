@@ -25,9 +25,8 @@ azure-pipelines.yml
 **/build
 **/coverage
 **/__coverage__
+**/__reports__
 junit.xml
 
-.eslintignore
 .eslintcache
 .gitignore
-.prettierrc.json

@@ -1,6 +1,7 @@
 {
     "expand": false,
     "nullable": false,
+    "schemaValidate": true,
     "nestingDelimiter": "_",
     "varPrefix": "VITE_APP_"
 }
