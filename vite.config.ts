@@ -10,7 +10,7 @@ import { VitePWA as pwa } from 'vite-plugin-pwa';
 import { createHtmlPlugin as html } from 'vite-plugin-html';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
-const basePath = (process.env.BASE_URL + '/').replace(/\/+/g, '/');
+const basePath = `${process.env.BASE_URL}/`.replace(/\/+/g, '/');
 const fontFamily = 'Catamaran';
 const fontWeight = '200;400;600;800';
 
