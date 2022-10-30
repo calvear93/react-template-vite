@@ -3,5 +3,5 @@
 	"nullable": false,
 	"schemaValidate": true,
 	"nestingDelimiter": "_",
-	"varPrefix": "VITE_APP_"
+	"packageInfoPrefix": "VITE_APP_"
 }
