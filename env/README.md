@@ -23,34 +23,34 @@ Your `appsettings.json` could contains an structure like below:
 
 ```json
 {
-    // (optional) base default variables
-    "|DEFAULT|": {
-        ...
-    },
-    // (optional) execution modes
-    "|MODE|": {
-        // on build
-        "build": {
-            ...
-        },
-        // on local debugging
-        "debug": {
-            ...
-        },
-        // on testing
-        "test": {
-            ...
-        },
-        // any custom mode
-        ...
-    },
-    // (optional) execution environments
-    "|ENV|": {
-        "<env-name>": {
-            ...
-        },
-        ...
-    }
+	// (optional) base default variables
+	"|DEFAULT|": {
+		...
+	},
+	// (optional) execution modes
+	"|MODE|": {
+		// on build
+		"build": {
+			...
+		},
+		// on local debugging
+		"debug": {
+			...
+		},
+		// on testing
+		"test": {
+			...
+		},
+		// any custom mode
+		...
+	},
+	// (optional) execution environments
+	"|ENV|": {
+		"<env-name>": {
+			...
+		},
+		...
+	}
 }
 ```
 
@@ -101,21 +101,21 @@ You can organize your keys in nested objects.
 
 ```json
 {
-    // .dev.env.json
-    "GROUP1": {
-        "VAR": "anyValue1",
-        ...
-    },
-    "GROUP2": {
-        "VAR": "anyValue2",
-        "SUBGROUP1": {
-            "VAR": "anyValue1",
-            ...
-        },
-        ...
-    },
-    "VAR3": "anyValue3",
-    ...
+	// .dev.env.json
+	"GROUP1": {
+		"VAR": "anyValue1",
+		...
+	},
+	"GROUP2": {
+		"VAR": "anyValue2",
+		"SUBGROUP1": {
+			"VAR": "anyValue1",
+			...
+		},
+		...
+	},
+	"VAR3": "anyValue3",
+	...
 }
 ```
 

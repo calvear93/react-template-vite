@@ -11,10 +11,10 @@ you can define your route as
 
 ```javascript
 const routes = {
-    Main: {
-        path: '/',
-        layout: 'App'
-    }
+	Main: {
+		path: '/',
+		layout: 'App'
+	}
 }
 ```
 

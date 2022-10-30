@@ -1,5 +1,5 @@
 export type Mock<T> = {
-    [P in keyof T]?: Mock<T[P]>;
+	[P in keyof T]?: Mock<T[P]>;
 };
 
 /**
@@ -14,5 +14,5 @@ export type Mock<T> = {
  * @returns {T}
  */
 export const mock = <T>(mockObj: Mock<T>): T => {
-    return mockObj as T;
+	return mockObj as T;
 };

@@ -3,7 +3,7 @@ import { Header } from './Header';
 import styles from './app.layout.module.scss';
 
 export interface AppLayoutProps {
-    children?: React.ReactNode;
+	children?: React.ReactNode;
 }
 
 /**
@@ -12,15 +12,15 @@ export interface AppLayoutProps {
  * @returns {JSX.Element} app layout
  */
 export const AppLayout: React.FC<AppLayoutProps> = ({
-    children
+	children
 }): JSX.Element => (
-    <main className={styles.layout}>
-        <Header title='App' />
+	<main className={styles.layout}>
+		<Header title='App' />
 
-        {children}
+		{children}
 
-        <Footer text='Footer' />
-    </main>
+		<Footer text='Footer' />
+	</main>
 );
 
 export default AppLayout;

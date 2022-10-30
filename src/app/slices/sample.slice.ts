@@ -3,9 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from 'app/App.store';
 
 export interface SampleState {
-    state: number;
+	state: number;
 
-    message: string;
+	message: string;
 }
 
 /**
@@ -19,31 +19,31 @@ export interface SampleState {
  *  const { sample: sampleAction } = sampleSlice.actions;
  *
  *  export const AnyComponent = () => {
- *      const dispatch = useAppDispatch();
- *      const { message } = useSelector<AppState, SampleState>(
- *          ({ [sampleSlice.name]: slice }) => slice
- *      );
+ *	  const dispatch = useAppDispatch();
+ *	  const { message } = useSelector<AppState, SampleState>(
+ *		  ({ [sampleSlice.name]: slice }) => slice
+ *	  );
  *
- *      useEffect(() => {
- *          dispatch(sampleAction(200));
- *      }, []);
- *      ...
+ *	  useEffect(() => {
+ *		  dispatch(sampleAction(200));
+ *	  }, []);
+ *	  ...
  *  }
  *
  * @returns {Slice} sample slice
  */
 export const sampleSlice = createSlice({
-    name: 'sample',
-    initialState: { state: 0, message: 'loading' } as SampleState,
-    reducers: {
-        sample: (state, { payload }: PayloadAction<number>) => {
-            state.state = payload;
-            state.message = payload === 200 ? 'success' : 'error';
-        }
-    }
+	name: 'sample',
+	initialState: { state: 0, message: 'loading' } as SampleState,
+	reducers: {
+		sample: (state, { payload }: PayloadAction<number>) => {
+			state.state = payload;
+			state.message = payload === 200 ? 'success' : 'error';
+		}
+	}
 });
 
 export const useSampleSelector = () =>
-    useSelector<AppState, SampleState>(
-        ({ [sampleSlice.name]: slice }) => slice
-    );
+	useSelector<AppState, SampleState>(
+		({ [sampleSlice.name]: slice }) => slice
+	);

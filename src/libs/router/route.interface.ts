@@ -2,8 +2,8 @@ import { Route } from 'react-router-dom';
 import { FC, LazyExoticComponent } from 'react';
 
 type RouteProps = Omit<
-    Parameters<typeof Route>[0],
-    'id' | 'path' | 'element' | 'children'
+	Parameters<typeof Route>[0],
+	'id' | 'path' | 'element' | 'children'
 >;
 
 export type RouteComponent = FC | LazyExoticComponent<any>;
@@ -19,17 +19,17 @@ export type RoutePath = string | string[];
  * @interface RouteInfo
  */
 export interface RouteInfo {
-    path: RoutePath;
+	path: RoutePath;
 
-    page?: RouteComponent;
+	page?: RouteComponent;
 
-    layout?: RouteComponent | string;
+	layout?: RouteComponent | string;
 
-    pageProps?: React.ComponentProps<any>;
+	pageProps?: React.ComponentProps<any>;
 
-    layoutProps?: React.ComponentProps<any>;
+	layoutProps?: React.ComponentProps<any>;
 
-    config?: RouteProps;
+	config?: RouteProps;
 }
 
 /**
@@ -40,7 +40,7 @@ export interface RouteInfo {
  * @interface RoutesInfoCollection
  */
 export interface RoutesInfoCollection {
-    [name: string]: RouteInfo | RoutePath;
+	[name: string]: RouteInfo | RoutePath;
 }
 
 /**
@@ -51,5 +51,5 @@ export interface RoutesInfoCollection {
  * @returns {boolean}
  */
 export const isRouteInfo = (route: any): route is RouteInfo => {
-    return !!route?.path;
+	return !!route?.path;
 };

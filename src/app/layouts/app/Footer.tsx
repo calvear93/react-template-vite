@@ -1,5 +1,5 @@
 interface FooterProps {
-    text: string;
+	text: string;
 }
 
 /**
@@ -8,5 +8,5 @@ interface FooterProps {
  * @returns {JSX.Element} footer component
  */
 export const Footer: React.FC<FooterProps> = ({ text }): JSX.Element => {
-    return <footer>{text}</footer>;
+	return <footer>{text}</footer>;
 };

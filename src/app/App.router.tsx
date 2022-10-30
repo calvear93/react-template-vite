@@ -3,10 +3,10 @@ import { routes } from 'app/app.routes';
 
 // creates a router
 const Router = createRouter({
-    routes: routes.app,
-    layout: 'App',
-    loader: <h1>Loading</h1>,
-    fallback: <h1>Not Found</h1>
+	routes: routes.app,
+	layout: 'App',
+	loader: <h1>Loading</h1>,
+	fallback: <h1>Not Found</h1>
 });
 
 /**
@@ -18,5 +18,5 @@ const Router = createRouter({
  * @returns {JSX.Element} application router
  */
 export const AppRouter: React.FC = (): JSX.Element => {
-    return <Router />;
+	return <Router />;
 };

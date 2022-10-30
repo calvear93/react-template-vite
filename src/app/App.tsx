@@ -13,11 +13,11 @@ import 'app/styles/app.scss';
  * @returns {JSX.Element} app container
  */
 export const App: React.FC = (): JSX.Element => {
-    return (
-        <BrowserRouter basename={import.meta.env.BASE_URL}>
-            <Provider store={AppStore}>
-                <AppRouter />
-            </Provider>
-        </BrowserRouter>
-    );
+	return (
+		<BrowserRouter basename={import.meta.env.BASE_URL}>
+			<Provider store={AppStore}>
+				<AppRouter />
+			</Provider>
+		</BrowserRouter>
+	);
 };

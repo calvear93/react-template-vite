@@ -7,9 +7,9 @@ import { useLocation } from 'react-router-dom';
  * @param {string} title document title
  */
 export const useDocumentTitle = (title: string): void => {
-    useEffect(() => {
-        document.title = title;
-    }, [title]);
+	useEffect(() => {
+		document.title = title;
+	}, [title]);
 };
 
 /**
@@ -23,9 +23,9 @@ export const useDocumentTitle = (title: string): void => {
  * @returns {string} URL hash.
  */
 export const useHashValue = (): string => {
-    const { hash } = useLocation();
+	const { hash } = useLocation();
 
-    return hash.slice(1);
+	return hash.slice(1);
 };
 
 /**
@@ -36,7 +36,7 @@ export const useHashValue = (): string => {
  * @returns {T} route state.
  */
 export const useRouteState = <T>(): T => {
-    const { state } = useLocation();
+	const { state } = useLocation();
 
-    return state as T;
+	return state as T;
 };

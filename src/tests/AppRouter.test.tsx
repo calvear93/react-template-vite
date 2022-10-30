@@ -7,44 +7,44 @@ import { AppRouter } from 'app/App.router';
 import { AppStore } from 'app/App.store';
 
 describe('App', () => {
-    const env = import.meta.env.VITE_APP_ENV;
+	const env = import.meta.env.VITE_APP_ENV;
 
-    beforeAll(async () => {
-        render(
-            <MemoryRouter>
-                <Provider store={AppStore}>
-                    <AppRouter />
-                </Provider>
-            </MemoryRouter>
-        );
+	beforeAll(async () => {
+		render(
+			<MemoryRouter>
+				<Provider store={AppStore}>
+					<AppRouter />
+				</Provider>
+			</MemoryRouter>
+		);
 
-        // waits for lazy loading
-        await waitFor(() => screen.findByText('Go To Detail'), {
-            timeout: 2500
-        });
-    });
+		// waits for lazy loading
+		await waitFor(() => screen.findByText('Go To Detail'), {
+			timeout: 2500
+		});
+	});
 
-    test('has header (banner role) with content "App"', () => {
-        const header = screen.getByRole('banner');
+	test('has header (banner role) with content "App"', () => {
+		const header = screen.getByRole('banner');
 
-        expect(header).toHaveTextContent('App');
-    });
+		expect(header).toHaveTextContent('App');
+	});
 
-    test('has footer (contentinfo role) with content "Footer"', () => {
-        const footer = screen.getByRole('contentinfo');
+	test('has footer (contentinfo role) with content "Footer"', () => {
+		const footer = screen.getByRole('contentinfo');
 
-        expect(footer).toHaveTextContent('Footer');
-    });
+		expect(footer).toHaveTextContent('Footer');
+	});
 
-    test('navigates to detail page', async () => {
-        const anchor = screen.getByRole('link', { name: 'Go To Detail' });
+	test('navigates to detail page', async () => {
+		const anchor = screen.getByRole('link', { name: 'Go To Detail' });
 
-        userEvent.click(anchor);
+		userEvent.click(anchor);
 
-        const asyncMessage = await waitFor(() => screen.findByText(env), {
-            timeout: 1000
-        });
+		const asyncMessage = await waitFor(() => screen.findByText(env), {
+			timeout: 1000
+		});
 
-        expect(asyncMessage.tagName).toBe('H2');
-    });
+		expect(asyncMessage.tagName).toBe('H2');
+	});
 });

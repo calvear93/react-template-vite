@@ -11,8 +11,8 @@
  * function from @router module.
  */
 export const routes = {
-    app: {
-        Main: '/',
-        Detail: ['/detail', '/detail/:id']
-    }
+	app: {
+		Main: '/',
+		Detail: ['/detail', '/detail/:id']
+	}
 };

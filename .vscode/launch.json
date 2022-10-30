@@ -1,44 +1,44 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Debug in Edge",
-            "type": "msedge",
-            "request": "launch",
-            "url": "http://localhost:3001",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "Debug in Chrome",
-            "type": "chrome",
-            "request": "launch",
-            "url": "http://localhost:3001",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "Test",
-            "type": "node",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "sourceMaps": true,
-            "restart": true,
-            "runtimeExecutable": "pnpm",
-            "runtimeArgs": [
-                "test:${input:environmentName}",
-                "${fileBasenameNoExtension}"
-            ],
-            "skipFiles": ["<node_internals>/**/*.js"],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-        }
-    ],
-    "inputs": [
-        {
-            "id": "environmentName",
-            "type": "pickString",
-            "description": "Select execution environment",
-            "default": "dev",
-            "options": ["dev", "release"]
-        }
-    ]
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug in Edge",
+			"type": "msedge",
+			"request": "launch",
+			"url": "http://localhost:3001",
+			"webRoot": "${workspaceFolder}"
+		},
+		{
+			"name": "Debug in Chrome",
+			"type": "chrome",
+			"request": "launch",
+			"url": "http://localhost:3001",
+			"webRoot": "${workspaceFolder}"
+		},
+		{
+			"name": "Test",
+			"type": "node",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"sourceMaps": true,
+			"restart": true,
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": [
+				"test:${input:environmentName}",
+				"${fileBasenameNoExtension}"
+			],
+			"skipFiles": ["<node_internals>/**/*.js"],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen"
+		}
+	],
+	"inputs": [
+		{
+			"id": "environmentName",
+			"type": "pickString",
+			"description": "Select execution environment",
+			"default": "dev",
+			"options": ["dev", "release"]
+		}
+	]
 }

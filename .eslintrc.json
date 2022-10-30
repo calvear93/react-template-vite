@@ -60,19 +60,19 @@
         "prettier/prettier": [
             "warn",
             {
-                "arrowParens": "always",
-                "bracketSameLine": false,
+                "useTabs": true,
+                "tabWidth": 4,
+                "printWidth": 80,
+                "trailingComma": "none",
+                "singleQuote": true,
+                "semi": true,
                 "bracketSpacing": true,
+                "bracketSameLine": false,
+                "quoteProps": "as-needed",
+                "arrowParens": "always",
                 "endOfLine": "auto",
                 "htmlWhitespaceSensitivity": "ignore",
-                "jsxSingleQuote": true,
-                "printWidth": 80,
-                "quoteProps": "as-needed",
-                "semi": true,
-                "singleQuote": true,
-                "tabWidth": 4,
-                "trailingComma": "none",
-                "useTabs": false
+                "jsxSingleQuote": true
             },
             {
                 "usePrettierrc": false
@@ -224,13 +224,13 @@
         "react/jsx-handler-names": "off",
         "react/jsx-indent": [
             "warn",
-            4,
+            "tab",
             {
                 "checkAttributes": true,
                 "indentLogicalExpressions": true
             }
         ],
-        "react/jsx-indent-props": ["warn", 4],
+        "react/jsx-indent-props": ["warn", "tab"],
         "react/jsx-key": [
             "error",
             {

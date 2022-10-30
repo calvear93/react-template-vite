@@ -2,18 +2,18 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { ThunkMiddlewareFor } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
 import {
-    Action,
-    AnyAction,
-    configureStore,
-    ConfigureStoreOptions,
-    EnhancedStore,
-    Middleware,
-    PayloadAction
+	Action,
+	AnyAction,
+	configureStore,
+	ConfigureStoreOptions,
+	EnhancedStore,
+	Middleware,
+	PayloadAction
 } from '@reduxjs/toolkit';
 
 const DEV =
-    import.meta.env.VITEST !== 'true' &&
-    import.meta.env.VITE_APP_ENV !== 'release';
+	import.meta.env.VITEST !== 'true' &&
+	import.meta.env.VITE_APP_ENV !== 'release';
 
 /**
  * Creates a redux logger middleware.
@@ -21,16 +21,16 @@ const DEV =
  * @returns {Middleware} redux logger middleware
  */
 const configureLogger = (): Middleware => {
-    return createLogger({
-        duration: true,
-        timestamp: true,
-        diff: true,
-        collapsed: (
-            _getState: any,
-            _action: PayloadAction<any>,
-            logEntry: any
-        ) => !logEntry.error
-    });
+	return createLogger({
+		duration: true,
+		timestamp: true,
+		diff: true,
+		collapsed: (
+			_getState: any,
+			_action: PayloadAction<any>,
+			logEntry: any
+		) => !logEntry.error
+	});
 };
 
 /**
@@ -42,19 +42,19 @@ const configureLogger = (): Middleware => {
  * @returns {Middleware[]}
  */
 const configureMiddleware = (
-    debug = false,
-    extraMiddlewares: Middleware[]
+	debug = false,
+	extraMiddlewares: Middleware[]
 ): Middleware[] => {
-    const middleware: Middleware[] = [thunk, ...extraMiddlewares];
+	const middleware: Middleware[] = [thunk, ...extraMiddlewares];
 
-    if (debug) middleware.push(configureLogger());
+	if (debug) middleware.push(configureLogger());
 
-    return middleware;
+	return middleware;
 };
 
 type InitStoreConfig<S, A extends Action> = Omit<
-    ConfigureStoreOptions<S, A>,
-    'middleware' | 'devTools'
+	ConfigureStoreOptions<S, A>,
+	'middleware' | 'devTools'
 > & { middlewares?: Middleware[] };
 
 /**
@@ -67,16 +67,16 @@ type InitStoreConfig<S, A extends Action> = Omit<
  * @returns {EnhancedStore<S, A, [ThunkMiddlewareFor<S>]>}
  */
 export const initStore = <A extends Action = AnyAction, S = any>({
-    reducer,
-    preloadedState,
-    enhancers,
-    middlewares = []
+	reducer,
+	preloadedState,
+	enhancers,
+	middlewares = []
 }: InitStoreConfig<S, A>): EnhancedStore<S, A, [ThunkMiddlewareFor<S>]> => {
-    return configureStore<S, A, any>({
-        middleware: configureMiddleware(DEV, middlewares),
-        devTools: DEV,
-        preloadedState,
-        reducer,
-        enhancers
-    });
+	return configureStore<S, A, any>({
+		middleware: configureMiddleware(DEV, middlewares),
+		devTools: DEV,
+		preloadedState,
+		reducer,
+		enhancers
+	});
 };

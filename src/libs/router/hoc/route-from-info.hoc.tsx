@@ -12,13 +12,13 @@ import { routerService } from '../router.service';
  * @returns {JSX.Element | JSX.Element[]}
  */
 export const wrapElementWithLayout = (
-    Element: JSX.Element | JSX.Element[],
-    Layout?: RouteComponent | string,
-    props?: React.ComponentProps<any>
+	Element: JSX.Element | JSX.Element[],
+	Layout?: RouteComponent | string,
+	props?: React.ComponentProps<any>
 ): JSX.Element | JSX.Element[] => {
-    if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
+	if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
 
-    return Layout ? <Layout {...props}>{Element}</Layout> : Element;
+	return Layout ? <Layout {...props}>{Element}</Layout> : Element;
 };
 
 /**
@@ -32,20 +32,20 @@ export const wrapElementWithLayout = (
  * @returns {JSX.Element}
  */
 export const wrapComponentWithLayout = (
-    Component: RouteComponent,
-    Layout?: RouteComponent | string,
-    componentProps?: React.ComponentProps<any>,
-    layoutProps?: React.ComponentProps<any>
+	Component: RouteComponent,
+	Layout?: RouteComponent | string,
+	componentProps?: React.ComponentProps<any>,
+	layoutProps?: React.ComponentProps<any>
 ): JSX.Element => {
-    if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
+	if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
 
-    return Layout ? (
-        <Layout {...layoutProps}>
-            <Component {...componentProps} />
-        </Layout>
-    ) : (
-        <Component {...componentProps} />
-    );
+	return Layout ? (
+		<Layout {...layoutProps}>
+			<Component {...componentProps} />
+		</Layout>
+	) : (
+		<Component {...componentProps} />
+	);
 };
 
 /**
@@ -57,26 +57,26 @@ export const wrapComponentWithLayout = (
  * @returns {JSX.Element}
  */
 export const routeFromInfo = (
-    name: string,
-    { path, layout, page, config, pageProps, layoutProps }: RouteInfo
+	name: string,
+	{ path, layout, page, config, pageProps, layoutProps }: RouteInfo
 ): JSX.Element => {
-    const routePath = path as string;
-    const Page = page ?? routerService.getPage(name);
+	const routePath = path as string;
+	const Page = page ?? routerService.getPage(name);
 
-    const render = wrapComponentWithLayout(
-        Page,
-        layout,
-        pageProps,
-        layoutProps
-    );
+	const render = wrapComponentWithLayout(
+		Page,
+		layout,
+		pageProps,
+		layoutProps
+	);
 
-    return (
-        <Route
-            id={routePath}
-            key={routePath}
-            path={routePath}
-            element={render}
-            {...config}
-        />
-    );
+	return (
+		<Route
+			id={routePath}
+			key={routePath}
+			path={routePath}
+			element={render}
+			{...config}
+		/>
+	);
 };

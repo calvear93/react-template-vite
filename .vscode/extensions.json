@@ -1,17 +1,16 @@
 {
-    "recommendations": [
-        "adam-bender.commit-message-editor",
-        "alefragnani.bookmarks",
-        "bradgashler.htmltagwrap",
-        "clinyong.vscode-css-modules",
-        "dbaeumer.vscode-eslint",
-        "eamodio.gitlens",
-        "exodiusstudios.comment-anchors",
-        "oouo-diogo-perdigao.docthis",
-        "rbbit.typescript-hero",
-        "stylelint.vscode-stylelint",
-        "svipas.prettier-plus",
-        "tyriar.windows-terminal",
-        "yatki.vscode-surround"
-    ]
+	"recommendations": [
+		"voorjaar.windicss-intellisense",
+		"mrmlnc.vscode-scss",
+		"rldnrl.typescript-snippet",
+		"christian-kohler.path-intellisense",
+		"p42ai.refactor",
+		"NicholasHsiang.vscode-javascript-snippet",
+		"bradgashler.htmltagwrap",
+		"clinyong.vscode-css-modules",
+		"dbaeumer.vscode-eslint",
+		"stylelint.vscode-stylelint",
+		"svipas.prettier-plus",
+		"formulahendry.auto-rename-tag"
+	]
 }

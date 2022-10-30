@@ -4,13 +4,13 @@ import { AppState } from 'app/App.store';
 import { fetchSampleAsyncMock } from '../__mocks__/fetchSampleAsync.mock';
 
 export interface FetchSampleAsyncResponse {
-    anyProp: string;
+	anyProp: string;
 }
 
 export interface FetchSampleAsyncState {
-    ready: boolean;
-    loading: boolean;
-    content: FetchSampleAsyncResponse;
+	ready: boolean;
+	loading: boolean;
+	content: FetchSampleAsyncResponse;
 }
 
 /**
@@ -20,32 +20,32 @@ export interface FetchSampleAsyncState {
  *  import { useDispatch, useSelector } from 'react-redux';
  *  import { AppState } from 'app';
  *  import {
- *      asyncSlice,
- *      fetchSampleAsync,
- *      FetchSampleAsyncState
+ *	  asyncSlice,
+ *	  fetchSampleAsync,
+ *	  FetchSampleAsyncState
  *  } from 'pages/detail/slices/async.slice';
  *
  *  export const AnyComponent = () => {
- *      const dispatch = useDispatch();
- *      const { loading, content } = useSelector<AppState, FetchSampleAsyncState>(
- *          ({ [asyncSlice.name]: slice }) => slice
- *      );
+ *	  const dispatch = useDispatch();
+ *	  const { loading, content } = useSelector<AppState, FetchSampleAsyncState>(
+ *		  ({ [asyncSlice.name]: slice }) => slice
+ *	  );
  *
- *      useEffect(() => {
- *          dispatch(fetchSampleAsync());
- *      }, []);
- *      ...
+ *	  useEffect(() => {
+ *		  dispatch(fetchSampleAsync());
+ *	  }, []);
+ *	  ...
  *  }
  */
 export const fetchSampleAsync = createAsyncThunk(
-    'sample/fetchAsync',
-    async (): Promise<FetchSampleAsyncResponse> => {
-        const response = await fetchSampleAsyncMock();
+	'sample/fetchAsync',
+	async (): Promise<FetchSampleAsyncResponse> => {
+		const response = await fetchSampleAsyncMock();
 
-        if (response.status !== 200) throw new Error('An error has ocurred');
+		if (response.status !== 200) throw new Error('An error has ocurred');
 
-        return response.json();
-    }
+		return response.json();
+	}
 );
 
 /**
@@ -54,33 +54,33 @@ export const fetchSampleAsync = createAsyncThunk(
  * @returns {Slice}
  */
 export const asyncSlice = createSlice({
-    name: 'asyncFetch',
-    initialState: {
-        ready: false,
-        loading: false,
-        content: {}
-    } as FetchSampleAsyncState,
-    reducers: {},
-    extraReducers: {
-        [fetchSampleAsync.pending.type]: (state) => {
-            state.ready = false;
-            state.loading = true;
-        },
-        [fetchSampleAsync.fulfilled.type]: (
-            state,
-            { payload }: PayloadAction<FetchSampleAsyncResponse>
-        ) => {
-            state.ready = true;
-            state.loading = false;
-            state.content = payload;
-        },
-        [fetchSampleAsync.rejected.type]: (state) => {
-            state.loading = false;
-        }
-    }
+	name: 'asyncFetch',
+	initialState: {
+		ready: false,
+		loading: false,
+		content: {}
+	} as FetchSampleAsyncState,
+	reducers: {},
+	extraReducers: {
+		[fetchSampleAsync.pending.type]: (state) => {
+			state.ready = false;
+			state.loading = true;
+		},
+		[fetchSampleAsync.fulfilled.type]: (
+			state,
+			{ payload }: PayloadAction<FetchSampleAsyncResponse>
+		) => {
+			state.ready = true;
+			state.loading = false;
+			state.content = payload;
+		},
+		[fetchSampleAsync.rejected.type]: (state) => {
+			state.loading = false;
+		}
+	}
 });
 
 export const useAsyncFetchSelector = () =>
-    useSelector<AppState, FetchSampleAsyncState>(
-        ({ [asyncSlice.name]: slice }) => slice
-    );
+	useSelector<AppState, FetchSampleAsyncState>(
+		({ [asyncSlice.name]: slice }) => slice
+	);

@@ -1,7 +1,7 @@
 import { useDocumentTitle } from '../router.hook';
 
 export interface PageProps extends React.HTMLAttributes<HTMLElement> {
-    title: string;
+	title: string;
 }
 
 /**
@@ -12,12 +12,12 @@ export interface PageProps extends React.HTMLAttributes<HTMLElement> {
  * @returns {JSX.Element} page
  */
 export const Page: React.FC<PageProps> = ({
-    title,
-    children,
-    ...attrs
+	title,
+	children,
+	...attrs
 }): JSX.Element => {
-    // sets up page tab title
-    useDocumentTitle(title);
+	// sets up page tab title
+	useDocumentTitle(title);
 
-    return <section {...attrs}>{children}</section>;
+	return <section {...attrs}>{children}</section>;
 };

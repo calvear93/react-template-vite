@@ -12,18 +12,18 @@ const rootPath = routes.app.Main[0];
  * @returns {JSX.Element} detail page
  */
 export const DetailPage: React.FC = (): JSX.Element => {
-    const { id } = useParams();
+	const { id } = useParams();
 
-    return (
-        <Page title='Detail Page' className={styles.page}>
-            <Link to={rootPath}>Go To Main</Link>
+	return (
+		<Page title='Detail Page' className={styles.page}>
+			<Link to={rootPath}>Go To Main</Link>
 
-            <h2>{import.meta.env.VITE_APP_ENV}</h2>
-            {id && <h3>ID: {id}</h3>}
+			<h2>{import.meta.env.VITE_APP_ENV}</h2>
+			{id && <h3>ID: {id}</h3>}
 
-            <FetchBox />
-        </Page>
-    );
+			<FetchBox />
+		</Page>
+	);
 };
 
 // for lazy loading
