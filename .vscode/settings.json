@@ -18,6 +18,7 @@
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "css.lint.unknownAtRules": "ignore",
+    "editor.detectIndentation": true,
     "editor.rulers": [80, 100],
     "eslint.format.enable": true,
     "eslint.lintTask.enable": true,
