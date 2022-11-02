@@ -11,8 +11,8 @@ import { createHtmlPlugin as html } from 'vite-plugin-html';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
 const basePath = `${process.env.BASE_URL}/`.replace(/\/+/g, '/');
-const fontFamily = 'Catamaran';
-const fontWeight = '200;400;600;800';
+const fontFamily = process.env.FONT_FAMILY;
+const fontWeight = process.env.FONT_WEIGHTS;
 
 // https://vitejs.dev/config/
 export default {
@@ -24,7 +24,9 @@ export default {
 	},
 	build: {
 		sourcemap: process.env.GENERATE_SOURCEMAP === 'true',
-		minify: true
+		emptyOutDir: true,
+		minify: true,
+		target: process.env.TARGET
 	},
 	plugins: [
 		react(),
