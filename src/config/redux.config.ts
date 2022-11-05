@@ -72,7 +72,7 @@ export const initStore = <A extends Action = AnyAction, S = any>({
 	enhancers,
 	middlewares = []
 }: InitStoreConfig<S, A>): EnhancedStore<S, A, [ThunkMiddlewareFor<S>]> => {
-	return configureStore<S, A, any>({
+	return configureStore<S, A, any, any>({
 		middleware: configureMiddleware(DEV, middlewares),
 		devTools: DEV,
 		preloadedState,
