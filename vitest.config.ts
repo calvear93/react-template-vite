@@ -15,7 +15,7 @@ export default {
 		outputFile: {
 			junit: '__reports__/junit.json'
 		},
-		testTimeout: 30_000,
+		testTimeout: 12_000,
 		coverage: {
 			reportsDirectory: '__reports__/coverage',
 			reporter: ['text', 'text-summary', 'lcov', 'cobertura', 'json'],
