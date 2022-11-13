@@ -31,7 +31,7 @@ export const MainPage: React.FC = (): JSX.Element => {
 			<Link to={detailPath}>Go To Detail</Link>
 			<Link to={detailPathWithId(123)}>Go To Detail 123</Link>
 			<h2>{import.meta.env.VITE_APP_ENV}</h2>
-			<h3>{message}</h3>
+			<h3 className='font-bold text-green-700'>{message}</h3>
 		</Page>
 	);
 };
