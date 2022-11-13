@@ -61,22 +61,26 @@ export const asyncSlice = createSlice({
 		content: {}
 	} as FetchSampleAsyncState,
 	reducers: {},
-	extraReducers: {
-		[fetchSampleAsync.pending.type]: (state) => {
-			state.ready = false;
-			state.loading = true;
-		},
-		[fetchSampleAsync.fulfilled.type]: (
-			state,
-			{ payload }: PayloadAction<FetchSampleAsyncResponse>
-		) => {
-			state.ready = true;
-			state.loading = false;
-			state.content = payload;
-		},
-		[fetchSampleAsync.rejected.type]: (state) => {
-			state.loading = false;
-		}
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchSampleAsync.pending.type, (state) => {
+				state.ready = false;
+				state.loading = true;
+			})
+			.addCase(
+				fetchSampleAsync.fulfilled.type,
+				(
+					state,
+					{ payload }: PayloadAction<FetchSampleAsyncResponse>
+				) => {
+					state.ready = true;
+					state.loading = false;
+					state.content = payload;
+				}
+			)
+			.addCase(fetchSampleAsync.rejected.type, (state) => {
+				state.loading = false;
+			});
 	}
 });
 
