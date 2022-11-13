@@ -9,7 +9,7 @@
 		"start:release": "env -e release -m debug : vite",
 		"build:dev": "env -e dev -m build --log debug : pnpm vite build",
 		"build:release": "env -e release -m build : pnpm vite build",
-		"build:preview": "pnpm dlx serve -s dist",
+		"build:preview": "pnpx serve -s dist",
 		"test:dev": "env -e dev -m test : vitest run",
 		"test:release": "env -e release -m test : vitest",
 		"test:coverage": "env -e dev -m debug : vitest run --coverage",
