@@ -32,7 +32,6 @@
 		"importHelpers": true,
 		"skipLibCheck": true,
 		"downlevelIteration": false,
-		"preserveSymlinks": true,
 
 		"strict": true,
 		"noUnusedLocals": false,
