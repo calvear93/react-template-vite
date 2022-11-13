@@ -13,17 +13,17 @@ you can define your route as
 const routes = {
 	Main: {
 		path: '/',
-		layout: 'App'
-	}
-}
+		layout: 'App',
+	},
+};
 ```
 
-## 2. Store (Redux)
+## 2. Store
 
-This app uses `@redux-toolkit` so you must declare _slices_ for manage your
-store.
+This app uses `easy-peasy` for global store, so you must declare
+_slices_ for manage your store.
 
-`App.store` contains _reducers_ declaration, so you can add new slices.
+`App.store` contains _slices_ imports.
 
 ## 3. Layouts
 

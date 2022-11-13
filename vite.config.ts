@@ -49,7 +49,7 @@ export default {
 			customSplitting: {
 				react: ['react', 'react-dom'],
 				router: ['react-router-dom', /src\/libs\/router/],
-				redux: ['redux', 'react-redux', '@reduxjs/toolkit']
+				store: ['easy-peasy']
 			}
 		}),
 		pwa({

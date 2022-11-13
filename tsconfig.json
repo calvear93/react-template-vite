@@ -3,11 +3,10 @@
 		"baseUrl": "src",
 		"outDir": "dist",
 		"paths": {
-			"@config": ["config"],
 			"@router": ["libs/router"]
 		},
 
-		"target": "es2018",
+		"target": "es2022",
 		"module": "es2022",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,

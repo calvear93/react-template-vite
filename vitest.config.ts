@@ -13,11 +13,11 @@ export default {
 		],
 		reporters: ['junit', 'verbose'],
 		outputFile: {
-			junit: '__reports__/junit.json'
+			junit: '.reports/junit.json'
 		},
 		testTimeout: 12_000,
 		coverage: {
-			reportsDirectory: '__reports__/coverage',
+			reportsDirectory: '.reports/coverage',
 			reporter: ['text', 'text-summary', 'lcov', 'cobertura', 'json'],
 			exclude: [
 				'index.ts',

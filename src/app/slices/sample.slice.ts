@@ -1,49 +1,37 @@
-import { useSelector } from 'react-redux';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppState } from 'app/App.store';
+import { Action, action } from 'easy-peasy';
 
 export interface SampleState {
-	state: number;
-
+	status: number;
 	message: string;
 }
 
+export interface SampleSlice {
+	state: SampleState;
+	update: Action<SampleSlice, number>;
+}
+
 /**
- * Sample slice for redux store.
+ * Sample slice for app store.
  *
  * @example
- *  import { AppState, useAppDispatch } from 'app';
- *  import { sampleSlice, SampleState } from 'slices';
- *  import { useSelector } from 'react-redux';
- *
- *  const { sample: sampleAction } = sampleSlice.actions;
+ *  import { useStoreActions, useStoreState } from 'app/App.store';
  *
  *  export const AnyComponent = () => {
- *	  const dispatch = useAppDispatch();
- *	  const { message } = useSelector<AppState, SampleState>(
- *		  ({ [sampleSlice.name]: slice }) => slice
- *	  );
+ *	  const message = useStoreState(({ sample: { state } }) => state.message);
+ *	  const update = useStoreActions(({ sample: { update } }) => update);
  *
  *	  useEffect(() => {
- *		  dispatch(sampleAction(200));
- *	  }, []);
+ *		  update(200);
+ *	  }, [update]);
  *	  ...
  *  }
  *
  * @returns {Slice} sample slice
  */
-export const sampleSlice = createSlice({
-	name: 'sample',
-	initialState: { state: 0, message: 'loading' } as SampleState,
-	reducers: {
-		sample: (state, { payload }: PayloadAction<number>) => {
-			state.state = payload;
-			state.message = payload === 200 ? 'success' : 'error';
-		}
-	}
-});
-
-export const useSampleSelector = () =>
-	useSelector<AppState, SampleState>(
-		({ [sampleSlice.name]: slice }) => slice
-	);
+export const sampleState: SampleSlice = {
+	state: { status: 0, message: 'loading' },
+	update: action(({ state }, status) => {
+		state.status = status;
+		state.message = status === 200 ? 'success' : 'error';
+	})
+};

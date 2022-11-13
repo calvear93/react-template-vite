@@ -2,9 +2,9 @@
 /node_modules
 
 # testing
+.reports
 __reports__
 **/coverage
-**/__coverage__
 
 # artifacts
 /dist

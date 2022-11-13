@@ -1,20 +1,17 @@
-import { initStore } from '@config';
-import { useDispatch } from 'react-redux';
-import { sampleSlice } from 'app/slices/sample.slice';
-import { asyncSlice } from 'app/pages/detail/slices/async.slice';
+import { createStore, createTypedHooks } from 'easy-peasy';
+import { asyncState } from './pages/detail/slices/async.slice';
+import { sampleState } from './slices/sample.slice';
 
-/**
- * Creates a redux store.
- */
-export const AppStore = initStore({
-	reducer: {
-		[sampleSlice.name]: sampleSlice.reducer,
-		[asyncSlice.name]: asyncSlice.reducer
-	}
+export const state = {
+	sample: sampleState,
+	async: asyncState
+};
+
+export type AppState = typeof state;
+
+export const { useStoreActions, useStoreDispatch, useStoreState } =
+	createTypedHooks<AppState>();
+
+export const AppStore = createStore(state, {
+	devTools: import.meta.env.VITE_APP_STORE_DEVTOOLS === 'true'
 });
-
-export type AppState = ReturnType<typeof AppStore.getState>;
-
-export type AppDispatch = typeof AppStore.dispatch;
-
-export const useAppDispatch = useDispatch as () => AppDispatch;

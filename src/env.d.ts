@@ -19,6 +19,7 @@ interface ImportMetaEnv {
 	readonly PROD: 'true' | 'false';
 	readonly VITEST: 'true' | 'false';
 	readonly SSR: 'true' | 'false';
+	readonly VITE_APP_STORE_DEVTOOLS: 'true' | 'false';
 
 	// SECTION: project info from package.json
 	readonly VITE_APP_VERSION: string;

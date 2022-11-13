@@ -1,90 +1,48 @@
-import { useSelector } from 'react-redux';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppState } from 'app/App.store';
+import { action, Action, Thunk, thunk } from 'easy-peasy';
 import { fetchSampleAsyncMock } from '../__mocks__/fetchSampleAsync.mock';
 
-export interface FetchSampleAsyncResponse {
-	anyProp: string;
+export interface AsyncSampleResult {
+	anyProp?: string;
 }
 
-export interface FetchSampleAsyncState {
+export interface AsyncSampleState {
 	ready: boolean;
 	loading: boolean;
-	content: FetchSampleAsyncResponse;
+	content: AsyncSampleResult;
 }
 
-/**
- * Async thunk for fetch some data.
- *
- * @example
- *  import { useDispatch, useSelector } from 'react-redux';
- *  import { AppState } from 'app';
- *  import {
- *	  asyncSlice,
- *	  fetchSampleAsync,
- *	  FetchSampleAsyncState
- *  } from 'pages/detail/slices/async.slice';
- *
- *  export const AnyComponent = () => {
- *	  const dispatch = useDispatch();
- *	  const { loading, content } = useSelector<AppState, FetchSampleAsyncState>(
- *		  ({ [asyncSlice.name]: slice }) => slice
- *	  );
- *
- *	  useEffect(() => {
- *		  dispatch(fetchSampleAsync());
- *	  }, []);
- *	  ...
- *  }
- */
-export const fetchSampleAsync = createAsyncThunk(
-	'sample/fetchAsync',
-	async (): Promise<FetchSampleAsyncResponse> => {
-		const response = await fetchSampleAsyncMock();
+export interface AsyncSampleStore {
+	state: AsyncSampleState;
+	get: Thunk<AsyncSampleStore>;
+	pending: Action<AsyncSampleStore>;
+	fulfilled: Action<AsyncSampleStore, AsyncSampleResult>;
+	rejected: Action<AsyncSampleStore>;
+}
 
-		if (response.status !== 200) throw new Error('An error has ocurred');
-
-		return response.json();
-	}
-);
-
-/**
- * Redux slice sample for async fetch.
- *
- * @returns {Slice}
- */
-export const asyncSlice = createSlice({
-	name: 'asyncFetch',
-	initialState: {
+export const asyncState: AsyncSampleStore = {
+	state: {
 		ready: false,
 		loading: false,
 		content: {}
-	} as FetchSampleAsyncState,
-	reducers: {},
-	extraReducers: (builder) => {
-		builder
-			.addCase(fetchSampleAsync.pending.type, (state) => {
-				state.ready = false;
-				state.loading = true;
-			})
-			.addCase(
-				fetchSampleAsync.fulfilled.type,
-				(
-					state,
-					{ payload }: PayloadAction<FetchSampleAsyncResponse>
-				) => {
-					state.ready = true;
-					state.loading = false;
-					state.content = payload;
-				}
-			)
-			.addCase(fetchSampleAsync.rejected.type, (state) => {
-				state.loading = false;
-			});
-	}
-});
+	},
+	get: thunk(async (actions) => {
+		actions.pending();
+		const response = await fetchSampleAsyncMock();
 
-export const useAsyncFetchSelector = () =>
-	useSelector<AppState, FetchSampleAsyncState>(
-		({ [asyncSlice.name]: slice }) => slice
-	);
+		if (response.status !== 200) actions.rejected();
+
+		actions.fulfilled(await response.json());
+	}),
+	pending: action(({ state }) => {
+		state.ready = false;
+		state.loading = true;
+	}),
+	fulfilled: action(({ state }, data) => {
+		state.ready = true;
+		state.loading = false;
+		state.content = data;
+	}),
+	rejected: action(({ state }) => {
+		state.loading = false;
+	})
+};

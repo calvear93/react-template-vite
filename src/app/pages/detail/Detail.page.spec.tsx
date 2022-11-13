@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { Provider } from 'react-redux';
+import { StoreProvider } from 'easy-peasy';
 import { MemoryRouter } from '@router';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -10,9 +10,9 @@ describe('Detail Page', () => {
 	test('fetch data clicking button', async () => {
 		render(
 			<MemoryRouter>
-				<Provider store={AppStore}>
+				<StoreProvider store={AppStore}>
 					<DetailPage />
-				</Provider>
+				</StoreProvider>
 			</MemoryRouter>
 		);
 

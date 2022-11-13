@@ -1,17 +1,9 @@
-import { useAppDispatch } from 'app/App.store';
-import {
-	fetchSampleAsync,
-	FetchSampleAsyncState,
-	useAsyncFetchSelector
-} from '../slices/async.slice';
+import { useStoreActions, useStoreState } from 'app/App.store';
+import { AsyncSampleState } from '../slices/async.slice';
 
-export const useAsyncFetch = (): [FetchSampleAsyncState, () => void] => {
-	const dispatch = useAppDispatch();
-	const state = useAsyncFetchSelector();
+export const useAsyncFetch = (): [AsyncSampleState, () => void] => {
+	const state = useStoreState((store) => store.async.state);
+	const fetch = useStoreActions((store) => store.async.get);
 
-	const triggerFetch = () => {
-		dispatch(fetchSampleAsync());
-	};
-
-	return [state, triggerFetch];
+	return [state, fetch];
 };

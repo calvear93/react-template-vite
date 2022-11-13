@@ -4,6 +4,20 @@
 	"name": "(((app-name)))",
 	"title": "(((app-title)))",
 	"description": "(((project-description)))",
+	"scripts": {
+		"start:dev": "env -e dev -m debug --log debug : vite",
+		"start:release": "env -e release -m debug : vite",
+		"build:dev": "env -e dev -m build --log debug : pnpm vite build",
+		"build:release": "env -e release -m build : pnpm vite build",
+		"build:preview": "pnpm dlx serve -s dist",
+		"test:dev": "env -e dev -m test : vitest run",
+		"test:release": "env -e release -m test : vitest",
+		"test:coverage": "env -e dev -m debug : vitest run --coverage",
+		"env:schema": "env schema -e dev -m build",
+		"lint": "eslint src/**/*.{ts,tsx}",
+		"stylelint": "stylelint src/**/*.{css,scss,sass}",
+		"clean": "pnpx rimraf **/node_modules **/dist **/.reports **/*.tsbuildinfo"
+	},
 	"license": "MIT",
 	"private": false,
 	"repository": {
@@ -19,7 +33,6 @@
 	],
 	"keywords": [
 		"react",
-		"redux",
 		"spa",
 		"pwa",
 		"vite",
@@ -28,31 +41,13 @@
 		"windi",
 		"pnpm"
 	],
-	"scripts": {
-		"preview": "env -e dev -m debug --log debug : vite preview",
-		"start:dev": "env -e dev -m debug --log debug : vite",
-		"start:release": "env -e release -m debug : vite",
-		"build:dev": "env -e dev -m build --log debug : pnpm vite build",
-		"build:release": "env -e release -m build : pnpm vite build",
-		"build:preview": "pnpm dlx serve -s dist",
-		"test:dev": "env -e dev -m test : vitest run",
-		"test:release": "env -e release -m test : vitest",
-		"test:coverage": "env -e dev -m debug : vitest run --coverage",
-		"env:schema": "env schema -e dev -m build",
-		"lint": "eslint src/**/*.{ts,tsx}",
-		"stylelint": "stylelint src/**/*.{css,scss,sass}"
-	},
+	"type": "module",
 	"dependencies": {
-		"@reduxjs/toolkit": "^1.9.0",
 		"axios": "^1.1.3",
-		"immer": "^9.0.16",
+		"easy-peasy": "^5.1.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-redux": "^8.0.5",
-		"react-router-dom": "^6.4.3",
-		"redux": "^4.2.0",
-		"redux-logger": "^3.0.6",
-		"redux-thunk": "^2.4.2"
+		"react-router-dom": "^6.4.3"
 	},
 	"devDependencies": {
 		"@calvear/env": "^2.6.0",
@@ -63,8 +58,6 @@
 		"@types/node": "^18.11.9",
 		"@types/react": "^18.0.25",
 		"@types/react-dom": "^18.0.8",
-		"@types/react-redux": "^7.1.24",
-		"@types/redux-logger": "^3.0.9",
 		"@types/testing-library__jest-dom": "^5.14.5",
 		"@typescript-eslint/eslint-plugin": "^5.42.1",
 		"@typescript-eslint/parser": "^5.42.1",
@@ -99,6 +92,7 @@
 		"stylelint-order": "^5.0.0",
 		"stylelint-scss": "^4.3.0",
 		"ts-node": "^10.9.1",
+		"ts-toolbelt": "^9.6.0",
 		"tslib": "^2.4.1",
 		"typescript": "^4.8.4",
 		"vite": "^3.2.3",
@@ -114,6 +108,11 @@
 		"vitest": "^0.25.1",
 		"windicss": "^3.5.6"
 	},
+	"engines": {
+		"node": ">=18",
+		"npm": ">=8",
+		"pnpm": ">=7"
+	},
 	"browserslist": {
 		"development": [
 			"last 1 chrome version",
@@ -126,10 +125,5 @@
 			"not op_mini all",
 			"not ie <= 10"
 		]
-	},
-	"engines": {
-		"node": ">=18.12.0",
-		"npm": ">=8",
-		"pnpm": ">=7"
 	}
 }

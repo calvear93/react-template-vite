@@ -1,5 +1,5 @@
-import { Provider } from 'react-redux';
 import { BrowserRouter } from '@router';
+import { StoreProvider } from 'easy-peasy';
 import { AppStore } from 'app/App.store';
 import { AppRouter } from 'app/App.router';
 import 'app/styles/app.scss';
@@ -15,9 +15,9 @@ import 'app/styles/app.scss';
 export const App: React.FC = (): JSX.Element => {
 	return (
 		<BrowserRouter basename={import.meta.env.BASE_URL}>
-			<Provider store={AppStore}>
+			<StoreProvider store={AppStore}>
 				<AppRouter />
-			</Provider>
+			</StoreProvider>
 		</BrowserRouter>
 	);
 };
