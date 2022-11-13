@@ -27,8 +27,7 @@ export default {
 				'.config.ts',
 				'__tests__',
 				'__mocks__',
-				'__fixtures__',
-				'__reports__'
+				'__fixtures__'
 			]
 		} as CoverageC8Options
 	},

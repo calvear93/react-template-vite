@@ -13,7 +13,7 @@ export interface AsyncSampleState {
 
 export interface AsyncSampleStore {
 	state: AsyncSampleState;
-	get: Thunk<AsyncSampleStore>;
+	fetch: Thunk<AsyncSampleStore>;
 	pending: Action<AsyncSampleStore>;
 	fulfilled: Action<AsyncSampleStore, AsyncSampleResult>;
 	rejected: Action<AsyncSampleStore>;
@@ -25,13 +25,13 @@ export const asyncState: AsyncSampleStore = {
 		loading: false,
 		content: {}
 	},
-	get: thunk(async (actions) => {
+	fetch: thunk(async (actions) => {
 		actions.pending();
+
 		const response = await fetchSampleAsyncMock();
 
 		if (response.status !== 200) actions.rejected();
-
-		actions.fulfilled(await response.json());
+		else actions.fulfilled(await response.json());
 	}),
 	pending: action(({ state }) => {
 		state.ready = false;

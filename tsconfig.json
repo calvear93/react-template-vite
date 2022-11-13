@@ -26,13 +26,13 @@
 		"declaration": true,
 		"declarationMap": true,
 		"removeComments": true,
-		"preserveSymlinks": true,
 
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"importHelpers": true,
 		"skipLibCheck": true,
 		"downlevelIteration": false,
+		"preserveSymlinks": true,
 
 		"strict": true,
 		"noUnusedLocals": false,

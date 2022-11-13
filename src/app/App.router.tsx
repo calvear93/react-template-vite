@@ -3,8 +3,8 @@ import { routes } from 'app/app.routes';
 
 // creates a router
 const Router = createRouter({
-	routes: routes.app,
 	layout: 'App',
+	routes: routes.app,
 	loader: <h1>Loading</h1>,
 	fallback: <h1>Not Found</h1>
 });
@@ -12,8 +12,8 @@ const Router = createRouter({
 /**
  * Application routing handler.
  *
- * Here you can define logic for authorization
- * redirection or app splitting.
+ * Here you can define logic
+ * for authorization or redirection .
  *
  * @returns {JSX.Element} application router
  */
