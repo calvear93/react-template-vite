@@ -9,9 +9,10 @@ export const state = {
 
 export type AppState = typeof state;
 
-export const { useStoreActions, useStoreDispatch, useStoreState } =
+export const { useStoreActions, useStoreDispatch, useStoreState, useStore } =
 	createTypedHooks<AppState>();
 
 export const AppStore = createStore(state, {
+	name: import.meta.env.VITE_APP_NAME,
 	devTools: import.meta.env.VITE_APP_STORE_DEVTOOLS === 'true'
 });
