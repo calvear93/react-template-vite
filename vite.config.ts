@@ -32,7 +32,14 @@ export default {
 		react(),
 		css(),
 		tsconfigPaths(),
-		checker({ typescript: true, enableBuild: true }),
+		checker({
+			typescript: true,
+			enableBuild: true,
+			eslint: {
+				lintCommand: 'eslint src/**/*.{ts,tsx}',
+				dev: { logLevel: ['error'] }
+			}
+		}),
 		svg(),
 		stylelint(),
 		fonts([
