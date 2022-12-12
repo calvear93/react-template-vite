@@ -1,5 +1,5 @@
-import { UserConfigExport } from 'vite';
 import { CoverageC8Options } from 'vitest';
+import { UserConfigExport } from 'vitest/config';
 import viteConfig from './vite.config';
 
 export default {
