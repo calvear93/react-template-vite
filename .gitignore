@@ -46,6 +46,7 @@ debug.json
 
 # Optional eslint cache
 .eslintcache
+.stylelintcache
 
 # Yarn Integrity file
 .yarn - integrity
