@@ -8,7 +8,6 @@ import svg from 'vite-plugin-svgr';
 import stylelint from 'vite-plugin-stylelint';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
 import { createHtmlPlugin as html } from 'vite-plugin-html';
-import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
 const basePath = `${process.env.BASE_URL}/`.replace(/\/+/g, '/');
 const fontFamily = process.env.FONT_FAMILY;
@@ -26,7 +25,15 @@ export default {
 		sourcemap: process.env.GENERATE_SOURCEMAP === 'true',
 		emptyOutDir: true,
 		minify: true,
-		target: process.env.TARGET
+		target: process.env.TARGET,
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					react: ['react', 'react-dom', 'react-router-dom'],
+					store: ['redux', 'easy-peasy']
+				}
+			}
+		}
 	},
 	plugins: [
 		react(),
@@ -50,14 +57,6 @@ export default {
 				data: process.env
 			},
 			minify: true
-		}),
-		chunkSplitPlugin({
-			strategy: 'single-vendor',
-			customSplitting: {
-				react: ['react', 'react-dom'],
-				router: ['react-router-dom', /src\/libs\/router/],
-				store: ['easy-peasy']
-			}
 		}),
 		pwa({
 			devOptions: {
