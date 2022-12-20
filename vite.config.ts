@@ -1,6 +1,6 @@
 import { UserConfigExport } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import css from 'vite-plugin-windicss';
 import fonts from 'vite-plugin-webfont-dl';
 import { checker } from 'vite-plugin-checker';
