@@ -4,6 +4,7 @@
 		{
 			"name": "Debug in Edge",
 			"type": "msedge",
+			"version": "stable",
 			"request": "launch",
 			"url": "http://localhost:3001",
 			"webRoot": "${workspaceFolder}"

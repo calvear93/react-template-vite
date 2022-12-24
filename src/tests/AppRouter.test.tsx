@@ -20,7 +20,7 @@ describe('App', () => {
 
 		// waits for lazy loading
 		await waitFor(() => screen.findByText('Go To Detail'), {
-			timeout: 2500
+			timeout: 5000
 		});
 	});
 

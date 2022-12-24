@@ -46,8 +46,9 @@
 		"*.tsx": "${capture}.*",
 		".eslintrc.json": ".eslintignore",
 		"README*": "CHANGELOG*, LICENSE*",
-		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml",
-		"tsconfig.json": "tsconfig.*.json"
+		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.release.json",
+		"tsconfig.json": "tsconfig.*.json",
+		"vite.config.ts": "vitest.config.ts, windi.config.ts"
     },
     "explorer.incrementalNaming": "smart",
     "explorer.sortOrder": "type",
