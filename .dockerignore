@@ -47,6 +47,13 @@ coverage
 *.launch
 .settings/
 *.sublime-workspace
+.vscode
+
+# config & docs
+.git
+CHANGELOG.md
+README.md
+LICENSE.md
 
 # logs
 logs
