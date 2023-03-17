@@ -44,11 +44,11 @@ export default {
 			typescript: true,
 			enableBuild: true,
 			eslint: {
-				lintCommand: 'eslint src/**/*.{ts,cts,mts,tsx}',
+				lintCommand: 'eslint --cache src/**/*.{ts,cts,mts,tsx}',
 				dev: { logLevel: ['error'] },
 			},
 			stylelint: {
-				lintCommand: 'stylelint src/**/*.{css,scss,sass}',
+				lintCommand: 'stylelint --cache src/**/*.{css,scss,sass}',
 			},
 		}),
 		react(),
