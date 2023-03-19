@@ -28,24 +28,26 @@
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": false,
 	"explorer.fileNesting.patterns": {
-		"readme*": "changelog*, license*, code_of_conduct*, contributing*",
-		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc",
-		"tsconfig.json": "tsconfig.*.json",
-		"dockerfile": ".dockerignore, docker-compose.*, dockerfile*",
+		"*.cts": "${capture}.cts.*",
 		"*.env.json": "${capture}.*.env.json",
+		"*.json": "${capture}.json",
+		"*.mts": "${capture}.mts.*",
 		"*.ts": "${capture}.*",
 		"*.tsx": "${capture}.*",
-		"*.mts": "${capture}.mts.*",
-		"*.cts": "${capture}.cts.*",
-		"*.json": "${capture}.json",
 		".eslintrc*": ".eslintignore, .prettierrc*, .prettierignore, .stylelintrc*, .stylelintignore",
-		"vite.config.ts": "vitest.config.ts, unocss.config.ts",
+		"dockerfile": ".dockerignore, docker-compose.*, dockerfile*",
 		"main.ts": "*.config.ts, *.d.ts",
-		"main.tsx": "*.config.ts, *.d.ts"
+		"main.tsx": "*.config.ts, *.d.ts",
+		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc",
+		"readme*": "changelog*, license*, code_of_conduct*, contributing*",
+		"tsconfig.json": "tsconfig.*.json",
+		"vite.config.ts": "vitest.config.ts, unocss.config.ts"
 	},
 	"explorer.incrementalNaming": "smart",
 	"explorer.sortOrder": "type",
 	"files.exclude": {
+		"**/*.log": true,
+		"**/*.tsbuildinfo": true,
 		"**/..eslintcache": true,
 		"**/..stylelintcache": true,
 		"**/.DS_Store": true,
@@ -54,8 +56,6 @@
 		"**/.rollup.cache": true,
 		"**/.svn": true,
 		"**/.wireit": true,
-		"**/*.log": true,
-		"**/*.tsbuildinfo": true,
 		"**/desktop.ini": true,
 		"**/node_modules": true,
 		"**/obj": true
@@ -65,6 +65,7 @@
 	"files.trimTrailingWhitespace": true,
 	"html.autoClosingTags": true,
 	"javascript.autoClosingTags": true,
+	"javascript.preferences.quoteStyle": "single",
 	"prettier.useTabs": true,
 	"scss.lint.unknownAtRules": "ignore",
 	"search.exclude": {
@@ -72,8 +73,8 @@
 		"**/.vscode": true,
 		"**/.wireit": true,
 		"**/build": true,
-		"**/dist": true,
 		"**/coverage": true,
+		"**/dist": true,
 		"**/package-lock.json": true,
 		"**/pnpm-lock.yaml": true
 	},
@@ -81,7 +82,10 @@
 	"stylelint.snippet": ["css", "postcss", "scss", "sass"],
 	"stylelint.validate": ["css", "postcss", "scss", "sass"],
 	"typescript.autoClosingTags": true,
+	"typescript.disableAutomaticTypeAcquisition": true,
+	"typescript.preferences.quoteStyle": "single",
 	"typescript.suggest.autoImports": true,
 	"typescript.tsdk": "node_modules\\typescript\\lib",
-	"typescript.validate.enable": true
+	"typescript.validate.enable": true,
+	"yaml.format.singleQuote": true
 }

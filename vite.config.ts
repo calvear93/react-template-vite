@@ -43,12 +43,14 @@ export default {
 		checker({
 			typescript: true,
 			enableBuild: true,
+			terminal: false,
 			eslint: {
 				lintCommand: 'eslint --cache src/**/*.{ts,cts,mts,tsx}',
 				dev: { logLevel: ['error'] },
 			},
 			stylelint: {
 				lintCommand: 'stylelint --cache src/**/*.{css,scss,sass}',
+				dev: { logLevel: ['error'] },
 			},
 		}),
 		react(),
