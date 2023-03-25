@@ -35,5 +35,5 @@ export const asyncAtom = atom(
 			loading: false,
 			content,
 		}));
-	}
+	},
 );

@@ -25,7 +25,7 @@ class RouterService {
 
 	private discoverRouteModules(): MetaLazyComponentModule {
 		const modules = import.meta.glob(
-			'/src/app/**/*.(page|layout).(t|j)sx'
+			'/src/app/**/*.(page|layout).(t|j)sx',
 		) as MetaModule;
 
 		return Object.keys(modules).reduce<MetaLazyComponentModule>(
@@ -38,7 +38,7 @@ class RouterService {
 
 				return map;
 			},
-			{}
+			{},
 		);
 	}
 

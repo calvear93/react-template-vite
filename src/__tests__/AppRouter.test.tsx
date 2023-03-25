@@ -12,7 +12,7 @@ describe('App', () => {
 		render(
 			<MemoryRouter>
 				<AppRouter />
-			</MemoryRouter>
+			</MemoryRouter>,
 		);
 
 		// waits for lazy loading

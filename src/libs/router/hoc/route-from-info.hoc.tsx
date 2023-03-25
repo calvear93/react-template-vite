@@ -14,7 +14,7 @@ import { RouteComponent, RouteInfo } from '../route.interface';
 export const wrapElementWithLayout = (
 	Element: JSX.Element | JSX.Element[],
 	Layout?: RouteComponent | string,
-	props?: React.ComponentProps<any>
+	props?: React.ComponentProps<any>,
 ): JSX.Element | JSX.Element[] => {
 	if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
 
@@ -35,7 +35,7 @@ export const wrapComponentWithLayout = (
 	Component: RouteComponent,
 	Layout?: RouteComponent | string,
 	componentProps?: React.ComponentProps<any>,
-	layoutProps?: React.ComponentProps<any>
+	layoutProps?: React.ComponentProps<any>,
 ): JSX.Element => {
 	if (typeof Layout === 'string') Layout = routerService.getLayout(Layout);
 
@@ -58,7 +58,7 @@ export const wrapComponentWithLayout = (
  */
 export const routeFromInfo = (
 	name: string,
-	{ path, layout, page, config, pageProps, layoutProps }: RouteInfo
+	{ path, layout, page, config, pageProps, layoutProps }: RouteInfo,
 ): JSX.Element => {
 	const routePath = path as string;
 	const Page = page ?? routerService.getPage(name);
@@ -67,7 +67,7 @@ export const routeFromInfo = (
 		Page,
 		layout,
 		pageProps,
-		layoutProps
+		layoutProps,
 	);
 
 	return (

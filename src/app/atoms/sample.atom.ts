@@ -17,5 +17,5 @@ export const sampleAtom = atom(
 			status,
 			message: status === 200 ? 'success' : 'error',
 		});
-	}
+	},
 );

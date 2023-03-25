@@ -136,7 +136,7 @@ export const createRouter = ({
 			<Route path='*' element={fallback} />
 		</Routes>,
 		layout,
-		layoutProps
+		layoutProps,
 	);
 
 	return (): JSX.Element => <Suspense fallback={loader}>{render}</Suspense>;

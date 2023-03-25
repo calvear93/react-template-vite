@@ -10,7 +10,7 @@ describe('Detail Page', () => {
 		render(
 			<MemoryRouter>
 				<DetailPage />
-			</MemoryRouter>
+			</MemoryRouter>,
 		);
 
 		const button = screen.getByRole('button', { name: 'Fetch' });
@@ -21,7 +21,7 @@ describe('Detail Page', () => {
 			() => screen.findByText('anyValue'),
 			{
 				timeout: 4000,
-			}
+			},
 		);
 
 		expect(asyncMessage).toBeInTheDocument();

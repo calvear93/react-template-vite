@@ -57,9 +57,12 @@ export default {
 		css(),
 		svg(),
 		tsconfigPaths(),
-		fonts([
-			`https://fonts.googleapis.com/css2?family=${FONT_FAMILY}:wght@${FONT_WEIGHTS}&display=swap`,
-		]),
+		fonts(
+			[
+				`https://fonts.googleapis.com/css2?family=${FONT_FAMILY}:wght@${FONT_WEIGHTS}&display=swap`,
+			],
+			{ injectAsStyleTag: false },
+		),
 		html({
 			inject: {
 				data: process.env,
