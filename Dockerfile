@@ -25,7 +25,7 @@ WORKDIR ${APP_DIR}
 RUN npm i -g pnpm@${PNPM_VER}
 # prepares source files
 COPY . ${APP_DIR}
-RUN pnpm install --frozen-lockfile --ignore-scripts
+RUN pnpm install --frozen-lockfile
 # builds the app
 ENV NODE_ENV production
 RUN pnpm build:${ENV}
