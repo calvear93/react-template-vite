@@ -1,11 +1,11 @@
 ###
-###   REACT SPA with PNPM
+###   REACT SPA with NGINX
 ###
 
 # global variables
 ARG ALPINE=node:18.15.0-alpine
-ARG NGINX=nginx:1.23.3-alpine
-ARG PNPM_VER=8.0.0
+ARG NGINX=nginx:1.23.4-alpine
+ARG PNPM_VER=8.1.0
 ARG APP_DIR='/app/'
 ARG OUT_DIR='dist'
 
