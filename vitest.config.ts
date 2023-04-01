@@ -1,5 +1,7 @@
 import type { UserConfigExport } from 'vitest/config';
-import viteConfig from './vite.config';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import svg from 'vite-plugin-svgr';
+import react from '@vitejs/plugin-react-swc';
 
 export default {
 	test: {
@@ -29,5 +31,5 @@ export default {
 			],
 		},
 	},
-	...viteConfig,
+	plugins: [react(), svg(), tsconfigPaths()],
 } satisfies UserConfigExport;

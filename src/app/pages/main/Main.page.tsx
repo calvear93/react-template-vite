@@ -4,6 +4,8 @@ import { sampleAtom } from 'app/atoms/sample.atom';
 import { routes } from 'app/app.routes';
 import { generatePath, Link, Page } from '@router';
 import styles from './main.page.module.scss';
+import viteLogoUrl from '../../assets/vite.png';
+import { ReactComponent as Logo } from '../../assets/logo.svg';
 
 // constants
 const detailPath = routes.app.Detail[0];
@@ -34,6 +36,9 @@ export const MainPage: React.FC = (): JSX.Element => {
 
 			<h2>{import.meta.env.VITE_APP_ENV}</h2>
 			<h3 className='font-bold text-green-700'>{message}</h3>
+
+			<Logo width='10%' />
+			<img width='10%' src={viteLogoUrl} alt='vite logo' />
 		</Page>
 	);
 };
