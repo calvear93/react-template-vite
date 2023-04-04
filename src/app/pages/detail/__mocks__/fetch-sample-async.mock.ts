@@ -12,6 +12,6 @@ export const fetchSampleAsyncMock = (): Promise<{
 							anyProp: 'anyValue',
 						}),
 				}),
-			3000,
+			2500,
 		),
 	);

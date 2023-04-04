@@ -1,61 +1,51 @@
-import { Route, Routes } from 'react-router-dom';
-import { ReactNode, Suspense } from 'react';
-import { routeFromInfo, wrapElementWithLayout } from './route-from-info.hoc';
 import {
-	isRouteInfo,
-	RouteComponent,
-	RouteInfo,
-	RoutePath,
-	RoutesInfoCollection,
-} from '../route.interface';
+	RouterProvider,
+	createBrowserRouter,
+	createHashRouter,
+	createMemoryRouter,
+} from 'react-router-dom';
+import { Suspense } from 'react';
+import { createRoutes } from './create-routes';
+import { RouteDefinition } from '../types/route.interface';
 
-export interface RouterConfig {
-	routes: RoutesInfoCollection;
+interface RouterOptions {
+	basename?: string;
+	window?: Window;
+}
 
-	layout?: RouteComponent | string;
+interface MemoryRouterOptions {
+	basename?: string;
+	initialEntries?: string[];
+	initialIndex?: number;
+}
 
-	loader?: ReactNode;
+export interface RouterConfigBase {
+	routes: RouteDefinition[];
 
-	fallback?: JSX.Element;
+	loading?: React.ReactNode;
 
-	layoutProps?: React.ComponentProps<any>;
+	fallback?: React.ReactNode;
+}
+
+export interface RouterConfig extends RouterConfigBase {
+	type?: 'browser' | 'hash';
+
+	options?: RouterOptions;
+}
+
+export interface MemoryRouterConfig extends RouterConfigBase {
+	type?: 'memory';
+
+	options?: MemoryRouterOptions;
 }
 
 /**
- * Normalizes route info collection
- * and generates Route components
- * for each route info.
- *
- * @param routes - routes collection
- *
- * @returns array of router as components
+ * Create router lookup.
  */
-const getRoutesComponents = (routes: RoutesInfoCollection): JSX.Element[] => {
-	const paths: JSX.Element[] = [];
-
-	for (const name in routes) {
-		const routeInfo = routes[name];
-
-		let path: RoutePath;
-		let render: Partial<RouteInfo>;
-
-		if (isRouteInfo(routeInfo)) {
-			({ path, ...render } = routeInfo);
-		} else {
-			path = routeInfo;
-			render = {};
-		}
-
-		// may have single or multiple route paths for one page
-		if (typeof path === 'string') {
-			paths.push(routeFromInfo(name, { path, ...render }));
-		} else if (Array.isArray(path)) {
-			for (const route of path)
-				paths.push(routeFromInfo(name, { path: route, ...render }));
-		}
-	}
-
-	return paths;
+const getRouterFactory = {
+	browser: createBrowserRouter,
+	hash: createHashRouter,
+	memory: createMemoryRouter,
 };
 
 /**
@@ -76,24 +66,22 @@ const getRoutesComponents = (routes: RoutesInfoCollection): JSX.Element[] => {
  *	import { lazy } from 'react';
  *	import MyEagerPage from '@pages/MyEagerPage.page';
  *
- *	export const myRoutes = {
+ *	export const myRoutes = [
  *		...,
- *		MyMainPage : '/', // for use 'MyMainPage.page.tsx' as page for root path
- *		MyDetailPage : ['detail', 'detail/:id'], // multiple paths for same page
- *		DBoard: {
- *			path: 'dashboard', // single or multiple paths
- *			layout: 'MyLayout' // for use 'MyLayout.layout.tsx' for this page
+ *		{	// when not specified, by default '/' path
+ *			Layout: AppLayout, // a layout wraps its children
+ *			children: [
+ *				{
+ *					Component: lazy(() => import('./pages/main/Main.page')),
+ *					..., // any React Router route config
+ *				},
+ *				{
+ *					path: 'detail/:id?',
+ *					Component: lazy(() => import('./pages/detail/Detail.page')),
+ *				},
+ *			],
  *		},
- *		eagerPage: {
- *			path: ['eager', 'no-lazy'],
- *			page: MyEagerPage // eager page
- *		},
- *		lazyManual: {
- *			path: 'lazy',
- *			// isn't necessary because autoload is lazy by default
- *			page: lazy(() => import('pages/MyPage.page'))
- *		}
- *	}
+ *	];
  *```
  * @example
  * ```ts
@@ -103,7 +91,6 @@ const getRoutesComponents = (routes: RoutesInfoCollection): JSX.Element[] => {
  *
  *	const Router = createRouter({
  *		routes: myRoutes,
- *		layout: 'MyLayout', // for autoload MyLayout.layout.tsx
  *		loader: <h1>Loading</h1>,
  *		fallback: <h1>Not Found</h1>
  *	});
@@ -120,24 +107,20 @@ const getRoutesComponents = (routes: RoutesInfoCollection): JSX.Element[] => {
  * @returns router with routes preloaded
  */
 export const createRouter = ({
-	routes,
-	layout,
-	loader = 'Loading',
+	routes: routesDef,
+	type = 'browser',
+	loading,
 	fallback,
-	layoutProps,
-}: RouterConfig): React.FC => {
-	const paths = getRoutesComponents(routes);
+	options,
+}: RouterConfig | MemoryRouterConfig): React.FC => {
+	const routes = createRoutes(routesDef);
 
-	// wraps routes with layout if defined
-	const render = wrapElementWithLayout(
-		<Routes>
-			{paths}
+	const create = getRouterFactory[type];
+	const router = create(routes, options);
 
-			<Route path='*' element={fallback} />
-		</Routes>,
-		layout,
-		layoutProps,
+	return (): JSX.Element => (
+		<Suspense fallback={loading}>
+			<RouterProvider router={router} fallbackElement={fallback} />
+		</Suspense>
 	);
-
-	return (): JSX.Element => <Suspense fallback={loader}>{render}</Suspense>;
 };

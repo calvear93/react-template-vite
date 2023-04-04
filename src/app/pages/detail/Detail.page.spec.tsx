@@ -1,17 +1,18 @@
 import { describe, expect, test } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from '@router';
+import { createRouter } from '@router';
 import { DetailPage } from './Detail.page';
 
 describe('Detail Page', () => {
 	// tests
 	test('fetch data clicking button', async () => {
-		render(
-			<MemoryRouter>
-				<DetailPage />
-			</MemoryRouter>,
-		);
+		const DetailPageRouter = createRouter({
+			routes: [{ Component: DetailPage }],
+			type: 'memory',
+		});
+
+		render(<DetailPageRouter />);
 
 		const button = screen.getByRole('button', { name: 'Fetch' });
 
@@ -20,7 +21,7 @@ describe('Detail Page', () => {
 		const asyncMessage = await waitFor(
 			() => screen.findByText('anyValue'),
 			{
-				timeout: 4000,
+				timeout: 2500,
 			},
 		);
 

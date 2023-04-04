@@ -1,19 +1,19 @@
 import { beforeAll, describe, expect, test } from 'vitest';
-import { AppRouter } from 'app/App.router';
-import userEvent from '@testing-library/user-event';
+import { routes } from 'app/app.routes';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from '@router';
+import { createRouter } from '@router';
 
 describe('App', () => {
 	const env = import.meta.env.VITE_APP_ENV;
 
 	// hooks
 	beforeAll(async () => {
-		render(
-			<MemoryRouter>
-				<AppRouter />
-			</MemoryRouter>,
-		);
+		const AppRouter = createRouter({
+			routes: routes.app,
+			type: 'memory',
+		});
+
+		render(<AppRouter />);
 
 		// waits for lazy loading
 		await screen.findByText('Go To Detail');
@@ -34,8 +34,7 @@ describe('App', () => {
 
 	test('navigates to detail page', async () => {
 		const anchor = screen.getByRole('link', { name: 'Go To Detail' });
-
-		await userEvent.click(anchor);
+		anchor.click();
 
 		const asyncMessage = await screen.findByText(env);
 

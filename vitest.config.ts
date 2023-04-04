@@ -6,11 +6,13 @@ import react from '@vitejs/plugin-react-swc';
 export default {
 	test: {
 		globals: true,
+		silent: true,
 		environment: 'jsdom',
 		include: ['src/**/*.{spec,test}.{ts,cts,mts,tsx}'],
 		setupFiles: [
 			'@testing-library/jest-dom',
 			'@testing-library/react/dont-cleanup-after-each',
+			'./src/__tests__/setup.ts',
 		],
 		reporters: ['junit', 'verbose'],
 		outputFile: {

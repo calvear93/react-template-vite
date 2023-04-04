@@ -3,9 +3,8 @@ import { createRouter } from '@router';
 
 // creates a router
 const Router = createRouter({
-	layout: 'App',
 	routes: routes.app,
-	loader: <h1>Loading</h1>,
+	loading: <h1>Loading</h1>,
 	fallback: <h1>Not Found</h1>,
 });
 

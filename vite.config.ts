@@ -14,6 +14,11 @@ const BASE_PATH = normalizePath(`/${process.env.BASE_URL}`);
 
 export default {
 	base: BASE_PATH,
+	server: {
+		open: true,
+		https: process.env.HTTPS === 'true',
+		cors: true,
+	},
 	preview: {
 		open: true,
 		https: process.env.HTTPS === 'true',

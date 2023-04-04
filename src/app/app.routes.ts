@@ -1,3 +1,7 @@
+import { lazy } from 'react';
+import { RouteDefinition } from '@router';
+import { AppLayout } from './layouts/app/App.layout';
+
 /**
  * Routes definition.
  *
@@ -11,8 +15,19 @@
  * function from \@router module.
  */
 export const routes = {
-	app: {
-		Main: '/',
-		Detail: ['/detail', '/detail/:id'],
-	},
+	app: [
+		{
+			Layout: AppLayout,
+			children: [
+				{
+					Component: lazy(() => import('./pages/main/Main.page')),
+				},
+				{
+					path: 'detail/:id?',
+					Component: lazy(() => import('./pages/detail/Detail.page')),
+					loader: () => Promise.resolve('a promise'),
+				},
+			],
+		},
+	] as RouteDefinition[],
 };
