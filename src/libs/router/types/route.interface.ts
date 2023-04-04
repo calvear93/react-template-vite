@@ -5,12 +5,12 @@ export type LayoutRouteComponent =
 	| React.ComponentType
 	| React.LazyExoticComponent<any>;
 
-export interface ComponentRoute
-	extends Omit<NonIndexRouteObject, 'element' | 'errorElement' | 'index'> {
+export interface ComponentRoute extends Omit<NonIndexRouteObject, 'index'> {
 	children?: RouteDefinition[];
 }
 
-export interface LayoutRoute extends Omit<ComponentRoute, 'Component'> {
+export interface LayoutRoute
+	extends Omit<ComponentRoute, 'element' | 'Component'> {
 	Layout: LayoutRouteComponent;
 	loading?: React.ReactNode;
 }
