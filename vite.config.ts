@@ -17,7 +17,6 @@ export default {
 	server: {
 		open: true,
 		https: process.env.HTTPS === 'true',
-		cors: true,
 	},
 	preview: {
 		open: true,

@@ -1,7 +1,3 @@
-interface ImportMeta {
-	readonly env: ImportMetaEnv;
-}
-
 /**
  * Global types definition for
  * environment variables.
@@ -18,16 +14,16 @@ interface ImportMetaEnv {
 	readonly VITEST: 'true' | 'false';
 	readonly SSR: 'true' | 'false';
 
+	// SECTION: base config
+	readonly PORT: string;
+	readonly BASE_URL: string;
+
 	// SECTION: project info from package.json
 	readonly VITE_APP_VERSION: string;
 	readonly VITE_APP_PROJECT: string;
 	readonly VITE_APP_NAME: string;
 	readonly VITE_APP_TITLE: string;
 	readonly VITE_APP_DESCRIPTION: string;
-
-	// SECTION: base config
-	readonly PORT: string;
-	readonly BASE_URL: string;
 }
 
 declare global {
@@ -46,11 +42,8 @@ declare global {
 
 	// unix timestamp, number of seconds that have elapsed since January 1, 1970
 	type epoch = seconds;
+}
 
-	type AnyError = unknown;
-
-	type Class = new (...args: any[]) => any;
-
-	// type EntityId = Opaque<number>;
-	type Opaque<T> = T & { __opaque__: any };
+interface ImportMeta {
+	readonly env: ImportMetaEnv;
 }
