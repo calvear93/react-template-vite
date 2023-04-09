@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { Suspense } from 'react';
 import { createRoutes } from './create-routes';
-import { RouteDefinition } from '../types/route.interface';
+import { type RouteDefinition } from '../types/route.interface';
 
 interface RouterOptions {
 	basename?: string;

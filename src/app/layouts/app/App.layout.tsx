@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import styles from './app.layout.module.scss';

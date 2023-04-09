@@ -69,15 +69,20 @@
 				}
 			}
 		],
+		"@typescript-eslint/consistent-type-imports": [
+			"warn",
+			{
+				"prefer": "type-imports",
+				"fixStyle": "inline-type-imports"
+			}
+		],
 		"@typescript-eslint/explicit-function-return-type": "off",
 		"@typescript-eslint/explicit-module-boundary-types": "off",
 		"@typescript-eslint/interface-name-prefix": "off",
 		"@typescript-eslint/no-empty-function": "warn",
 		"@typescript-eslint/no-empty-interface": [
 			"error",
-			{
-				"allowSingleExtends": true
-			}
+			{ "allowSingleExtends": true }
 		],
 		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/no-extraneous-class": "off",
@@ -125,19 +130,8 @@
 		"default-case-last": "warn",
 		"default-param-last": "warn",
 		"eqeqeq": "warn",
-		"func-style": [
-			"warn",
-			"declaration",
-			{
-				"allowArrowFunctions": true
-			}
-		],
-		"getter-return": [
-			"error",
-			{
-				"allowImplicit": true
-			}
-		],
+		"func-style": ["warn", "declaration", { "allowArrowFunctions": true }],
+		"getter-return": ["error", { "allowImplicit": true }],
 		"grouped-accessor-pairs": "warn",
 		"import/no-extraneous-dependencies": [
 			"off",
@@ -240,9 +234,7 @@
 		"testing-library/no-debugging-utils": "warn",
 		"testing-library/no-render-in-setup": [
 			"error",
-			{
-				"allowTestingFrameworkSetupHook": "beforeAll"
-			}
+			{ "allowTestingFrameworkSetupHook": "beforeAll" }
 		],
 		"unicorn/custom-error-definition": "off",
 		"unicorn/filename-case": [

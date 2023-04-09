@@ -1,5 +1,5 @@
-import { NonIndexRouteObject } from 'react-router-dom';
-import { XOR } from './xor.type';
+import { type NonIndexRouteObject } from 'react-router-dom';
+import { type XOR } from './xor.type';
 
 export type LayoutRouteComponent =
 	| React.ComponentType

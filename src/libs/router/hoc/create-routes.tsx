@@ -1,6 +1,9 @@
-import { Outlet, RouteObject } from 'react-router-dom';
+import { Outlet, type RouteObject } from 'react-router-dom';
 import { Suspense } from 'react';
-import { ComponentRoute, RouteDefinition } from '../types/route.interface';
+import {
+	type ComponentRoute,
+	type RouteDefinition,
+} from '../types/route.interface';
 import { isLayoutRoute } from '../types/is-layout-route';
 
 export const createRoutes = (routes: RouteDefinition[]): RouteObject[] => {
