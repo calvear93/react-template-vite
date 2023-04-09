@@ -1,5 +1,5 @@
-import { routes } from 'app/app.routes';
 import { createRouter } from '@router';
+import { routes } from './app.routes';
 
 // creates a router
 const Router = createRouter({

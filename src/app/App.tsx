@@ -1,5 +1,5 @@
-import { AppRouter } from 'app/App.router';
-import 'app/styles/app.scss';
+import { AppRouter } from './App.router';
+import './styles/app.scss';
 
 /**
  * App container.
