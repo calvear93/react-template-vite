@@ -21,21 +21,17 @@ interface MemoryRouterOptions {
 
 export interface RouterConfigBase {
 	routes: RouteDefinition[];
-
 	loading?: React.ReactNode;
-
 	fallback?: React.ReactNode;
 }
 
 export interface RouterConfig extends RouterConfigBase {
 	type?: 'browser' | 'hash';
-
 	options?: RouterOptions;
 }
 
 export interface MemoryRouterConfig extends RouterConfigBase {
 	type?: 'memory';
-
 	options?: MemoryRouterOptions;
 }
 
