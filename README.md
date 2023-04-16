@@ -20,10 +20,10 @@
 ## ⛩ **Structure**
 
 ```bash
-├── README.md
 ├── env/
 │   └── appsettings.json
 ├── src/
+│   ├── __tests__/
 │   ├── app/
 │   │   ├── assets/
 │   │   │   └── assets.d.ts
@@ -36,7 +36,6 @@
 │   │   ├──  app.routes.ts
 │   │   ├──  App.store.tsx
 │   │   └──  App.router.tsx
-│   ├── tests/
 │   ├── libs/
 │   │   └── router/ # routing using react router v6
 │   ├── env.d.ts
@@ -85,6 +84,6 @@ it environment may be 'dev' or 'release'.
 | pnpm env:schema              | updates env JSON schema      |
 | pnpm format                  | code format                  |
 | pnpm lint                    | code review                  |
-| pnpm lint --fix              | code review/fix              |
+| pnpm lint -- -- --fix        | code review/fix              |
 | pnpm stylelint               | stylesheets review           |
-| pnpm stylelint --fix         | stylesheets review/fix       |
+| pnpm stylelint -- -- --fix   | stylesheets review/fix       |

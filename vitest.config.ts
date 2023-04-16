@@ -12,7 +12,6 @@ export default {
 		setupFiles: [
 			'@testing-library/jest-dom',
 			'@testing-library/react/dont-cleanup-after-each',
-			'./src/__tests__/setup.ts',
 		],
 		reporters: ['junit', 'verbose'],
 		outputFile: {
