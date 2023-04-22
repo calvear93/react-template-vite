@@ -83,7 +83,7 @@
 	"stylelint.validate": ["css", "postcss", "scss", "sass"],
 	"typescript.autoClosingTags": true,
 	"typescript.disableAutomaticTypeAcquisition": true,
-	"typescript.preferences.importModuleSpecifier": "relative",
+	"typescript.preferences.importModuleSpecifier": "shortest",
 	"typescript.preferences.importModuleSpecifierEnding": "minimal",
 	"typescript.preferences.quoteStyle": "single",
 	"typescript.suggest.autoImports": true,

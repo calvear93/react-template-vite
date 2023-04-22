@@ -1,12 +1,13 @@
-import { beforeAll, describe, expect, test } from 'vitest';
-import userEvent from '@testing-library/user-event';
-import { render, screen, waitFor } from '@testing-library/react';
+import { beforeAll, describe, expect, test, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import { createRouter } from '@router';
 import { DetailPage } from './Detail.page';
 
 describe('Detail Page', () => {
 	// hooks
 	beforeAll(() => {
+		vi.useFakeTimers();
+
 		const DetailPageRouter = createRouter({
 			routes: [{ Component: DetailPage }],
 			type: 'memory',
@@ -15,18 +16,17 @@ describe('Detail Page', () => {
 		render(<DetailPageRouter />);
 	});
 
+	afterAll(() => {
+		vi.useRealTimers();
+	});
+
 	// tests
 	test('fetch data clicking button', async () => {
 		const button = screen.getByRole('button', { name: 'Fetch' });
-		await userEvent.click(button);
+		button.click();
+		await vi.advanceTimersToNextTimerAsync();
 
-		const asyncMessage = await waitFor(
-			() => screen.findByText('anyValue'),
-			{
-				timeout: 3000,
-				container: button,
-			},
-		);
+		const asyncMessage = screen.getByRole('heading', { name: 'anyValue' });
 
 		expect(asyncMessage).toBeInTheDocument();
 	});

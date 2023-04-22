@@ -1,0 +1,69 @@
+import { describe, expect, test, vi } from 'vitest';
+import { useAtom } from 'jotai';
+import { renderHook } from '@testing-library/react';
+import { type AsyncSampleState, asyncAtom } from './async.atom';
+
+const renderAsyncAtom = () => renderHook(() => useAtom(asyncAtom));
+type HookCurrent = ReturnType<typeof renderAsyncAtom>['result'];
+
+describe('async atom', () => {
+	let hook: HookCurrent;
+	let rerender: () => void;
+
+	// hooks
+	beforeAll(() => {
+		vi.useFakeTimers();
+		// renders the hook
+		({ result: hook, rerender } = renderAsyncAtom());
+	});
+
+	afterAll(() => {
+		vi.useRealTimers();
+	});
+
+	// tests
+	test('initial state has "content" empty, and "loading" and "ready" false', () => {
+		const expected: AsyncSampleState = {
+			ready: false,
+			loading: false,
+			content: {},
+		};
+
+		const {
+			current: [state],
+		} = hook;
+
+		expect(state).toStrictEqual(expected);
+	});
+
+	test('starts fetch changes "loading" to true', () => {
+		const expected: AsyncSampleState = {
+			ready: false,
+			loading: true,
+			content: {},
+		};
+
+		const startFetch = hook.current[1];
+		startFetch();
+		rerender();
+
+		const state = hook.current[0];
+		expect(state).toStrictEqual(expected);
+	});
+
+	test('once fetch is resolved, content has the value', async () => {
+		const expected: AsyncSampleState = {
+			ready: true,
+			loading: false,
+			content: { anyProp: 'anyValue' },
+		};
+
+		const startFetch = hook.current[1];
+		startFetch();
+		await vi.advanceTimersToNextTimerAsync();
+		rerender();
+
+		const state = hook.current[0];
+		expect(state).toStrictEqual(expected);
+	});
+});

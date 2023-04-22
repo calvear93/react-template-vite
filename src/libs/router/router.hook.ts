@@ -27,16 +27,3 @@ export const useHashValue = (): string => {
 
 	return hash.slice(1);
 };
-
-/**
- * Retrieves current path state.
- *
- * @see useLocation from react-router-dom.
- *
- * @returns route state.
- */
-export const useRouteState = <T>(): T => {
-	const { state } = useLocation();
-
-	return state as T;
-};

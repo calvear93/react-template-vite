@@ -26,7 +26,11 @@ interface ImportMetaEnv {
 	readonly VITE_APP_DESCRIPTION: string;
 }
 
-declare global {
+interface ImportMeta {
+	readonly env: ImportMetaEnv;
+}
+
+export declare global {
 	// SECTION: built-in types tweaks
 	interface JSON {
 		parse<T = unknown>(
@@ -62,8 +66,4 @@ declare global {
 
 	// unix timestamp, number of seconds that have elapsed since January 1, 1970
 	type epoch = seconds;
-}
-
-interface ImportMeta {
-	readonly env: ImportMetaEnv;
 }
