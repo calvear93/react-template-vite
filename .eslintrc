@@ -276,15 +276,15 @@
 					"error",
 					{
 						"name": "describe",
-						"message": "Use vitest import instead."
+						"message": "Import from vitest instead."
 					},
 					{
 						"name": "test",
-						"message": "Use vitest import instead."
+						"message": "Import from vitest instead."
 					},
 					{
 						"name": "it",
-						"message": "Use vitest import instead."
+						"message": "Import from vitest instead."
 					}
 				],
 				"max-classes-per-file": "off",
