@@ -33,7 +33,7 @@ export default {
 					react: ['react', 'react-dom'],
 					router: ['react-router-dom'],
 					store: ['jotai'],
-					axios: ['axios'],
+					http: ['ky'],
 				},
 			},
 		},

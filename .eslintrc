@@ -227,7 +227,7 @@
 		"react/self-closing-comp": "warn",
 		"redos/no-vulnerable": ["error"],
 		"require-await": "error",
-		"sonarjs/cognitive-complexity": ["warn", 15],
+		"sonarjs/cognitive-complexity": ["warn", 10],
 		"sonarjs/max-switch-cases": ["warn", 15],
 		"sonarjs/no-duplicate-string": ["warn", 3],
 		"tailwindcss/no-custom-classname": "off",
@@ -272,6 +272,21 @@
 			"plugins": ["vitest"],
 			"extends": ["plugin:vitest/all"],
 			"rules": {
+				"no-restricted-globals": [
+					"error",
+					{
+						"name": "describe",
+						"message": "Use vitest import instead."
+					},
+					{
+						"name": "test",
+						"message": "Use vitest import instead."
+					},
+					{
+						"name": "it",
+						"message": "Use vitest import instead."
+					}
+				],
 				"max-classes-per-file": "off",
 				"react/no-multi-comp": "off",
 				"redos/no-vulnerable": "off",
@@ -280,9 +295,12 @@
 				"vitest/consistent-test-it": "off",
 				"vitest/expect-expect": "off",
 				"vitest/no-hooks": "off",
+				"vitest/no-mocks-import": "off",
 				"vitest/no-test-return-statement": "off",
 				"vitest/prefer-lowercase-title": "off",
+				"vitest/require-hook": "off",
 				"vitest/require-to-throw-message": "off",
+				"vitest/require-top-level-describe": "off",
 				"vitest/valid-title": "off"
 			}
 		}
