@@ -1,10 +1,9 @@
-import { describe, expect, test } from 'vitest';
-import { type PropsWithChildren } from 'react';
+import { afterEach, describe, test } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { createRouter } from './create-router.hoc';
 
 describe('create-router', () => {
-	const Layout = ({ children }: PropsWithChildren) => (
+	const Layout = ({ children }: React.PropsWithChildren) => (
 		<div>
 			<h1>layout</h1>
 			{children}
@@ -27,9 +26,7 @@ describe('create-router', () => {
 
 		render(<Router />);
 
-		const header = screen.getByRole('heading', { name: 'Root Route' });
-
-		expect(header).toBeInTheDocument();
+		screen.getByRole('heading', { name: 'Root Route' });
 	});
 
 	test('renders a route with layout', () => {
@@ -40,9 +37,7 @@ describe('create-router', () => {
 
 		render(<RouterWithLayout />);
 
-		const header = screen.getByRole('heading');
-
-		expect(header).toBeInTheDocument();
+		screen.getByRole('heading');
 	});
 
 	test('renders a route with layout and suspense', () => {
@@ -59,8 +54,6 @@ describe('create-router', () => {
 
 		render(<RouterWithLayout />);
 
-		const header = screen.getByRole('heading');
-
-		expect(header).toBeInTheDocument();
+		screen.getByRole('heading');
 	});
 });

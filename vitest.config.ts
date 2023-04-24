@@ -1,19 +1,14 @@
 import type { UserConfigExport } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import svg from 'vite-plugin-svgr';
-import react from '@vitejs/plugin-react-swc';
 
 export default {
 	test: {
-		globals: true,
 		silent: false,
 		testTimeout: 6000,
 		environment: 'jsdom',
 		include: ['src/**/*.{spec,test}.{ts,cts,mts,tsx}'],
-		setupFiles: [
-			'@testing-library/jest-dom',
-			'@testing-library/react/dont-cleanup-after-each',
-		],
+		setupFiles: ['@testing-library/react/dont-cleanup-after-each'],
 		reporters: ['verbose'],
 		coverage: {
 			all: true,
@@ -27,5 +22,5 @@ export default {
 			],
 		},
 	},
-	plugins: [react(), svg(), tsconfigPaths()],
+	plugins: [svg(), tsconfigPaths()],
 } satisfies UserConfigExport;

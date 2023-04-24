@@ -272,21 +272,6 @@
 			"plugins": ["vitest"],
 			"extends": ["plugin:vitest/all"],
 			"rules": {
-				"no-restricted-globals": [
-					"error",
-					{
-						"name": "describe",
-						"message": "Import from vitest instead."
-					},
-					{
-						"name": "test",
-						"message": "Import from vitest instead."
-					},
-					{
-						"name": "it",
-						"message": "Import from vitest instead."
-					}
-				],
 				"max-classes-per-file": "off",
 				"react/no-multi-comp": "off",
 				"redos/no-vulnerable": "off",
@@ -296,6 +281,7 @@
 				"vitest/expect-expect": "off",
 				"vitest/no-hooks": "off",
 				"vitest/no-mocks-import": "off",
+				"vitest/no-standalone-expect": "off",
 				"vitest/no-test-return-statement": "off",
 				"vitest/prefer-lowercase-title": "off",
 				"vitest/require-hook": "off",

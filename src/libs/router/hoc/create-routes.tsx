@@ -1,25 +1,39 @@
+/* eslint-disable react/no-multi-comp */
 import { Outlet, type RouteObject } from 'react-router-dom';
 import { Suspense } from 'react';
-import { type ComponentRoute, type RouteDefinition } from '../types/route';
+import {
+	type LayoutRouteComponent,
+	type ComponentRoute,
+	type RouteDefinition,
+} from '../types/route';
 import { isLayoutRoute } from '../types/is-layout-route';
+
+const renderLayout = (
+	Layout: LayoutRouteComponent,
+	loading: React.ReactNode,
+) => {
+	if (loading)
+		return () => (
+			<Layout>
+				<Suspense fallback={loading}>
+					<Outlet />
+				</Suspense>
+			</Layout>
+		);
+
+	return () => (
+		<Layout>
+			<Outlet />
+		</Layout>
+	);
+};
 
 export const createRoutes = (routes: RouteDefinition[]): RouteObject[] => {
 	for (const route of routes) {
 		if (isLayoutRoute(route)) {
 			const { Layout, loading } = route;
 
-			(route as ComponentRoute).Component = () =>
-				loading ? (
-					<Layout>
-						<Suspense fallback={loading}>
-							<Outlet />
-						</Suspense>
-					</Layout>
-				) : (
-					<Layout>
-						<Outlet />
-					</Layout>
-				);
+			(route as ComponentRoute).Component = renderLayout(Layout, loading);
 
 			(route as RouteDefinition).Layout = undefined;
 		}

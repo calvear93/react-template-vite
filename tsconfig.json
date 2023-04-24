@@ -14,7 +14,7 @@
 
 		"jsx": "react-jsx",
 		"lib": ["dom", "es2022"],
-		"types": ["vite/client", "@testing-library/jest-dom"],
+		"types": ["vite/client"],
 
 		"experimentalDecorators": false,
 		"emitDecoratorMetadata": false,

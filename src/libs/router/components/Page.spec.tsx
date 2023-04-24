@@ -22,6 +22,6 @@ describe('Page', () => {
 		);
 		const header = screen.getByRole('heading');
 
-		expect(header).toHaveTextContent(content);
+		expect(header.innerHTML).toBe(content);
 	});
 });

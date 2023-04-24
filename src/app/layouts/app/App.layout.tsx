@@ -1,9 +1,8 @@
-import { type PropsWithChildren } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import styles from './app.layout.module.scss';
 
-export interface AppLayoutProps extends PropsWithChildren {}
+export interface AppLayoutProps extends React.PropsWithChildren {}
 
 /**
  * App layout (wrapper for pages with header/footer).

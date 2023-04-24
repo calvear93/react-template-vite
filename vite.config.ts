@@ -14,6 +14,7 @@ const BASE_PATH = normalizePath(`/${process.env.BASE_URL}`);
 
 export default {
 	base: BASE_PATH,
+	clearScreen: false,
 	server: {
 		open: true,
 		https: process.env.HTTPS === 'true',

@@ -23,13 +23,13 @@ describe('App', () => {
 	test('has header (banner role) with content "App"', () => {
 		const header = screen.getByRole('banner');
 
-		expect(header).toHaveTextContent('App');
+		expect(header.innerHTML).toBe('App');
 	});
 
 	test('has footer (contentinfo role) with content "Footer"', () => {
 		const footer = screen.getByRole('contentinfo');
 
-		expect(footer).toHaveTextContent('Footer');
+		expect(footer.innerHTML).toBe('Footer');
 	});
 
 	test('navigates to detail page', async () => {
