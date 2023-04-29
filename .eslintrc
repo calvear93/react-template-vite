@@ -232,10 +232,7 @@
 		"sonarjs/no-duplicate-string": ["warn", 3],
 		"tailwindcss/no-custom-classname": "off",
 		"testing-library/no-debugging-utils": "warn",
-		"testing-library/no-render-in-setup": [
-			"error",
-			{ "allowTestingFrameworkSetupHook": "beforeAll" }
-		],
+		"testing-library/no-render-in-setup": "off",
 		"unicorn/custom-error-definition": "off",
 		"unicorn/filename-case": [
 			"error",
