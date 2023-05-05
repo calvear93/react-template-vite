@@ -34,8 +34,8 @@ devDependencies:
     specifier: ^18.16.3
     version: 18.16.3
   '@types/react':
-    specifier: ^18.2.2
-    version: 18.2.2
+    specifier: ^18.2.5
+    version: 18.2.5
   '@types/react-dom':
     specifier: ^18.2.3
     version: 18.2.3
@@ -100,8 +100,8 @@ devDependencies:
     specifier: ^46.0.0
     version: 46.0.0(eslint@8.39.0)
   eslint-plugin-vitest:
-    specifier: ^0.1.4
-    version: 0.1.4(eslint@8.39.0)(typescript@5.0.4)
+    specifier: ^0.1.5
+    version: 0.1.5(eslint@8.39.0)(typescript@5.0.4)
   jsdom:
     specifier: ^22.0.0
     version: 22.0.0
@@ -151,8 +151,8 @@ devDependencies:
     specifier: ^2.5.0
     version: 2.5.0
   type-fest:
-    specifier: ^3.9.0
-    version: 3.9.0
+    specifier: ^3.10.0
+    version: 3.10.0(typescript@5.0.4)
   typescript:
     specifier: ^5.0.4
     version: 5.0.4
@@ -175,8 +175,8 @@ devDependencies:
     specifier: ^3.2.0
     version: 3.2.0(rollup@2.79.1)(vite@4.3.4)
   vite-plugin-webfont-dl:
-    specifier: ^3.7.3
-    version: 3.7.3(vite@4.3.4)
+    specifier: ^3.7.4
+    version: 3.7.4(vite@4.3.4)
   vite-plugin-windicss:
     specifier: ^1.8.10
     version: 1.8.10(vite@4.3.4)
@@ -2271,11 +2271,11 @@ packages:
   /@types/react-dom@18.2.3:
     resolution: {integrity: sha512-hxXEXWxFJXbY0LMj/T69mznqOZJXNtQMqVxIiirVAZnnpeYiD4zt+lPsgcr/cfWg2VLsxZ1y26vigG03prYB+Q==}
     dependencies:
-      '@types/react': 18.2.2
+      '@types/react': 18.2.5
     dev: true
 
-  /@types/react@18.2.2:
-    resolution: {integrity: sha512-4GZH3GLuqdZbDvOW5Pqqe7jgsDrKwkJfZMZLwFcgoz3CVDSvnMeG/Ihe44IbZ5Mqhh1fyTh5e44z6pNjIzzV8g==}
+  /@types/react@18.2.5:
+    resolution: {integrity: sha512-RuoMedzJ5AOh23Dvws13LU9jpZHIc/k90AgmK7CecAYeWmSr3553L4u5rk4sWAPBuQosfT7HmTfG4Rg5o4nGEA==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
@@ -3148,7 +3148,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001482
-      electron-to-chromium: 1.4.381
+      electron-to-chromium: 1.4.383
       node-releases: 2.0.10
       update-browserslist-db: 1.0.11(browserslist@4.21.5)
     dev: true
@@ -3919,8 +3919,8 @@ packages:
       jake: 10.8.5
     dev: true
 
-  /electron-to-chromium@1.4.381:
-    resolution: {integrity: sha512-jSbS1KRmmGO6SwssmVQpCy1jENfCJT6hN36W6Dxj5HXUj59cUn6yd4gv5113mfATo6aEj/mPUTkMZmNknFXj6Q==}
+  /electron-to-chromium@1.4.383:
+    resolution: {integrity: sha512-BQyvFauIMzCJqILViJNs0kIBEAlx1bYLS5CRLyJtlun1KAnZlhNSgyfyWifPWagQ5s8KYPY6BpNHZsEMkxZAQQ==}
     dev: true
 
   /emoji-regex@7.0.3:
@@ -4334,8 +4334,8 @@ packages:
       strip-indent: 3.0.0
     dev: true
 
-  /eslint-plugin-vitest@0.1.4(eslint@8.39.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-R3/0Ch8KcQCZqKFfCxw+cQvUPdoQ6YF7yXV5/NZ9trQqoFDTUzu0vBYPSTJ7T8FLKi3nccR6ZsUvIBD2G0MXYg==}
+  /eslint-plugin-vitest@0.1.5(eslint@8.39.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-SxbGjyC6peUaCt/P+YrHxdfVzJkLC1RCotaCMZ6vuvkRGOx3SE1jcZb7vTlU6s9PoF0DYlkWuBAAYZi1IAwg2A==}
     engines: {node: 14.x || >= 16}
     peerDependencies:
       eslint: '>=8.0.0'
@@ -6314,7 +6314,7 @@ packages:
       acorn: 8.8.2
       pathe: 1.1.0
       pkg-types: 1.0.3
-      ufo: 1.1.1
+      ufo: 1.1.2
     dev: true
 
   /mrmime@1.0.1:
@@ -6550,7 +6550,7 @@ packages:
     dependencies:
       destr: 1.2.2
       node-fetch-native: 1.1.0
-      ufo: 1.1.1
+      ufo: 1.1.2
     dev: true
 
   /once@1.4.0:
@@ -8642,9 +8642,13 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /type-fest@3.9.0:
-    resolution: {integrity: sha512-hR8JP2e8UiH7SME5JZjsobBlEiatFoxpzCP+R3ZeCo7kAaG1jXQE5X/buLzogM6GJu8le9Y4OcfNuIQX0rZskA==}
+  /type-fest@3.10.0(typescript@5.0.4):
+    resolution: {integrity: sha512-hmAPf1datm+gt3c2mvu0sJyhFy6lTkIGf0GzyaZWxRLnabQfPUqg6tF95RPg6sLxKI7nFLGdFxBcf2/7+GXI+A==}
     engines: {node: '>=14.16'}
+    peerDependencies:
+      typescript: '>=4.7.0'
+    dependencies:
+      typescript: 5.0.4
     dev: true
 
   /typed-array-length@1.0.4:
@@ -8661,8 +8665,8 @@ packages:
     hasBin: true
     dev: true
 
-  /ufo@1.1.1:
-    resolution: {integrity: sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==}
+  /ufo@1.1.2:
+    resolution: {integrity: sha512-TrY6DsjTQQgyS3E3dBaOXf0TpPD8u9FVrVYmKVegJuFw51n/YB9XPt+U6ydzFG5ZIN7+DIjPbNmXoBj9esYhgQ==}
     dev: true
 
   /unbox-primitive@1.0.2:
@@ -9055,8 +9059,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-webfont-dl@3.7.3(vite@4.3.4):
-    resolution: {integrity: sha512-55PkuJI2SUTXMyGpFqNreRdF1J7NNWkI7S0v97pKIpdfUaPejBUmN48JgHtFNSvUdyF0ooRj1S440aM7K8kfdg==}
+  /vite-plugin-webfont-dl@3.7.4(vite@4.3.4):
+    resolution: {integrity: sha512-cCvP4aMHevcug0KAPd8v0ll8eA7NqWOI7SQ/qKTshpb4Di18zsdo2Z/ECgZSrVd9UpJhCFVso52WgO+zM0sQeQ==}
     peerDependencies:
       vite: ^2 || ^3 || ^4
     dependencies:
