@@ -12,6 +12,7 @@ jspm_packages
 *.tsbuildinfo
 
 # Rollup & Vite cache
+.swc
 .rollup.cache
 vite.config.ts.*
 vitest.config.ts.*
