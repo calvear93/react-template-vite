@@ -47,7 +47,7 @@
 		"ky": "^0.33.3",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.11.2"
+		"react-router-dom": "^6.12.0"
 	},
 	"devDependencies": {
 		"@calvear/env": "^2.7.0",
@@ -60,8 +60,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.59.9",
 		"@typescript-eslint/parser": "^5.59.9",
 		"@vitejs/plugin-react-swc": "^3.3.2",
-		"@vitest/coverage-c8": "^0.31.4",
-		"c8": "^7.14.0",
+		"@vitest/coverage-v8": "^0.32.0",
 		"eslint": "^8.42.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-import": "^2.27.5",
@@ -82,7 +81,7 @@
 		"postcss": "^8.4.24",
 		"prettier": "^2.8.8",
 		"sass": "^1.62.1",
-		"stylelint": "^15.6.3",
+		"stylelint": "^15.7.0",
 		"stylelint-config-css-modules": "^4.2.0",
 		"stylelint-config-rational-order": "^0.1.2",
 		"stylelint-config-recommended": "^12.0.0",
@@ -105,7 +104,7 @@
 		"vite-plugin-webfont-dl": "^3.7.4",
 		"vite-plugin-windicss": "^1.9.0",
 		"vite-tsconfig-paths": "^4.2.0",
-		"vitest": "^0.31.4",
+		"vitest": "^0.32.0",
 		"wireit": "^0.9.5"
 	},
 	"wireit": {
