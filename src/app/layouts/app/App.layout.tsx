@@ -11,7 +11,7 @@ export interface AppLayoutProps extends React.PropsWithChildren {}
  */
 export const AppLayout: React.FC<AppLayoutProps> = ({
 	children,
-}): JSX.Element => (
+}): React.ReactElement => (
 	<main className={styles.layout}>
 		<Header title='App' />
 

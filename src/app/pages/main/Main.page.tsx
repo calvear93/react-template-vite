@@ -9,7 +9,7 @@ import { ReactComponent as Logo } from '../../assets/logo.svg';
 /**
  * Main page.
  */
-export const MainPage: React.FC = (): JSX.Element => {
+export const MainPage: React.FC = (): React.ReactElement => {
 	const [message, setStatus] = useAtom(sampleAtom);
 
 	// effects

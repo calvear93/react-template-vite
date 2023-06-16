@@ -15,7 +15,7 @@ export const Page: React.FC<PageProps> = ({
 	title,
 	children,
 	...attrs
-}): JSX.Element => {
+}): React.ReactElement => {
 	// sets up page tab title
 	useDocumentTitle(title);
 

@@ -7,6 +7,8 @@ interface HeaderProps {
  *
  * @returns header component
  */
-export const Header: React.FC<HeaderProps> = ({ title }): JSX.Element => {
+export const Header: React.FC<HeaderProps> = ({
+	title,
+}): React.ReactElement => {
 	return <header>{title}</header>;
 };

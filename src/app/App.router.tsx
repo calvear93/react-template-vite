@@ -17,6 +17,6 @@ const Router = createRouter({
  *
  * @returns application router
  */
-export const AppRouter: React.FC = (): JSX.Element => {
+export const AppRouter: React.FC = (): React.ReactElement => {
 	return <Router />;
 };

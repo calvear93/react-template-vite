@@ -5,7 +5,7 @@ import { FetchBox } from './components/FetchBox';
 /**
  * Detail page.
  */
-export const DetailPage: React.FC = (): JSX.Element => {
+export const DetailPage: React.FC = (): React.ReactElement => {
 	const { id } = useParams();
 	const aMessage = useLoaderData() as string;
 

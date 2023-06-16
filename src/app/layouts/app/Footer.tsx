@@ -7,6 +7,6 @@ interface FooterProps {
  *
  * @returns footer component
  */
-export const Footer: React.FC<FooterProps> = ({ text }): JSX.Element => {
+export const Footer: React.FC<FooterProps> = ({ text }): React.ReactElement => {
 	return <footer>{text}</footer>;
 };

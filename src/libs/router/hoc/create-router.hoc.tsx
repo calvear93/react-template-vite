@@ -91,7 +91,7 @@ const getRouterFactory = {
  *		fallback: <h1>Not Found</h1>
  *	});
  *
- *	export const AppRouter: React.FC = (): JSX.Element => {
+ *	export const AppRouter: React.FC = (): React.ReactElement => {
  *		// authorization or any other logic
  *
  *		return <Router />;
@@ -114,7 +114,7 @@ export const createRouter = ({
 	const create = getRouterFactory[type];
 	const router = create(routes, options);
 
-	return (): JSX.Element => (
+	return (): React.ReactElement => (
 		<Suspense fallback={loading}>
 			<RouterProvider router={router} fallbackElement={fallback} />
 		</Suspense>

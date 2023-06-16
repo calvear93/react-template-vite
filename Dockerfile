@@ -3,9 +3,9 @@
 ###
 
 # global variables
-ARG ALPINE=node:20.2.0-alpine
-ARG NGINX=nginx:1.25.0-alpine
-ARG PNPM_VER=8.6.0
+ARG ALPINE=node:20.3.0-alpine
+ARG NGINX=nginx:1.25.1-alpine
+ARG PNPM_VER=8.6.2
 ARG APP_DIR='/app/'
 ARG OUT_DIR='dist'
 

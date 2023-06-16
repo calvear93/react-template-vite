@@ -9,6 +9,6 @@ import './styles/app.scss';
  *
  * @returns app container
  */
-export const App: React.FC = (): JSX.Element => {
+export const App: React.FC = (): React.ReactElement => {
 	return <AppRouter />;
 };
