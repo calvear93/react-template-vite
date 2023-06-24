@@ -17,6 +17,7 @@ export default {
 	clearScreen: false,
 	server: {
 		open: true,
+		port: +process.env.PORT!,
 		https: process.env.HTTPS === 'true',
 	},
 	preview: {
