@@ -7,13 +7,13 @@
 			"@router": ["libs/router"]
 		},
 
-		"target": "es2020",
+		"target": "es2018",
 		"module": "es2022",
 		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 
 		"jsx": "react-jsx",
-		"lib": ["dom", "es2022"],
+		"lib": ["dom", "es2023"],
 		"types": ["vite/client"],
 
 		"experimentalDecorators": false,
