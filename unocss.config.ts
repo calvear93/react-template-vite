@@ -7,11 +7,11 @@ const fontFamily = process.env.FONT_FAMILY;
 
 export default {
 	presets: [tailwind({ preflight: true }), icons({ prefix: '' })],
-	transformers: [transformerDirectives(), transformerVariantGroup()],
 	theme: {
 		fontFamily: {
 			sans: [fontFamily, 'sans-serif'],
 			serif: [fontFamily, 'serif'],
 		},
 	},
+	transformers: [transformerDirectives(), transformerVariantGroup()],
 } as UserConfig;

@@ -3,24 +3,24 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import svg from 'vite-plugin-svgr';
 
 export default {
+	plugins: [svg(), tsconfigPaths()],
 	test: {
-		silent: false,
-		testTimeout: 6000,
-		environment: 'jsdom',
-		include: ['src/**/*.{spec,test}.{ts,cts,mts,tsx}'],
-		setupFiles: ['@testing-library/react/dont-cleanup-after-each'],
-		reporters: ['verbose'],
 		coverage: {
 			all: true,
-			reportsDirectory: '.reports/coverage',
-			reporter: ['text', 'text-summary', 'lcov', 'cobertura', 'json'],
-			include: ['src/**/*.{ts,cts,mts,tsx}'],
 			exclude: [
 				'**/*.{d,config,mock,fixture}.{ts,cts,mts,tsx}',
 				'**/{index,main}.{ts,cts,mts,tsx}',
 				'**/__{tests,mocks,fixtures}__',
 			],
+			include: ['src/**/*.{ts,cts,mts,tsx}'],
+			reporter: ['text', 'text-summary', 'lcov', 'cobertura', 'json'],
+			reportsDirectory: '.reports/coverage',
 		},
+		environment: 'jsdom',
+		include: ['src/**/*.{spec,test}.{ts,cts,mts,tsx}'],
+		reporters: ['verbose'],
+		setupFiles: ['@testing-library/react/dont-cleanup-after-each'],
+		silent: false,
+		testTimeout: 6000,
 	},
-	plugins: [svg(), tsconfigPaths()],
 } satisfies UserConfigExport;

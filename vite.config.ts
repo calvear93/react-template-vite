@@ -14,41 +14,31 @@ const BASE_PATH = normalizePath(`/${process.env.BASE_URL}`);
 
 export default {
 	base: BASE_PATH,
-	clearScreen: false,
-	server: {
-		open: true,
-		port: +process.env.PORT!,
-		https: process.env.HTTPS === 'true',
-	},
-	preview: {
-		open: true,
-		https: process.env.HTTPS === 'true',
-		cors: true,
-	},
 	build: {
-		sourcemap: process.env.SOURCEMAP === 'true',
 		minify: true,
-		target: process.env.TARGET,
 		rollupOptions: {
 			output: {
 				manualChunks: {
+					http: ['ky'],
 					react: ['react', 'react-dom'],
 					router: ['react-router-dom'],
 					store: ['jotai'],
-					http: ['ky'],
 				},
 			},
 		},
+		sourcemap: process.env.SOURCEMAP === 'true',
+		target: process.env.TARGET,
 	},
+	clearScreen: false,
 	plugins: [
 		checker({
-			typescript: true,
 			enableBuild: true,
-			terminal: false,
 			eslint: {
-				lintCommand: 'eslint --cache src/**/*.{ts,cts,mts,tsx}',
 				dev: { logLevel: ['error'] },
+				lintCommand: 'eslint --cache src/**/*.{ts,cts,mts,tsx}',
 			},
+			terminal: false,
+			typescript: true,
 		}),
 		react(),
 		css(),
@@ -71,14 +61,24 @@ export default {
 				enabled: false,
 			},
 			disable: process.env.SERVICE_WORKER === 'false',
+			injectRegister: 'inline',
 			manifest: false,
 			registerType: 'autoUpdate',
-			injectRegister: 'inline',
 			workbox: {
-				globPatterns: ['**/*.{html,js,css,ico,png,svg,woff2}'],
 				cleanupOutdatedCaches: true,
+				globPatterns: ['**/*.{html,js,css,ico,png,svg,woff2}'],
 				sourcemap: process.env.SOURCEMAP === 'true',
 			},
 		}),
 	],
+	preview: {
+		cors: true,
+		https: process.env.HTTPS === 'true',
+		open: true,
+	},
+	server: {
+		https: process.env.HTTPS === 'true',
+		open: true,
+		port: +process.env.PORT!,
+	},
 } satisfies UserConfigExport;
