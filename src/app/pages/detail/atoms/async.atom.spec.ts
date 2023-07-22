@@ -14,7 +14,7 @@ describe('async atom', () => {
 	beforeAll(() => {
 		vi.useFakeTimers();
 		// renders the hook
-		({ result: hook, rerender } = renderAsyncAtom());
+		({ rerender, result: hook } = renderAsyncAtom());
 	});
 
 	afterAll(() => {
@@ -24,9 +24,9 @@ describe('async atom', () => {
 	// tests
 	test('initial state has "content" empty, and "loading" and "ready" false', () => {
 		const expected: AsyncSampleState = {
-			ready: false,
-			loading: false,
 			content: {},
+			loading: false,
+			ready: false,
 		};
 
 		const {
@@ -38,9 +38,9 @@ describe('async atom', () => {
 
 	test('starts fetch changes "loading" to true', () => {
 		const expected: AsyncSampleState = {
-			ready: false,
-			loading: true,
 			content: {},
+			loading: true,
+			ready: false,
 		};
 
 		const startFetch = hook.current[1];
@@ -53,9 +53,9 @@ describe('async atom', () => {
 
 	test('once fetch is resolved, content has the value', async () => {
 		const expected: AsyncSampleState = {
-			ready: true,
-			loading: false,
 			content: { anyProp: 'anyValue' },
+			loading: false,
+			ready: true,
 		};
 
 		const startFetch = hook.current[1];

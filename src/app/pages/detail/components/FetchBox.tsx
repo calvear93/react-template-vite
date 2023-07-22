@@ -4,7 +4,7 @@ import styles from './fetch-box.module.scss';
 import { asyncAtom } from '../atoms/async.atom';
 
 export const FetchBox: React.FC = () => {
-	const [{ loading, content }, dispatchFetch] = useAtom(asyncAtom);
+	const [{ content, loading }, dispatchFetch] = useAtom(asyncAtom);
 
 	return (
 		<div className={styles.box}>

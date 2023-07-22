@@ -36,6 +36,7 @@
 		"testing-library",
 		"promise",
 		"sonarjs",
+		"perfectionist",
 		"unicorn",
 		"regexp",
 		"redos",
@@ -227,6 +228,13 @@
 		"react/self-closing-comp": "warn",
 		"redos/no-vulnerable": ["error"],
 		"require-await": "error",
+		"perfectionist/sort-objects": [
+			"warn",
+			{
+				"type": "natural",
+				"order": "asc"
+			}
+		],
 		"sonarjs/cognitive-complexity": ["warn", 10],
 		"sonarjs/max-switch-cases": ["warn", 15],
 		"sonarjs/no-duplicate-string": ["warn", 3],

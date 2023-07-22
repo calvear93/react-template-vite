@@ -45,8 +45,8 @@ describe('create-router', () => {
 			routes: [
 				{
 					Layout,
-					loading: 'loading',
 					children: [{ Component: Children }],
+					loading: 'loading',
 				},
 			],
 			type: 'memory',

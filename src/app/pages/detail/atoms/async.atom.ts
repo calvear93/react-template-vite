@@ -12,9 +12,9 @@ export interface AsyncSampleState {
 }
 
 const _innerAtom = atom<AsyncSampleState>({
-	ready: false,
-	loading: false,
 	content: {},
+	loading: false,
+	ready: false,
 });
 
 export const asyncAtom = atom(
@@ -22,8 +22,8 @@ export const asyncAtom = atom(
 	async (_get, set) => {
 		set(_innerAtom, (state) => ({
 			...state,
-			ready: false,
 			loading: true,
+			ready: false,
 		}));
 
 		const response = await fetchSampleAsyncMock();
@@ -31,9 +31,9 @@ export const asyncAtom = atom(
 
 		set(_innerAtom, (state) => ({
 			...state,
-			ready: response.status === 200,
-			loading: false,
 			content,
+			loading: false,
+			ready: response.status === 200,
 		}));
 	},
 );

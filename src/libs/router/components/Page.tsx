@@ -12,8 +12,8 @@ export interface PageProps extends React.HTMLAttributes<HTMLElement> {
  * @returns page
  */
 export const Page: React.FC<PageProps> = ({
-	title,
 	children,
+	title,
 	...attrs
 }): React.ReactElement => {
 	// sets up page tab title

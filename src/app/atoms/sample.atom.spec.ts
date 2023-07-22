@@ -13,7 +13,7 @@ describe('sample atom', () => {
 	// hooks
 	beforeAll(() => {
 		// renders the hook
-		({ result: hook, rerender } = renderSampleAtom());
+		({ rerender, result: hook } = renderSampleAtom());
 	});
 
 	// tests

@@ -23,9 +23,9 @@ export const routes = {
 					Component: lazy(() => import('./pages/main/Main.page')),
 				},
 				{
-					path: 'detail/:id?',
 					Component: lazy(() => import('./pages/detail/Detail.page')),
 					loader: () => Promise.resolve('a promise'),
+					path: 'detail/:id?',
 				},
 			],
 		},

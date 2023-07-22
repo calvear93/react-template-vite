@@ -103,11 +103,11 @@ const getRouterFactory = {
  * @returns router with routes preloaded
  */
 export const createRouter = ({
+	fallback,
+	loading,
+	options,
 	routes: routesDef,
 	type = 'browser',
-	loading,
-	fallback,
-	options,
 }: RouterConfig | MemoryRouterConfig): React.FC => {
 	const routes = createRoutes(routesDef);
 

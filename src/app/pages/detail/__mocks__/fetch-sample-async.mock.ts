@@ -6,11 +6,11 @@ export const fetchSampleAsyncMock = (): Promise<{
 		setTimeout(
 			() =>
 				resolve({
-					status: 200,
 					json: () =>
 						Promise.resolve({
 							anyProp: 'anyValue',
 						}),
+					status: 200,
 				}),
 			2500,
 		),

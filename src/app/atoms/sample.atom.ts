@@ -6,16 +6,16 @@ export interface SampleState {
 }
 
 const _innerAtom = atom<SampleState>({
-	status: 0,
 	message: 'loading',
+	status: 0,
 });
 
 export const sampleAtom = atom(
 	(get) => get(_innerAtom).message,
 	(_get, set, status: number) => {
 		set(_innerAtom, {
-			status,
 			message: status === 200 ? 'success' : 'error',
+			status,
 		});
 	},
 );
