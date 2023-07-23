@@ -10,7 +10,12 @@
 	},
 	"coverageAnalysis": "perTest",
 	"reporters": ["clear-text", "progress", "dots", "html", "json"],
-	"ignorePatterns": ["dist", "*.d.ts"],
+	"ignorePatterns": [
+		"dist",
+		"**/*.{d,config,mock,fixture,interface}.{ts,cts,mts}",
+		"**/{index,main}.{ts,cts,mts}",
+		"**/__{tests,mocks,fixtures}__"
+	],
 	"tsconfigFile": "tsconfig.json",
 	"checkers": ["typescript"],
 	"plugins": [
