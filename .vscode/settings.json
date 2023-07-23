@@ -41,7 +41,7 @@
 		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc",
 		"readme*": "changelog*, license*, code_of_conduct*, contributing*",
 		"tsconfig.json": "tsconfig.*.json",
-		"vite.config.ts": "vitest.config.ts, unocss.config.ts"
+		"vite.config.ts": "vitest.config.ts, unocss.config.ts, stryker.conf.*"
 	},
 	"explorer.incrementalNaming": "smart",
 	"explorer.sortOrder": "type",
@@ -55,6 +55,8 @@
 		"**/.history": true,
 		"**/.rollup.cache": true,
 		"**/.svn": true,
+		"**/.swc": true,
+		"**/.stryker-tmp": true,
 		"**/.wireit": true,
 		"**/desktop.ini": true,
 		"**/node_modules": true,
@@ -72,6 +74,8 @@
 		"**/.rollup.cache": true,
 		"**/.vscode": true,
 		"**/.wireit": true,
+		"**/.swc": true,
+		"**/.stryker-tmp": true,
 		"**/build": true,
 		"**/coverage": true,
 		"**/dist": true,
