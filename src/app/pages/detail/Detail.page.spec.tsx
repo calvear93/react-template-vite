@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { createRouter } from '@router';
 import { DetailPage } from './Detail.page';
 
-describe('Detail Page', () => {
+describe(DetailPage, () => {
 	// hooks
 	beforeAll(() => {
 		vi.useFakeTimers();

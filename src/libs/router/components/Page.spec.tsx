@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Page } from './Page';
 
-describe('Page', () => {
+describe(Page, () => {
 	// tests
 	test('sets document title', () => {
 		const title = 'page title';
