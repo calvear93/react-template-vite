@@ -237,7 +237,7 @@
 		],
 		"sonarjs/cognitive-complexity": ["warn", 10],
 		"sonarjs/max-switch-cases": ["warn", 15],
-		"sonarjs/no-duplicate-string": ["warn", 3],
+		"sonarjs/no-duplicate-string": ["warn", { "threshold": 5 }],
 		"tailwindcss/no-custom-classname": "off",
 		"testing-library/no-debugging-utils": "warn",
 		"testing-library/no-render-in-setup": "off",
