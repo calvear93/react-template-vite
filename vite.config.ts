@@ -19,7 +19,6 @@ export default {
 		rollupOptions: {
 			output: {
 				manualChunks: {
-					http: ['ky'],
 					react: ['react', 'react-dom'],
 					router: ['react-router-dom'],
 					store: ['jotai'],
