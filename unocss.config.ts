@@ -1,16 +1,19 @@
 import tailwind from 'unocss/preset-wind';
 import icons from 'unocss/preset-icons';
-import { transformerDirectives, transformerVariantGroup } from 'unocss';
-import type { UserConfig } from 'unocss';
+import {
+	transformerDirectives,
+	transformerVariantGroup,
+	type UserConfig,
+} from 'unocss';
 
-const fontFamily = process.env.FONT_FAMILY;
+const FONT_FAMILY = process.env.FONT_FAMILY;
 
 export default {
 	presets: [tailwind({ preflight: true }), icons({ prefix: '' })],
 	theme: {
 		fontFamily: {
-			sans: [fontFamily, 'sans-serif'],
-			serif: [fontFamily, 'serif'],
+			sans: [FONT_FAMILY, 'sans-serif'],
+			serif: [FONT_FAMILY, 'serif'],
 		},
 	},
 	transformers: [transformerDirectives(), transformerVariantGroup()],
