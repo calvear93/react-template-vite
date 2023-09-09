@@ -21,8 +21,8 @@
 
 		"incremental": true,
 		"sourceMap": true,
-		"declaration": true,
-		"declarationMap": true,
+		"declaration": false,
+		"declarationMap": false,
 
 		"isolatedModules": true,
 		"esModuleInterop": false,

@@ -107,7 +107,7 @@
 		"vite-plugin-svgr": "^3.2.0",
 		"vite-plugin-webfont-dl": "^3.7.6",
 		"vite-plugin-windicss": "^1.9.1",
-		"vite-tsconfig-paths": "^4.2.0",
+		"vite-tsconfig-paths": "^4.2.1",
 		"vitest": "^0.34.4",
 		"vitest-mock-extended": "^1.2.1",
 		"wireit": "^0.13.0"
