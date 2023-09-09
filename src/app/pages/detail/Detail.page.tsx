@@ -7,8 +7,9 @@ import { FetchBox } from './components/FetchBox';
  */
 export const DetailPage: React.FC = (): React.ReactElement => {
 	const { id } = useParams();
-	const aMessage = useLoaderData() as string;
+	const aMessage = useLoaderData<string>();
 
+	// jsx
 	return (
 		<Page title='Detail Page' className={styles.page}>
 			<Link to='/'>Go To Main</Link>
