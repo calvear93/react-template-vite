@@ -44,7 +44,7 @@ WORKDIR '/usr/share/nginx/html'
 # retrieves build app
 RUN rm -rf ./*
 COPY --from=builder ${APP_DIR}${OUT_DIR} .
-COPY --from=builder ${APP_DIR}'deploy/nginx.conf' '/etc/nginx/conf.d/default.conf'
+COPY --from=builder ${APP_DIR}'nginx.conf' '/etc/nginx/conf.d/default.conf'
 # alpine security updates
 RUN apk --no-cache -U upgrade
 

@@ -62,6 +62,18 @@
 -   Execute `pnpm env:schema` command.
 -   Run either `pnpm start:dev` or `pnpm test:dev` commands.
 
+-   Using Docker.
+    -   Exec `docker build --no-cache --build-arg ENV=dev -f Dockerfile --tag image_name .`
+    -   Exec `docker run -d -it -p 8080:8080/tcp --name container_name image_name`
+    -   Open `http://localhost:8080/` in browser
+    -   **CAUTION !!!**: if you use a BASE_PATH different from root '/', create a `dev.env.local.json` file in `env/` with:
+
+```json
+{
+	"BASE_URL": "/"
+}
+```
+
 ## 📋 **Branches and Environments**
 
 Project has 2 environments.

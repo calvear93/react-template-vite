@@ -23,8 +23,8 @@ dependencies:
 
 devDependencies:
   '@calvear/env':
-    specifier: ^2.7.0
-    version: 2.7.0
+    specifier: ^2.8.0
+    version: 2.8.0
   '@stryker-mutator/core':
     specifier: ^7.1.1
     version: 7.1.1
@@ -1491,8 +1491,8 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@calvear/env@2.7.0:
-    resolution: {integrity: sha512-IqswofK4Vq0UtMuxOLPQq9bhZagUTdMzWMo9sadXoD0qBMRxjqiG/cw0cE2WCe47eSN9y0zW5SLdCijeCUtHjg==}
+  /@calvear/env@2.8.0:
+    resolution: {integrity: sha512-rlvJIF8oRnmClgBX34K5XDCCayDqTiuKFFG65nt2kyc8J5gz/5GEn4UXxEHxb5I/GsZofQf85mIqlw+/fWx4oA==}
     engines: {node: ~16.0.0 || >=18}
     hasBin: true
     dependencies:
