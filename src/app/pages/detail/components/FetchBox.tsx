@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { ReactComponent as Logo } from 'app/assets/logo.svg';
+import Logo from 'app/assets/logo.svg?react';
 import styles from './fetch-box.module.scss';
 import { asyncAtom } from '../atoms/async.atom';
 

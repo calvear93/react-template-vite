@@ -4,7 +4,7 @@ import { sampleAtom } from 'app/atoms/sample.atom';
 import { Link, Page } from '@router';
 import styles from './main.page.module.scss';
 import viteLogoUrl from '../../assets/vite.png';
-import { ReactComponent as Logo } from '../../assets/logo.svg';
+import Logo from '../../assets/logo.svg?react';
 
 /**
  * Main page.
