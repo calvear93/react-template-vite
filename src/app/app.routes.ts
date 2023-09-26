@@ -11,6 +11,10 @@ import { AppLayout } from './layouts/app/App.layout';
  * routes, for example 'app', 'public',
  * 'private', etc.
  *
+ * [!] Be sure your Layout is defined
+ * in parent route, due to <Outlet />
+ * that renderices children only.
+ *
  * This routes should be used in createRouter
  * function from \@router module.
  */
