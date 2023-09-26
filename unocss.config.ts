@@ -17,4 +17,4 @@ export default {
 		},
 	},
 	transformers: [transformerDirectives(), transformerVariantGroup()],
-} as UserConfig;
+} satisfies UserConfig;

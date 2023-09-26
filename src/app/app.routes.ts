@@ -33,5 +33,5 @@ export const routes = {
 				},
 			],
 		},
-	] as RouteDefinition[],
+	] satisfies RouteDefinition[],
 };
