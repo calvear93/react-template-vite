@@ -1,9 +1,8 @@
 import type { UserConfigExport } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import svg from 'vite-plugin-svgr';
 
 export default {
-	plugins: [svg(), tsconfigPaths()],
+	plugins: [tsconfigPaths()],
 	test: {
 		coverage: {
 			all: true,

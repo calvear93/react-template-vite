@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import Logo from 'app/assets/logo.svg?react';
+import Logo from 'app/assets/logo.svg';
 import styles from './fetch-box.module.scss';
 import { asyncAtom } from '../atoms/async.atom';
 
@@ -8,7 +8,8 @@ export const FetchBox: React.FC = () => {
 
 	return (
 		<div className={styles.box}>
-			<Logo style={{ height: 128, width: 128 }} className={styles.logo} />
+			<img className={styles.logo} src={Logo} alt='logo' />
+
 			<button className={styles.button} onClick={dispatchFetch}>
 				Fetch
 			</button>

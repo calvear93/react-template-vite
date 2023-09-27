@@ -1,6 +1,5 @@
 import tsconfigPaths from 'vite-tsconfig-paths';
 import fonts from 'vite-plugin-webfont-dl';
-import svg from 'vite-plugin-svgr';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
 import { createHtmlPlugin as html } from 'vite-plugin-html';
 import { checker } from 'vite-plugin-checker';
@@ -41,7 +40,6 @@ export default {
 		}),
 		react(),
 		css(),
-		svg(),
 		tsconfigPaths(),
 		fonts(
 			[
