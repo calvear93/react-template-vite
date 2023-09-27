@@ -38,7 +38,7 @@
 		"dockerfile": ".dockerignore, docker-compose.*, dockerfile*",
 		"main.ts": "*.config.ts, *.d.ts",
 		"main.tsx": "*.config.ts, *.d.ts",
-		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc",
+		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc, .pnp.cjs",
 		"readme*": "changelog*, license*, code_of_conduct*, contributing*",
 		"tsconfig.json": "tsconfig.*.json",
 		"vite.config.ts": "vitest.config.ts, unocss.config.ts, stryker.conf.*"
