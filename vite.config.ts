@@ -1,7 +1,6 @@
 import tsconfigPaths from 'vite-tsconfig-paths';
 import fonts from 'vite-plugin-webfont-dl';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
-import { createHtmlPlugin as html } from 'vite-plugin-html';
 import { checker } from 'vite-plugin-checker';
 import { normalizePath, type UserConfigExport } from 'vite';
 import css from 'unocss/vite';
@@ -47,12 +46,6 @@ export default {
 			],
 			{ injectAsStyleTag: false },
 		),
-		html({
-			inject: {
-				data: process.env,
-			},
-			minify: true,
-		}),
 		pwa({
 			devOptions: {
 				enabled: false,
@@ -70,11 +63,9 @@ export default {
 	],
 	preview: {
 		cors: true,
-		https: process.env.HTTPS === 'true',
 		open: true,
 	},
 	server: {
-		https: process.env.HTTPS === 'true',
 		open: true,
 		port: +process.env.PORT!,
 	},

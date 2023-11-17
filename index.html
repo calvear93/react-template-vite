@@ -2,14 +2,13 @@
 
 <html
 	xmlns="http://www.w3.org/1999/xhtml"
-	lang="<%= LANG %>"
-	xml:lang="<%= LANG %>"
+	lang="en-US"
 >
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="theme-color" content="#1976D2" />
-		<meta name="description" content="<%= VITE_APP_TITLE %>" />
+		<meta name="description" content="%VITE_APP_TITLE%" />
 
 		<link rel="icon" href="/icons/favicon.ico" />
 		<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
@@ -24,11 +23,16 @@
 		-->
 		<link rel="manifest" href="/site.webmanifest" />
 
-		<title><%= VITE_APP_TITLE %></title>
+		<title>%VITE_APP_TITLE%</title>
+		<meta name="application-name" content="%VITE_APP_TITLE%" />
+		<meta
+			name="apple-mobile-web-app-title"
+			content="%VITE_APP_TITLE%"
+		/>
 	</head>
 
 	<body>
-		<noscript><%= VITE_APP_NO_SCRIPT %></noscript>
+		<noscript>%VITE_APP_NO_SCRIPT%</noscript>
 
 		<app id="app"></app>
 
