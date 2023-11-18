@@ -1,3 +1,4 @@
+.reports
+.rollup.cache
 build
 dist
-.rollup.cache
