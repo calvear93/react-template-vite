@@ -17,35 +17,6 @@
   </a>
 </p>
 
-## ⛩ **Structure**
-
-```bash
-├── env/
-│   └── appsettings.json
-├── src/
-│   ├── __tests__/
-│   ├── app/
-│   │   ├── assets/
-│   │   │   └── assets.d.ts
-│   │   ├── components/
-│   │   ├── layouts/
-│   │   ├── pages/ # app pages, loaded in app/app.routes.ts
-│   │   ├── slices/
-│   │   ├── styles/
-│   │   ├── App.tsx
-│   │   ├──  app.routes.ts
-│   │   ├──  App.store.tsx
-│   │   └──  App.router.tsx
-│   ├── libs/
-│   │   └── router/ # routing using react router v6
-│   ├── env.d.ts
-│   └── main.tsx # entry file
-├── index.html # entry SPA HTML
-├── Dockerfile
-├── tsconfig.json
-└── package.json
-```
-
 ## 📥 **Getting Started**
 
 -   Replace globally these terms:
