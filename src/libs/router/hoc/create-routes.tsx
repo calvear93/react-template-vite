@@ -1,12 +1,12 @@
 /* eslint-disable react/no-multi-comp */
 import { Outlet, type RouteObject } from 'react-router-dom';
 import { Suspense } from 'react';
-import {
-	type LayoutRouteComponent,
-	type ComponentRoute,
-	type RouteDefinition,
-} from '../types/route';
-import { isLayoutRoute } from '../types/is-layout-route';
+import type {
+	LayoutRouteComponent,
+	ComponentRoute,
+	RouteDefinition,
+} from '../types/route.d.ts';
+import { isLayoutRoute } from '../types/is-layout-route.ts';
 
 const renderLayout = (
 	Layout: LayoutRouteComponent,

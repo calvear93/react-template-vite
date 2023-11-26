@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { renderHook } from '@testing-library/react';
-import { useDocumentTitle, useHashValue } from './router.hook';
+import { useDocumentTitle, useHashValue } from './router.hook.ts';
 
 describe('router hooks', () => {
 	// tests

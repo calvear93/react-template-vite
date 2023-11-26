@@ -23,11 +23,13 @@
 		"sourceMap": true,
 		"declaration": false,
 		"declarationMap": false,
+		"noEmit": true,
 
 		"isolatedModules": true,
 		"esModuleInterop": false,
 		"importHelpers": false,
 		"allowSyntheticDefaultImports": true,
+		"allowImportingTsExtensions": true,
 
 		"strict": true,
 		"noUnusedLocals": false,

@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, test } from 'vitest';
-import { routes } from 'app/app.routes';
 import { render, screen } from '@testing-library/react';
 import { createRouter } from '@router';
+import { routes } from '../app/app.routes.ts';
 
 describe('App', () => {
 	const env = import.meta.env.VITE_APP_ENV;

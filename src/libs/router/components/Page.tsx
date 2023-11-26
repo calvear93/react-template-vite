@@ -1,4 +1,4 @@
-import { useDocumentTitle } from '../router.hook';
+import { useDocumentTitle } from '../router.hook.ts';
 
 export interface PageProps extends React.HTMLAttributes<HTMLElement> {
 	title: string;

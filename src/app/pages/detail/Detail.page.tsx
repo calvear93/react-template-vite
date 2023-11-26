@@ -1,6 +1,6 @@
 import { Link, Page, useLoaderData, useParams } from '@router';
 import styles from './detail.page.module.scss';
-import { FetchBox } from './components/FetchBox';
+import { FetchBox } from './components/FetchBox.tsx';
 
 /**
  * Detail page.

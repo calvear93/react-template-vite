@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
-import Logo from 'app/assets/logo.svg';
 import styles from './fetch-box.module.scss';
-import { asyncAtom } from '../atoms/async.atom';
+import { asyncAtom } from '../atoms/async.atom.ts';
+import Logo from '../../../assets/logo.svg';
 
 export const FetchBox: React.FC = () => {
 	const [{ content, loading }, dispatchFetch] = useAtom(asyncAtom);

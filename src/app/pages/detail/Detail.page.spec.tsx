@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createRouter } from '@router';
-import { DetailPage } from './Detail.page';
+import { DetailPage } from './Detail.page.tsx';
 
 describe(DetailPage, () => {
 	// hooks

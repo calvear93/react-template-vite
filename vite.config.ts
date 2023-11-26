@@ -5,6 +5,7 @@ import { checker } from 'vite-plugin-checker';
 import { normalizePath, type UserConfigExport } from 'vite';
 import css from 'unocss/vite';
 import react from '@vitejs/plugin-react-swc';
+import { compilerOptions } from './tsconfig.json';
 
 const FONT_FAMILY = process.env.FONT_FAMILY;
 const FONT_WEIGHTS = process.env.FONT_WEIGHTS;
@@ -21,6 +22,7 @@ export default {
 					router: ['react-router-dom'],
 					store: ['jotai'],
 				},
+				sourcemap: compilerOptions.sourceMap,
 			},
 		},
 		sourcemap: process.env.SOURCEMAP === 'true',

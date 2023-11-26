@@ -1,4 +1,4 @@
-import { AppRouter } from './App.router';
+import { AppRouter } from './App.router.tsx';
 import './styles/app.scss';
 
 /**

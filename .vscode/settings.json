@@ -89,7 +89,7 @@
 	"typescript.disableAutomaticTypeAcquisition": true,
 	"typescript.preferGoToSourceDefinition": true,
 	"typescript.preferences.importModuleSpecifier": "shortest",
-	"typescript.preferences.importModuleSpecifierEnding": "minimal",
+	"typescript.preferences.importModuleSpecifierEnding": "js",
 	"typescript.preferences.jsxAttributeCompletionStyle": "auto",
 	"typescript.preferences.quoteStyle": "single",
 	"typescript.preferences.renameMatchingJsxTags": true,

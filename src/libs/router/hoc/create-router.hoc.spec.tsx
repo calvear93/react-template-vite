@@ -1,6 +1,6 @@
 import { afterEach, describe, test } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
-import { createRouter } from './create-router.hoc';
+import { createRouter } from './create-router.hoc.tsx';
 
 describe('create-router', () => {
 	const Layout = ({ children }: React.PropsWithChildren) => (

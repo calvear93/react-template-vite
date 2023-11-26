@@ -5,8 +5,8 @@ import {
 	createMemoryRouter,
 } from 'react-router-dom';
 import { Suspense } from 'react';
-import { createRoutes } from './create-routes';
-import { type RouteDefinition } from '../types/route';
+import { createRoutes } from './create-routes.tsx';
+import type { RouteDefinition } from '../types/route.d.ts';
 
 interface RouterOptions {
 	basename?: string;

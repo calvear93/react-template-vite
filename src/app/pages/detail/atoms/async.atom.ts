@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { fetchSampleAsyncMock } from '../__mocks__/fetch-sample-async.mock';
+import { fetchSampleAsyncMock } from '../__mocks__/fetch-sample-async.mock.ts';
 
 export interface AsyncSampleResult {
 	anyProp?: string;

@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, test } from 'vitest';
 import { useAtom } from 'jotai';
 import { renderHook } from '@testing-library/react';
-import { sampleAtom } from './sample.atom';
+import { sampleAtom } from './sample.atom.ts';
 
 const renderSampleAtom = () => renderHook(() => useAtom(sampleAtom));
 type HookCurrent = ReturnType<typeof renderSampleAtom>['result'];
