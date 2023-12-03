@@ -57,7 +57,9 @@ export default {
 			registerType: 'autoUpdate',
 			workbox: {
 				cleanupOutdatedCaches: true,
-				globPatterns: ['**/*.{html,js,css,ico,png,svg,woff2}'],
+				globPatterns: [
+					'**/*.{html,js,css,ico,png,svg,webp,avif,woff2}',
+				],
 				sourcemap: process.env.SOURCEMAP === 'true',
 			},
 		}),
@@ -67,6 +69,7 @@ export default {
 		open: true,
 	},
 	server: {
+		cors: true,
 		open: true,
 		port: +process.env.PORT!,
 	},

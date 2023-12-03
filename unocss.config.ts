@@ -1,4 +1,5 @@
-import tailwind from 'unocss/preset-wind';
+import wind from 'unocss/preset-wind';
+import typography from 'unocss/preset-typography';
 import icons from 'unocss/preset-icons';
 import {
 	transformerDirectives,
@@ -9,7 +10,7 @@ import {
 const FONT_FAMILY = process.env.FONT_FAMILY;
 
 export default {
-	presets: [tailwind({ preflight: true }), icons({ prefix: '' })],
+	presets: [typography(), wind({ preflight: true }), icons({ prefix: '' })],
 	theme: {
 		fontFamily: {
 			sans: [FONT_FAMILY, 'sans-serif'],
