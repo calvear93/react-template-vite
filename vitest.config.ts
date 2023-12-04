@@ -5,9 +5,8 @@ export default {
 	plugins: [tsconfigPaths()],
 	test: {
 		coverage: {
-			all: true,
 			exclude: [
-				'**/*.{d,config,mock,fixture}.{ts,cts,mts,tsx}',
+				'**/*.{d,config,mock,fixture,interface,bench}.{ts,cts,mts,tsx}',
 				'**/{index,main}.{ts,cts,mts,tsx}',
 				'**/__{tests,mocks,fixtures}__',
 			],
@@ -19,7 +18,5 @@ export default {
 		include: ['src/**/*.{spec,test}.{ts,cts,mts,tsx}'],
 		reporters: ['verbose'],
 		setupFiles: ['@testing-library/react/dont-cleanup-after-each'],
-		silent: false,
-		testTimeout: 6000,
 	},
 } satisfies UserConfigExport;
