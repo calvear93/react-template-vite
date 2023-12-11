@@ -25,7 +25,6 @@
     -   `(((app-name)))` app name, i.e. home-web
     -   `(((app-title)))` app title, i.e. Sample API
     -   `(((project-name)))` project name, i.e. my-project
-    -   `(((project-description)))` project description, i.e. API for manage user data
 
 -   Install [NodeJS](https://nodejs.org/es/).
 -   Install [PNPM](https://pnpm.io/installation)
@@ -37,13 +36,6 @@
     -   Exec `docker build --no-cache --build-arg ENV=dev -f Dockerfile --tag image_name .`
     -   Exec `docker run -d -it -p 8080:8080/tcp --name container_name image_name`
     -   Open `http://localhost:8080/` in browser
-    -   **CAUTION !!!**: if you use a BASE_PATH different from root '/', create a `dev.env.local.json` file in `env/` with:
-
-```json
-{
-	"BASE_URL": "/"
-}
-```
 
 ## 📋 **Branches and Environments**
 
@@ -62,11 +54,9 @@ it environment may be 'dev' or 'release'.
 | ---------------------------- | ---------------------------- |
 | pnpm start:`<env>`           | executes the app             |
 | pnpm build:`<env>`           | build the app                |
+| pnpm preview                 | builds and server app        |
 | pnpm test:`<env>`            | executes tests               |
 | pnpm test:`<env>` --coverage | executes tests with coverage |
 | pnpm env:schema              | updates env JSON schema      |
 | pnpm format                  | code format                  |
-| pnpm lint                    | code review                  |
-| pnpm lint -- -- --fix        | code review/fix              |
-| pnpm stylelint               | stylesheets review           |
-| pnpm stylelint -- -- --fix   | stylesheets review/fix       |
+| pnpm lint                    | code/styles review           |
