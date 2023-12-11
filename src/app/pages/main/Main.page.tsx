@@ -29,7 +29,7 @@ export const MainPage: React.FC = (): React.ReactElement => {
 			</h1>
 
 			<h2>{import.meta.env.VITE_APP_ENV}</h2>
-			<h3 className='font-bold text-green-700'>{message}</h3>
+			<h3 className='text-green-700 font-bold'>{message}</h3>
 
 			<img width='10%' src={Logo} alt='logo' />
 			<img width='10%' src={viteLogoUrl} alt='vite logo' />

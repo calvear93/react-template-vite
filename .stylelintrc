@@ -3,14 +3,12 @@
 	"plugins": [
 		"stylelint-prettier",
 		"stylelint-scss",
-		"stylelint-declaration-block-no-ignored-properties",
 		"stylelint-order",
 		"stylelint-config-rational-order/plugin"
 	],
 	"extends": [
 		"stylelint-config-standard",
-		"stylelint-config-standard-scss",
-		"stylelint-config-css-modules"
+		"stylelint-config-standard-scss"
 	],
 	"rules": {
 		"prettier/prettier": true,
@@ -36,7 +34,6 @@
 				"empty-line-between-groups": false
 			}
 		],
-		"plugin/declaration-block-no-ignored-properties": true,
 		"scss/at-rule-no-unknown": [
 			true,
 			{
