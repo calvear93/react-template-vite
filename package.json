@@ -191,18 +191,5 @@
 		"node": ">=20",
 		"npm": ">=9",
 		"pnpm": ">=8"
-	},
-	"browserslist": {
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		],
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all",
-			"not ie <= 10"
-		]
 	}
 }
