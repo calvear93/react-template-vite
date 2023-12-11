@@ -16,7 +16,7 @@
 		"abc": "stylelint --cache src/**/*.{css,scss,sass}",
 		"lint": "wireit",
 		"format": "wireit",
-		"clean": "pnpx del-cli **/node_modules **/dist **/.reports **/*.tsbuildinfo **/.wireit",
+		"clean": "pnpx del-cli dist reports **/*.tsbuildinfo .wireit .swc .node_modules",
 		"preview": "wireit"
 	},
 	"license": "MIT",
