@@ -1,3 +1,5 @@
+type MODE = 'development' | 'production' | 'test';
+
 /**
  * Global types definition for
  * environment variables.
@@ -5,8 +7,9 @@
  * @remarks environment variables schema
  */
 interface ImportMetaEnv {
-	readonly NODE_ENV: 'development' | 'production' | 'test';
-	readonly MODE: 'dev' | 'release';
+	readonly NODE_ENV: MODE;
+	readonly MODE: MODE;
+	readonly APP_ENV: 'dev' | 'release';
 
 	readonly DEV: 'true' | 'false';
 	readonly PROD: 'true' | 'false';

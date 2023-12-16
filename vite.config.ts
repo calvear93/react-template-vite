@@ -28,7 +28,7 @@ export default {
 		target: tsconfig.target,
 	},
 	clearScreen: false,
-	mode: process.env.MODE,
+	envPrefix: 'APP_',
 	plugins: [
 		checker({
 			enableBuild: true,
