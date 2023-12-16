@@ -87,7 +87,6 @@
 	"stylelint.validate": ["css", "postcss", "scss", "sass"],
 	"typescript.autoClosingTags": true,
 	"typescript.disableAutomaticTypeAcquisition": true,
-	"typescript.preferGoToSourceDefinition": true,
 	"typescript.preferences.importModuleSpecifier": "shortest",
 	"typescript.preferences.importModuleSpecifierEnding": "js",
 	"typescript.preferences.jsxAttributeCompletionStyle": "auto",
