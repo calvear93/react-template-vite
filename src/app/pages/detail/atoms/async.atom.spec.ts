@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { useAtom } from 'jotai';
 import { renderHook } from '@testing-library/react';
