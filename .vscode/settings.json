@@ -95,5 +95,8 @@
 	"typescript.suggest.autoImports": true,
 	"typescript.tsdk": "node_modules\\typescript\\lib",
 	"typescript.validate.enable": true,
-	"yaml.format.singleQuote": true
+	"yaml.format.singleQuote": true,
+	"[scss]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }
