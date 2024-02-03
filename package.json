@@ -1,4 +1,5 @@
 {
+	"$schema": "https://json.schemastore.org/package.json",
 	"version": "0.0.1",
 	"project": "(((project-name)))",
 	"name": "(((app-name)))",
@@ -33,26 +34,26 @@
 	],
 	"type": "module",
 	"dependencies": {
-		"jotai": "2.6.3",
+		"jotai": "2.6.4",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"react-router-dom": "6.21.3"
+		"react-router-dom": "6.22.0"
 	},
 	"devDependencies": {
 		"@calvear/env": "2.9.2",
-		"@stryker-mutator/core": "8.0.0",
-		"@stryker-mutator/typescript-checker": "8.0.0",
-		"@stryker-mutator/vitest-runner": "8.0.0",
+		"@stryker-mutator/core": "8.2.3",
+		"@stryker-mutator/typescript-checker": "8.2.3",
+		"@stryker-mutator/vitest-runner": "8.2.3",
 		"@testing-library/dom": "9.3.4",
-		"@testing-library/react": "14.1.2",
+		"@testing-library/react": "14.2.1",
 		"@testing-library/user-event": "14.5.2",
-		"@types/node": "20.11.9",
-		"@types/react": "18.2.48",
+		"@types/node": "20.11.16",
+		"@types/react": "18.2.52",
 		"@types/react-dom": "18.2.18",
-		"@typescript-eslint/eslint-plugin": "6.19.1",
-		"@typescript-eslint/parser": "6.19.1",
+		"@typescript-eslint/eslint-plugin": "6.20.0",
+		"@typescript-eslint/parser": "6.20.0",
 		"@unocss/eslint-config": "0.58.4",
-		"@vitejs/plugin-react-swc": "3.5.0",
+		"@vitejs/plugin-react-swc": "3.6.0",
 		"@vitest/coverage-v8": "1.2.2",
 		"eslint": "8.56.0",
 		"eslint-config-prettier": "9.1.0",
@@ -69,12 +70,12 @@
 		"eslint-plugin-testing-library": "6.2.0",
 		"eslint-plugin-tsdoc": "0.2.17",
 		"eslint-plugin-unicorn": "50.0.1",
-		"eslint-plugin-vitest": "0.3.20",
+		"eslint-plugin-vitest": "0.3.21",
 		"jsdom": "24.0.0",
 		"postcss": "8.4.33",
 		"prettier": "3.2.4",
 		"sass": "1.70.0",
-		"stylelint": "16.2.0",
+		"stylelint": "16.2.1",
 		"stylelint-config-rational-order": "0.1.2",
 		"stylelint-config-recommended": "14.0.0",
 		"stylelint-config-standard": "36.0.0",
@@ -86,7 +87,7 @@
 		"typescript": "5.3.3",
 		"unocss": "0.58.4",
 		"vite": "5.0.12",
-		"vite-plugin-checker": "0.6.2",
+		"vite-plugin-checker": "0.6.4",
 		"vite-plugin-pwa": "0.17.5",
 		"vite-plugin-webfont-dl": "3.9.1",
 		"vite-tsconfig-paths": "4.3.1",
@@ -152,9 +153,9 @@
 			]
 		},
 		"lint": {
-			"command": "eslint --cache src/**/*.{ts,cts,mts,tsx}",
+			"command": "eslint --cache src/**/*.{ts,cts,mts,tsx} --cache-location node_modules/.cache/eslint/",
 			"output": [
-				".eslintcache"
+				"./node_modules/.cache/eslint/"
 			],
 			"files": [
 				".eslintrc",
@@ -166,9 +167,9 @@
 			]
 		},
 		"stylelint": {
-			"command": "stylelint --cache src/**/*.{css,scss,sass}",
+			"command": "stylelint --cache src/**/*.{css,scss,sass} --cache-location node_modules/.cache/stylelint/",
 			"output": [
-				".stylelintcache"
+				"./node_modules/.cache/stylelint/"
 			],
 			"files": [
 				".stylelintrc",
