@@ -21,11 +21,8 @@ interface ImportMetaEnv {
 	readonly BASE_URL: string;
 
 	// SECTION: project info from package.json
-	readonly VITE_APP_VERSION: string;
-	readonly VITE_APP_PROJECT: string;
-	readonly VITE_APP_NAME: string;
-	readonly VITE_APP_TITLE: string;
-	readonly VITE_APP_DESCRIPTION: string;
+	readonly APP_VERSION: string;
+	readonly APP_NAME: string;
 }
 
 interface ImportMeta {

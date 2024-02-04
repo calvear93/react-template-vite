@@ -1,7 +1,7 @@
 {
-	"expand": false,
+	"$schema": "../../node_modules/@calvear/env/schemas/settings.schema.json",
+	"expand": true,
 	"nullable": false,
 	"schemaValidate": true,
-	"nestingDelimiter": "_",
-	"packageInfoPrefix": "VITE_APP_"
+	"nestingDelimiter": "_"
 }

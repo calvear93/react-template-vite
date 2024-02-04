@@ -4,7 +4,7 @@ import { createRouter } from '@router';
 import { routes } from '../app/app.routes.ts';
 
 describe('App', () => {
-	const env = import.meta.env.VITE_APP_ENV;
+	const env = import.meta.env.APP_ENV;
 
 	// hooks
 	beforeAll(async () => {

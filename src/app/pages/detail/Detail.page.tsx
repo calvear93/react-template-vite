@@ -14,7 +14,7 @@ export const DetailPage: React.FC = (): React.ReactElement => {
 		<Page title='Detail Page' className={styles.page}>
 			<Link to='/'>Go To Main</Link>
 
-			<h2>{import.meta.env.VITE_APP_ENV}</h2>
+			<h2>{import.meta.env.APP_ENV}</h2>
 			{id && <h2>ID: {id}</h2>}
 			<h4>message: {aMessage}</h4>
 

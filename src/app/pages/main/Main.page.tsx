@@ -28,7 +28,7 @@ export const MainPage: React.FC = (): React.ReactElement => {
 				<div className='mdi-alarm text-orange-400' />
 			</h1>
 
-			<h2>{import.meta.env.VITE_APP_ENV}</h2>
+			<h2>{import.meta.env.APP_ENV}</h2>
 			<h3 className='text-green-700 font-bold'>{message}</h3>
 
 			<img width='10%' src={Logo} alt='logo' />
