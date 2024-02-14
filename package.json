@@ -40,7 +40,7 @@
 		"react-router-dom": "6.22.0"
 	},
 	"devDependencies": {
-		"@calvear/env": "2.10.1",
+		"@calvear/env": "2.10.2",
 		"@stryker-mutator/core": "8.2.3",
 		"@stryker-mutator/typescript-checker": "8.2.3",
 		"@stryker-mutator/vitest-runner": "8.2.3",
@@ -50,8 +50,8 @@
 		"@types/node": "20.11.17",
 		"@types/react": "18.2.55",
 		"@types/react-dom": "18.2.19",
-		"@typescript-eslint/eslint-plugin": "6.21.0",
-		"@typescript-eslint/parser": "6.21.0",
+		"@typescript-eslint/eslint-plugin": "7.0.1",
+		"@typescript-eslint/parser": "7.0.1",
 		"@unocss/eslint-config": "0.58.5",
 		"@vitejs/plugin-react-swc": "3.6.0",
 		"@vitest/coverage-v8": "1.2.2",
@@ -66,7 +66,7 @@
 		"eslint-plugin-react-hooks": "4.6.0",
 		"eslint-plugin-redos": "4.4.5",
 		"eslint-plugin-regexp": "2.2.0",
-		"eslint-plugin-sonarjs": "0.23.0",
+		"eslint-plugin-sonarjs": "0.24.0",
 		"eslint-plugin-testing-library": "6.2.0",
 		"eslint-plugin-tsdoc": "0.2.17",
 		"eslint-plugin-unicorn": "51.0.1",
