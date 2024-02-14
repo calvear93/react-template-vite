@@ -61,7 +61,7 @@ export default {
 				globPatterns: [
 					'**/*.{html,js,css,ico,png,svg,webp,avif,woff2}',
 				],
-				sourcemap: process.env.SOURCEMAP === 'true',
+				sourcemap: tsconfig.sourceMap,
 			},
 		}),
 	],
