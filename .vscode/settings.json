@@ -5,6 +5,9 @@
 	"[javascript][typescript][javascriptreact][typescriptreact]": {
 		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
 	},
+	"[scss]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
 	"css.lint.unknownAtRules": "ignore",
 	"editor.detectIndentation": true,
 	"editor.linkedEditing": true,
@@ -90,13 +93,12 @@
 	"typescript.preferences.importModuleSpecifier": "shortest",
 	"typescript.preferences.importModuleSpecifierEnding": "js",
 	"typescript.preferences.jsxAttributeCompletionStyle": "auto",
+	"typescript.preferences.preferTypeOnlyAutoImports": true,
 	"typescript.preferences.quoteStyle": "single",
 	"typescript.preferences.renameMatchingJsxTags": true,
+	"typescript.preferences.useAliasesForRenames": false,
 	"typescript.suggest.autoImports": true,
 	"typescript.tsdk": "node_modules\\typescript\\lib",
 	"typescript.validate.enable": true,
-	"yaml.format.singleQuote": true,
-	"[scss]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	}
+	"yaml.format.singleQuote": true
 }
