@@ -32,10 +32,6 @@ export default {
 	plugins: [
 		checker({
 			enableBuild: true,
-			eslint: {
-				dev: { logLevel: ['error'] },
-				lintCommand: 'eslint --cache src/**/*.{ts,cts,mts,tsx}',
-			},
 			terminal: false,
 			typescript: true,
 		}),
