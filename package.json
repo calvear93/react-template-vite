@@ -13,7 +13,7 @@
 		"test:release": "env -e release -m test : vitest",
 		"test:mutation": "env -e dev -m test : stryker run",
 		"env:schema": "wireit",
-		"abc": "stylelint --cache src/**/*.{css,scss,sass}",
+		"stylelint": "stylelint --cache src/**/*.{css,scss,sass}",
 		"lint": "wireit",
 		"format": "wireit",
 		"clean": "pnpx del-cli dist reports **/*.tsbuildinfo .wireit .swc .node_modules",
