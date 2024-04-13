@@ -5,9 +5,6 @@
 	"[javascript][typescript][javascriptreact][typescriptreact]": {
 		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
 	},
-	"[scss]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
 	"css.lint.unknownAtRules": "ignore",
 	"editor.detectIndentation": true,
 	"editor.linkedEditing": true,
@@ -37,8 +34,8 @@
 		"*.mts": "${capture}.mts.*",
 		"*.ts": "${capture}.*",
 		"*.tsx": "${capture}.*",
-		".eslintrc*": ".eslintignore, .prettierrc*, .prettierignore, .stylelintrc*, .stylelintignore",
 		"dockerfile": ".dockerignore, docker-compose.*, dockerfile*",
+		"eslint.config.js": ".prettierrc*, .prettierignore, .stylelintrc*, .stylelintignore",
 		"main.ts": "*.config.ts, *.d.ts",
 		"main.tsx": "*.config.ts, *.d.ts",
 		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc, .pnp.cjs",
@@ -100,5 +97,10 @@
 	"typescript.suggest.autoImports": true,
 	"typescript.tsdk": "node_modules\\typescript\\lib",
 	"typescript.validate.enable": true,
+	"workbench.editor.customLabels.patterns": {
+		"**/*.{spec,test}.*": "🧪 ${filename}.${extname}",
+		"env/*.env.json": "🌐 ${filename}.${extname}",
+		"env/appsettings.json": "🌐 ${filename}.${extname}"
+	},
 	"yaml.format.singleQuote": true
 }

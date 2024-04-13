@@ -2,6 +2,7 @@ import type { UserConfigExport } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default {
+	clearScreen: false,
 	plugins: [tsconfigPaths()],
 	test: {
 		coverage: {

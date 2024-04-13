@@ -1,10 +1,10 @@
 ###
-###   REACT SPA with NGINX
+###   NGINX: REACT using VITE
 ###
 
 # global variables
 # https://hub.docker.com/_/node
-ARG ALPINE=node:20.12.1-alpine
+ARG ALPINE=node:20.12.2-alpine
 # https://hub.docker.com/_/nginx
 ARG NGINX=nginx:1.25.4-alpine
 ARG PNPM_VER=8.15.6
