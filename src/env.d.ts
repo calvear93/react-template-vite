@@ -7,22 +7,22 @@ type MODE = 'development' | 'production' | 'test';
  * @remarks environment variables schema
  */
 interface ImportMetaEnv {
-	readonly NODE_ENV: MODE;
-	readonly MODE: MODE;
 	readonly APP_ENV: 'dev' | 'release';
+	readonly MODE: MODE;
+	readonly NODE_ENV: MODE;
 
-	readonly DEV: 'true' | 'false';
-	readonly PROD: 'true' | 'false';
-	readonly VITEST: 'true' | 'false';
-	readonly SSR: 'true' | 'false';
+	readonly DEV: 'false' | 'true';
+	readonly PROD: 'false' | 'true';
+	readonly SSR: 'false' | 'true';
+	readonly VITEST: 'false' | 'true';
 
 	// SECTION: base config
-	readonly PORT: string;
 	readonly BASE_URL: string;
+	readonly PORT: string;
 
 	// SECTION: project info from package.json
-	readonly APP_VERSION: string;
 	readonly APP_NAME: string;
+	readonly APP_VERSION: string;
 }
 
 interface ImportMeta {

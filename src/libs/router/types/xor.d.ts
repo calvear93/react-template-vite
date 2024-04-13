@@ -3,5 +3,5 @@ export type Without<T, U> = {
 };
 
 export type XOR<T, U> = T | U extends object
-	? (Without<T, U> & U) | (Without<U, T> & T)
+	? (T & Without<U, T>) | (U & Without<T, U>)
 	: T | U;

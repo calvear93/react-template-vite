@@ -6,9 +6,9 @@ export interface AsyncSampleResult {
 }
 
 export interface AsyncSampleState {
-	ready: boolean;
-	loading: boolean;
 	content: AsyncSampleResult;
+	loading: boolean;
+	ready: boolean;
 }
 
 const _innerAtom = atom<AsyncSampleState>({

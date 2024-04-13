@@ -1,5 +1,5 @@
-import { afterEach, describe, test } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, describe, test } from 'vitest';
 import { createRouter } from './create-router.hoc.tsx';
 
 describe('create-router', () => {

@@ -1,11 +1,11 @@
-import wind from 'unocss/preset-wind';
-import typography from 'unocss/preset-typography';
-import icons from 'unocss/preset-icons';
 import {
+	type UserConfig,
 	transformerDirectives,
 	transformerVariantGroup,
-	type UserConfig,
 } from 'unocss';
+import icons from 'unocss/preset-icons';
+import typography from 'unocss/preset-typography';
+import wind from 'unocss/preset-wind';
 
 const FONT_FAMILY = process.env.FONT_FAMILY;
 

@@ -29,8 +29,7 @@
 		"typescript",
 		"spa",
 		"pwa",
-		"unocss",
-		"tailwind"
+		"unocss"
 	],
 	"type": "module",
 	"dependencies": {
@@ -158,7 +157,7 @@
 			],
 			"files": [
 				"eslint.config.js",
-				"**/*.{js,mjs,cjs,ts,cts,mts,jsx,tsx,json}"
+				"**/*.{js,mjs,cjs,jsx,ts,cts,mts,tsx,json}"
 			],
 			"dependencies": [
 				"stylelint"

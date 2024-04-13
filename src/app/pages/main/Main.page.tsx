@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useAtom } from 'jotai';
 import { Link, Page } from '@router';
-import styles from './main.page.module.scss';
-import { sampleAtom } from '../../atoms/sample.atom.ts';
-import viteLogoUrl from '../../assets/vite.png';
+import { useAtom } from 'jotai';
+import { useEffect } from 'react';
 import Logo from '../../assets/logo.svg';
+import viteLogoUrl from '../../assets/vite.png';
+import { sampleAtom } from '../../atoms/sample.atom.ts';
+import styles from './main.page.module.scss';
 
 /**
  * Main page.
@@ -19,7 +19,7 @@ export const MainPage: React.FC = (): React.ReactElement => {
 
 	// jsx
 	return (
-		<Page title='Main Page' className={styles.page}>
+		<Page className={styles.page} title='Main Page'>
 			<Link to='/detail'>Go To Detail</Link>
 			<Link to='/detail/123'>Go To Detail 123</Link>
 
@@ -31,8 +31,8 @@ export const MainPage: React.FC = (): React.ReactElement => {
 			<h2>{import.meta.env.APP_ENV}</h2>
 			<h3 className='text-green-700 font-bold'>{message}</h3>
 
-			<img width='10%' src={Logo} alt='logo' />
-			<img width='10%' src={viteLogoUrl} alt='vite logo' />
+			<img alt='logo' src={Logo} width='10%' />
+			<img alt='vite logo' src={viteLogoUrl} width='10%' />
 		</Page>
 	);
 };

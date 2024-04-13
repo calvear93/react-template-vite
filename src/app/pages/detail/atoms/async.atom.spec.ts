@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
-import { useAtom } from 'jotai';
 import { renderHook } from '@testing-library/react';
+import { useAtom } from 'jotai';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { type AsyncSampleState, asyncAtom } from './async.atom.ts';
 
 const renderAsyncAtom = () => renderHook(() => useAtom(asyncAtom));

@@ -1,8 +1,8 @@
 import { atom } from 'jotai';
 
 export interface SampleState {
-	status: number;
 	message: string;
+	status: number;
 }
 
 const _innerAtom = atom<SampleState>({

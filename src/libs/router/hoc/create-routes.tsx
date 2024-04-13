@@ -1,9 +1,8 @@
-/* eslint-disable react/no-multi-comp */
-import { Outlet, type RouteObject } from 'react-router-dom';
 import { Suspense } from 'react';
+import { Outlet, type RouteObject } from 'react-router-dom';
 import type {
-	LayoutRouteComponent,
 	ComponentRoute,
+	LayoutRouteComponent,
 	RouteDefinition,
 } from '../types/route.d.ts';
 import { isLayoutRoute } from '../types/is-layout-route.ts';

@@ -10,7 +10,7 @@ export interface ComponentRoute extends Omit<NonIndexRouteObject, 'index'> {
 }
 
 export interface LayoutRoute
-	extends Omit<ComponentRoute, 'element' | 'Component'> {
+	extends Omit<ComponentRoute, 'Component' | 'element'> {
 	Layout: LayoutRouteComponent;
 	loading?: React.ReactNode;
 }

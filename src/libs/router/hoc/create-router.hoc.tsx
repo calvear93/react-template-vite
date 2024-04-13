@@ -1,12 +1,12 @@
+import { Suspense } from 'react';
 import {
 	RouterProvider,
 	createBrowserRouter,
 	createHashRouter,
 	createMemoryRouter,
 } from 'react-router-dom';
-import { Suspense } from 'react';
-import { createRoutes } from './create-routes.tsx';
 import type { RouteDefinition } from '../types/route.d.ts';
+import { createRoutes } from './create-routes.tsx';
 
 interface RouterOptions {
 	basename?: string;
@@ -20,19 +20,19 @@ interface MemoryRouterOptions {
 }
 
 export interface RouterConfigBase {
-	routes: RouteDefinition[];
-	loading?: React.ReactNode;
 	fallback?: React.ReactNode;
+	loading?: React.ReactNode;
+	routes: RouteDefinition[];
 }
 
 export interface RouterConfig extends RouterConfigBase {
-	type?: 'browser' | 'hash';
 	options?: RouterOptions;
+	type?: 'browser' | 'hash';
 }
 
 export interface MemoryRouterConfig extends RouterConfigBase {
-	type?: 'memory';
 	options?: MemoryRouterOptions;
+	type?: 'memory';
 }
 
 /**
@@ -108,7 +108,7 @@ export const createRouter = ({
 	options,
 	routes: routesDef,
 	type = 'browser',
-}: RouterConfig | MemoryRouterConfig): React.FC => {
+}: MemoryRouterConfig | RouterConfig): React.FC => {
 	const routes = createRoutes(routesDef);
 
 	const create = getRouterFactory[type];
@@ -116,7 +116,7 @@ export const createRouter = ({
 
 	return (): React.ReactElement => (
 		<Suspense fallback={loading}>
-			<RouterProvider router={router} fallbackElement={fallback} />
+			<RouterProvider fallbackElement={fallback} router={router} />
 		</Suspense>
 	);
 };

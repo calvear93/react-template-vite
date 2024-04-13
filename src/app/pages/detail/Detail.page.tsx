@@ -1,6 +1,6 @@
 import { Link, Page, useLoaderData, useParams } from '@router';
-import styles from './detail.page.module.scss';
 import { FetchBox } from './components/FetchBox.tsx';
+import styles from './detail.page.module.scss';
 
 /**
  * Detail page.
@@ -11,7 +11,7 @@ export const DetailPage: React.FC = (): React.ReactElement => {
 
 	// jsx
 	return (
-		<Page title='Detail Page' className={styles.page}>
+		<Page className={styles.page} title='Detail Page'>
 			<Link to='/'>Go To Main</Link>
 
 			<h2>{import.meta.env.APP_ENV}</h2>
