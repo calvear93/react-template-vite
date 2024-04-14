@@ -2,7 +2,6 @@
 	"recommendations": [
 		"antfu.iconify",
 		"antfu.unocss",
-		"christian-kohler.path-intellisense",
 		"clinyong.vscode-css-modules",
 		"dbaeumer.vscode-eslint",
 		"esbenp.prettier-vscode",
