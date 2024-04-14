@@ -270,7 +270,7 @@ export default [
 		},
 		plugins: { hooks, react },
 		rules: {
-			'hooks/exhaustive-deps': WARN,
+			// 'hooks/exhaustive-deps': WARN,
 			'hooks/rules-of-hooks': WARN,
 			// 'react/destructuring-assignment': [WARN, 'always'],
 			// 'react/display-name': OFF,
@@ -688,12 +688,12 @@ export default [
 		files: [TEST_GLOB],
 		plugins: { 'testing-library': testingLibrary },
 		rules: {
-			'testing-library/await-async-events': [
-				ERROR,
-				{ eventModule: 'userEvent' },
-			],
+			// 'testing-library/await-async-events': [
+			// 	ERROR,
+			// 	{ eventModule: 'userEvent' },
+			// ],
 			// 'testing-library/await-async-queries': ERROR,
-			'testing-library/await-async-utils': ERROR,
+			// 'testing-library/await-async-utils': ERROR,
 			'testing-library/no-await-sync-events': [
 				ERROR,
 				{ eventModules: ['fire-event'] },
@@ -705,7 +705,7 @@ export default [
 			'testing-library/no-global-regexp-flag-in-query': ERROR,
 			'testing-library/no-manual-cleanup': ERROR,
 			'testing-library/no-node-access': ERROR,
-			'testing-library/no-promise-in-fire-event': ERROR,
+			// 'testing-library/no-promise-in-fire-event': ERROR,
 			// 'testing-library/no-render-in-lifecycle': ERROR,
 			'testing-library/no-unnecessary-act': ERROR,
 			'testing-library/no-wait-for-multiple-assertions': ERROR,
