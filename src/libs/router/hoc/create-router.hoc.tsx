@@ -8,33 +8,6 @@ import {
 import type { RouteDefinition } from '../types/route.d.ts';
 import { createRoutes } from './create-routes.tsx';
 
-interface RouterOptions {
-	basename?: string;
-	window?: Window;
-}
-
-interface MemoryRouterOptions {
-	basename?: string;
-	initialEntries?: string[];
-	initialIndex?: number;
-}
-
-export interface RouterConfigBase {
-	fallback?: React.ReactNode;
-	loading?: React.ReactNode;
-	routes: RouteDefinition[];
-}
-
-export interface RouterConfig extends RouterConfigBase {
-	options?: RouterOptions;
-	type?: 'browser' | 'hash';
-}
-
-export interface MemoryRouterConfig extends RouterConfigBase {
-	options?: MemoryRouterOptions;
-	type?: 'memory';
-}
-
 /**
  * Create router lookup.
  */
@@ -120,3 +93,30 @@ export const createRouter = ({
 		</Suspense>
 	);
 };
+
+interface RouterOptions {
+	basename?: string;
+	window?: Window;
+}
+
+interface MemoryRouterOptions {
+	basename?: string;
+	initialEntries?: string[];
+	initialIndex?: number;
+}
+
+export interface RouterConfigBase {
+	fallback?: React.ReactNode;
+	loading?: React.ReactNode;
+	routes: RouteDefinition[];
+}
+
+export interface RouterConfig extends RouterConfigBase {
+	options?: RouterOptions;
+	type?: 'browser' | 'hash';
+}
+
+export interface MemoryRouterConfig extends RouterConfigBase {
+	options?: MemoryRouterOptions;
+	type?: 'memory';
+}

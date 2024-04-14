@@ -37,7 +37,7 @@ export const createRoutes = (routes: RouteDefinition[]): RouteObject[] => {
 			(route as RouteDefinition).Layout = undefined;
 		}
 
-		if (!route.path) route.path = '';
+		route.path ??= '';
 
 		if (route.children) createRoutes(route.children);
 	}

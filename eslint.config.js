@@ -1,6 +1,6 @@
 import unocss from '@unocss/eslint-config/flat';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import perfectionist from 'eslint-plugin-perfectionist/configs/recommended-natural';
+import perfectionist from 'eslint-plugin-perfectionist';
 import prettier from 'eslint-plugin-prettier/recommended';
 import promise from 'eslint-plugin-promise';
 import react from 'eslint-plugin-react';
@@ -448,7 +448,7 @@ export default [
 	// #region perfectionist
 	{
 		files: [SRC_GLOB],
-		plugins: { ...perfectionist.plugins },
+		plugins: { perfectionist },
 		rules: {
 			'perfectionist/sort-array-includes': [
 				WARN,
@@ -786,7 +786,6 @@ export default [
 			'vitest/no-test-prefixes': WARN,
 			'vitest/no-test-return-statement': WARN,
 			'vitest/prefer-called-exactly-once-with': OFF,
-			'vitest/prefer-called-with': WARN,
 			'vitest/prefer-comparison-matcher': WARN,
 			'vitest/prefer-each': WARN,
 			'vitest/prefer-equality-matcher': WARN,
