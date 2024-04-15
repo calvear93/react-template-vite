@@ -1,9 +1,16 @@
 import type { UserConfigExport } from 'vitest/config';
+import { checker } from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default {
 	clearScreen: false,
-	plugins: [tsconfigPaths()],
+	plugins: [
+		tsconfigPaths(),
+		checker({
+			terminal: true,
+			typescript: true,
+		}),
+	],
 	test: {
 		coverage: {
 			exclude: [

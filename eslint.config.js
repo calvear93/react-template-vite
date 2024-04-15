@@ -403,7 +403,7 @@ export default [
 			'unicorn/prefer-dom-node-dataset': ERROR,
 			'unicorn/prefer-dom-node-remove': ERROR,
 			'unicorn/prefer-dom-node-text-content': ERROR,
-			'unicorn/prefer-event-target': WARN,
+			'unicorn/prefer-event-target': ERROR,
 			'unicorn/prefer-export-from': WARN,
 			'unicorn/prefer-includes': WARN,
 			'unicorn/prefer-json-parse-buffer': WARN,

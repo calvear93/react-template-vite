@@ -25,10 +25,6 @@ const getRouterFactory = {
  * different routes contexts, i.e. public
  * and private routes.
  *
- * This HOC autodiscover pages and layout modules
- * with pre-extension .page and .layout, so you
- * can use them by its name, i.e. 'Main' for 'Main.page.tsx'.
- *
  * @example
  * ```ts
  *  // routes definition
