@@ -1,4 +1,4 @@
-import { createRouter } from '@router';
+import { createRouter } from '#libs/router';
 import { render, screen } from '@testing-library/react';
 import { afterAll, beforeAll, describe, test, vi } from 'vitest';
 import { DetailPage } from './Detail.page.tsx';

@@ -1,4 +1,4 @@
-import { Link, Page, useLoaderData, useParams } from '@router';
+import { Link, Page, useLoaderData, useParams } from '#libs/router';
 import { FetchBox } from './components/FetchBox.tsx';
 import styles from './detail.page.module.scss';
 

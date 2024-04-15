@@ -98,8 +98,8 @@ devDependencies:
     specifier: 52.0.0
     version: 52.0.0(eslint@9.0.0)
   eslint-plugin-vitest:
-    specifier: 0.5.2
-    version: 0.5.2(eslint@9.0.0)(typescript@5.4.5)(vitest@1.5.0)
+    specifier: 0.5.3
+    version: 0.5.3(eslint@9.0.0)(typescript@5.4.5)(vitest@1.5.0)
   globals:
     specifier: ^15.0.0
     version: 15.0.0
@@ -163,9 +163,6 @@ devDependencies:
   vite-plugin-webfont-dl:
     specifier: 3.9.3
     version: 3.9.3(vite@5.2.8)
-  vite-tsconfig-paths:
-    specifier: 4.3.2
-    version: 4.3.2(typescript@5.4.5)(vite@5.2.8)
   vitest:
     specifier: 1.5.0
     version: 1.5.0(@types/node@20.12.7)(jsdom@24.0.0)(sass@1.75.0)
@@ -4784,8 +4781,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-vitest@0.5.2(eslint@9.0.0)(typescript@5.4.5)(vitest@1.5.0):
-    resolution: {integrity: sha512-KROUmsB9xCq8R78omFJmn8tS11s8OC+TXwmo1RaU69x5CI56icXb4k4rSfag4za2ZcIQIEpoOkS/bYWyiMyK/g==}
+  /eslint-plugin-vitest@0.5.3(eslint@9.0.0)(typescript@5.4.5)(vitest@1.5.0):
+    resolution: {integrity: sha512-D0iu6ppP6FmNSZP4cdhEXqyI+fuW6JwwWdECRrNymd1jiVgUmDgSvtryytonNxHQQWhGNmZM3V/qvpXttH1rRQ==}
     engines: {node: ^18.0.0 || >= 20.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '*'
@@ -5489,10 +5486,6 @@ packages:
 
   /globjoin@0.1.4:
     resolution: {integrity: sha512-xYfnw62CKG8nLkZBfWbhWwDw02CHty86jfPcc2cr3ZfeuK9ysoVPPEUxf21bAD/rWAgk52SuBrLJlefNy8mvFg==}
-    dev: true
-
-  /globrex@0.1.2:
-    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
 
   /gonzales-pe@4.3.0:
@@ -9158,19 +9151,6 @@ packages:
       typescript: 5.4.5
     dev: true
 
-  /tsconfck@3.0.3(typescript@5.4.5):
-    resolution: {integrity: sha512-4t0noZX9t6GcPTfBAbIbbIU4pfpCwh0ueq3S4O/5qXI1VwK1outmxhe9dOiEWqMz3MW2LKgDTpqWV+37IWuVbA==}
-    engines: {node: ^18 || >=20}
-    hasBin: true
-    peerDependencies:
-      typescript: ^5.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      typescript: 5.4.5
-    dev: true
-
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
@@ -9696,23 +9676,6 @@ packages:
       vite: 5.2.8(@types/node@20.12.7)(sass@1.75.0)
     transitivePeerDependencies:
       - debug
-    dev: true
-
-  /vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.8):
-    resolution: {integrity: sha512-0Vd/a6po6Q+86rPlntHye7F31zA2URZMbH8M3saAZ/xR9QoGN/L21bxEGfXdWmFdNkqPpRdxFT7nmNe12e9/uA==}
-    peerDependencies:
-      vite: '*'
-    peerDependenciesMeta:
-      vite:
-        optional: true
-    dependencies:
-      debug: 4.3.4
-      globrex: 0.1.2
-      tsconfck: 3.0.3(typescript@5.4.5)
-      vite: 5.2.8(@types/node@20.12.7)(sass@1.75.0)
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
     dev: true
 
   /vite@5.2.8(@types/node@20.12.7)(sass@1.75.0):

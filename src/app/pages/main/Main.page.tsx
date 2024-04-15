@@ -1,4 +1,4 @@
-import { Link, Page } from '@router';
+import { Link, Page } from '#libs/router';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import Logo from '../../assets/logo.svg';

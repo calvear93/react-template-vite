@@ -1,4 +1,4 @@
-import { createRouter } from '@router';
+import { createRouter } from '#libs/router';
 import { render, screen } from '@testing-library/react';
 import { beforeAll, describe, expect, test } from 'vitest';
 import { routes } from '../app/app.routes.ts';

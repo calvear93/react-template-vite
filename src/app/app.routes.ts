@@ -1,4 +1,4 @@
-import { type RouteDefinition } from '@router';
+import { type RouteDefinition } from '#libs/router';
 import { lazy } from 'react';
 import { AppLayout } from './layouts/app/App.layout.tsx';
 

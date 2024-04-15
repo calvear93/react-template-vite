@@ -1,4 +1,4 @@
-import { createRouter } from '@router';
+import { createRouter } from '#libs/router';
 import { routes } from './app.routes.ts';
 
 // creates a router

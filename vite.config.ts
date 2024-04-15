@@ -4,7 +4,6 @@ import { type UserConfigExport, normalizePath } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
 import fonts from 'vite-plugin-webfont-dl';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { compilerOptions as tsconfig } from './tsconfig.json';
 
 const FONT_FAMILY = process.env.FONT_FAMILY;
@@ -37,7 +36,6 @@ export default {
 		}),
 		react(),
 		css(),
-		tsconfigPaths(),
 		fonts(
 			[
 				`https://fonts.googleapis.com/css2?family=${FONT_FAMILY}:wght@${FONT_WEIGHTS}&display=swap`,
