@@ -20,7 +20,8 @@
 		"preview": "wireit"
 	},
 	"imports": {
-		"#libs/router": "./src/libs/router/index.ts"
+		"#libs/router": "./src/libs/router/index.ts",
+		"#libs/feature": "./src/libs/feature-flag-handler/index.ts"
 	},
 	"license": "MIT",
 	"repository": "https://github.com/calvear93/react-template-vite",
@@ -51,9 +52,9 @@
 		"@testing-library/user-event": "14.5.2",
 		"@types/eslint": "^8.56.9",
 		"@types/node": "20.12.7",
-		"@types/react": "18.2.78",
+		"@types/react": "18.2.79",
 		"@types/react-dom": "18.2.25",
-		"@unocss/eslint-config": "0.59.2",
+		"@unocss/eslint-config": "0.59.3",
 		"@vitejs/plugin-react-swc": "3.6.0",
 		"@vitest/coverage-v8": "1.5.0",
 		"eslint": "9.0.0",
@@ -65,7 +66,7 @@
 		"eslint-plugin-redos": "4.4.5",
 		"eslint-plugin-regexp": "2.5.0",
 		"eslint-plugin-sonarjs": "0.25.1",
-		"eslint-plugin-testing-library": "6.2.1",
+		"eslint-plugin-testing-library": "6.2.2",
 		"eslint-plugin-tsdoc": "0.2.17",
 		"eslint-plugin-unicorn": "52.0.0",
 		"eslint-plugin-vitest": "0.5.3",
@@ -84,9 +85,9 @@
 		"stylelint-scss": "6.2.1",
 		"tslib": "2.6.2",
 		"typescript": "5.4.5",
-		"typescript-eslint": "^7.6.0",
-		"unocss": "0.59.2",
-		"vite": "5.2.8",
+		"typescript-eslint": "^7.7.0",
+		"unocss": "0.59.3",
+		"vite": "5.2.9",
 		"vite-plugin-checker": "0.6.4",
 		"vite-plugin-pwa": "0.19.8",
 		"vite-plugin-webfont-dl": "3.9.3",

@@ -5,14 +5,14 @@
 			"name": "Debug in Edge",
 			"type": "msedge",
 			"request": "launch",
-			"url": "http://localhost:3001",
+			"url": "http://localhost:3003",
 			"webRoot": "${workspaceFolder}"
 		},
 		{
 			"name": "Debug in Chrome",
 			"type": "chrome",
 			"request": "launch",
-			"url": "http://localhost:3001",
+			"url": "http://localhost:3003",
 			"webRoot": "${workspaceFolder}"
 		},
 		{

@@ -61,11 +61,11 @@ export default {
 	],
 	preview: {
 		cors: true,
-		open: true,
+		open: false,
 	},
 	server: {
 		cors: true,
-		open: true,
+		open: false,
 		port: +process.env.PORT!,
 	},
 } satisfies UserConfigExport;
