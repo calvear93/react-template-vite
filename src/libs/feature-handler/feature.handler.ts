@@ -10,11 +10,9 @@ export type FeatureOnChangeListener = (
 
 export type FeatureLookup = Record<string, boolean | undefined>;
 
-// TODO: localstorage with namespace for get query params
-
 export class FeatureHandler {
 	addOnChangeListener(action: FeatureOnChangeListener): void {
-		this._emitter.addEventListener(FEATURE_CHANGED_EVENT, action);
+		this._emitter.addEventListener(FEATURE_CHANGED_EVENT, action as any);
 	}
 
 	get(feature: string): boolean {
@@ -26,7 +24,7 @@ export class FeatureHandler {
 	}
 
 	removeOnChangeListener(action: FeatureOnChangeListener): void {
-		this._emitter.removeEventListener(FEATURE_CHANGED_EVENT, action);
+		this._emitter.removeEventListener(FEATURE_CHANGED_EVENT, action as any);
 	}
 
 	set(feature: string, value: boolean): void {

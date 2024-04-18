@@ -367,7 +367,6 @@ export default [
 			'unicorn/no-hex-escape': WARN,
 			'unicorn/no-instanceof-array': WARN,
 			'unicorn/no-invalid-remove-event-listener': ERROR,
-			'unicorn/no-keyword-prefix': WARN,
 			'unicorn/no-lonely-if': WARN,
 			'unicorn/no-negated-condition': ERROR,
 			'unicorn/no-new-array': ERROR,
