@@ -1,10 +1,10 @@
 import { beforeAll, describe, expect, test } from 'vitest';
-import { FeatureFlagHandler } from './feature-flag.handler.ts';
+import { FeatureHandler } from './feature.handler.ts';
 
-describe(FeatureFlagHandler, () => {
+describe(FeatureHandler, () => {
 	// hooks
 	beforeAll(() => {
-		const handler = new FeatureFlagHandler({
+		const handler = new FeatureHandler({
 			V1: true,
 		});
 	});

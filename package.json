@@ -21,7 +21,7 @@
 	},
 	"imports": {
 		"#libs/router": "./src/libs/router/index.ts",
-		"#libs/feature": "./src/libs/feature-flag-handler/index.ts"
+		"#libs/feature": "./src/libs/feature-handler/index.ts"
 	},
 	"license": "MIT",
 	"repository": "https://github.com/calvear93/react-template-vite",

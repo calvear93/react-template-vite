@@ -1,7 +1,3 @@
-interface HeaderProps {
-	title: string;
-}
-
 /**
  * Header for App Layout.
  *
@@ -12,3 +8,7 @@ export const Header: React.FC<HeaderProps> = ({
 }): React.ReactElement => {
 	return <header>{title}</header>;
 };
+
+interface HeaderProps {
+	title: string;
+}

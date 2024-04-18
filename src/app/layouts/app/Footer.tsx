@@ -1,7 +1,3 @@
-interface FooterProps {
-	text: string;
-}
-
 /**
  * Footer for App Layout.
  *
@@ -10,3 +6,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ text }): React.ReactElement => {
 	return <footer>{text}</footer>;
 };
+
+interface FooterProps {
+	text: string;
+}
