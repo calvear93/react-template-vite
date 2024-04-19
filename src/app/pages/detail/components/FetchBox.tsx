@@ -1,19 +1,18 @@
-import { useAtom } from 'jotai';
-import Logo from '../../../assets/logo.svg';
-import { asyncAtom } from '../atoms/async.atom.ts';
-import styles from './fetch-box.module.scss';
+import { withFeatures } from '#libs/feature';
+import { lazy } from 'react';
+import { FetchBox_v2a } from './FetchBox.v2a.tsx';
 
-export const FetchBox: React.FC = () => {
-	const [{ content, loading }, dispatchFetch] = useAtom(asyncAtom);
-
-	return (
-		<div className={styles.box}>
-			<img alt='logo' className={styles.logo} src={Logo} />
-
-			<button className={styles.button} onClick={dispatchFetch}>
-				Fetch
-			</button>
-			{loading ? <h4>Fetching Data</h4> : <h4>{content.anyProp}</h4>}
-		</div>
-	);
-};
+// feature managing example
+export const FetchBox = withFeatures({
+	fallback: <h1>No Features Enabled</h1>,
+	features: {
+		// lazy load chunk
+		FEATURE_FETCHBOX_V1: lazy(() =>
+			import('./FetchBox.v1.tsx').then(({ FetchBox_v1 }) => ({
+				default: FetchBox_v1,
+			})),
+		),
+		FEATURE_FETCHBOX_V2ALPHA: FetchBox_v2a,
+	},
+	loading: <h2>Loading Feature</h2>,
+});

@@ -1,5 +1,6 @@
 import { FeatureProvider } from '#libs/feature';
 import { AppRouter } from './App.router.tsx';
+import { featureHandler } from './app.features.ts';
 import './styles/app.scss';
 
 /**
@@ -12,7 +13,7 @@ import './styles/app.scss';
  */
 export const App: React.FC = (): React.ReactElement => {
 	return (
-		<FeatureProvider>
+		<FeatureProvider handler={featureHandler}>
 			<AppRouter />
 		</FeatureProvider>
 	);

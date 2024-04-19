@@ -1,43 +1,34 @@
-import { createContext, useEffect } from 'react';
-import { FeatureHandler, type FeatureLookup } from '../feature.handler.ts';
+import { createContext } from 'react';
+import { type FeatureHandler } from '../feature.handler.ts';
 
-const STORAGE_PREFIX = 'feature:';
 export const FeatureContext = createContext<FeatureHandler | null>(null);
-const handler = new FeatureHandler();
 
-const getStorageFeatures = (storage: Storage): Record<string, boolean> => {
-	const features: Record<string, boolean> = {};
-
-	for (const [key, value] of Object.entries(storage)) {
-		if (key.startsWith(STORAGE_PREFIX)) {
-			features[key.replace(STORAGE_PREFIX, '')] = !!value;
-		}
-	}
-
-	return features;
-};
-
+/**
+ * Injects FeatureHandler to React context.
+ *
+ * @example
+ * ```ts
+ *	import { FeatureHandler, FeatureProvider } from '@feature-handler';
+ *
+ *	const features = new FeatureHandler({
+ *		FEATURE_X_V1: true,
+ *		FEATURE_Y_V2: import.meta.env.FEATURE_Y_V2 === 'true',
+ *		FEATURE_Z_V2: globalThis.FEATURES.Z_V2,
+ *	});
+ *
+ *	export const App: React.FC = () => {
+ *		return (
+ *			<FeatureProvider handler={features}>
+ *				<App />
+ *			</FeatureProvider>
+ *		);
+ *	};
+ *```
+ */
 export const FeatureProvider: React.FC<FeatureProviderProps> = ({
 	children,
-	features,
+	handler,
 }) => {
-	useEffect(() => {
-		handler.setAll({
-			...features,
-			...getStorageFeatures(localStorage),
-			...getStorageFeatures(sessionStorage),
-		});
-
-		addEventListener('storage', ({ key, newValue }) => {
-			if (key?.startsWith(STORAGE_PREFIX)) {
-				handler.set(
-					key.replace(STORAGE_PREFIX, ''),
-					newValue === '1' || newValue === 'true',
-				);
-			}
-		});
-	}, []);
-
 	return (
 		<FeatureContext.Provider value={handler}>
 			{children}
@@ -46,5 +37,5 @@ export const FeatureProvider: React.FC<FeatureProviderProps> = ({
 };
 
 export interface FeatureProviderProps extends React.PropsWithChildren {
-	features?: FeatureLookup;
+	handler: FeatureHandler;
 }

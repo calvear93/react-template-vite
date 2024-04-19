@@ -1,3 +1,4 @@
+import { FeatureHandler, FeatureProvider } from '#libs/feature';
 import { createRouter } from '#libs/router';
 import { render, screen } from '@testing-library/react';
 import { afterAll, beforeAll, describe, test, vi } from 'vitest';
@@ -13,7 +14,15 @@ describe(DetailPage, () => {
 			type: 'memory',
 		});
 
-		render(<DetailPageRouter />);
+		const features = new FeatureHandler({
+			FEATURE_FETCHBOX_V2ALPHA: true,
+		});
+
+		render(
+			<FeatureProvider handler={features}>
+				<DetailPageRouter />
+			</FeatureProvider>,
+		);
 	});
 
 	afterAll(() => {
