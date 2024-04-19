@@ -1,3 +1,4 @@
+import { FeatureProvider } from '#libs/feature';
 import { AppRouter } from './App.router.tsx';
 import './styles/app.scss';
 
@@ -10,5 +11,9 @@ import './styles/app.scss';
  * @returns app container
  */
 export const App: React.FC = (): React.ReactElement => {
-	return <AppRouter />;
+	return (
+		<FeatureProvider>
+			<AppRouter />
+		</FeatureProvider>
+	);
 };

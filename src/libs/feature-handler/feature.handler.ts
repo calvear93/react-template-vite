@@ -38,12 +38,12 @@ export class FeatureHandler {
 			);
 	}
 
-	setAll(features: Record<string, boolean>): void {
+	setAll(features: FeatureLookup): void {
 		let isChanged = false;
 		const changedFeatures: Record<string, boolean> = {};
 
 		for (const feature in features) {
-			const value = features[feature];
+			const value = !!features[feature];
 
 			if (this._willChange(feature, value)) {
 				changedFeatures[feature] = value;
