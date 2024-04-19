@@ -10,4 +10,4 @@ export {
 } from './react/Feature.provider.tsx';
 export { withFeatures } from './react/feature.hoc.tsx';
 export { useFeature, useFeatureHandler } from './react/feature.hook.ts';
-export { linkStorageToFeatureHandler } from './sources/link-storage-to-handler.ts';
+export { linkStorageToFeatureHandler } from './stores/link-storage-to-handler.ts';
