@@ -4,8 +4,6 @@ import { featureHandler } from './app.features.ts';
 import './styles/app.scss';
 
 /**
- * App container.
- *
  * Here occur the initialization,
  * for routing, store and main app.
  *

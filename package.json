@@ -159,6 +159,8 @@
 			],
 			"files": [
 				"eslint.config.js",
+				".prettierrc",
+				".prettierignore",
 				"**/*.{js,mjs,cjs,jsx,ts,cts,mts,tsx,json}"
 			],
 			"dependencies": [

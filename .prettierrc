@@ -16,7 +16,7 @@
 	"singleAttributePerLine": false,
 	"overrides": [
 		{
-			"files": ["tsconfig.json", ".eslintrc", ".stylelintrc"],
+			"files": ["tsconfig.json", ".stylelintrc"],
 			"options": {
 				"trailingComma": "none"
 			}

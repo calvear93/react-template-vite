@@ -1,5 +1,5 @@
 import { type RenderOptions, act, renderHook } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { FeatureHandler } from '../feature.handler.ts';
 import { FeatureProvider } from './Feature.provider.tsx';
 import { FeatureContextException } from './exceptions/feature-context.exception.ts';
@@ -10,6 +10,15 @@ describe('feature hooks', () => {
 	const wrapper: RenderOptions['wrapper'] = ({ children }) => (
 		<FeatureProvider handler={_handler}>{children}</FeatureProvider>
 	);
+
+	// hooks
+	beforeAll(() => {
+		vi.spyOn(console, 'error').mockImplementation(() => null);
+	});
+
+	afterAll(() => {
+		vi.clearAllMocks();
+	});
 
 	// tests
 	describe('useFeatureHandler', () => {

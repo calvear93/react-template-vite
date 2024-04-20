@@ -81,6 +81,7 @@ describe('feature HOC', () => {
 	});
 
 	describe('throws', () => {
+		// hooks
 		beforeAll(() => {
 			vi.spyOn(console, 'error').mockImplementation(() => null);
 		});
@@ -89,6 +90,7 @@ describe('feature HOC', () => {
 			vi.clearAllMocks();
 		});
 
+		// tests
 		test('FeatureContextException when no FeatureProvider found ', () => {
 			const Component = withFeatures({ features: {} });
 			// avoids stderror output

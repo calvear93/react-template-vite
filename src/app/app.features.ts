@@ -1,7 +1,7 @@
 import { FeatureHandler, linkStorageToFeatureHandler } from '#libs/feature';
 
 /**
- * Defines features for use "withFeature" HOC.
+ * Defines features for use "withFeatures" HOC.
  * Eases features render and switching using
  * local and session storage for toggling features.
  */

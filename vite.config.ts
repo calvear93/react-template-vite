@@ -31,7 +31,7 @@ export default {
 	plugins: [
 		checker({
 			enableBuild: true,
-			terminal: false,
+			terminal: true,
 			typescript: true,
 		}),
 		react(),
