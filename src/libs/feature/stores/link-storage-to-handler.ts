@@ -65,10 +65,15 @@ export const linkStorageToFeatureHandler = (
 
 	addEventListener('storage', ({ key, newValue, storageArea }) => {
 		const feature = getStorageKey(key, prefix);
+
+		if (!feature) return;
+
 		// keeps sessionStorage precedence
-		if (key && storageArea === localStorage) {
-			newValue = sessionStorage[key] ?? newValue;
+		if (storageArea === localStorage) {
+			const sessionValue = sessionStorage[key!];
+			newValue = sessionValue === undefined ? newValue : sessionValue;
 		}
-		if (feature) handler.set(feature, coerceStorageBoolean(newValue));
+
+		handler.set(feature, coerceStorageBoolean(newValue));
 	});
 };
