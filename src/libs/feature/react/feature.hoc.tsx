@@ -18,6 +18,7 @@ const FeatureSwitch: React.FC<FeatureSwitchProps> = ({
 	components,
 	fallback,
 	handler,
+	props,
 }) => {
 	const [feature, setFeature] = useState<string | null>();
 
@@ -54,7 +55,7 @@ const FeatureSwitch: React.FC<FeatureSwitchProps> = ({
 	}, [handler]);
 
 	const Component = feature ? components[feature] : null;
-	return Component ? <Component /> : fallback;
+	return Component ? <Component {...props} /> : fallback;
 };
 
 /**
@@ -85,7 +86,7 @@ export const withFeatures = <Props,>({
 	features,
 	loading,
 }: WithFeaturesConfig<Props>): ReactComponent<Props> => {
-	return (): React.ReactElement => (
+	return (props: Props): React.ReactElement => (
 		<FeatureContext.Consumer>
 			{(handler) => {
 				if (!handler) throw new FeatureContextException();
@@ -96,6 +97,7 @@ export const withFeatures = <Props,>({
 							components={features}
 							fallback={fallback}
 							handler={handler}
+							props={props}
 						/>
 					</Suspense>
 				);
@@ -108,6 +110,7 @@ interface FeatureSwitchProps {
 	components: Record<string, ReactComponent<any>>;
 	fallback?: React.ReactNode;
 	handler: FeatureHandler;
+	props: any;
 }
 
 export interface WithFeaturesConfig<Props = unknown> {

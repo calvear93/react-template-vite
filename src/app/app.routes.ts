@@ -1,5 +1,5 @@
-import { type RouteDefinition } from '#libs/router';
 import { lazy } from 'react';
+import { type RouteDefinition } from '#libs/router';
 import { AppLayout } from './layouts/app/App.layout.tsx';
 
 /**

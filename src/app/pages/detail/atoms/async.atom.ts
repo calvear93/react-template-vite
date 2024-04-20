@@ -1,16 +1,6 @@
 import { atom } from 'jotai';
 import { fetchSampleAsyncMock } from '../__mocks__/fetch-sample-async.mock.ts';
 
-export interface AsyncSampleResult {
-	anyProp?: string;
-}
-
-export interface AsyncSampleState {
-	content: AsyncSampleResult;
-	loading: boolean;
-	ready: boolean;
-}
-
 const _innerAtom = atom<AsyncSampleState>({
 	content: {},
 	loading: false,
@@ -37,3 +27,13 @@ export const asyncAtom = atom(
 		}));
 	},
 );
+
+export interface AsyncSampleResult {
+	anyProp?: string;
+}
+
+export interface AsyncSampleState {
+	content: AsyncSampleResult;
+	loading: boolean;
+	ready: boolean;
+}

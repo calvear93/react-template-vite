@@ -1,6 +1,6 @@
-import { Link, Page } from '#libs/router';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
+import { Link, Page } from '#libs/router';
 import Logo from '../../assets/logo.svg';
 import viteLogoUrl from '../../assets/vite.png';
 import { sampleAtom } from '../../atoms/sample.atom.ts';

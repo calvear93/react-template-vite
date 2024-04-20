@@ -1,4 +1,5 @@
 import { Link, Page, useLoaderData, useParams } from '#libs/router';
+import Logo from '../../assets/logo.svg';
 import { FetchBox } from './components/FetchBox.tsx';
 import styles from './detail.page.module.scss';
 
@@ -18,7 +19,7 @@ export const DetailPage: React.FC = (): React.ReactElement => {
 			{id && <h2>ID: {id}</h2>}
 			<h4>message: {aMessage}</h4>
 
-			<FetchBox />
+			<FetchBox logoSrc={Logo} />
 		</Page>
 	);
 };

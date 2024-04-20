@@ -21,7 +21,7 @@
 	},
 	"imports": {
 		"#libs/router": "./src/libs/router/index.ts",
-		"#libs/feature": "./src/libs/feature-handler/index.ts"
+		"#libs/feature": "./src/libs/feature/index.ts"
 	},
 	"license": "MIT",
 	"repository": "https://github.com/calvear93/react-template-vite",
@@ -57,7 +57,7 @@
 		"@unocss/eslint-config": "0.59.4",
 		"@vitejs/plugin-react-swc": "3.6.0",
 		"@vitest/coverage-v8": "1.5.0",
-		"eslint": "9.0.0",
+		"eslint": "9.1.0",
 		"eslint-config-prettier": "9.1.0",
 		"eslint-plugin-jsx-a11y": "6.8.0",
 		"eslint-plugin-perfectionist": "2.9.0",

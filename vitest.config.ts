@@ -1,5 +1,5 @@
-import type { UserConfigExport } from 'vitest/config';
 import { checker } from 'vite-plugin-checker';
+import type { UserConfigExport } from 'vitest/config';
 
 export default {
 	clearScreen: false,

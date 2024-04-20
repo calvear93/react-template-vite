@@ -1,9 +1,9 @@
-import { withFeatures } from '#libs/feature';
 import { lazy } from 'react';
+import { withFeatures } from '#libs/feature';
 import { FetchBox_v2a } from './FetchBox.v2a.tsx';
 
 // feature managing example
-export const FetchBox = withFeatures({
+export const FetchBox = withFeatures<FetchBoxProps>({
 	fallback: <h1>No Features Enabled</h1>,
 	features: {
 		// lazy load chunk
@@ -16,3 +16,7 @@ export const FetchBox = withFeatures({
 	},
 	loading: <h2>Loading Feature</h2>,
 });
+
+export interface FetchBoxProps {
+	logoSrc: string;
+}
