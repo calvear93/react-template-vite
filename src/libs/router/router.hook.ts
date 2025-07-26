@@ -3,12 +3,11 @@ import { useLocation } from 'react-router';
 /**
  * Returns URL hash value.
  *
+ * @see useLocation from react-router.
+ * @returns URL hash.
+ *
  * @example
  *	const hash = useHash();
- *
- * @see useLocation from react-router.
- *
- * @returns URL hash.
  */
 export const useHashValue = (): string => {
 	const { hash } = useLocation();

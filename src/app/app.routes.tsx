@@ -17,7 +17,7 @@ import MainPage from './pages/main/Main.page.tsx';
  * that renderices children only.
  *
  * This routes should be used in createRouter
- * function from \@router module.
+ * function from #libs/router module.
  */
 export const routes = {
 	app: [

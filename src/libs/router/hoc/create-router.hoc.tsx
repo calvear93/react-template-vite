@@ -25,6 +25,9 @@ const getRouterFactory = {
  * different routes contexts, i.e. public
  * and private routes.
  *
+ * @param config - router config
+ * @returns router with routes preloaded
+ *
  * @example
  * ```ts
  *	// routes definition
@@ -65,10 +68,6 @@ const getRouterFactory = {
  *		return <Router />;
  *	};
  *```
- *
- * @param config - router config
- *
- * @returns router with routes preloaded
  */
 export const createRouter = ({
 	loading,

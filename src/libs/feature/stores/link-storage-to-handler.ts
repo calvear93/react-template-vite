@@ -5,7 +5,6 @@ import type { FeatureHandler } from '../feature.handler.ts';
  * values to boolean.
  *
  * @param value - string
- *
  * @returns true if input is '1' or 'true', false in otherwise
  */
 const coerceStorageBoolean = (value: string | null) =>
@@ -30,7 +29,6 @@ const getStorageKey = (key: string | null, prefix: string): string | null => {
  *
  * @param storage - localStorage, sessionStorage
  * @param prefix - prefix for filter searched keys
- *
  * @returns features lookup
  */
 const getStorageFeatures = (
