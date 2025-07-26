@@ -27,7 +27,7 @@ const getRouterFactory = {
  *
  * @example
  * ```ts
- *  // routes definition
+ *	// routes definition
  *	import { lazy } from 'react';
  *	import MyEagerPage from '@pages/MyEagerPage.page';
  *
@@ -50,7 +50,7 @@ const getRouterFactory = {
  *```
  * @example
  * ```ts
- *  // use this HOC as
+ *	// use this HOC as
  *	import { createRouter } from '@router';
  *	import { myRoutes } from '...';
  *

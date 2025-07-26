@@ -13,7 +13,6 @@ const Router = createRouter({
  *
  * Here you can define logic
  * for authorization or redirection .
- *
  * @returns application router
  */
 export const AppRouter: React.FC = (): React.ReactElement => {

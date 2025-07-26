@@ -21,7 +21,7 @@ const HydrateAtom = ({ atom, children, values }: HydrateAtomsProps) => {
  *
  * @example
  * ```ts
- *  // app.ioc.ts
+ *	// app.ioc.ts
  *	import { createContainer } from '#libs/ioc';
  *
  *	export const { container, useInjection } = = createContainer();
@@ -31,7 +31,7 @@ const HydrateAtom = ({ atom, children, values }: HydrateAtomsProps) => {
  *	container.bind(HttpClient, new HttpClient()); // bind using a class
  *	container.bind(MY_CUSTOM_PROVIDER, new MyCustomProvider()); // bind using a class
  *
- *  // AnyComponent.ts
+ *	// AnyComponent.ts
  *	import { useInjection, MY_CUSTOM_PROVIDER } from './app.ioc.ts';
  *
  *	export const AnyComponent: React.FC = (): React.ReactElement => {
