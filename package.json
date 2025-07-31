@@ -30,7 +30,7 @@
 		"react": "19.1.1",
 		"react-dom": "19.1.1",
 		"react-router": "7.7.1",
-		"zod": "4.0.13"
+		"zod": "4.0.14"
 	},
 	"devDependencies": {
 		"@calvear/env": "2.10.3",
@@ -74,7 +74,7 @@
 		"stylelint-prettier": "5.0.3",
 		"stylelint-use-nesting": "6.0.0",
 		"tslib": "2.8.1",
-		"typescript": "5.8.3",
+		"typescript": "5.9.2",
 		"typescript-eslint": "8.38.0",
 		"unocss": "66.3.3",
 		"vite": "7.0.6",

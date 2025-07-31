@@ -36,6 +36,8 @@
 		"*.tsx": "${capture}.*",
 		"dockerfile": ".dockerignore, docker-compose.*, dockerfile*",
 		"eslint.config.js": ".prettierrc*, .prettierignore, .stylelintrc*, .stylelintignore",
+		".copilotrc.json": ".copilotignore",
+		".gitignore": ".gitattributes",
 		"main.ts": "*.config.ts, *.d.ts",
 		"main.tsx": "*.config.ts, *.d.ts",
 		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc, .pnp.cjs",
