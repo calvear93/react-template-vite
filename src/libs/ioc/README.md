@@ -1,6 +1,6 @@
 # IOC (Inversion of Control)
 
-This library provides a lightweight Inversion of Control (IoC) container for React applications using Jotai atoms. It enables dependency injection patterns with type safety and React integration.
+This library provides a lightweight Inversion of Control (IoC) container for React applications using React Context. It enables dependency injection patterns with type safety and React integration.
 
 ## Overview
 
@@ -9,7 +9,7 @@ The IOC library offers:
 - **Dependency Injection**: Manage and inject dependencies throughout your application
 - **Type Safety**: Full TypeScript support with strongly typed injections
 - **React Integration**: Seamless integration with React components and hooks
-- **Atom-based**: Built on Jotai atoms for optimal performance and reactivity
+- **Context-based**: Built on React Context for optimal performance and component tree isolation
 - **Scoped Providers**: Support for multiple container scopes within the same application
 
 ## Core Concepts
@@ -26,19 +26,34 @@ The process of associating a token (class constructor or string) with a concrete
 
 The process of retrieving a dependency from the container using its token.
 
+## Implementation Details
+
+### React Context Architecture
+
+This IoC implementation uses React Context to provide dependency injection throughout the component tree. The key benefits of this approach include:
+
+- **Component Tree Isolation**: Each provider creates its own context scope
+- **Performance**: Context values are memoized to prevent unnecessary re-renders
+- **Flexibility**: Supports both global container and local scoped containers
+- **Testing**: Easy to mock dependencies by providing custom container values
+
+### Container Behavior
+
+- **Global Container**: When using `container.bind()`, dependencies are stored in a global Map
+- **Scoped Container**: When using `InversionOfControlProvider` with `values` prop, a new isolated container is created
+- **Fallback Strategy**: If no provider is found, `useInjection` falls back to the global container
+- **Memoization**: Provider values are memoized using `useMemo` for optimal performance
+
 ## Getting Started
 
 ### Creating a Container
 
 ```typescript
 // app.ioc.ts
-import { createContainer } from '@libs/ioc';
+import { createContainer } from '#libs/ioc';
 
-export const {
-	InversionOfControlProvider,
-	useInjection,
-	container
-} = createContainer();
+export const { InversionOfControlProvider, useInjection, container } =
+	createContainer();
 
 // Define tokens for string-based bindings
 export const HTTP_CLIENT = 'HTTP_CLIENT';
@@ -118,8 +133,9 @@ export const UserProfile = () => {
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
-		httpClient.get('/api/user/profile')
-			.then(response => response.json())
+		httpClient
+			.get('/api/user/profile')
+			.then((response) => response.json())
 			.then(setUser);
 	}, [httpClient]);
 
@@ -157,7 +173,7 @@ export const ApiComponent = () => {
 export class ApiClientFactory {
 	constructor(
 		private baseUrl: string,
-		private timeout: number = 5000
+		private timeout: number = 5000,
 	) {}
 
 	createClient() {
@@ -170,7 +186,7 @@ export const API_CLIENT_FACTORY = 'API_CLIENT_FACTORY';
 
 container.bind(
 	API_CLIENT_FACTORY,
-	new ApiClientFactory(import.meta.env.VITE_API_URL)
+	new ApiClientFactory(import.meta.env.VITE_API_URL),
 );
 ```
 
@@ -214,7 +230,7 @@ You can create multiple containers for different scopes:
 export const {
 	InversionOfControlProvider: AuthProvider,
 	useInjection: useAuthInjection,
-	container: authContainer
+	container: authContainer,
 } = createContainer();
 
 export const AUTH_SERVICE = 'AUTH_SERVICE';
@@ -224,7 +240,7 @@ authContainer.bind(AUTH_SERVICE, new AuthService());
 export const {
 	InversionOfControlProvider: AppProvider,
 	useInjection: useAppInjection,
-	container: appContainer
+	container: appContainer,
 } = createContainer();
 ```
 
@@ -239,6 +255,29 @@ export const App = () => (
 	</AppProvider>
 );
 ```
+
+### Scoped Container Values
+
+You can also create a provider with specific values without creating a separate container:
+
+```tsx
+// Create a scoped container with specific dependencies
+const scopedValues = new Map();
+scopedValues.set(HTTP_CLIENT, new MockHttpClient());
+scopedValues.set(CONFIG_SERVICE, new TestConfigService());
+
+export const TestWrapper = ({ children }) => (
+	<InversionOfControlProvider values={scopedValues}>
+		{children}
+	</InversionOfControlProvider>
+);
+```
+
+This approach is particularly useful for:
+
+- **Testing**: Providing mock implementations
+- **Feature Flags**: Different implementations based on features
+- **Environment-specific**: Different services for dev/prod environments
 
 ## Best Practices
 
@@ -305,7 +344,7 @@ Mock dependencies for testing:
 ```typescript
 // MyComponent.test.tsx
 import { render } from '@testing-library/react';
-import { createContainer } from '@libs/ioc';
+import { createContainer } from '#libs/ioc';
 
 describe('MyComponent', () => {
 	it('should render with mocked dependencies', () => {
@@ -332,10 +371,12 @@ describe('MyComponent', () => {
 
 ```typescript
 // Create typed tokens
-export const createTypedToken = <T>(name: string) => name as string & { __type: T };
+export const createTypedToken = <T>(name: string) =>
+	name as string & { __type: T };
 
 export const HTTP_CLIENT = createTypedToken<HttpClient>('HTTP_CLIENT');
-export const CONFIG_SERVICE = createTypedToken<IConfigService>('CONFIG_SERVICE');
+export const CONFIG_SERVICE =
+	createTypedToken<IConfigService>('CONFIG_SERVICE');
 
 // Usage provides better type inference
 const httpClient = useInjection(HTTP_CLIENT); // Type: HttpClient

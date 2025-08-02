@@ -1,20 +1,8 @@
-import {
-	atom,
-	createStore,
-	type PrimitiveAtom,
-	Provider,
-	useAtomValue,
-} from 'jotai';
-import { useHydrateAtoms } from 'jotai/utils';
+import { createContext, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
-/**
- * Injects a new value to atom.
- */
-const HydrateAtom = ({ atom, children, values }: HydrateAtomsProps) => {
-	useHydrateAtoms([[atom, values]]);
-	return children;
-};
+// react context for the IoC container
+const IoCContext = createContext<Map<unknown, unknown> | null>(null);
 
 /**
  * Creates a new Inversion of Control container.
@@ -42,25 +30,29 @@ const HydrateAtom = ({ atom, children, values }: HydrateAtomsProps) => {
  *	};
  *```
  */
-export const createContainer = (store = createStore()) => {
-	const container = atom(new Map());
+export const createContainer = () => {
+	const container = new Map<unknown, unknown>();
 
 	return {
 		InversionOfControlProvider: ({
 			children,
 			values,
 		}: InversionOfControlProviderProps) => {
+			const contextContainer = useMemo(() => {
+				// if values is provided, use only those values (don't merge with global container)
+				// if values is not provided, use the global container
+				return new Map(values ?? container);
+			}, [values]);
+
 			return (
-				<Provider store={store}>
-					<HydrateAtom atom={container} values={values}>
-						{children}
-					</HydrateAtom>
-				</Provider>
+				<IoCContext.Provider value={contextContainer}>
+					{children}
+				</IoCContext.Provider>
 			);
 		},
 		container: {
 			bind: (key: any, value: any) => {
-				store.get(container).set(key, value);
+				container.set(key, value);
 			},
 			resolve: <
 				T,
@@ -69,10 +61,10 @@ export const createContainer = (store = createStore()) => {
 			>(
 				key: K,
 			): R => {
-				return store.get(container).get(key);
+				return container.get(key) as R;
 			},
 			unbind: (key: any) => {
-				store.get(container).delete(key);
+				container.delete(key);
 			},
 		},
 		useInjection: <
@@ -82,16 +74,15 @@ export const createContainer = (store = createStore()) => {
 		>(
 			key: K,
 		): R => {
-			return useAtomValue(container).get(key);
+			const context = useContext(IoCContext);
+			// if we're inside a provider, use the context value
+			// otherwise, fall back to the global containerMap
+			const map = context ?? container;
+			return map.get(key) as R;
 		},
 	};
 };
 
-export interface HydrateAtomsProps extends PropsWithChildren {
-	atom: PrimitiveAtom<any>;
-	values: unknown;
-}
-
 export interface InversionOfControlProviderProps extends PropsWithChildren {
-	values: Map<unknown, unknown>;
+	values?: Map<unknown, unknown>;
 }
