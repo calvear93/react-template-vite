@@ -1,68 +1,22 @@
 {
 	"$schema": "https://json.schemastore.org/stylelintrc.json",
 	"defaultSeverity": "warning",
+	"extends": ["stylelint-config-standard"],
 	"plugins": [
 		"stylelint-prettier",
-		"stylelint-scss",
 		"stylelint-order",
+		"stylelint-use-nesting",
 		"stylelint-config-rational-order/plugin"
 	],
-	"extends": [
-		"stylelint-config-standard",
-		"stylelint-config-standard-scss"
-	],
 	"rules": {
-		"prettier/prettier": true,
-		"order/order": [
-			[
-				"custom-properties",
-				"dollar-variables",
-				"at-variables",
-				"declarations",
-				"at-rules",
-				"rules",
-				"less-mixins"
-			],
-			{
-				"severity": "warning"
-			}
-		],
-		"order/properties-order": [],
-		"plugin/rational-order": [
-			true,
-			{
-				"border-in-box-model": false,
-				"empty-line-between-groups": false
-			}
-		],
-		"scss/at-rule-no-unknown": [
-			true,
-			{
-				"ignoreAtRules": [
-					"apply",
-					"each",
-					"function",
-					"if",
-					"include",
-					"layer",
-					"mixin",
-					"responsive",
-					"return",
-					"screen",
-					"tailwind",
-					"variants"
-				]
-			}
-		],
-		"scss/function-no-unknown": [
-			true,
-			{
-				"ignoreFunctions": ["map-get", "theme"]
-			}
-		],
-		"scss/no-global-function-names": null,
 		"alpha-value-notation": "number",
 		"at-rule-disallowed-list": ["debug"],
+		"at-rule-no-deprecated": [
+			true,
+			{
+				"ignoreAtRules": ["apply"]
+			}
+		],
 		"at-rule-no-unknown": [
 			true,
 			{
@@ -74,6 +28,7 @@
 					"include",
 					"layer",
 					"mixin",
+					"property",
 					"responsive",
 					"return",
 					"screen",
@@ -89,6 +44,7 @@
 		"comment-empty-line-before": "always",
 		"comment-no-empty": true,
 		"comment-whitespace-inside": "always",
+		"csstools/use-nesting": "always",
 		"declaration-block-no-duplicate-properties": true,
 		"declaration-block-no-redundant-longhand-properties": true,
 		"declaration-block-no-shorthand-property-overrides": true,
@@ -119,6 +75,29 @@
 		"no-duplicate-at-import-rules": true,
 		"no-empty-source": true,
 		"no-unknown-animations": true,
+		"order/order": [
+			[
+				"custom-properties",
+				"dollar-variables",
+				"at-variables",
+				"declarations",
+				"at-rules",
+				"rules",
+				"less-mixins"
+			],
+			{
+				"severity": "warning"
+			}
+		],
+		"order/properties-order": [],
+		"plugin/rational-order": [
+			true,
+			{
+				"border-in-box-model": false,
+				"empty-line-between-groups": false
+			}
+		],
+		"prettier/prettier": true,
 		"selector-attribute-quotes": "always",
 		"selector-pseudo-class-no-unknown": null,
 		"selector-pseudo-element-colon-notation": "single",

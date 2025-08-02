@@ -2,20 +2,16 @@
 	"$schema": "https://json.schemastore.org/tsconfig.json",
 	"compilerOptions": {
 		"rootDir": ".",
-		"baseUrl": "src",
 		"outDir": "dist",
 
 		"target": "es2020",
-		"module": "es2022",
+		"module": "preserve",
 		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 
 		"jsx": "react-jsx",
-		"lib": ["dom", "es2023"],
-		"types": ["vite/client"],
-
-		"experimentalDecorators": false,
-		"emitDecoratorMetadata": false,
+		"lib": ["dom", "es2024"],
+		"types": ["vite/client", "@testing-library/jest-dom"],
 
 		"incremental": true,
 		"sourceMap": true,
@@ -36,5 +32,11 @@
 
 		"skipLibCheck": true
 	},
-	"include": ["src", "vite.config.ts", "vitest.config.ts", "unocss.config.ts"]
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"vite.config.ts",
+		"vitest.config.ts",
+		"unocss.config.ts"
+	]
 }

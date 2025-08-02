@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { asyncAtom } from '../atoms/async.atom.ts';
 import type { FetchBoxProps } from './FetchBox.tsx';
-import styles from './fetch-box.module.scss';
+import styles from './FetchBox.module.css';
 
 export const FetchBox_v2a: React.FC<FetchBoxProps> = ({ logoSrc }) => {
 	const [{ content, loading }, dispatchFetch] = useAtom(asyncAtom);

@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import {
-	RouterProvider,
 	createBrowserRouter,
 	createHashRouter,
 	createMemoryRouter,
-} from 'react-router-dom';
+	RouterProvider,
+} from 'react-router';
 import type { RouteDefinition } from '../types/route.d.ts';
 import { createRoutes } from './create-routes.tsx';
 
@@ -25,9 +25,12 @@ const getRouterFactory = {
  * different routes contexts, i.e. public
  * and private routes.
  *
+ * @param config - router config
+ * @returns router with routes preloaded
+ *
  * @example
  * ```ts
- *  // routes definition
+ *	// routes definition
  *	import { lazy } from 'react';
  *	import MyEagerPage from '@pages/MyEagerPage.page';
  *
@@ -50,14 +53,13 @@ const getRouterFactory = {
  *```
  * @example
  * ```ts
- *  // use this HOC as
+ *	// use this HOC as
  *	import { createRouter } from '@router';
  *	import { myRoutes } from '...';
  *
  *	const Router = createRouter({
  *		routes: myRoutes,
  *		loader: <h1>Loading</h1>,
- *		fallback: <h1>Not Found</h1>
  *	});
  *
  *	export const AppRouter: React.FC = (): React.ReactElement => {
@@ -66,13 +68,8 @@ const getRouterFactory = {
  *		return <Router />;
  *	};
  *```
- *
- * @param config - router config
- *
- * @returns router with routes preloaded
  */
 export const createRouter = ({
-	fallback,
 	loading,
 	options,
 	routes: routesDef,
@@ -85,7 +82,7 @@ export const createRouter = ({
 
 	return (): React.ReactElement => (
 		<Suspense fallback={loading}>
-			<RouterProvider fallbackElement={fallback} router={router} />
+			<RouterProvider router={router} />
 		</Suspense>
 	);
 };
@@ -102,9 +99,8 @@ interface MemoryRouterOptions {
 }
 
 export interface RouterConfigBase {
-	fallback?: React.ReactNode;
-	loading?: React.ReactNode;
 	routes: RouteDefinition[];
+	loading?: React.ReactNode;
 }
 
 export interface RouterConfig extends RouterConfigBase {

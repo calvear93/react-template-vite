@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react-swc';
-import css from 'unocss/vite';
-import { type UserConfigExport, normalizePath } from 'vite';
+import unocss from 'unocss/vite';
+import { normalizePath, type UserConfigExport } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
 import fonts from 'vite-plugin-webfont-dl';
@@ -12,50 +12,62 @@ const BASE_PATH = normalizePath(`/${process.env.BASE_URL}`);
 
 export default {
 	base: BASE_PATH,
+	clearScreen: false,
+	envPrefix: 'APP_',
 	build: {
 		minify: true,
+		sourcemap: tsconfig.sourceMap,
+		target: 'baseline-widely-available',
 		rollupOptions: {
 			output: {
 				manualChunks: {
+					/* elements order is important because chunks
+					may import previously generated/grouped chunks */
 					react: ['react', 'react-dom'],
-					router: ['react-router-dom'],
+					router: ['react-router'],
 					store: ['jotai'],
+					'lib-feature': ['./src/libs/feature/index.ts'],
+					'lib-router': ['./src/libs/router/index.ts'],
 				},
 			},
 		},
-		sourcemap: tsconfig.sourceMap,
-		target: tsconfig.target,
 	},
-	clearScreen: false,
-	envPrefix: 'APP_',
 	plugins: [
 		checker({
 			enableBuild: true,
 			terminal: true,
 			typescript: true,
+			eslint: {
+				dev: { logLevel: ['error'] },
+				lintCommand: 'eslint --cache',
+				useFlatConfig: true,
+			},
 		}),
 		react(),
-		css(),
+		unocss(),
 		fonts(
 			[
 				`https://fonts.googleapis.com/css2?family=${FONT_FAMILY}:wght@${FONT_WEIGHTS}&display=swap`,
 			],
-			{ injectAsStyleTag: false },
+			{
+				injectAsStyleTag: false,
+				minifyCss: true,
+			},
 		),
 		pwa({
-			devOptions: {
-				enabled: false,
-			},
 			disable: process.env.SERVICE_WORKER === 'false',
 			injectRegister: 'inline',
 			manifest: false,
 			registerType: 'autoUpdate',
+			devOptions: {
+				enabled: false,
+			},
 			workbox: {
 				cleanupOutdatedCaches: true,
+				sourcemap: tsconfig.sourceMap,
 				globPatterns: [
 					'**/*.{html,js,css,ico,png,svg,webp,avif,woff2}',
 				],
-				sourcemap: tsconfig.sourceMap,
 			},
 		}),
 	],

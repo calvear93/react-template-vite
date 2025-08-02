@@ -13,5 +13,10 @@ body,
 	box-sizing: border-box;
 	width: 100dvw;
 	height: 100dvh;
-	font-family: 'Andika', sans-serif;
+	font-family: 'Quicksand', sans-serif;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+	margin-block: 0.67em;
+	font-size: 1rem;
 }

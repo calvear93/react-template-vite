@@ -4,10 +4,10 @@
 
 # global variables
 # https://hub.docker.com/_/node
-ARG ALPINE=node:20.12.2-alpine
+ARG ALPINE=node:22.17.1-alpine
 # https://hub.docker.com/_/nginx
-ARG NGINX=nginx:1.25.4-alpine
-ARG PNPM_VER=9.0.4
+ARG NGINX=nginx:1.29.0-alpine
+ARG PNPM_VER=10.14.0
 ARG APP_DIR='/app/'
 ARG OUT_DIR='dist'
 
@@ -29,7 +29,7 @@ RUN npm i -g pnpm@${PNPM_VER}
 COPY . ${APP_DIR}
 RUN pnpm install --frozen-lockfile
 # builds the app
-ENV NODE_ENV production
+ENV NODE_ENV=production
 RUN pnpm build:${ENV}
 
 

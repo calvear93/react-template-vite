@@ -1,13 +1,13 @@
-import { render, screen } from '@testing-library/react';
-import { afterAll, beforeAll, describe, test, vi } from 'vitest';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { FeatureHandler, FeatureProvider } from '#libs/feature';
 import { createRouter } from '#libs/router';
+import { afterAll, beforeAll, describe, test, vi } from 'vitest';
 import { DetailPage } from './Detail.page.tsx';
 
 describe(DetailPage, () => {
 	// hooks
 	beforeAll(() => {
-		vi.useFakeTimers();
+		vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
 
 		const DetailPageRouter = createRouter({
 			routes: [{ Component: DetailPage }],
@@ -32,8 +32,11 @@ describe(DetailPage, () => {
 	// tests
 	test('fetch data clicking button', async () => {
 		const button = screen.getByRole('button', { name: 'Fetch' });
-		button.click();
-		await vi.advanceTimersToNextTimerAsync();
+
+		fireEvent.click(button);
+		await act(async () => {
+			await vi.advanceTimersToNextTimerAsync();
+		});
 
 		screen.getByRole('heading', { name: 'anyValue' });
 	});

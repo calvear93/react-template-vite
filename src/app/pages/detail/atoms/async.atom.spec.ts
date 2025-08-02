@@ -2,7 +2,7 @@
 import { renderHook } from '@testing-library/react';
 import { useAtom } from 'jotai';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
-import { type AsyncSampleState, asyncAtom } from './async.atom.ts';
+import { asyncAtom, type AsyncSampleState } from './async.atom.ts';
 
 const renderAsyncAtom = () => renderHook(() => useAtom(asyncAtom));
 type HookCurrent = ReturnType<typeof renderAsyncAtom>['result'];
@@ -13,7 +13,7 @@ describe('async atom', () => {
 
 	// hooks
 	beforeAll(() => {
-		vi.useFakeTimers();
+		vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
 		// renders the hook
 		({ rerender, result: hook } = renderAsyncAtom());
 	});

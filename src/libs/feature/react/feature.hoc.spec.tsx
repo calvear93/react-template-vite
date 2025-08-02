@@ -10,9 +10,9 @@ import {
 	vi,
 } from 'vitest';
 import { FeatureHandler, type FeatureLookup } from '../feature.handler.ts';
-import { FeatureProvider } from './Feature.provider.tsx';
 import { FeatureContextException } from './exceptions/feature-context.exception.ts';
 import { withFeatures } from './feature.hoc.tsx';
+import { FeatureProvider } from './Feature.provider.tsx';
 
 const renderFeature = (component: ReactNode, features?: FeatureLookup) => {
 	const handler = new FeatureHandler(features);
@@ -43,7 +43,7 @@ describe('feature HOC', () => {
 		renderFeature(<Component />);
 		const component = screen.queryByTestId('id');
 
-		expect(component).toBeNull();
+		expect(component).not.toBeInTheDocument();
 	});
 
 	test('when feature is enabled, component is rendered', () => {
@@ -77,7 +77,7 @@ describe('feature HOC', () => {
 		const component2 = screen.queryByTestId('id2');
 
 		expect(component1?.innerHTML).toBe('v1');
-		expect(component2).toBeNull();
+		expect(component2).not.toBeInTheDocument();
 	});
 
 	describe('throws', () => {

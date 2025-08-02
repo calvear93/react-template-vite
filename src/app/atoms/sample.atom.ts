@@ -1,10 +1,5 @@
 import { atom } from 'jotai';
 
-export interface SampleState {
-	message: string;
-	status: number;
-}
-
 const _innerAtom = atom<SampleState>({
 	message: 'loading',
 	status: 0,
@@ -19,3 +14,8 @@ export const sampleAtom = atom(
 		});
 	},
 );
+
+export interface SampleState {
+	message: string;
+	status: number;
+}

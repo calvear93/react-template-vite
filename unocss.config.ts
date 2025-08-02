@@ -1,21 +1,24 @@
 import {
-	type UserConfig,
 	transformerDirectives,
 	transformerVariantGroup,
+	type UserConfig,
 } from 'unocss';
 import icons from 'unocss/preset-icons';
 import typography from 'unocss/preset-typography';
-import wind from 'unocss/preset-wind';
+import wind from 'unocss/preset-wind3';
 
 const FONT_FAMILY = process.env.FONT_FAMILY;
 
 export default {
-	presets: [typography(), wind({ preflight: true }), icons({ prefix: '' })],
+	presets: [typography(), wind(), icons()],
+	transformers: [transformerDirectives(), transformerVariantGroup()],
 	theme: {
-		fontFamily: {
+		colors: {
+			primary: '#00b2a9',
+		},
+		font: {
 			sans: [FONT_FAMILY, 'sans-serif'],
 			serif: [FONT_FAMILY, 'serif'],
 		},
 	},
-	transformers: [transformerDirectives(), transformerVariantGroup()],
 } satisfies UserConfig;

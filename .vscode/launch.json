@@ -6,14 +6,16 @@
 			"type": "msedge",
 			"request": "launch",
 			"url": "http://localhost:3003",
-			"webRoot": "${workspaceFolder}"
+			"webRoot": "${workspaceFolder}",
+			"preLaunchTask": "prelaunch"
 		},
 		{
 			"name": "Debug in Chrome",
 			"type": "chrome",
 			"request": "launch",
 			"url": "http://localhost:3003",
-			"webRoot": "${workspaceFolder}"
+			"webRoot": "${workspaceFolder}",
+			"preLaunchTask": "prelaunch"
 		},
 		{
 			"name": "Test",

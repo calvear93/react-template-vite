@@ -1,12 +1,13 @@
-import { type NonIndexRouteObject } from 'react-router-dom';
+import { type RouteObject } from 'react-router';
 import { type XOR } from './xor.d.ts';
 
 export type LayoutRouteComponent =
 	| React.ComponentType
 	| React.LazyExoticComponent<any>;
 
-export interface ComponentRoute extends Omit<NonIndexRouteObject, 'index'> {
+export interface ComponentRoute extends Omit<RouteObject, 'index'> {
 	children?: RouteDefinition[];
+	lazy?: () => Promise<{ default: React.ComponentType<any> }>;
 }
 
 export interface LayoutRoute

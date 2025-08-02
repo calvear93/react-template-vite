@@ -1,6 +1,6 @@
 import { Footer } from './Footer.tsx';
 import { Header } from './Header.tsx';
-import styles from './app.layout.module.scss';
+import styles from './App.layout.module.css';
 
 /**
  * App layout (wrapper for pages with header/footer).
@@ -20,5 +20,3 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 );
 
 export interface AppLayoutProps extends React.PropsWithChildren {}
-
-export default AppLayout;

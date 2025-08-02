@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { beforeAll, describe, expect, test } from 'vitest';
+import userEvent from '@testing-library/user-event';
 import { createRouter } from '#libs/router';
-import { routes } from '../app/app.routes.ts';
+import { beforeAll, describe, expect, test } from 'vitest';
+import { routes } from '../app/app.routes.tsx';
 
 describe('App', () => {
 	const env = import.meta.env.APP_ENV;
@@ -34,7 +35,7 @@ describe('App', () => {
 
 	test('navigates to detail page', async () => {
 		const anchor = screen.getByRole('link', { name: 'Go To Detail' });
-		anchor.click();
+		await userEvent.click(anchor);
 
 		const asyncMessage = await screen.findByText(env);
 

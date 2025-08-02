@@ -3,8 +3,8 @@ import type {
 	FeatureHandler,
 	FeatureOnChangeListener,
 } from '../feature.handler.ts';
-import { FeatureContext } from './Feature.provider.tsx';
 import { FeatureContextException } from './exceptions/feature-context.exception.ts';
+import { FeatureContext } from './Feature.provider.tsx';
 
 /**
  * Returns feature handler.

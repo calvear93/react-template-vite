@@ -1,9 +1,9 @@
-import { type RenderOptions, act, renderHook } from '@testing-library/react';
+import { act, renderHook, type RenderOptions } from '@testing-library/react';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { FeatureHandler } from '../feature.handler.ts';
-import { FeatureProvider } from './Feature.provider.tsx';
 import { FeatureContextException } from './exceptions/feature-context.exception.ts';
 import { useFeature, useFeatureHandler } from './feature.hook.ts';
+import { FeatureProvider } from './Feature.provider.tsx';
 
 describe('feature hooks', () => {
 	const _handler = new FeatureHandler();
