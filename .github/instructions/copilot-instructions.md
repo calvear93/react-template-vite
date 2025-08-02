@@ -479,6 +479,65 @@ pnpm build
 pnpm preview
 ```
 
+## 📝 Commit Guidelines
+
+**ALWAYS use Conventional Commits with Gitmojis for all commit messages:**
+
+### Commit Message Format
+
+```
+<type>[optional scope] <gitmoji>: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Examples
+
+```bash
+feat(auth) ✨: add JWT authentication middleware
+fix(api) 🐛: resolve validation error in user creation endpoint
+docs(readme) 📚: update installation instructions
+style(components) 🎨: improve code formatting and structure
+refactor(services) ♻️: extract common database operations
+test(users) ✅: add integration tests for user CRUD operations
+chore(deps) 🔧: update dependencies to latest versions
+perf(database) ⚡: optimize query performance with indexes
+feat ✨: v2025.1
+```
+
+### Common Gitmoji Types
+
+- **✨ `:sparkles:`** - New features
+- **🐛 `:bug:`** - Bug fixes
+- **📚 `:books:`** - Documentation
+- **🎨 `:art:`** - Code structure/format improvements
+- **⚡ `:zap:`** - Performance improvements
+- **✅ `:white_check_mark:`** - Tests
+- **🔧 `:wrench:`** - Configuration changes
+- **♻️ `:recycle:`** - Refactoring
+- **🚀 `:rocket:`** - Deployment/releases
+- **🔒 `:lock:`** - Security improvements
+- **💄 `:lipstick:`** - UI/UX improvements
+- **🚚 `:truck:`** - Moving/renaming files
+- **🗑️ `:wastebasket:`** - Removing code/files
+- **🩹 `:adhesive_bandage:`** - Simple fixes
+- **📦 `:package:`** - Package/dependency updates
+
+### Conventional Commit Types
+
+- **feat**: New feature for the user
+- **fix**: Bug fix for the user
+- **docs**: Documentation changes
+- **style**: Formatting, missing semicolons, etc.
+- **refactor**: Code change that neither fixes a bug nor adds a feature
+- **perf**: Performance improvements
+- **test**: Adding missing tests or correcting existing tests
+- **chore**: Build process or auxiliary tool changes
+- **ci**: Changes to CI configuration files and scripts
+- **build**: Changes that affect the build system or external dependencies
+
 ### Dependency Injection & Configuration Rules
 
 **CRITICAL**: Never use hardcoded variables directly in code. All configuration must be:
