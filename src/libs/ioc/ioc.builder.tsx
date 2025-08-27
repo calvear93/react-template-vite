@@ -17,7 +17,7 @@ const IoCContext = createContext<Map<unknown, unknown> | null>(null);
  *	export const MY_CUSTOM_PROVIDER = 'custom_provider';
  *	// bindings
  *	container.bind(HttpClient, new HttpClient()); // bind using a class
- *	container.bind(MY_CUSTOM_PROVIDER, new MyCustomProvider()); // bind using a class
+ *	container.bind(MY_CUSTOM_PROVIDER, new MyCustomProvider()); // bind using a injection token
  *
  *	// AnyComponent.ts
  *	import { useInjection, MY_CUSTOM_PROVIDER } from './app.ioc.ts';
