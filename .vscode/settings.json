@@ -28,6 +28,8 @@
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": false,
 	"explorer.fileNesting.patterns": {
+		".copilotrc.json": ".copilotignore, llms.txt",
+		".gitignore": ".gitattributes",
 		"*.cts": "${capture}.cts.*",
 		"*.env.json": "${capture}.*.env.json",
 		"*.json": "${capture}.json",
@@ -36,17 +38,20 @@
 		"*.tsx": "${capture}.*",
 		"dockerfile": ".dockerignore, docker-compose.*, dockerfile*",
 		"eslint.config.js": ".prettierrc*, .prettierignore, .stylelintrc*, .stylelintignore",
-		".copilotrc.json": ".copilotignore",
-		".gitignore": ".gitattributes",
 		"main.ts": "*.config.ts, *.d.ts",
 		"main.tsx": "*.config.ts, *.d.ts",
 		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc, .pnp.cjs",
-		"readme*": "changelog*, license*, code_of_conduct*, contributing*",
+		"readme*": "changelog.md, license.md, code_of_conduct.md, contributing.md, architecture.md, exemplars.md",
 		"tsconfig.json": "tsconfig.*.json",
 		"vite.config.ts": "vitest.config.ts, unocss.config.ts, stryker.conf.*"
 	},
 	"explorer.incrementalNaming": "smart",
 	"explorer.sortOrder": "type",
+	"files.associations": {
+		"*.md": "markdown",
+		"tsconfig.*.json": "jsonc",
+		"tsconfig.json": "jsonc"
+	},
 	"files.exclude": {
 		"**/*.log": true,
 		"**/*.tsbuildinfo": true,
