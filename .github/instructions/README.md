@@ -113,6 +113,7 @@ export const UserService: React.FC = () => {
 - Include accessibility features (ARIA, semantic HTML)
 - Handle loading, error, and success states
 - Write comprehensive tests with React Testing Library
+- Use InversionOfControlProvider with mockIoCValues Map for IoC dependency testing
 
 ### State Management
 

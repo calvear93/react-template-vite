@@ -1,7 +1,8 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { FeatureHandler, FeatureProvider } from '#libs/feature';
 import { createRouter } from '#libs/router';
-import { afterAll, beforeAll, describe, test, vi } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+import { InversionOfControlProvider } from '../../app.ioc.ts';
 import { DetailPage } from './Detail.page.tsx';
 
 describe(DetailPage, () => {
@@ -18,10 +19,16 @@ describe(DetailPage, () => {
 			FEATURE_FETCHBOX_V2ALPHA: true,
 		});
 
+		// mock IoC container dependencies
+		const mockIoCValues = new Map();
+		mockIoCValues.set('injectionToken', { example: 'mocked-demo-value' });
+
 		render(
-			<FeatureProvider handler={features}>
-				<DetailPageRouter />
-			</FeatureProvider>,
+			<InversionOfControlProvider values={mockIoCValues}>
+				<FeatureProvider handler={features}>
+					<DetailPageRouter />
+				</FeatureProvider>
+			</InversionOfControlProvider>,
 		);
 	});
 
@@ -39,5 +46,14 @@ describe(DetailPage, () => {
 		});
 
 		screen.getByRole('heading', { name: 'anyValue' });
+	});
+
+	test('should display injected data from IoC container', () => {
+		const injectedDataElement = screen.getByTestId('injected-data');
+
+		expect(injectedDataElement).toBeInTheDocument();
+		expect(injectedDataElement).toHaveTextContent(
+			'Injected example data: mocked-demo-value',
+		);
 	});
 });

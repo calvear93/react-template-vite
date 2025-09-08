@@ -28,7 +28,7 @@ Create a new custom React hook for [HOOK_DESCRIPTION] following these requiremen
 - Use appropriate React hooks (useState, useEffect, useCallback, useMemo)
 - Handle loading, error, and success states
 - Implement proper cleanup with useEffect
-- Integrate with custom IoC container when needed
+- Integrate with IoC container when needed (useInjection from #libs/ioc)
 
 ### 4. Error Handling
 
@@ -50,7 +50,7 @@ Create a new custom React hook for [HOOK_DESCRIPTION] following these requiremen
 
 ```typescript
 import { useState, useEffect, useCallback } from 'react';
-import { useInjection } from './app.ioc.ts'; // adjust path based on hook location
+import { useInjection } from '#libs/ioc';
 
 interface UseApiResult<T> {
 	data: T | null;
@@ -298,6 +298,45 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 };
 ```
 
+### Hook Testing with IoC Dependencies
+
+```typescript
+import { renderHook, act } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { InversionOfControlProvider } from './app.ioc.ts'; // adjust path
+import { useApiData } from './useApiData.ts';
+
+describe('useApiData with IoC', () => {
+	it('should fetch data using injected HTTP client', async () => {
+		const mockHttpClient = {
+			get: vi.fn().mockResolvedValue({ data: 'test data' }),
+		};
+
+		// Mock IoC container dependencies
+		const mockIoCValues = new Map();
+		mockIoCValues.set('HttpClient', mockHttpClient);
+
+		const wrapper = ({ children }: { children: React.ReactNode }) => (
+			<InversionOfControlProvider values={mockIoCValues}>
+				{children}
+			</InversionOfControlProvider>
+		);
+
+		const { result } = renderHook(() => useApiData('/api/test'), {
+			wrapper,
+		});
+
+		// Verify hook behavior with mocked dependencies
+		await act(async () => {
+			// Wait for hook to complete
+		});
+
+		expect(mockHttpClient.get).toHaveBeenCalledWith('/api/test');
+		expect(result.current.data).toBe('test data');
+	});
+});
+```
+
 ## Technical Checklist
 
 ### Essential Features
@@ -311,7 +350,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 
 ### Advanced Features
 
-- [ ] Integration with custom IoC container (useInjection from ./app.ioc.ts)
+- [ ] IoC container integration (useInjection from #libs/ioc)
 - [ ] Performance optimization (useMemo, useCallback)
 - [ ] Generic types for reusability
 - [ ] Proper subscription cleanup
@@ -330,6 +369,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 
 - [ ] Unit tests for hook behavior
 - [ ] Testing with different parameter combinations
+- [ ] IoC dependencies mocked with InversionOfControlProvider pattern
 - [ ] Error scenario testing
 - [ ] Cleanup and memory leak testing
 - [ ] Performance testing for optimization

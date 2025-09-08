@@ -47,6 +47,7 @@ This template serves as a starting point for creating enterprise-grade React app
 
 - [Mutation Testing](stryker.conf.json): Configuration for mutation testing with Stryker
 - [Test Setup](src/__tests__/AppRouter.test.tsx): Example test file for the application router
+- [IoC Testing Guide](src/app/pages/detail/Detail.page.spec.tsx): Example of testing with InversionOfControlProvider for dependency injection
 
 ## Optional
 

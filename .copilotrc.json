@@ -147,7 +147,8 @@
 			"coverage": "Maintain at least 80% coverage",
 			"patterns": "render, screen, fireEvent, waitFor from React Testing Library",
 			"accessibility": "Test ARIA attributes and keyboard navigation",
-			"mocking": "Mock external dependencies and API calls appropriately"
+			"mocking": "Mock external dependencies and API calls appropriately",
+			"ioc_testing": "Use InversionOfControlProvider with mockIoCValues Map for dependency injection testing"
 		},
 		"comments": {
 			"jsdoc": {

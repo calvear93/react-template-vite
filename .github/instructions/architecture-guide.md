@@ -426,26 +426,41 @@ export const AppRouter: React.FC = () => {
 ### Test patterns
 
 ```typescript
-// Component test example
-describe('UserCard', () => {
-  it('should render user information correctly', () => {
-    const user = { id: 1, name: 'John Doe', email: 'john@example.com' };
-    render(<UserCard user={user} />);
+// Component test with IoC dependency injection
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { InversionOfControlProvider } from '../../app.ioc.ts';
+import { UserCard } from './UserCard.tsx';
 
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.getByText('john@example.com')).toBeInTheDocument();
-  });
+describe('UserCard', () => {
+	it('should render user information correctly with injected dependencies', () => {
+		const user = { id: 1, name: 'John Doe', email: 'john@example.com' };
+
+		// Mock IoC container dependencies
+		const mockIoCValues = new Map();
+		mockIoCValues.set('USER_SERVICE', mockUserService);
+		mockIoCValues.set('CONFIG_SERVICE', mockConfigService);
+
+		render(
+			<InversionOfControlProvider values={mockIoCValues}>
+				<UserCard user={user} />
+			</InversionOfControlProvider>,
+		);
+
+		expect(screen.getByText('John Doe')).toBeInTheDocument();
+		expect(screen.getByText('john@example.com')).toBeInTheDocument();
+	});
 });
 
 // Hook test example
 describe('useUser', () => {
-  it('should fetch user data on mount', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useUser(1));
+	it('should fetch user data on mount', async () => {
+		const { result, waitForNextUpdate } = renderHook(() => useUser(1));
 
-    expect(result.current.isLoading).toBe(true);
-    await waitForNextUpdate();
-    expect(result.current.user).toBeDefined();
-  });
+		expect(result.current.isLoading).toBe(true);
+		await waitForNextUpdate();
+		expect(result.current.user).toBeDefined();
+	});
 });
 ```
 

@@ -55,6 +55,7 @@ Create a new React component for [COMPONENT_DESCRIPTION] following these require
 ### 7. Testing & Documentation
 
 - Create comprehensive unit tests with React Testing Library
+- Use InversionOfControlProvider for IoC dependency testing (import from ./app.ioc.ts)
 - Test user interactions and accessibility features
 - Include JSDoc comments with prop descriptions
 - Document complex business logic and patterns
@@ -94,7 +95,7 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
 ### Component with IoC Integration
 
 ```typescript
-import { useInjection } from './app.ioc.ts'; // adjust path based on component location
+import { useInjection } from '#libs/ioc';
 
 export const DataComponent: React.FC<DataComponentProps> = ({ userId }) => {
 	const httpClient = useInjection(HttpClient);
@@ -103,6 +104,47 @@ export const DataComponent: React.FC<DataComponentProps> = ({ userId }) => {
 	// Use injected dependencies
 };
 ```
+
+### IoC Component Testing Pattern
+
+```typescript
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { InversionOfControlProvider } from './app.ioc.ts'; // adjust path
+import { DataComponent } from './DataComponent.tsx';
+
+describe('DataComponent', () => {
+	it('should work with injected dependencies', () => {
+		const mockHttpClient = {
+			get: vi.fn().mockResolvedValue({ data: 'test' }),
+		};
+		const mockConfig = {
+			apiBaseUrl: 'https://test-api.com',
+		};
+
+		// Mock IoC container dependencies
+		const mockIoCValues = new Map();
+		mockIoCValues.set('HttpClient', mockHttpClient);
+		mockIoCValues.set('AppConfig', mockConfig);
+
+		render(
+			<InversionOfControlProvider values={mockIoCValues}>
+				<DataComponent userId="123" />
+			</InversionOfControlProvider>,
+		);
+
+		// Test component behavior with mocked dependencies
+	});
+});
+```
+
+    const config = useInjection(AppConfig);
+
+    // Use injected dependencies
+
+};
+
+````
 
 ### Form Component with Validation
 
@@ -117,7 +159,7 @@ type FormData = z.infer<typeof FormSchema>;
 export const FormComponent: React.FC<FormProps> = ({ onSubmit }) => {
 	// Form implementation with Zod validation
 };
-```
+````
 
 ## Technical Checklist
 
@@ -133,7 +175,7 @@ export const FormComponent: React.FC<FormProps> = ({ onSubmit }) => {
 
 ### Advanced Features
 
-- [ ] Integration with custom IoC container when needed
+- [ ] IoC container integration when needed (useInjection from #libs/ioc)
 - [ ] Zod validation for complex data structures
 - [ ] Error boundaries for async error handling
 - [ ] Performance optimization (React.memo, useMemo, useCallback)
@@ -152,6 +194,7 @@ export const FormComponent: React.FC<FormProps> = ({ onSubmit }) => {
 
 - [ ] Component renders correctly with different props
 - [ ] User interactions trigger expected behaviors
+- [ ] IoC dependencies mocked with InversionOfControlProvider pattern
 - [ ] Loading and error states display appropriately
 - [ ] Accessibility features work as expected
 - [ ] Edge cases and error scenarios are handled

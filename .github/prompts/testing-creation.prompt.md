@@ -46,6 +46,7 @@ Create comprehensive tests for [COMPONENT/HOOK_NAME] following React TypeScript 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { InversionOfControlProvider } from '../app.ioc.ts';
 import { ComponentName } from './ComponentName.tsx';
 
 // Mock dependencies
@@ -54,14 +55,6 @@ const mockService = {
 	getData: vi.fn(),
 	updateData: vi.fn(),
 };
-
-// Mock IoC container
-vi.mock('../app.ioc.ts', () => ({
-	useInjection: vi.fn((token) => {
-		if (token === 'ServiceName') return mockService;
-		return {};
-	}),
-}));
 
 describe('ComponentName', () => {
 	beforeEach(() => {
@@ -79,6 +72,23 @@ describe('ComponentName', () => {
 
 			expect(screen.getByText('Test Title')).toBeInTheDocument();
 			expect(screen.getByText('Test Data')).toBeInTheDocument();
+		});
+
+		it('should render with IoC dependencies', () => {
+			const props = { title: 'Test Title' };
+
+			// Mock IoC container dependencies
+			const mockIoCValues = new Map();
+			mockIoCValues.set('DATA_SERVICE', mockService);
+			mockIoCValues.set('CONFIG_SERVICE', { apiUrl: 'http://test.api' });
+
+			render(
+				<InversionOfControlProvider values={mockIoCValues}>
+					<ComponentName {...props} />
+				</InversionOfControlProvider>,
+			);
+
+			expect(screen.getByText('Test Title')).toBeInTheDocument();
 		});
 
 		it('should render loading state correctly', () => {

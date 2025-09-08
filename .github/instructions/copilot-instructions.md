@@ -203,6 +203,7 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
 - **Unit Tests**: Test individual components and hooks in isolation
 - **Integration Tests**: Test component interactions and user workflows
 - **Mock External Dependencies**: Use MSW for API mocking and vi.mock for module mocking
+- **IoC Container Testing**: Use InversionOfControlProvider with mockIoCValues Map for dependency injection testing
 - **Coverage Goals**: Maintain at least 80% code coverage across components and hooks
 - **Mutation Testing**: Run periodic mutation tests to verify test quality
 - **Visual Testing**: Use component snapshots for visual regression testing
@@ -210,17 +211,27 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
 ### Testing Patterns:
 
 ```typescript
-// Component testing example
+// Component testing with IoC dependency injection
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import { InversionOfControlProvider } from '../app.ioc.ts';
 import { UserCard } from './UserCard.tsx';
 
 describe('UserCard', () => {
-	it('should display user information correctly', () => {
+	it('should display user information correctly with injected dependencies', () => {
 		const user = { name: 'John Doe', email: 'john@example.com' };
 		const onEdit = vi.fn();
 
-		render(<UserCard user={user} onEdit={onEdit} />);
+		// Mock IoC container dependencies
+		const mockIoCValues = new Map();
+		mockIoCValues.set('USER_SERVICE', mockUserService);
+		mockIoCValues.set('CONFIG_SERVICE', mockConfigService);
+
+		render(
+			<InversionOfControlProvider values={mockIoCValues}>
+				<UserCard user={user} onEdit={onEdit} />
+			</InversionOfControlProvider>,
+		);
 
 		expect(screen.getByText('John Doe')).toBeInTheDocument();
 		expect(screen.getByText('john@example.com')).toBeInTheDocument();
@@ -230,7 +241,14 @@ describe('UserCard', () => {
 		const user = { name: 'John Doe', email: 'john@example.com' };
 		const onEdit = vi.fn();
 
-		render(<UserCard user={user} onEdit={onEdit} />);
+		const mockIoCValues = new Map();
+		mockIoCValues.set('USER_SERVICE', mockUserService);
+
+		render(
+			<InversionOfControlProvider values={mockIoCValues}>
+				<UserCard user={user} onEdit={onEdit} />
+			</InversionOfControlProvider>,
+		);
 
 		fireEvent.click(screen.getByRole('button', { name: /edit/i }));
 

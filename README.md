@@ -65,7 +65,7 @@ it environment may be 'dev' or 'release'.
 
 This React application is built with a modular architecture featuring:
 
-- **📦 Dependency Injection (IoC)**: Clean dependency management with Jotai-based IoC container
+- **📦 Dependency Injection (IoC)**: Clean dependency management with React Context based IoC container
 - **🛣️ Routing System**: File-based routing with lazy loading and layout support
 - **🎛️ Feature Flags**: Runtime feature toggles for controlled deployments
 - **⚛️ State Management**: Jotai atoms for fine-grained reactive state
