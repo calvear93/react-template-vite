@@ -91,7 +91,7 @@ export const appConfig = (): AppConfig => {
 ```typescript
 // app.ioc.ts
 import { createContainer } from '#libs/ioc';
-import { appConfig } from '../env/settings/settings.js';
+import { appConfig } from '../env/settings/settings.ts';
 
 export const { container, useInjection, InversionOfControlProvider } =
 	createContainer();
