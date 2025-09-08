@@ -20,8 +20,8 @@ The Router library extends React Router with:
 Creates a router instance with pre-configured routes and layout support.
 
 ```typescript
-import { createRouter } from '@libs/router';
-import { AppLayout } from '@layouts/app';
+import { createRouter } from '#libs/router';
+import { AppLayout } from '../app/layouts/app/App.layout.tsx';
 import { lazy } from 'react';
 
 const MyRouter = createRouter({
@@ -32,11 +32,11 @@ const MyRouter = createRouter({
 			children: [
 				{
 					path: '/',
-					Component: lazy(() => import('@pages/main/Main.page')),
+					Component: lazy(() => import('../app/pages/main/Main.page.tsx')),
 				},
 				{
 					path: '/detail/:id?',
-					Component: lazy(() => import('@pages/detail/Detail.page')),
+					Component: lazy(() => import('../app/pages/detail/Detail.page.tsx')),
 				},
 			],
 		},
@@ -52,7 +52,7 @@ export const App = () => <MyRouter />;
 #### Basic Route Structure
 
 ```typescript
-import type { RouteDefinition } from '@libs/router';
+import type { RouteDefinition } from '#libs/router';
 
 export const routes: RouteDefinition[] = [
 	{
@@ -61,7 +61,7 @@ export const routes: RouteDefinition[] = [
 	},
 	{
 		path: '/about',
-		Component: lazy(() => import('@pages/AboutPage')),
+		Component: lazy(() => import('../app/pages/AboutPage.tsx')),
 	},
 ];
 ```
@@ -100,7 +100,7 @@ export const routes: RouteDefinition[] = [
 #### Protected Routes
 
 ```typescript
-import { ProtectedLayout } from '@layouts/protected';
+import { ProtectedLayout } from '../app/layouts/protected/Protected.layout.tsx';
 
 export const protectedRoutes: RouteDefinition[] = [
 	{
@@ -162,7 +162,7 @@ const router = createRouter({
 Returns the current URL hash value without the '#' symbol:
 
 ```typescript
-import { useHashValue } from '@libs/router';
+import { useHashValue } from '#libs/router';
 
 export const MyComponent = () => {
 	const hash = useHashValue();
@@ -201,7 +201,7 @@ export const App = () => {
 ### Conditional Route Loading
 
 ```typescript
-import { useFeature } from '@libs/feature';
+import { useFeature } from '#libs/feature';
 
 export const ConditionalRoutes = () => {
 	const [betaFeatures] = useFeature('BETA_FEATURES');
@@ -215,7 +215,9 @@ export const ConditionalRoutes = () => {
 			? [
 					{
 						path: '/beta',
-						Component: lazy(() => import('@pages/BetaPage')),
+						Component: lazy(
+							() => import('../app/pages/BetaPage.tsx'),
+						),
 					},
 				]
 			: []),
@@ -342,9 +344,9 @@ Organize routes by feature or section:
 
 ```typescript
 // routes/index.ts
-export { authRoutes } from './auth.routes';
-export { dashboardRoutes } from './dashboard.routes';
-export { publicRoutes } from './public.routes';
+export { authRoutes } from './auth.routes.ts';
+export { dashboardRoutes } from './dashboard.routes.ts';
+export { publicRoutes } from './public.routes.ts';
 
 // routes/dashboard.routes.ts
 export const dashboardRoutes = [
@@ -354,7 +356,9 @@ export const dashboardRoutes = [
 		children: [
 			{
 				path: '/dashboard/overview',
-				Component: lazy(() => import('@pages/dashboard/Overview.page')),
+				Component: lazy(
+					() => import('../app/pages/dashboard/Overview.page.tsx'),
+				),
 			},
 			// More dashboard routes...
 		],
@@ -370,12 +374,12 @@ Use React.lazy() for automatic code splitting:
 import { lazy } from 'react';
 
 // Good: Lazy load pages
-const HomePage = lazy(() => import('@pages/Home.page'));
-const AboutPage = lazy(() => import('@pages/About.page'));
+const HomePage = lazy(() => import('../app/pages/Home.page.tsx'));
+const AboutPage = lazy(() => import('../app/pages/About.page.tsx'));
 
 // Better: Lazy load with named exports
 const HomePage = lazy(() =>
-	import('@pages/Home.page').then((module) => ({
+	import('../app/pages/Home.page.tsx').then((module) => ({
 		default: module.HomePage,
 	})),
 );

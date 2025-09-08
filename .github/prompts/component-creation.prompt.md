@@ -41,7 +41,7 @@ Create a new React component for [COMPONENT_DESCRIPTION] following these require
 ### 5. State Management
 
 - Use React hooks for local component state
-- Integrate with custom IoC container when needed (useInjection hook)
+- Integrate with custom IoC container when needed (useInjection hook from ./app.ioc.ts)
 - Handle loading, error, and success states appropriately
 - Implement proper cleanup with useEffect when necessary
 
@@ -94,6 +94,8 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
 ### Component with IoC Integration
 
 ```typescript
+import { useInjection } from './app.ioc.ts'; // adjust path based on component location
+
 export const DataComponent: React.FC<DataComponentProps> = ({ userId }) => {
 	const httpClient = useInjection(HttpClient);
 	const config = useInjection(AppConfig);

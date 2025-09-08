@@ -49,6 +49,9 @@ Create a new custom React hook for [HOOK_DESCRIPTION] following these requiremen
 ### Basic Data Fetching Hook
 
 ```typescript
+import { useState, useEffect, useCallback } from 'react';
+import { useInjection } from './app.ioc.ts'; // adjust path based on hook location
+
 interface UseApiResult<T> {
 	data: T | null;
 	loading: boolean;
@@ -308,7 +311,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 
 ### Advanced Features
 
-- [ ] Integration with custom IoC container (useInjection)
+- [ ] Integration with custom IoC container (useInjection from ./app.ioc.ts)
 - [ ] Performance optimization (useMemo, useCallback)
 - [ ] Generic types for reusability
 - [ ] Proper subscription cleanup

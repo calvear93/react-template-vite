@@ -161,7 +161,7 @@ export const sidebarAtom = atom(
 
 ```tsx
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { counterAtom } from '../atoms/counter.atom';
+import { counterAtom } from '../atoms/counter.atom.ts';
 
 export const Counter = () => {
 	// Read and write
@@ -187,7 +187,7 @@ export const Counter = () => {
 ```tsx
 import { Suspense } from 'react';
 import { useAtomValue } from 'jotai';
-import { dataAtom } from '../atoms/data.atom';
+import { dataAtom } from '../atoms/data.atom.ts';
 
 const DataList = () => {
 	const data = useAtomValue(dataAtom);
@@ -217,7 +217,7 @@ export const DataPage = () => (
 import { renderHook, act } from '@testing-library/react';
 import { useAtom } from 'jotai';
 import { describe, expect, test } from 'vitest';
-import { counterAtom } from './counter.atom';
+import { counterAtom } from './counter.atom.ts';
 
 describe('counterAtom', () => {
 	test('should have initial value of 0', () => {
@@ -244,7 +244,7 @@ describe('counterAtom', () => {
 import { renderHook, act } from '@testing-library/react';
 import { useAtom, useAtomValue } from 'jotai';
 import { describe, expect, test } from 'vitest';
-import { userAtom, userNameAtom } from './user.atom';
+import { userAtom, userNameAtom } from './user.atom.ts';
 
 describe('user atoms', () => {
 	test('should derive username from user', () => {

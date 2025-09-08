@@ -76,6 +76,9 @@ export const PageName: React.FC = () => {
 ### Page with Data Fetching
 
 ```typescript
+import { useParams } from 'react-router-dom';
+import { useInjection } from '../app.ioc.ts'; // adjust path based on page location
+
 export const UserPage: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const httpClient = useInjection(HttpClient);
@@ -118,6 +121,10 @@ export const UserPage: React.FC = () => {
 ### Page with Form Handling
 
 ```typescript
+import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+import { useInjection } from '../app.ioc.ts'; // adjust path based on page location
+
 const FormSchema = z.object({
 	title: z.string().min(1, 'Title is required'),
 	description: z.string().optional(),
@@ -173,7 +180,7 @@ export const CreateItemPage: React.FC = () => {
 
 ### Data Management
 
-- [ ] Custom IoC container integration (useInjection)
+- [ ] Custom IoC container integration (useInjection from ./app.ioc.ts)
 - [ ] Proper data fetching patterns
 - [ ] Loading, error, and success state management
 - [ ] Form validation with Zod schemas

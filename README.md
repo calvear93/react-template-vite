@@ -96,7 +96,7 @@ container.bind(CONFIG_SERVICE, new ConfigService());
 ### Using Dependency Injection
 
 ```typescript
-// In components
+// In components - adjust path based on component location
 import { useInjection } from '../app.ioc.ts';
 
 export const UserProfile: React.FC = () => {

@@ -19,7 +19,7 @@ The Feature library enables developers to:
 The main class that manages feature flags and provides reactivity through event emission.
 
 ```typescript
-import { FeatureHandler } from '@libs/feature';
+import { FeatureHandler } from '#libs/feature';
 
 const features = new FeatureHandler({
 	FEATURE_X_V1: true,
@@ -46,7 +46,7 @@ features.set('FEATURE_X_V1', false);
 React context provider that makes the FeatureHandler available throughout the component tree.
 
 ```tsx
-import { FeatureProvider } from '@libs/feature';
+import { FeatureProvider } from '#libs/feature';
 
 export const App = () => (
 	<FeatureProvider handler={features}>
@@ -62,7 +62,7 @@ export const App = () => (
 Returns the FeatureHandler instance from context. Use this when you need direct access to the handler methods.
 
 ```typescript
-import { useFeatureHandler } from '@libs/feature';
+import { useFeatureHandler } from '#libs/feature';
 
 export const MyComponent = () => {
 	const handler = useFeatureHandler();
@@ -81,7 +81,7 @@ export const MyComponent = () => {
 Returns a feature flag value and a setter function. The component will automatically re-render when the feature flag changes.
 
 ```typescript
-import { useFeature } from '@libs/feature';
+import { useFeature } from '#libs/feature';
 
 export const MyComponent = () => {
 	const [isEnabled, setFeature] = useFeature('MY_FEATURE');
@@ -104,7 +104,7 @@ export const MyComponent = () => {
 A HOC that provides feature flags as props to wrapped components.
 
 ```typescript
-import { withFeatures } from '@libs/feature';
+import { withFeatures } from '#libs/feature';
 
 interface MyComponentProps {
 	myFeature: boolean;
@@ -131,7 +131,7 @@ export default withFeatures({
 Links a storage provider (like localStorage) to automatically persist and restore feature flags.
 
 ```typescript
-import { FeatureHandler, linkStorageToFeatureHandler } from '@libs/feature';
+import { FeatureHandler, linkStorageToFeatureHandler } from '#libs/feature';
 
 const features = new FeatureHandler({
 	FEATURE_A: false,
@@ -151,7 +151,7 @@ linkStorageToFeatureHandler(features, 'app-features');
 Event emitted when feature flags change, containing information about what changed.
 
 ```typescript
-import type { FeatureOnChangeListener } from '@libs/feature';
+import type { FeatureOnChangeListener } from '#libs/feature';
 
 const listener: FeatureOnChangeListener = ({ changedFeatures, handler }) => {
 	Object.entries(changedFeatures).forEach(([feature, value]) => {
@@ -212,7 +212,7 @@ export const Dashboard = () => {
 Combine with routing for feature-gated pages:
 
 ```tsx
-import { useFeature } from '@libs/feature';
+import { useFeature } from '#libs/feature';
 import { Navigate } from 'react-router';
 
 export const BetaFeaturePage = () => {

@@ -141,7 +141,7 @@ export type UpdateUserData = z.infer<typeof UpdateUserSchema>;
 ```typescript
 // components/user/UserCard.tsx
 import React, { useState } from 'react';
-import { useInjection } from '#libs/ioc';
+import { useInjection } from './app.ioc.ts'; // adjust path based on component location
 import { UserService } from './services/user.service.ts';
 import { User, UpdateUserData } from './schemas/user.schema.ts';
 import styles from './UserCard.module.css';
@@ -193,7 +193,7 @@ export const UserCard: React.FC<UserCardProps> = ({
 ```typescript
 // hooks/useUser.ts
 import { useState, useEffect } from 'react';
-import { useInjection } from '#libs/ioc';
+import { useInjection } from './app.ioc.ts'; // adjust path based on component location
 import { UserService } from '../services/user.service.ts';
 import {
 	User,
@@ -464,7 +464,7 @@ import { useUser } from '../hooks/useUser.ts';
 
 ```typescript
 // For shared libraries, use path aliases
-import { useInjection } from '#libs/ioc';
+import { useInjection } from './app.ioc.ts'; // adjust path based on component location
 import { useFeature } from '#libs/feature';
 import { useRouter } from '#libs/router';
 ```

@@ -11,6 +11,7 @@
 		"Use Zod schemas for form validation and prop validation when complex",
 		"Apply accessibility features (ARIA attributes, semantic HTML) to all components",
 		"Import with .tsx/.ts extensions and use path aliases (#libs/*)",
+		"For useInjection hook, import from relative path to app.ioc.ts (e.g., './app.ioc.ts', '../app.ioc.ts')",
 		"Create comprehensive unit tests with .spec.tsx/.spec.ts files using Vitest",
 		"Add JSDoc comments for public components and hooks (main descriptions uppercase, params lowercase)",
 		"Use async/await instead of Promises",
@@ -159,7 +160,7 @@
 		}
 	},
 	"libraries": {
-		"ioc": "#libs/ioc - useInjection, createContainer, InversionOfControlProvider",
+		"ioc": "./app.ioc.ts - useInjection, createContainer, InversionOfControlProvider (import path depends on component location)",
 		"feature": "#libs/feature - useFeature, FeatureProvider, feature flag management",
 		"router": "#libs/router - custom router utilities and type-safe routing"
 	},

@@ -53,10 +53,10 @@ pnpm preview
 // └── index.ts
 
 // feature entry point: src/features/user/index.ts
-export * from './components';
-export * from './hooks';
-export * from './pages';
-export * from './types';
+export * from './components/index.ts';
+export * from './hooks/index.ts';
+export * from './pages/index.ts';
+export * from './types/index.ts';
 ```
 
 ### Barrel Exports Pattern
@@ -72,9 +72,9 @@ export * from './useUser.ts';
 export * from './useUserService.ts';
 
 // src/features/index.ts
-export * from './user';
-export * from './auth';
-export * from './dashboard';
+export * from './user/index.ts';
+export * from './auth/index.ts';
+export * from './dashboard/index.ts';
 ```
 
 ### Provider Pattern for Context
@@ -1023,8 +1023,8 @@ const ParentComponent: React.FC = () => {
 
 ```typescript
 // Lazy load components
-const LazyUserProfile = React.lazy(() => import('./UserProfile'));
-const LazyAdminPanel = React.lazy(() => import('./AdminPanel'));
+const LazyUserProfile = React.lazy(() => import('./UserProfile.tsx'));
+const LazyAdminPanel = React.lazy(() => import('./AdminPanel.tsx'));
 
 const App: React.FC = () => {
 	return (

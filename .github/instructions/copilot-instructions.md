@@ -128,7 +128,7 @@ type UserFormData = z.infer<typeof userSchema>;
 
 - Use the custom IoC container for dependency injection
 - Bind services and utilities at the application level
-- Inject dependencies in components using `useInjection` hook
+- Inject dependencies in components using `useInjection` hook from relative `./app.ioc.ts` path
 - Create scoped providers for testing and feature isolation
 
 ### Feature Flags
@@ -213,7 +213,7 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
 // Component testing example
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { UserCard } from './UserCard';
+import { UserCard } from './UserCard.tsx';
 
 describe('UserCard', () => {
 	it('should display user information correctly', () => {
@@ -322,7 +322,8 @@ describe('UserCard', () => {
 
 ## 📂 Path Aliases and Import Conventions
 
-- Use **package.json path aliases**: `#libs/ioc`, `#libs/feature`, `#libs/router`
+- Use **package.json path aliases**: `#libs/feature`, `#libs/router`
+- Use **relative paths for IoC**: `./app.ioc.ts` (adjust path based on component location)
 - Always include **.ts/.tsx extension** in relative imports
 - Group imports: external packages first, then internal modules, then relative imports
 - Use **named imports** and avoid default exports where possible
@@ -335,10 +336,10 @@ import React, { useCallback, useMemo } from 'react';
 import { z } from 'zod';
 
 // Internal libraries
-import { useInjection } from '#libs/ioc';
 import { useFeature } from '#libs/feature';
 
 // Relative imports
+import { useInjection } from './app.ioc.ts';
 import { UserCard } from './UserCard.tsx';
 import styles from './UserList.module.css';
 ```

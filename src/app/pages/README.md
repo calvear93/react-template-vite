@@ -152,11 +152,11 @@ export const routes = [
 		children: [
 			{
 				path: '/',
-				Component: lazy(() => import('./pages/main/Main.page')),
+				Component: lazy(() => import('./pages/main/Main.page.tsx')),
 			},
 			{
 				path: '/detail/:id?',
-				lazy: () => import('./pages/detail/Detail.page'),
+				lazy: () => import('./pages/detail/Detail.page.tsx'),
 				loader: detailLoader, // Optional data loader
 			},
 			{
@@ -369,12 +369,12 @@ describe('DetailPage feature variations', () => {
 describe('DetailPage with mocks', () => {
 	beforeAll(() => {
 		// Mock page-specific modules
-		vi.mock('./atoms/async.atom', () => ({
+		vi.mock('./atoms/async.atom.ts', () => ({
 			asyncAtom: vi.fn(),
 		}));
 
 		// Mock external API calls
-		vi.mock('../../../libs/api', () => ({
+		vi.mock('../../../libs/api/index.ts', () => ({
 			fetchData: vi.fn().mockResolvedValue({ data: 'mocked' }),
 		}));
 	});
@@ -525,7 +525,7 @@ export const FeaturePage: React.FC = () => {
 
 ```tsx
 import { useAtomValue } from 'jotai';
-import { userAtom } from '../../atoms/user.atom';
+import { userAtom } from '../../atoms/user.atom.ts';
 
 export const ProtectedPage: React.FC = () => {
 	const user = useAtomValue(userAtom);

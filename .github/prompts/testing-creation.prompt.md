@@ -56,7 +56,7 @@ const mockService = {
 };
 
 // Mock IoC container
-vi.mock('#libs/ioc', () => ({
+vi.mock('../app.ioc.ts', () => ({
 	useInjection: vi.fn((token) => {
 		if (token === 'ServiceName') return mockService;
 		return {};
@@ -231,7 +231,7 @@ const mockHttpClient = {
 	post: vi.fn(),
 };
 
-vi.mock('#libs/ioc', () => ({
+vi.mock('../app.ioc.ts', () => ({
 	useInjection: vi.fn(() => mockHttpClient),
 }));
 

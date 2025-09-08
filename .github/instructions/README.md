@@ -82,6 +82,8 @@ pnpm build                       # Production build
 ### Example Pattern
 
 ```typescript
+import { useInjection } from './app.ioc.ts'; // adjust path based on component location
+
 // ❌ WRONG - Hardcoded
 const apiUrl = 'https://api.example.com';
 
