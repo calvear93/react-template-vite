@@ -91,6 +91,8 @@
 	"html.autoClosingTags": true,
 	"javascript.autoClosingTags": true,
 	"javascript.preferences.quoteStyle": "single",
+	"npm.packageManager": "pnpm",
+	"npm.scriptRunner": "pnpm",
 	"prettier.useTabs": true,
 	"scss.lint.unknownAtRules": "ignore",
 	"search.exclude": {
