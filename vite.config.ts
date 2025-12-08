@@ -18,16 +18,41 @@ export default {
 		minify: true,
 		sourcemap: tsconfig.sourceMap,
 		target: 'baseline-widely-available',
-		rollupOptions: {
+		rolldownOptions: {
 			output: {
-				manualChunks: {
-					/* elements order is important because chunks
-					may import previously generated/grouped chunks */
-					react: ['react', 'react-dom'],
-					router: ['react-router'],
-					store: ['jotai'],
-					'lib-feature': ['./src/libs/feature/index.ts'],
-					'lib-router': ['./src/libs/router/index.ts'],
+				advancedChunks: {
+					groups: [
+						{
+							name: 'react',
+							priority: 100,
+							test: /(?:^|\/)(?:react|react-dom)(?:$|\/)/u,
+						},
+						{
+							name: 'router',
+							priority: 100,
+							test: /node_modules\/react-router/u,
+						},
+						{
+							name: 'store',
+							priority: 100,
+							test: /node_modules\/jotai/u,
+						},
+						{
+							name: 'libs-router',
+							priority: 20,
+							test: /src\/libs\/router/u,
+						},
+						{
+							name: 'libs-ioc',
+							priority: 20,
+							test: /src\/libs\/ioc/u,
+						},
+						{
+							name: 'libs-feature',
+							priority: 20,
+							test: /src\/libs\/feature/u,
+						},
+					],
 				},
 			},
 		},

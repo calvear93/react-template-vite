@@ -10,8 +10,10 @@ export interface ComponentRoute extends Omit<RouteObject, 'index'> {
 	lazy?: () => Promise<{ default: React.ComponentType<any> }>;
 }
 
-export interface LayoutRoute
-	extends Omit<ComponentRoute, 'Component' | 'element'> {
+export interface LayoutRoute extends Omit<
+	ComponentRoute,
+	'Component' | 'element'
+> {
 	Layout: LayoutRouteComponent;
 	loading?: React.ReactNode;
 }
