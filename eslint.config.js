@@ -498,7 +498,7 @@ export default [
 		plugins: { perfectionist },
 		rules: {
 			'perfectionist/sort-array-includes': WARN,
-			'perfectionist/sort-enums': [WARN, { sortByValue: true }],
+			'perfectionist/sort-enums': [WARN, { sortByValue: 'ifNumericEnum' }],
 			'perfectionist/sort-exports': WARN,
 			'perfectionist/sort-heritage-clauses': WARN,
 			'perfectionist/sort-jsx-props': WARN,
