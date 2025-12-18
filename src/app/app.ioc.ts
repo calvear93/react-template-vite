@@ -4,7 +4,7 @@ import { createContainer } from '#libs/ioc';
  * Defines dependencies for inject in your components.
  * Use 'useInjection' hook for resolve inside them.
  */
-export const { InversionOfControlProvider, container, useInjection } =
+export const { container, InversionOfControlProvider, useInjection } =
 	createContainer();
 
 // define dependencies

@@ -1,6 +1,6 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
 import { FeatureHandler, FeatureProvider } from '#libs/feature';
 import { createRouter } from '#libs/router';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { InversionOfControlProvider } from '../../app.ioc.ts';
 import { DetailPage } from './Detail.page.tsx';

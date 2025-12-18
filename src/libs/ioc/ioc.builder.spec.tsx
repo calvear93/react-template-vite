@@ -4,7 +4,7 @@ import { createContainer } from './ioc.builder.tsx';
 
 describe(createContainer, () => {
 	// container creation
-	const { InversionOfControlProvider, container, useInjection } =
+	const { container, InversionOfControlProvider, useInjection } =
 		createContainer();
 	// tokens
 	const TEST_TOKEN = 'test_token';

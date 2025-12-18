@@ -34,22 +34,6 @@ export const createContainer = () => {
 	const container = new Map<unknown, unknown>();
 
 	return {
-		InversionOfControlProvider: ({
-			children,
-			values,
-		}: InversionOfControlProviderProps) => {
-			const contextContainer = useMemo(() => {
-				// if values is provided, use only those values (don't merge with global container)
-				// if values is not provided, use the global container
-				return new Map(values ?? container);
-			}, [values]);
-
-			return (
-				<IoCContext.Provider value={contextContainer}>
-					{children}
-				</IoCContext.Provider>
-			);
-		},
 		container: {
 			bind: (key: any, value: any) => {
 				container.set(key, value);
@@ -66,6 +50,22 @@ export const createContainer = () => {
 			unbind: (key: any) => {
 				container.delete(key);
 			},
+		},
+		InversionOfControlProvider: ({
+			children,
+			values,
+		}: InversionOfControlProviderProps) => {
+			const contextContainer = useMemo(() => {
+				// if values is provided, use only those values (don't merge with global container)
+				// if values is not provided, use the global container
+				return new Map(values ?? container);
+			}, [values]);
+
+			return (
+				<IoCContext.Provider value={contextContainer}>
+					{children}
+				</IoCContext.Provider>
+			);
 		},
 		useInjection: <
 			T,

@@ -13,7 +13,7 @@ export default {
 				useFlatConfig: true,
 			},
 		}),
-	] as any,
+	] as any[],
 	test: {
 		environment: 'happy-dom',
 		include: ['src/**/*.{spec,test}.?(c|m)[jt]s?(x)'],

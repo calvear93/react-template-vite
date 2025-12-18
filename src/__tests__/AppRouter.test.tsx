@@ -1,6 +1,6 @@
+import { createRouter } from '#libs/router';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createRouter } from '#libs/router';
 import { beforeAll, describe, expect, test } from 'vitest';
 import { routes } from '../app/app.routes.tsx';
 
