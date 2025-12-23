@@ -13,7 +13,7 @@ Create a new React page component for [PAGE_DESCRIPTION] following these require
 
 - Use `.page.tsx` suffix for page components
 - Implement functional component with React.FC type
-- Follow React Router v6+ patterns for routing
+- Follow React Router v7+ patterns for routing (prefer importing primitives via `#libs/router`)
 - Integrate with layout components (AppLayout or custom)
 
 ### 2. Data Management
@@ -76,7 +76,7 @@ export const PageName: React.FC = () => {
 ### Page with Data Fetching
 
 ```typescript
-import { useParams } from 'react-router-dom';
+import { useParams } from '#libs/router';
 import { useInjection } from '../app.ioc.ts'; // adjust path based on page location
 
 export const UserPage: React.FC = () => {
@@ -121,7 +121,7 @@ export const UserPage: React.FC = () => {
 ### Page with Form Handling
 
 ```typescript
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '#libs/router';
 import { z } from 'zod';
 import { useInjection } from '../app.ioc.ts'; // adjust path based on page location
 

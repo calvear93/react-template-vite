@@ -25,48 +25,51 @@
     - `(((app-title)))` app title, i.e. Sample API
     - `(((project-name)))` project name, i.e. my-project
 
-- Install [NodeJS](https://nodejs.org/es/).
-- Install [PNPM](https://pnpm.io/installation)
-- Execute `pnpm install` command.
-- Execute `pnpm env:schema` command.
-- Run either `pnpm start:dev` or `pnpm test:dev` commands.
+- Install [Node.js](https://nodejs.org/) (see `engines.node` in `package.json`).
+- Install [pnpm](https://pnpm.io/installation) (see `engines.pnpm` in `package.json`).
+- Run `pnpm install`.
+- Run `pnpm env:schema` (keeps env schema in sync).
+- Start with `pnpm start:dev` (or run tests with `pnpm test:dev`).
 
 - Using Docker.
     - Exec `docker build --no-cache --build-arg ENV=dev -f Dockerfile --tag image_name .`
     - Exec `docker run -d -it -p 8080:8080/tcp --name container_name image_name`
     - Open `http://localhost:8080/` in browser
 
-## 📋 **Branches and Environments**
+## 📋 **Environments**
 
-Project has 2 environments.
+This template uses an environment loader (`env` CLI) and ships with two environment names:
 
-- **dev (development)**: environment with breaking changes and new features.
-- **release (production)**: release environment.
+- **dev**: local development
+- **release**: production-like settings
+
+You can add more environments (e.g. `qa`, `prod`) by creating the corresponding files under `env/` and updating `env/appsettings.json` if needed.
 
 ## 🧪 **Executing**
 
-Project uses **npm scripts** for eases execution, testing and building.
-Many of these script run on a defined environment, specified after ':', and
-it environment may be 'dev' or 'release'.
+Project uses **pnpm scripts** to run, test, and build.
+Many scripts are environment-scoped via `:<env>` where `<env>` is typically `dev` or `release`.
 
 | Command                         | Action                         |
 | ------------------------------- | ------------------------------ |
 | pnpm start:`<env>`              | executes the app               |
 | pnpm build:`<env>`              | build the app                  |
-| pnpm preview                    | builds and server app          |
+| pnpm preview                    | builds and serves the app      |
 | pnpm test:`<env>`               | executes tests                 |
 | pnpm test:`<env>` --coverage    | executes tests with coverage   |
 | pnpm test:`<env>` --watch=false | executes tests without watcher |
 | pnpm env:schema                 | updates env JSON schema        |
 | pnpm format                     | code format                    |
 | pnpm lint                       | code/styles review             |
+| pnpm stylelint                  | CSS linting                    |
+| pnpm test:mutation              | mutation testing (Stryker)     |
 
 ## 🏗️ **Architecture Overview**
 
 This React application is built with a modular architecture featuring:
 
 - **📦 Dependency Injection (IoC)**: Clean dependency management with React Context based IoC container
-- **🛣️ Routing System**: File-based routing with lazy loading and layout support
+- **🛣️ Routing System**: Central route configuration with lazy loading and layout support
 - **🎛️ Feature Flags**: Runtime feature toggles for controlled deployments
 - **⚛️ State Management**: Jotai atoms for fine-grained reactive state
 - **🧩 Component Architecture**: Organized components with clear separation of concerns

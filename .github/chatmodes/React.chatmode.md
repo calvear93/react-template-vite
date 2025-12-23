@@ -118,7 +118,7 @@ describe('ComponentName', () => {
 
 Build / Dev:
 
-- `pnpm start:<env>` start HMR dev server (env = dev|qa|prod)
+- `pnpm start:<env>` start HMR dev server (env = dev|release by default; add qa/prod if configured)
 - `pnpm build:<env>` production build for environment
 - `pnpm preview` build + preview locally
 
@@ -130,7 +130,7 @@ Testing:
 
 Quality:
 
-- `pnpm lint` ESLint (with auto-fix)
+- `pnpm lint` ESLint (no auto-fix by default)
 - `pnpm format` Prettier formatting
 - `pnpm env:schema` regenerate env schema after config change
 

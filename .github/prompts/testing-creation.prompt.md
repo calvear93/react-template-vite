@@ -335,12 +335,12 @@ describe('useCustomHook', () => {
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from '#libs/router';
 import { PageComponent } from './PageComponent.tsx';
 
 // Wrapper for components that need router context
 const RouterWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-	<BrowserRouter>{children}</BrowserRouter>
+	<MemoryRouter initialEntries={['/']}>{children}</MemoryRouter>
 );
 
 describe('PageComponent Integration', () => {

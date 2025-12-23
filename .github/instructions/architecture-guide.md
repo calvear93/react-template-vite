@@ -64,11 +64,11 @@ src/libs/{library-name}/
 ### Environment Configuration Pattern
 
 ```typescript
-// env/settings/settings.ts
+// src/app/app.config.ts
 import { z } from 'zod';
 
 const AppConfigSchema = z.object({
-	apiUrl: z.url(),
+	apiUrl: z.string().url(),
 	timeout: z.coerce.number().default(10000),
 	retries: z.coerce.number().default(3),
 	enableFeatureFlags: z.coerce.boolean().default(false),
@@ -78,10 +78,12 @@ export type AppConfig = z.infer<typeof AppConfigSchema>;
 
 export const appConfig = (): AppConfig => {
 	return AppConfigSchema.parse({
-		apiUrl: import.meta.env.VITE_API_URL,
-		timeout: import.meta.env.VITE_API_TIMEOUT,
-		retries: import.meta.env.VITE_API_RETRIES,
-		enableFeatureFlags: import.meta.env.VITE_ENABLE_FEATURE_FLAGS,
+		// This template sets Vite's envPrefix to `APP_` (see vite.config.ts).
+		// Keep direct `import.meta.env` access confined to this config layer.
+		apiUrl: import.meta.env.APP_API_URL,
+		timeout: import.meta.env.APP_API_TIMEOUT,
+		retries: import.meta.env.APP_API_RETRIES,
+		enableFeatureFlags: import.meta.env.APP_ENABLE_FEATURE_FLAGS,
 	});
 };
 ```
@@ -91,7 +93,7 @@ export const appConfig = (): AppConfig => {
 ```typescript
 // app.ioc.ts
 import { createContainer } from '#libs/ioc';
-import { appConfig } from '../env/settings/settings.ts';
+import { appConfig } from './app.config.ts';
 
 export const { container, useInjection, InversionOfControlProvider } =
 	createContainer();
@@ -327,11 +329,11 @@ export class UserService {
 ```typescript
 // pages/user/User.page.tsx
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '#libs/router';
 import { useUser } from './hooks/useUser.ts';
 import { UserCard } from './components/UserCard.tsx';
-import { LoadingSpinner } from '#app/components/ui/LoadingSpinner.tsx';
-import { ErrorMessage } from '#app/components/ui/ErrorMessage.tsx';
+import { LoadingSpinner } from './components/LoadingSpinner.tsx';
+import { ErrorMessage } from './components/ErrorMessage.tsx';
 import styles from './User.page.module.css';
 
 export const UserPage: React.FC = () => {
@@ -358,9 +360,9 @@ export const UserPage: React.FC = () => {
 			<UserCard
 				user={user}
 				onUpdate={updateUser}
-      />
-    </div>
-  );
+			/>
+		</div>
+	);
 };
 ```
 
@@ -371,7 +373,7 @@ export const UserPage: React.FC = () => {
 ```typescript
 // app.routes.tsx
 import { lazy } from 'react';
-import type { RouteObject } from 'react-router-dom';
+import type { RouteObject } from '#libs/router';
 
 const UserPage = lazy(() => import('./pages/user/User.page.tsx'));
 const HomePage = lazy(() => import('./pages/main/Main.page.tsx'));
@@ -392,7 +394,7 @@ export const routes: RouteObject[] = [
 
 ```typescript
 // App.router.tsx
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from '#libs/router';
 import { routes } from './app.routes.tsx';
 import { AppLayout } from './layouts/app/App.layout.tsx';
 
@@ -487,9 +489,10 @@ import { useRouter } from '#libs/router';
 ### Cross-component imports
 
 ```typescript
-// For other components/pages, use absolute paths from app
-import { LoadingSpinner } from '#app/components/ui/LoadingSpinner.tsx';
-import { UserCard } from '#app/components/user/UserCard.tsx';
+// This template provides path aliases only for shared libraries (`#libs/*`).
+// For app code under `src/app/**`, prefer relative imports.
+import { LoadingSpinner } from '../../components/LoadingSpinner.tsx'; // example
+import { UserCard } from '../../components/UserCard.tsx'; // example
 ```
 
 ## 📝 Documentation Requirements

@@ -27,11 +27,11 @@
 		"Maintain at least 80% test coverage with comprehensive unit and integration tests",
 		"Use CSS Modules for component styling with UnoCSS utilities for common patterns",
 		"Implement proper loading and error states for all async operations",
-		"Follow React Router v6+ patterns for client-side routing",
+		"Follow React Router v7+ patterns for client-side routing",
 		"Use React Context and custom IoC container for state management and dependency injection"
 	],
 	"context": {
-		"framework": "React v18+ with TypeScript v5+",
+		"framework": "React v19+ with TypeScript v5+",
 		"runtime": "Browser with Vite development server",
 		"bundler": "Vite (fast build and dev server with HMR)",
 		"language": "TypeScript",
@@ -41,7 +41,7 @@
 		"testingLibrary": "React Testing Library for component testing",
 		"coverage": "Vitest Coverage V8",
 		"mutationTesting": "Stryker Mutator",
-		"router": "React Router v6+ (client-side routing)",
+		"router": "React Router v7+ (client-side routing)",
 		"stateManagement": "React hooks + custom IoC container",
 		"styling": "CSS Modules + UnoCSS (atomic CSS)",
 		"buildTool": "Vite",
@@ -70,8 +70,10 @@
 			"description_format": "Format code using Prettier"
 		},
 		"build": {
-			"build": "pnpm build",
-			"description": "Build project for production",
+			"build": "pnpm build:dev",
+			"description": "Build project (dev environment)",
+			"buildRelease": "pnpm build:release",
+			"description_buildRelease": "Build project (release environment)",
 			"preview": "pnpm preview",
 			"description_preview": "Preview production build locally"
 		}
@@ -85,7 +87,7 @@
 		},
 		"page": {
 			"suffix": ".page.tsx for page components",
-			"routing": "Use React Router v6+ with useParams, useNavigate",
+			"routing": "Use React Router v7+ (prefer importing via #libs/router when possible)",
 			"layout": "Integrate with layout components (AppLayout or custom)",
 			"seo": "Include proper meta tags and document titles"
 		},
@@ -107,7 +109,7 @@
 			"async": "Proper loading, error, and success state management"
 		},
 		"routing": {
-			"structure": "Client-side routing with React Router v6+",
+			"structure": "Client-side routing with React Router v7+",
 			"parameters": "Type-safe route parameters with useParams<T>",
 			"navigation": "useNavigate hook for programmatic navigation",
 			"protection": "Route guards for authentication and authorization"
@@ -115,7 +117,7 @@
 		"configuration": {
 			"principle": "NEVER hardcode - always inject configuration through IoC container",
 			"appsettings": "Non-secret config in env/appsettings.json",
-			"secrets": "Secrets in env/dev.local.env.json, env/qa.env.json, etc.",
+			"secrets": "Secrets in env/<env>.env.json / env/<env>.local.env.json (this repo ships with dev/release examples)",
 			"injection": "Define in app bootstrap, inject into components via useInjection",
 			"example": "config.apiBaseUrl vs hardcoded 'https://api.example.com'",
 			"pattern": "Use custom IoC container for all external dependencies"

@@ -27,10 +27,10 @@ This directory contains comprehensive configuration and documentation for develo
 
 This is a modern React TypeScript SPA template with:
 
-- **Framework**: React v18+ with TypeScript v5+
+- **Framework**: React v19+ with TypeScript v5+
 - **Build Tool**: Vite for fast development and building
 - **State Management**: React hooks + custom IoC container
-- **Routing**: React Router v6+ with type-safe routing
+- **Routing**: React Router v7+ with type-safe routing
 - **Validation**: Zod v4+ for schema validation
 - **Testing**: Vitest with React Testing Library
 - **Styling**: CSS Modules + UnoCSS
@@ -42,8 +42,11 @@ This is a modern React TypeScript SPA template with:
 pnpm start:dev                         # Development server with HMR
 pnpm test:dev --coverage --run   # Tests with coverage
 pnpm lint                        # Code quality checks
+pnpm stylelint                   # CSS linting
 pnpm format                      # Code formatting
-pnpm build                       # Production build
+pnpm build:dev                   # Build (dev environment)
+pnpm build:release               # Build (release environment)
+pnpm preview                     # Build + preview locally
 ```
 
 ### Key Architecture Patterns
@@ -77,7 +80,7 @@ pnpm build                       # Production build
 - **No hardcoded values** - all configuration must be externalized
 - **Use dependency injection** through the custom IoC container
 - **Type-safe configurations** with Zod schema validation
-- **Environment-specific settings** for dev/qa/prod
+- **Environment-specific settings** (this repo ships with `dev` and `release`)
 
 ### Example Pattern
 

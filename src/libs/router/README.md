@@ -432,7 +432,7 @@ export const MyComponent = () => {
 ```typescript
 // tests/routes.test.tsx
 import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from '#libs/router';
 
 describe('Routes', () => {
 	it('should render home page', () => {

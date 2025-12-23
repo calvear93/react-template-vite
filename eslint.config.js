@@ -621,6 +621,7 @@ export default [
 		settings: {
 			perfectionist: {
 				ignoreCase: false,
+				newlinesInside: 'ignore',
 				order: 'asc',
 				partitionByNewLine: true,
 				type: 'natural',

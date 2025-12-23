@@ -64,9 +64,9 @@ export const UserProfile: React.FC = () => {
 
 # Project Technology Stack
 
-- **Framework**: React v18+ with TypeScript v5+
+- **Framework**: React v19+ with TypeScript v5+
 - **Build Tool**: Vite (fast build and dev server with HMR)
-- **Router**: React Router v6+ (client-side routing)
+- **Router**: React Router v7+ (client-side routing)
 - **Validation**: Zod v4+ (TypeScript-first schema validation)
 - **Testing**: Vitest (fast unit testing framework)
 - **Coverage**: Vitest Coverage V8
@@ -88,7 +88,8 @@ pnpm test:dev --coverage --run  # Tests with coverage
 pnpm test:dev           # Watch mode testing
 pnpm lint               # Code quality checks
 pnpm format             # Code formatting
-pnpm build              # Production build
+pnpm build:dev          # Build (dev environment)
+pnpm build:release      # Build (release environment)
 pnpm preview            # Preview production build
 ```
 
@@ -140,7 +141,7 @@ type UserFormData = z.infer<typeof userSchema>;
 
 ### React Router
 
-- Use React Router v6 patterns with data loading
+- Use React Router v7 patterns with data loading
 - Implement route-based code splitting with lazy loading
 - Define routes using the type-safe routing configuration
 - Use layout routes for shared UI patterns
@@ -332,7 +333,7 @@ describe('UserCard', () => {
 ## ✅ ALWAYS DO:
 
 - Define non-secret config in `env/appsettings.json`
-- Define secrets in `env/dev.local.env.json`, `env/qa.env.json`, etc.
+- Define secrets in `env/<env>.env.json` / `env/<env>.local.env.json` as needed (this repo ships with `dev` and `release` as examples).
 - Create configuration interfaces and inject them via the IoC container
 - Define configuration as far out as possible (in the app bootstrap)
 - Use dependency injection for all configuration access
@@ -471,7 +472,7 @@ export const useUserForm = (initialData?: Partial<User>) => {
 
 ## 🤖 GitHub Copilot Best Practices
 
-### Essential npm Scripts for Development
+### Essential pnpm Scripts for Development
 
 Always use these specific commands in the project:
 
@@ -491,8 +492,9 @@ pnpm lint
 # Formatting - Format code with Prettier
 pnpm format
 
-# Building - Build for production
-pnpm build
+# Building - Build (choose environment)
+pnpm build:dev
+pnpm build:release
 
 # Preview - Preview production build
 pnpm preview

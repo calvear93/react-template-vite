@@ -24,7 +24,10 @@ pnpm lint
 pnpm format
 
 # build project for production
-pnpm build
+pnpm build:dev
+
+# build project for release environment
+pnpm build:release
 
 # preview production build
 pnpm preview
@@ -854,7 +857,7 @@ describe('useLocalStorage', () => {
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from '#libs/router';
 import { UserPage } from './User.page.tsx';
 
 // Mock fetch
@@ -862,9 +865,9 @@ global.fetch = vi.fn();
 
 const renderWithRouter = (component: React.ReactElement) => {
 	return render(
-		<BrowserRouter>
+		<MemoryRouter initialEntries={['/']}>
 			{component}
-		</BrowserRouter>
+		</MemoryRouter>
 	);
 };
 
@@ -880,7 +883,7 @@ describe('UserPage Integration', () => {
 			email: 'john@example.com',
 		};
 
-		(fetch as jest.MockedFunction<typeof fetch>).mockResolvedValueOnce({
+		(fetch as unknown as vi.MockedFunction<typeof fetch>).mockResolvedValueOnce({
 			ok: true,
 			json: async () => mockUser,
 		} as Response);

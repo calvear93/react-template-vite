@@ -5,7 +5,7 @@ description: 'Coding style instructions for TypeScript files'
 
 # TypeScript Code Style Guidelines
 
-## � Code Formatting
+## 🎨 Code Formatting
 
 - **Indentation**: Use tabs (not spaces, length 4) for indentation
 - **Line Length**: Limit lines to 80 characters
@@ -179,7 +179,8 @@ class UserService {
 
 ```typescript
 // use SCREAMING_SNAKE_CASE for module-level constants and primitives
-const API_BASE_URL = 'https://api.example.com';
+// NOTE: do not hardcode environment-specific URLs in app code; inject them via config.
+const API_BASE_URL = 'https://example.invalid';
 const MAX_RETRY_ATTEMPTS = 3;
 const PI = 3.1415;
 const EARTH_RATIO = 6_371;
@@ -195,35 +196,30 @@ const EARTH_RATIO = 6_371;
 
 ### Important File Suffixes
 
-Use these semantic suffixes to clearly identify file content and purpose:
+Use these semantic suffixes to clearly identify file content and purpose in this React SPA:
 
-| **Suffix**        | **Purpose**                   | **Example**              | **Exports**                 |
-| ----------------- | ----------------------------- | ------------------------ | --------------------------- |
-| `.tsx`            | React components              | `UserCard.tsx`           | `const UserCard`            |
-| `.page.tsx`       | Page components               | `User.page.tsx`          | `const UserPage`            |
-| `.layout.tsx`     | Layout components             | `App.layout.tsx`         | `const AppLayout`           |
-| `.hook.ts`        | Custom React hooks            | `useUser.hook.ts`        | `const useUser`             |
-| `.service.ts`     | Business logic services       | `user.service.ts`        | `const userService`         |
-| `.schema.ts`      | Validation schemas            | `user.schema.ts`         | `const UserSchema`          |
-| `.interface.ts`   | TypeScript interfaces         | `user.interface.ts`      | `interface IUser`           |
-| `.type.ts`        | Type definitions              | `user.type.ts`           | `type UserRole`             |
-| `.enum.ts`        | Enumerations                  | `status.enum.ts`         | `enum UserStatus`           |
-| `.atom.ts`        | State atoms                   | `user.atom.ts`           | `const userAtom`            |
-| `.spec.ts`        | Unit tests                    | `user.service.spec.ts`   | test functions              |
-| `.test.ts`        | Integration tests             | `user.module.test.ts`    | test functions              |
-| `.e2e.ts`         | End-to-end tests              | `user.e2e.ts`            | test functions              |
-| `.guard.ts`       | Authentication guards         | `auth.guard.ts`          | `class AuthGuard`           |
-| `.decorator.ts`   | Custom decorators             | `roles.decorator.ts`     | decorator functions         |
-| `.pipe.ts`        | Validation pipes              | `validation.pipe.ts`     | `class ValidationPipe`      |
-| `.filter.ts`      | Exception filters             | `http.filter.ts`         | `class HttpExceptionFilter` |
-| `.interceptor.ts` | Request/response interceptors | `logging.interceptor.ts` | `class LoggingInterceptor`  |
-| `.middleware.ts`  | Express middleware            | `cors.middleware.ts`     | middleware functions        |
-| `.config.ts`      | Configuration objects         | `database.config.ts`     | configuration objects       |
-| `.utils.ts`       | Utility functions             | `string.utils.ts`        | utility functions           |
-| `.constants.ts`   | Application constants         | `api.constants.ts`       | constant values             |
-| `.factory.ts`     | Factory functions             | `user.factory.ts`        | factory functions           |
-| `.provider.ts`    | Custom providers              | `cache.provider.ts`      | provider objects            |
-| `.gateway.ts`     | WebSocket gateways            | `chat.gateway.ts`        | `class ChatGateway`         |
+| **Suffix**      | **Purpose**             | **Example**            | **Exports**           |
+| --------------- | ----------------------- | ---------------------- | --------------------- |
+| `.tsx`          | React components        | `UserCard.tsx`         | `const UserCard`      |
+| `.page.tsx`     | Page components         | `User.page.tsx`        | `const UserPage`      |
+| `.layout.tsx`   | Layout components       | `App.layout.tsx`       | `const AppLayout`     |
+| `.hook.ts`      | Custom React hooks      | `useUser.hook.ts`      | `const useUser`       |
+| `.service.ts`   | Business logic services | `user.service.ts`      | `const userService`   |
+| `.schema.ts`    | Validation schemas      | `user.schema.ts`       | `const UserSchema`    |
+| `.interface.ts` | TypeScript interfaces   | `user.interface.ts`    | `interface IUser`     |
+| `.type.ts`      | Type definitions        | `user.type.ts`         | `type UserRole`       |
+| `.enum.ts`      | Enumerations            | `status.enum.ts`       | `enum UserStatus`     |
+| `.atom.ts`      | State atoms             | `user.atom.ts`         | `const userAtom`      |
+| `.spec.ts`      | Unit tests              | `user.service.spec.ts` | test functions        |
+| `.test.ts`      | Integration tests       | `user.module.test.ts`  | test functions        |
+| `.e2e.ts`       | End-to-end tests        | `user.e2e.ts`          | test functions        |
+| `.guard.ts`     | Authentication guards   | `auth.guard.ts`        | `class AuthGuard`     |
+| `.decorator.ts` | Custom decorators       | `roles.decorator.ts`   | decorator functions   |
+| `.config.ts`    | Configuration objects   | `app.config.ts`        | configuration objects |
+| `.utils.ts`     | Utility functions       | `string.utils.ts`      | utility functions     |
+| `.constants.ts` | Shared constants        | `router.constants.ts`  | constant values       |
+| `.factory.ts`   | Factory functions       | `http.factory.ts`      | factory functions     |
+| `.provider.tsx` | React providers         | `Feature.provider.tsx` | provider components   |
 
 ### Boolean Variables
 

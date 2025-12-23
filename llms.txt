@@ -33,7 +33,7 @@ This template serves as a starting point for creating enterprise-grade React app
 - [Prettier Configuration](.prettierrc): Code formatting configuration
 - [Stylelint Configuration](.stylelintrc): CSS linting and style quality rules
 - [Vitest Configuration](vitest.config.ts): Testing framework configuration
-- [Copilot Configuration](.copilotrc.json): GitHub Copilot development guidelines and rules
+- [Copilot Configuration](.copilotrc.json): GitHub Copilot guidance and project conventions
 - [VS Code Settings](.vscode/settings.json): IDE configuration and editor preferences
 
 ## Environment & Deployment
@@ -42,6 +42,8 @@ This template serves as a starting point for creating enterprise-grade React app
 - [Nginx Configuration](nginx.conf): Web server configuration for production deployment
 - [Application Settings](env/appsettings.json): Non-secret environment configuration
 - [Development Environment](env/dev.local.env.json): Local development environment variables
+
+Note: Environment names are project-defined. This repo ships with `dev` and `release` as examples; you can add `qa`, `prod`, etc. by adding corresponding files under `env/`.
 
 ## Testing & Quality
 
