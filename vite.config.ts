@@ -20,7 +20,7 @@ export default {
 		target: 'baseline-widely-available',
 		rolldownOptions: {
 			output: {
-				advancedChunks: {
+				codeSplitting: {
 					groups: [
 						{
 							name: 'react',
