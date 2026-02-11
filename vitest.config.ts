@@ -1,19 +1,7 @@
-import { checker } from 'vite-plugin-checker';
 import type { ViteUserConfig } from 'vitest/config';
 
 export default {
 	clearScreen: false,
-	plugins: [
-		checker({
-			terminal: true,
-			typescript: true,
-			eslint: {
-				dev: { logLevel: ['error'] },
-				lintCommand: 'eslint --cache',
-				useFlatConfig: true,
-			},
-		}) as any,
-	],
 	test: {
 		environment: 'happy-dom',
 		include: ['src/**/*.{spec,test}.?(c|m)[jt]s?(x)'],

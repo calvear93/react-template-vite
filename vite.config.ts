@@ -1,7 +1,6 @@
 import react from '@vitejs/plugin-react';
 import unocss from 'unocss/vite';
 import { normalizePath, type UserConfigExport } from 'vite';
-import { checker } from 'vite-plugin-checker';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
 import fonts from 'vite-plugin-webfont-dl';
 import { compilerOptions as tsconfig } from './tsconfig.json';
@@ -58,16 +57,6 @@ export default {
 		},
 	},
 	plugins: [
-		checker({
-			enableBuild: true,
-			terminal: true,
-			typescript: true,
-			eslint: {
-				dev: { logLevel: ['error'] },
-				lintCommand: 'eslint --cache',
-				useFlatConfig: true,
-			},
-		}),
 		react(),
 		unocss(),
 		fonts(
