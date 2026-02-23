@@ -341,7 +341,7 @@ export const useLocalStorage = <T>(
 ): [T, (value: T | ((val: T) => T)) => void] => {
 	const [storedValue, setStoredValue] = useState<T>(() => {
 		try {
-			const item = window.localStorage.getItem(key);
+			const item = globalThis.localStorage.getItem(key);
 			return item ? JSON.parse(item) : initialValue;
 		} catch (error) {
 			console.error(`Error reading localStorage key "${key}":`, error);
@@ -355,7 +355,7 @@ export const useLocalStorage = <T>(
 				const valueToStore =
 					value instanceof Function ? value(storedValue) : value;
 				setStoredValue(valueToStore);
-				window.localStorage.setItem(key, JSON.stringify(valueToStore));
+				globalThis.localStorage.setItem(key, JSON.stringify(valueToStore));
 			} catch (error) {
 				console.error(
 					`Error setting localStorage key "${key}":`,
@@ -1101,7 +1101,7 @@ export const useMediaQuery = (query: string): boolean => {
 	const [matches, setMatches] = useState(false);
 
 	useEffect(() => {
-		const media = window.matchMedia(query);
+		const media = globalThis.matchMedia(query);
 		setMatches(media.matches);
 
 		const listener = (event: MediaQueryListEvent) => {

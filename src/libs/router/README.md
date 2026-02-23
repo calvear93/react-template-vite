@@ -414,7 +414,7 @@ export const navigationUtils = {
 	goToHome: () => navigate('/'),
 	goToProfile: (userId: string) => navigate(`/profile/${userId}`),
 	goBack: () => navigate(-1),
-	reload: () => window.location.reload(),
+	reload: () => globalThis.location.reload(),
 };
 
 // Usage in components
