@@ -738,7 +738,7 @@ export default [
 			'jest-dom/prefer-in-document': WARN,
 			'jest-dom/prefer-required': WARN,
 			'jest-dom/prefer-to-have-attribute': WARN,
-			'jest-dom/prefer-to-have-class': WARN,
+			// 'jest-dom/prefer-to-have-class': WARN,
 			'jest-dom/prefer-to-have-style': WARN,
 			'jest-dom/prefer-to-have-text-content': WARN,
 			'jest-dom/prefer-to-have-value': WARN,
