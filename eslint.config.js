@@ -1,4 +1,5 @@
 import unocss from '@unocss/eslint-config/flat';
+import vitest from '@vitest/eslint-plugin';
 import testingLibraryJestDom from 'eslint-plugin-jest-dom';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import perfectionist from 'eslint-plugin-perfectionist';
@@ -9,7 +10,6 @@ import regexp from 'eslint-plugin-regexp';
 import sonarjs from 'eslint-plugin-sonarjs';
 import testingLibrary from 'eslint-plugin-testing-library';
 import unicorn from 'eslint-plugin-unicorn';
-import vitest from 'eslint-plugin-vitest';
 import globals from 'globals';
 import typescript from 'typescript-eslint';
 
@@ -32,7 +32,6 @@ export default [
 			'**/node_modules/**/*',
 			'.reports/**/*',
 			'.vscode/**/*',
-			'.rollup.cache/**/*',
 			'vite.config.ts.*',
 			'vitest.config.ts.*',
 		],
@@ -285,11 +284,11 @@ export default [
 			},
 		},
 		rules: {
-			'react/destructuring-assignment': [WARN, 'always'],
+			// 'react/destructuring-assignment': [WARN, 'always'],
 			'react/display-name': OFF,
 			'react/iframe-missing-sandbox': WARN,
 			'react/jsx-boolean-value': WARN,
-			'react/jsx-fragments': [WARN, 'syntax'],
+			// 'react/jsx-fragments': [WARN, 'syntax'],
 			'react/jsx-no-comment-textnodes': WARN,
 			'react/jsx-no-duplicate-props': WARN,
 			'react/jsx-no-useless-fragment': WARN,
