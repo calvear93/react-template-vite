@@ -2,6 +2,14 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Debug in Visual Studio Code",
+			"type": "editor-browser",
+			"request": "launch",
+			"url": "http://localhost:3003",
+			"webRoot": "${workspaceFolder}",
+			"preLaunchTask": "prelaunch"
+		},
+		{
 			"name": "Debug in Edge",
 			"type": "msedge",
 			"request": "launch",
