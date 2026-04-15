@@ -20,7 +20,6 @@
 		"noEmit": true,
 
 		"isolatedModules": true,
-		"esModuleInterop": false,
 		"importHelpers": false,
 		"allowSyntheticDefaultImports": true,
 		"allowImportingTsExtensions": true,
