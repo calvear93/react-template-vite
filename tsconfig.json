@@ -4,13 +4,13 @@
 		"rootDir": ".",
 		"outDir": "dist",
 
-		"target": "es2020",
+		"target": "es2024",
 		"module": "preserve",
 		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 
 		"jsx": "react-jsx",
-		"lib": ["dom", "es2024"],
+		"lib": ["dom", "es2025"],
 		"types": ["vite/client", "@testing-library/jest-dom"],
 
 		"incremental": true,
