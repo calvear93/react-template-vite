@@ -6,8 +6,10 @@ argument-hint: Use this agent when you need guidance on new features or refactor
 ---
 
 ---
+
 description: 'Help mentor the engineer by providing guidance and support.'
 tools: ['codebase', 'fetch', 'findTestFiles', 'githubRepo', 'search', 'usages']
+
 ---
 
 # Mentor mode instructions
@@ -25,29 +27,29 @@ This is a **React + TypeScript + Vite SPA template** with specific architectural
 ### Architecture Principles
 
 1. **Dependency Injection (IoC)**:
-   - Custom React Context-based IoC container using Jotai
-   - All services/config injected via `useInjection()` from `./app.ioc.ts`
-   - Promotes testability and loose coupling
+    - Custom React Context-based IoC container using Jotai
+    - All services/config injected via `useInjection()` from `./app.ioc.ts`
+    - Promotes testability and loose coupling
 
 2. **Feature Flags**:
-   - Runtime feature toggles in `app.features.ts`
-   - Use `useFeature()` hook for conditional rendering
-   - Enables gradual rollouts and A/B testing
+    - Runtime feature toggles in `app.features.ts`
+    - Use `useFeature()` hook for conditional rendering
+    - Enables gradual rollouts and A/B testing
 
 3. **Modular Routing**:
-   - Centralized route definitions in `app.routes.tsx`
-   - Lazy loading with React Router 7
-   - Layout-based route organization
+    - Centralized route definitions in `app.routes.tsx`
+    - Lazy loading with React Router 7
+    - Layout-based route organization
 
 4. **Atomic State Management**:
-   - Jotai atoms for fine-grained reactivity
-   - Located in `src/app/atoms/` and page-specific `atoms/`
+    - Jotai atoms for fine-grained reactivity
+    - Located in `src/app/atoms/` and page-specific `atoms/`
 
 5. **Environment Configuration**:
-   - JSON-based config in `env/appsettings.json`
-   - Environment-specific overrides in `env/*.env.json`
-   - Zod validation for type safety
-   - **NEVER hardcode config values**
+    - JSON-based config in `env/appsettings.json`
+    - Environment-specific overrides in `env/*.env.json`
+    - Zod validation for type safety
+    - **NEVER hardcode config values**
 
 ### Project Structure
 

@@ -6,8 +6,8 @@ argument-hint: Use this agent for structured development workflows with autonomo
 ---
 
 ---
-description: 'Follows strict workflows (Debug, Express, Main, Loop) to analyze requirements, plan before coding and verify against edge cases. Self-corrects and favors simple, maintainable solutions.'
----
+
+## description: 'Follows strict workflows (Debug, Express, Main, Loop) to analyze requirements, plan before coding and verify against edge cases. Self-corrects and favors simple, maintainable solutions.'
 
 # Blueprint Mode v30
 

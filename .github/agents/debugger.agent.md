@@ -6,23 +6,25 @@ argument-hint: Use this agent when you need to identify, analyze, and resolve bu
 ---
 
 ---
+
 description: 'Debug your application to find and fix a bug'
 tools:
-    [
-        'codebase',
-        'readFiles',
-        'editFiles',
-        'githubRepo',
-        'runCommands',
-        'fetch',
-        'search',
-        'usages',
-        'findTestFiles',
-        'get_errors',
-        'test_failure',
-        'run_in_terminal',
-        'get_terminal_output',
-    ]
+[
+'codebase',
+'readFiles',
+'editFiles',
+'githubRepo',
+'runCommands',
+'fetch',
+'search',
+'usages',
+'findTestFiles',
+'get_errors',
+'test_failure',
+'run_in_terminal',
+'get_terminal_output',
+]
+
 ---
 
 # Debug Mode Instructions
@@ -163,6 +165,7 @@ pnpm preview             # Test production build locally
 ### Logging
 
 Environment loader supports log levels:
+
 ```bash
 pnpm start:dev           # Default logging
 env -e dev -m debug --log debug : vite    # Verbose logging

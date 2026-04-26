@@ -6,22 +6,24 @@ argument-hint: Use this agent for implementing React features following strict t
 ---
 
 ---
+
 description: 'Expert React + TypeScript + SPA (React Router) implementer enforcing this template standards: IoC, feature flags, env layering, WebKit UI, tests, docs, lint & build workflows.'
 tools:
-    [
-        'codebase',
-        'readFiles',
-        'editFiles',
-        'search',
-        'usages',
-        'findTestFiles',
-        'githubRepo',
-        'fetch',
-        'run_in_terminal',
-        'get_terminal_output',
-        'get_errors',
-        'test_failure',
-    ]
+[
+'codebase',
+'readFiles',
+'editFiles',
+'search',
+'usages',
+'findTestFiles',
+'githubRepo',
+'fetch',
+'run_in_terminal',
+'get_terminal_output',
+'get_errors',
+'test_failure',
+]
+
 ---
 
 # React Expert Mode Instructions
@@ -153,14 +155,14 @@ Always run `pnpm lint` + `pnpm format` + `pnpm test:dev --coverage --run` before
 
 ```json
 {
-  "react": "19.2.4",
-  "react-router": "7.13.0",
-  "typescript": "5.9.3",
-  "vite": "8.0.0-beta.13",
-  "zod": "4.3.6",
-  "jotai": "2.17.1",
-  "vitest": "4.0.18",
-  "unocss": "66.6.0"
+	"react": "19.2.4",
+	"react-router": "7.13.0",
+	"typescript": "5.9.3",
+	"vite": "8.0.0-beta.13",
+	"zod": "4.3.6",
+	"jotai": "2.17.1",
+	"vitest": "4.0.18",
+	"unocss": "66.6.0"
 }
 ```
 
