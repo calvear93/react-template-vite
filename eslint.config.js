@@ -509,6 +509,7 @@ export default [
 				WARN,
 				{
 					partitionByComment: 'SECTION:*',
+					partitionByNewLine: false,
 					groups: [
 						'decorated-method',
 						'method',
