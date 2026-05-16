@@ -53,5 +53,30 @@ describe('feature hooks', () => {
 			expect(value).toBe(true);
 			expect(newValue).toBe(false);
 		});
+
+		test('does not update when an unrelated feature changes', () => {
+			const feature = 'FEATURE_OBSERVED';
+			const { result } = renderHook(() => useFeature(feature), {
+				wrapper,
+			});
+
+			act(() => _handler.set('FEATURE_UNRELATED', true));
+			const [value] = result.current;
+
+			expect(value).toBe(false);
+		});
+
+		test('unsubscribes from handler on unmount', () => {
+			const feature = 'FEATURE_UNMOUNT';
+			const removeSpy = vi.spyOn(_handler, 'removeOnChangeListener');
+			const { unmount } = renderHook(() => useFeature(feature), {
+				wrapper,
+			});
+
+			unmount();
+
+			expect(removeSpy).toHaveBeenCalledOnce();
+			removeSpy.mockRestore();
+		});
 	});
 });

@@ -63,4 +63,40 @@ describe(createContainer, () => {
 		expect(c2).toHaveTextContent('');
 		expect(c3).toHaveTextContent('test');
 	});
+
+	test('container.resolve returns dependency by token', () => {
+		expect(container.resolve<typeof fn>(TEST_TOKEN)()).toBe('test');
+	});
+
+	test('container.resolve returns dependency by class', () => {
+		expect(container.resolve(TestClass).test()).toBe('test');
+	});
+
+	test('container.unbind removes a dependency from container', () => {
+		const TOKEN = 'unbind_token';
+		container.bind(TOKEN, 'value');
+
+		expect(container.resolve(TOKEN)).toBe('value');
+
+		container.unbind(TOKEN);
+
+		expect(container.resolve(TOKEN)).toBeUndefined();
+	});
+
+	test('InversionOfControlProvider falls back to global container when no values are provided', () => {
+		const TestComponent = () => {
+			const provider = useInjection(TestClass);
+			return <h1 data-testid='fallback-id'>{provider?.test()}</h1>;
+		};
+
+		render(
+			<InversionOfControlProvider>
+				<TestComponent />
+			</InversionOfControlProvider>,
+		);
+
+		const target = screen.getByTestId('fallback-id');
+
+		expect(target).toHaveTextContent('test');
+	});
 });

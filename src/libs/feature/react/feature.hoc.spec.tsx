@@ -80,6 +80,24 @@ describe('feature HOC', () => {
 		expect(component2).not.toBeInTheDocument();
 	});
 
+	test('when an unrelated feature changes, does not rerender', () => {
+		const fallback = <span data-testid='fallback'>fallback</span>;
+		const Component = withFeatures({
+			fallback,
+			features: {
+				FEATURE_V1: () => <span data-testid='id'>v1</span>,
+			},
+		});
+
+		const [handler] = renderFeature(<Component />);
+		act(() => handler.set('UNRELATED_FEATURE', true));
+		const component = screen.queryByTestId('id');
+		const fallbackElement = screen.getByTestId('fallback');
+
+		expect(component).not.toBeInTheDocument();
+		expect(fallbackElement).toBeInTheDocument();
+	});
+
 	describe('throws', () => {
 		// hooks
 		beforeAll(() => {

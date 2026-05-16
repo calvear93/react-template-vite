@@ -95,4 +95,42 @@ describe('link storages to feature handler', () => {
 
 		expect(handler.get(feature)).toBe(false);
 	});
+
+	test('initial scan ignores storage keys not matching the prefix', () => {
+		const prefix = 'feat:';
+		const feature = 'FEATURE_V1';
+		const unrelated = 'UNRELATED_KEY';
+		const handler = new FeatureHandler();
+
+		localStorage.setItem(`${prefix}${feature}`, 'true');
+		localStorage.setItem(unrelated, 'true');
+		linkStorageToFeatureHandler(handler, prefix);
+
+		expect(handler.get(feature)).toBe(true);
+		expect(handler.get(unrelated)).toBe(false);
+	});
+
+	test('on localStorage event, persisted sessionStorage value takes precedence', () => {
+		const prefix = 'feat:';
+		const feature = 'FEATURE_V1';
+		const key = `${prefix}${feature}`;
+		const eventLocal = {
+			key,
+			newValue: 'true',
+			storageArea: localStorage,
+		} as StorageEvent;
+		const handler = new FeatureHandler();
+
+		sessionStorage.setItem(key, 'false');
+		linkStorageToFeatureHandler(handler, prefix);
+		const [, callback] = vi
+			.mocked(addEventListener)
+			.mock.calls.at(-1) as any as [
+			string,
+			(event: StorageEvent) => void,
+		];
+		callback(eventLocal);
+
+		expect(handler.get(feature)).toBe(false);
+	});
 });

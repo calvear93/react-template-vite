@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, test } from 'vitest';
+import { afterEach, describe, expect, test } from 'vitest';
 import { createRouter } from './create-router.hoc.tsx';
 
 describe('create-router', () => {
@@ -55,5 +55,19 @@ describe('create-router', () => {
 		render(<RouterWithLayout />);
 
 		screen.getByRole('heading');
+	});
+
+	test('resolves a route with lazy component for chunk splitting', async () => {
+		const LazyChildren = () => <h1>lazy children</h1>;
+		const routes = [
+			{ lazy: () => Promise.resolve({ default: LazyChildren }) },
+		];
+
+		const RouterWithLazy = createRouter({ routes, type: 'memory' });
+
+		render(<RouterWithLazy />);
+
+		await screen.findByRole('heading', { name: 'lazy children' });
+		expect(routes[0].lazy).toBeUndefined();
 	});
 });
