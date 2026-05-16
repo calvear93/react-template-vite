@@ -6,8 +6,8 @@
 # https://hub.docker.com/_/node
 ARG ALPINE=node:24.15.0-alpine
 # https://hub.docker.com/_/nginx
-ARG NGINX=nginx:1.29.8-alpine
-ARG PNPM_VER=11.0.8
+ARG NGINX=nginx:1.31.0-alpine
+ARG PNPM_VER=11.1.2
 ARG APP_DIR='/app/'
 ARG OUT_DIR='dist'
 
