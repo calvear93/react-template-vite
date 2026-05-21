@@ -4,10 +4,10 @@
 
 # global variables
 # https://hub.docker.com/_/node
-ARG ALPINE=node:24.15.0-alpine
+ARG ALPINE=node:24.16.0-alpine
 # https://hub.docker.com/_/nginx
 ARG NGINX=nginx:1.31.0-alpine
-ARG PNPM_VER=11.1.2
+ARG PNPM_VER=11.2.2
 ARG APP_DIR='/app/'
 ARG OUT_DIR='dist'
 
