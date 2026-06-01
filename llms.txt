@@ -36,7 +36,6 @@ This template serves as a starting point for creating enterprise-grade React app
 - [Prettier Configuration](.prettierrc): Code formatting configuration
 - [Stylelint Configuration](.stylelintrc): CSS linting and style quality rules
 - [Vitest Configuration](vitest.config.ts): Testing framework configuration
-- [Copilot Instructions](.github/copilot-instructions.md): Auto-loaded pointer to AGENTS.md for GitHub Copilot
 - [VS Code Settings](.vscode/settings.json): IDE configuration and editor preferences
 
 ## Environment & Deployment
