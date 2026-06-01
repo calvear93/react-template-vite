@@ -34,7 +34,7 @@ Create comprehensive tests for [COMPONENT/HOOK_NAME] following React TypeScript 
 ### 4. Mocking Strategy
 
 - Mock external dependencies appropriately
-- Use MSW for API mocking when needed
+- Mock services and config by injecting mocked dependencies through the IoC container — wrap the component in `InversionOfControlProvider` with a `mockIoCValues` Map (see the example below)
 - Mock custom IoC container dependencies
 - Avoid over-mocking internal React behavior
 

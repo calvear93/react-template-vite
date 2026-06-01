@@ -1,13 +1,13 @@
 ---
 mode: agent
-description: 'Comprehensive technology stack blueprint generator that analyzes codebases to create detailed architectural documentation. Automatically detects technology stacks, programming languages, and implementation patterns across multiple platforms (.NET, Java, JavaScript, React, Python). Generates configurable blueprints with version information, licensing details, usage patterns, coding conventions, and visual diagrams. Provides implementation-ready templates and maintains architectural consistency for guided development.'
+description: 'Comprehensive technology stack blueprint generator that analyzes the codebase to create detailed architectural documentation for this React + Vite + TypeScript SPA. Detects the JavaScript/TypeScript and React stack and implementation patterns. Generates configurable blueprints with version information, licensing details, usage patterns, coding conventions, and visual diagrams. Provides implementation-ready templates and maintains architectural consistency for guided development.'
 ---
 
 # Comprehensive Technology Stack Blueprint Generator
 
 ## Configuration Variables
 
-${PROJECT_TYPE="Auto-detect|.NET|Java|JavaScript|React.js|React Native|Angular|Python|Other"} <!-- Primary technology -->
+${PROJECT_TYPE="Auto-detect|JavaScript|React.js|Other"} <!-- Primary technology (this repo is a React + Vite + TypeScript SPA) -->
 ${DEPTH_LEVEL="Basic|Standard|Comprehensive|Implementation-Ready"} <!-- Analysis depth -->
 ${INCLUDE_VERSIONS=true|false} <!-- Include version information -->
 ${INCLUDE_LICENSES=true|false} <!-- Include license information -->
@@ -32,56 +32,23 @@ ${CATEGORIZATION="Technology Type|Layer|Purpose"} <!-- Organization method -->
 
 ### 2. Core Technologies Analysis
 
-${PROJECT_TYPE == ".NET" || PROJECT_TYPE == "Auto-detect" ? "#### .NET Stack Analysis (if detected)
+#### JavaScript / TypeScript Stack Analysis
 
-- Target frameworks and language versions (detect from project files)
-- All NuGet package references with versions and purpose comments
-- Project structure and organization patterns
-- Configuration approach (appsettings.json, IOptions, etc.)
-- Authentication mechanisms (Identity, JWT, etc.)
-- API design patterns (REST, GraphQL, minimal APIs, etc.)
-- Data access approaches (EF Core, Dapper, etc.)
-- Dependency injection patterns
-- Middleware pipeline components" : ""}
+- ECMAScript / TypeScript version and compiler settings (tsconfig)
+- All npm dependencies (pnpm) categorized by purpose
+- Module system (ESM) and path aliases (`#libs/*`)
+- Build tooling (Vite) with configuration
+- Testing frameworks and patterns (Vitest + React Testing Library + happy-dom)
 
-${PROJECT_TYPE == "Java" || PROJECT_TYPE == "Auto-detect" ? "#### Java Stack Analysis (if detected)
+#### React Analysis
 
-- JDK version and core frameworks
-- All Maven/Gradle dependencies with versions and purpose
-- Package structure organization
-- Spring Boot usage and configurations
-- Annotation patterns
-- Dependency injection approach
-- Data access technologies (JPA, JDBC, etc.)
-- API design (Spring MVC, JAX-RS, etc.)" : ""}
-
-${PROJECT_TYPE == "JavaScript" || PROJECT_TYPE == "Auto-detect" ? "#### JavaScript Stack Analysis (if detected)
-
-- ECMAScript version and transpiler settings
-- All npm dependencies categorized by purpose
-- Module system (ESM, CommonJS)
-- Build tooling (webpack, Vite, etc.) with configuration
-- TypeScript usage and configuration
-- Testing frameworks and patterns" : ""}
-
-${PROJECT_TYPE == "React.js" || PROJECT_TYPE == "Auto-detect" ? "#### React Analysis (if detected)
-
-- React version and key patterns (hooks vs class components)
-- State management approach (Context, Redux, Zustand, etc.)
-- Component library usage (Material-UI, Chakra, etc.)
-- Routing implementation
-- Form handling strategies
-- API integration patterns
-- Testing approach for components" : ""}
-
-${PROJECT_TYPE == "Python" || PROJECT_TYPE == "Auto-detect" ? "#### Python Analysis (if detected)
-
-- Python version and key language features used
-- Package dependencies and virtual environment setup
-- Web framework details (Django, Flask, FastAPI)
-- ORM usage patterns
-- Project structure organization
-- API design patterns" : ""}
+- React version and key patterns (function components + hooks)
+- State management approach (Jotai atoms, custom IoC via `#libs/ioc`)
+- Styling approach (UnoCSS + CSS Modules)
+- Routing implementation (`#libs/router`)
+- Validation (Zod) and feature flags (`#libs/feature`)
+- API integration patterns (injected services)
+- Testing approach for components
 
 ### 3. Implementation Patterns & Conventions
 
@@ -181,37 +148,7 @@ ${DEPTH_LEVEL == "Comprehensive" || DEPTH_LEVEL == "Implementation-Ready" ?
 
 ### 6. Technology-Specific Implementation Details
 
-${PROJECT_TYPE == ".NET" || PROJECT_TYPE == "Auto-detect" ?
-"#### .NET Implementation Details (if detected)
-
-- **Dependency Injection Pattern**:
-    - Service registration approach (Scoped/Singleton/Transient patterns)
-    - Configuration binding patterns
-
-- **Controller Patterns**:
-    - Base controller usage
-    - Action result types and patterns
-    - Route attribute conventions
-    - Filter usage (authorization, validation, etc.)
-
-- **Data Access Patterns**:
-    - ORM configuration and usage
-    - Entity configuration approach
-    - Relationship definitions
-    - Query patterns and optimization approaches
-
-- **API Design Patterns** (if used):
-    - Endpoint organization
-    - Parameter binding approaches
-    - Response type handling
-
-- **Language Features Used**:
-    - Detect specific language features from code
-    - Identify common patterns and idioms
-    - Note any specific version-dependent features" : ""}
-
-${PROJECT_TYPE == "React.js" || PROJECT_TYPE == "Auto-detect" ?
-"#### React Implementation Details (if detected)
+#### React Implementation Details
 
 - **Component Structure**:
     - Function vs class components
@@ -233,7 +170,7 @@ ${PROJECT_TYPE == "React.js" || PROJECT_TYPE == "Auto-detect" ?
 - **Styling Approach**:
     - CSS methodology (CSS modules, styled-components, etc.)
     - Theme implementation
-    - Responsive design patterns" : ""}
+    - Responsive design patterns
 
 ### 7. Blueprint for New Code Implementation
 

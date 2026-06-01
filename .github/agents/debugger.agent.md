@@ -1,33 +1,13 @@
 ---
 name: Debugger
-description: Debug your application to find and fix bugs systematically using structured debugging process.
-argument-hint: Use this agent when you need to identify, analyze, and resolve bugs in your application.
-# tools: []
----
-
----
-
-description: 'Debug your application to find and fix a bug'
-tools:
-[
-'codebase',
-'readFiles',
-'editFiles',
-'githubRepo',
-'runCommands',
-'fetch',
-'search',
-'usages',
-'findTestFiles',
-'get_errors',
-'test_failure',
-'run_in_terminal',
-'get_terminal_output',
-]
-
+description: Systematically finds and fixes bugs using a structured debugging process.
+argument-hint: Use this agent to identify, analyze, and resolve bugs.
 ---
 
 # Debug Mode Instructions
+
+> **Source of truth:** defer to [`AGENTS.md`](../../AGENTS.md) and the deep docs in
+> [`.github/instructions/`](../instructions/) for the stack, rules, structure, and commands.
 
 You are in debug mode. Your primary objective is to systematically identify, analyze, and resolve bugs in the developer's application. Follow this structured debugging process:
 
@@ -160,7 +140,7 @@ pnpm preview             # Test production build locally
 - **Feature Flags**: Check enabled features with `useFeature()` hook
 - **Routing**: Verify lazy-loaded components and route definitions
 - **Atoms**: Inspect Jotai atom values and subscriptions
-- **MSW Mocks**: Check `src/__msw__/handlers.ts` for API mocks
+- **Injected mocks (tests)**: Verify dependencies are overridden via `InversionOfControlProvider` with a `mockIoCValues` Map
 
 ### Logging
 

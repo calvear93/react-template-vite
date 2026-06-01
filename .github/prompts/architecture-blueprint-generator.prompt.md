@@ -7,7 +7,7 @@ description: 'Comprehensive project architecture blueprint generator that analyz
 
 ## Configuration Variables
 
-${PROJECT_TYPE="Auto-detect|.NET|Java|React|Angular|Python|Node.js|Flutter|Other"} <!-- Primary technology -->
+${PROJECT_TYPE="Auto-detect|React|Other"} <!-- Primary technology (this repo is a React + Vite + TypeScript SPA) -->
 ${ARCHITECTURE_PATTERN="Auto-detect|Clean Architecture|Microservices|Layered|MVVM|MVC|Hexagonal|Event-Driven|Serverless|Monolithic|Other"} <!-- Primary architectural pattern -->
 ${DIAGRAM_TYPE="C4|UML|Flow|Component|None"} <!-- Architecture diagram type -->
 ${DETAIL_LEVEL="High-level|Detailed|Comprehensive|Implementation-Ready"} <!-- Level of detail to include -->
@@ -142,54 +142,14 @@ Document implementation patterns for cross-cutting concerns:
 
 ${PROJECT_TYPE == "Auto-detect" ? "For each detected technology stack, document specific architectural patterns:" : `Document ${PROJECT_TYPE}-specific architectural patterns:`}
 
-${(PROJECT_TYPE == ".NET" || PROJECT_TYPE == "Auto-detect") ?
-"#### .NET Architectural Patterns (if detected)
-
-- Host and application model implementation
-- Middleware pipeline organization
-- Framework service integration patterns
-- ORM and data access approaches
-- API implementation patterns (controllers, minimal APIs, etc.)
-- Dependency injection container configuration" : ""}
-
-${(PROJECT_TYPE == "Java" || PROJECT_TYPE == "Auto-detect") ?
-"#### Java Architectural Patterns (if detected)
-
-- Application container and bootstrap process
-- Dependency injection framework usage (Spring, CDI, etc.)
-- AOP implementation patterns
-- Transaction boundary management
-- ORM configuration and usage patterns
-- Service implementation patterns" : ""}
-
-${(PROJECT_TYPE == "React" || PROJECT_TYPE == "Auto-detect") ?
-"#### React Architectural Patterns (if detected)
+#### React Architectural Patterns
 
 - Component composition and reuse strategies
-- State management architecture
-- Side effect handling patterns
-- Routing and navigation approach
-- Data fetching and caching patterns
-- Rendering optimization strategies" : ""}
-
-${(PROJECT_TYPE == "Angular" || PROJECT_TYPE == "Auto-detect") ?
-"#### Angular Architectural Patterns (if detected)
-
-- Module organization strategy
-- Component hierarchy design
-- Service and dependency injection patterns
-- State management approach
-- Reactive programming patterns
-- Route guard implementation" : ""}
-
-${(PROJECT_TYPE == "Python" || PROJECT_TYPE == "Auto-detect") ?
-"#### Python Architectural Patterns (if detected)
-
-- Module organization approach
-- Dependency management strategy
-- OOP vs. functional implementation patterns
-- Framework integration patterns
-- Asynchronous programming approach" : ""}
+- State management architecture (Jotai atoms, custom IoC via `#libs/ioc`)
+- Side effect handling patterns and custom hooks
+- Routing and navigation approach (`#libs/router`)
+- Data fetching, validation (Zod), and feature flags (`#libs/feature`)
+- Rendering optimization strategies (memoization, code splitting)
 
 ### 10. Implementation Patterns
 

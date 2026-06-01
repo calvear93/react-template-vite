@@ -6,8 +6,11 @@ This template serves as a starting point for creating enterprise-grade React app
 
 ## Documentation
 
+- [AGENTS.md](AGENTS.md): Canonical, tool-agnostic instructions for all AI assistants (stack, rules, conventions) — single source of truth
 - [README](README.md): Main project documentation with setup instructions, architecture overview, and usage examples
-- [Copilot Instructions](.github/instructions/copilot-instructions.md): Comprehensive development guidelines and best practices for the template
+- [Architecture Guide](.github/instructions/architecture-guide.instructions.md): Folder topology, configuration/IoC wiring, routing and import conventions
+- [Coding Standards](.github/instructions/coding-standards.instructions.md): Formatting, naming, file suffixes, TypeScript rules and anti-patterns
+- [Patterns](.github/instructions/patterns.instructions.md): Copy-paste recipes for components, hooks, services, schemas, forms and tests
 - [Environment Configuration](env/README.md): Guide for configuring environment variables and settings
 - [Pages Structure](src/app/pages/README.md): Documentation for page components and routing structure
 - [Atoms Documentation](src/app/atoms/README.md): Guide for Jotai atoms and global state management
@@ -33,7 +36,7 @@ This template serves as a starting point for creating enterprise-grade React app
 - [Prettier Configuration](.prettierrc): Code formatting configuration
 - [Stylelint Configuration](.stylelintrc): CSS linting and style quality rules
 - [Vitest Configuration](vitest.config.ts): Testing framework configuration
-- [Copilot Configuration](.copilotrc.json): GitHub Copilot guidance and project conventions
+- [Copilot Instructions](.github/copilot-instructions.md): Auto-loaded pointer to AGENTS.md for GitHub Copilot
 - [VS Code Settings](.vscode/settings.json): IDE configuration and editor preferences
 
 ## Environment & Deployment

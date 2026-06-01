@@ -92,8 +92,6 @@ export const UserCard: React.FC<UserCardProps> = ({
 - [ ] Error handling patterns explained
 - [ ] Integration examples with other components provided
 - [ ] Custom hooks usage documented if applicable
-- [ ] Authentication requirements specified
-- [ ] Parameter validation rules included
-- [ ] Rate limiting information provided
+- [ ] Prop validation rules included
 - [ ] Integration examples included
 - [ ] Consistent terminology used

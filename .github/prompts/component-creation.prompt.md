@@ -138,14 +138,6 @@ describe('DataComponent', () => {
 });
 ```
 
-    const config = useInjection(AppConfig);
-
-    // Use injected dependencies
-
-};
-
-````
-
 ### Form Component with Validation
 
 ```typescript
@@ -159,7 +151,7 @@ type FormData = z.infer<typeof FormSchema>;
 export const FormComponent: React.FC<FormProps> = ({ onSubmit }) => {
 	// Form implementation with Zod validation
 };
-````
+```
 
 ## Technical Checklist
 

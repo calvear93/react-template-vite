@@ -59,9 +59,9 @@ interface UseApiResult<T> {
 	refetch: () => Promise<void>;
 }
 
-interface UseApiOptions {
+interface UseApiOptions<T> {
 	enabled?: boolean;
-	onSuccess?: (data: any) => void;
+	onSuccess?: (data: T) => void;
 	onError?: (error: Error) => void;
 }
 
@@ -75,7 +75,7 @@ interface UseApiOptions {
  */
 export const useApi = <T>(
 	url: string,
-	options: UseApiOptions = {},
+	options: UseApiOptions<T> = {},
 ): UseApiResult<T> => {
 	const { enabled = true, onSuccess, onError } = options;
 	const httpClient = useInjection(HttpClient);
@@ -127,7 +127,7 @@ interface UseFormResult<T> {
 	values: T;
 	errors: Partial<Record<keyof T, string>>;
 	isSubmitting: boolean;
-	handleChange: (field: keyof T, value: any) => void;
+	handleChange: (field: keyof T, value: T[keyof T]) => void;
 	handleSubmit: (e: React.FormEvent) => Promise<void>;
 	reset: () => void;
 	setFieldError: (field: keyof T, error: string) => void;
@@ -140,7 +140,7 @@ interface UseFormResult<T> {
  * @param options - Form configuration including initial values and validation
  * @returns Form state and handlers for form management
  */
-export const useForm = <T extends Record<string, any>>({
+export const useForm = <T extends Record<string, unknown>>({
 	initialValues,
 	validationSchema,
 	onSubmit,
@@ -150,7 +150,7 @@ export const useForm = <T extends Record<string, any>>({
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const validateField = useCallback(
-		(field: keyof T, value: any) => {
+		(field: keyof T, value: T[keyof T]) => {
 			try {
 				const fieldSchema = validationSchema.pick({ [field]: true });
 				fieldSchema.parse({ [field]: value });
@@ -170,7 +170,7 @@ export const useForm = <T extends Record<string, any>>({
 	);
 
 	const handleChange = useCallback(
-		(field: keyof T, value: any) => {
+		(field: keyof T, value: T[keyof T]) => {
 			setValues((prev) => ({ ...prev, [field]: value }));
 			validateField(field, value);
 		},
