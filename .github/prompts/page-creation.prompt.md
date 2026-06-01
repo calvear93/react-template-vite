@@ -5,81 +5,64 @@ description: 'Create a new React page component following React TypeScript templ
 
 # React Page Creation Prompt
 
-Create a new React page component for [PAGE_DESCRIPTION] following these requirements:
+Create a new React page component for [PAGE_DESCRIPTION] following these requirements.
+
+Follow `AGENTS.md` and `.github/instructions/{architecture-guide,patterns}.instructions.md`. The points below are page-specific.
 
 ## Core Requirements
 
 ### 1. Page Structure
 
-- Use `.page.tsx` suffix for page components
-- Implement functional component with React.FC type
-- Follow React Router v7+ patterns for routing (prefer importing primitives via `#libs/router`)
-- Integrate with layout components (AppLayout or custom)
+- Use the `.page.tsx` suffix; type as `React.FC`. Keep data/business logic in custom hooks.
+- Import routing primitives from `#libs/router` (React Router 7); lazy-load routes. Wrap in a layout component.
 
-### 2. Data Management
+### 2. Data & state
 
-- Handle route parameters with proper TypeScript typing
-- Implement data fetching with loading states
-- Use custom hooks for complex data operations
-- Integrate with custom IoC container for services
+- Type route params: `useParams<{ id: string }>()`. Get services/config via `useInjection(...)` from the relative `app.ioc.ts` (never hardcode config).
+- Handle loading, error, and success states; manage URL state and navigation.
 
-### 3. State Management
+### 3. User experience
 
-- Use React hooks for page-level state
-- Implement proper loading, error, and success states
-- Handle form submissions and user interactions
-- Manage URL state and navigation
+- Document title / SEO; responsive; accessible (semantic HTML, ARIA, keyboard).
+- Loading indicators and an error boundary; handle auth/authorization where relevant.
 
-### 4. User Experience
+### 4. Error handling
 
-- Include SEO meta tags and proper document titles
-- Implement responsive design for all device sizes
-- Add proper loading indicators and error boundaries
-- Handle authentication and authorization
-
-### 5. Error Handling
-
-- Implement error boundaries for graceful failure
-- Provide meaningful error messages to users
-- Handle network errors and timeout scenarios
-- Include retry mechanisms for failed operations
+- Surface meaningful messages (catch param `error`); handle network/timeout failures; offer retry where useful.
 
 ## Implementation Patterns
 
 ### Basic Page Template
 
-```typescript
-interface PageNameProps {
-	/** Route parameters from React Router */
-	// Define specific params if known, e.g.: { id: string }
-}
+```tsx
+import { type FC } from 'react';
+import { useNavigate, useParams } from '#libs/router';
+import { AppLayout } from '../layouts/app.layout.tsx';
 
 /**
- * [Page description explaining purpose and functionality]
- * Handles [specific features] with proper error handling and loading states.
- *
- * @returns JSX element with complete page layout
+ * [page description explaining purpose and functionality]
+ * handles [specific features] with proper error handling and loading states.
  */
-export const PageName: React.FC = () => {
-	const params = useParams<{ id: string }>();
+export const PageName: FC = () => {
+	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 
-	// Page implementation
-	return (
-		<AppLayout>
-			{/* Page content */}
-		</AppLayout>
-	);
+	// page implementation
+	return <AppLayout>{/* page content */}</AppLayout>;
 };
 ```
 
 ### Page with Data Fetching
 
-```typescript
+```tsx
+import { type FC, useEffect, useState } from 'react';
 import { useParams } from '#libs/router';
-import { useInjection } from '../app.ioc.ts'; // adjust path based on page location
+import { useInjection } from '../app.ioc.ts';
+import { AppLayout } from '../layouts/app.layout.tsx';
+import { HttpClient } from '../services/http-client.service.ts';
+import { type User } from './user.schema.ts';
 
-export const UserPage: React.FC = () => {
+export const UserPage: FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const httpClient = useInjection(HttpClient);
 
@@ -92,18 +75,19 @@ export const UserPage: React.FC = () => {
 			try {
 				setIsLoading(true);
 				setError(null);
-				const userData = await httpClient.get(`/users/${id}`);
-				setUser(userData);
-			} catch (err) {
-				setError(err instanceof Error ? err.message : 'Failed to load user');
+				setUser(await httpClient.get<User>(`/users/${id}`));
+			} catch (error) {
+				setError(
+					error instanceof Error
+						? error.message
+						: 'failed to load user',
+				);
 			} finally {
 				setIsLoading(false);
 			}
 		};
 
-		if (id) {
-			fetchUser();
-		}
+		if (id) void fetchUser();
 	}, [id, httpClient]);
 
 	if (isLoading) return <LoadingSpinner />;
@@ -120,19 +104,21 @@ export const UserPage: React.FC = () => {
 
 ### Page with Form Handling
 
-```typescript
+```tsx
+import { type FC, useState } from 'react';
 import { useNavigate } from '#libs/router';
 import { z } from 'zod';
-import { useInjection } from '../app.ioc.ts'; // adjust path based on page location
+import { useInjection } from '../app.ioc.ts';
+import { HttpClient } from '../services/http-client.service.ts';
 
 const FormSchema = z.object({
-	title: z.string().min(1, 'Title is required'),
+	title: z.string().min(1, 'title is required'),
 	description: z.string().optional(),
 });
 
 type FormData = z.infer<typeof FormSchema>;
 
-export const CreateItemPage: React.FC = () => {
+export const CreateItemPage: FC = () => {
 	const navigate = useNavigate();
 	const httpClient = useInjection(HttpClient);
 
@@ -144,10 +130,14 @@ export const CreateItemPage: React.FC = () => {
 			setIsSubmitting(true);
 			setError(null);
 
-			const result = await httpClient.post('/items', data);
-			navigate(`/items/${result.id}`);
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Failed to create item');
+			const item = await httpClient.post<{ id: string }>('/items', data);
+			navigate(`/items/${item.id}`);
+		} catch (error) {
+			setError(
+				error instanceof Error
+					? error.message
+					: 'failed to create item',
+			);
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -167,100 +157,54 @@ export const CreateItemPage: React.FC = () => {
 
 ## Technical Checklist
 
-### Essential Features
-
-- [ ] `.page.tsx` suffix used for file naming
-- [ ] React.FC implementation with proper TypeScript
-- [ ] Route parameters handled with useParams<T>
-- [ ] Navigation implemented with useNavigate
-- [ ] Layout component integration (AppLayout)
-- [ ] Loading states for all async operations
-- [ ] Error boundaries and error handling
-- [ ] Responsive design implementation
-
-### Data Management
-
-- [ ] Custom IoC container integration (useInjection from ./app.ioc.ts)
-- [ ] Proper data fetching patterns
-- [ ] Loading, error, and success state management
-- [ ] Form validation with Zod schemas
-- [ ] URL state management when applicable
-- [ ] Cleanup of subscriptions and effects
-
-### User Experience
-
-- [ ] SEO meta tags and document title
-- [ ] Accessibility features (ARIA, semantic HTML)
-- [ ] Loading indicators and progress feedback
-- [ ] Error messages with retry options
-- [ ] Responsive design for all screen sizes
-- [ ] Keyboard navigation support
-
-### Authentication & Security
-
-- [ ] Authentication status checking
-- [ ] Authorization for protected pages
-- [ ] Proper error handling for auth failures
-- [ ] Secure handling of sensitive data
-- [ ] CSRF protection for form submissions
-
-### Testing & Documentation
-
-- [ ] Unit tests for page rendering
-- [ ] Integration tests for data fetching
-- [ ] User interaction testing
-- [ ] Error scenario testing
-- [ ] JSDoc documentation
-- [ ] Accessibility testing
-
-### Performance
-
-- [ ] Code splitting with lazy loading
-- [ ] Memoization for expensive operations
-- [ ] Efficient re-rendering patterns
-- [ ] Proper cleanup to prevent memory leaks
-- [ ] Optimized bundle size
+- [ ] `.page.tsx` suffix; typed via `React.FC`; wrapped in a layout
+- [ ] Typed `useParams`; navigation via `useNavigate`; routing primitives from `#libs/router`
+- [ ] Services/config via `useInjection` (no hardcoded values); data/logic in custom hooks
+- [ ] Loading/error/success states; error boundary; Zod for form validation
+- [ ] Document title / SEO; responsive; accessible (ARIA, semantic HTML, keyboard)
+- [ ] Auth/authorization handled where relevant; no sensitive data leaked
+- [ ] Lazy-loaded route; effects cleaned up
+- [ ] Tests cover render, data fetching, interactions, and error states
 
 ## Navigation Patterns
 
 ### Route Configuration
 
-```typescript
-// In route configuration
+Register the page in `app.routes.tsx` as a lazy route (see **architecture-guide**):
+
+```tsx
+import { lazy } from 'react';
+
+const UserPage = lazy(async () => import('./pages/user.page.tsx'));
+
+// inside the routes array
 {
 	path: '/users/:id',
 	element: <UserPage />,
 	errorElement: <ErrorBoundary />,
-	loader: async ({ params }) => {
-		// Pre-load data if needed
-		return { userId: params.id };
-	}
 }
 ```
 
 ### Protected Routes
 
-```typescript
-export const ProtectedPage: React.FC = () => {
+```tsx
+import { type FC, useEffect } from 'react';
+import { useNavigate } from '#libs/router';
+import { AppLayout } from '../layouts/app.layout.tsx';
+import { useAuth } from '../hooks/use-auth.ts';
+
+export const ProtectedPage: FC = () => {
 	const { isAuthenticated } = useAuth();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!isAuthenticated) {
-			navigate('/login', { replace: true });
-		}
+		if (!isAuthenticated) navigate('/login', { replace: true });
 	}, [isAuthenticated, navigate]);
 
-	if (!isAuthenticated) {
-		return <LoadingSpinner />;
-	}
+	if (!isAuthenticated) return <LoadingSpinner />;
 
-	return (
-		<AppLayout>
-			{/* Protected content */}
-		</AppLayout>
-	);
+	return <AppLayout>{/* protected content */}</AppLayout>;
 };
 ```
 
-Generate the page component following these patterns and ensure it integrates seamlessly with the existing React TypeScript architecture and routing system.
+Generate the page component following these patterns and ensure it integrates seamlessly with the existing architecture and routing system.

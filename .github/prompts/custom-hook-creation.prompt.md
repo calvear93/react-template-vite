@@ -5,52 +5,39 @@ description: 'Create a custom React hook following React TypeScript template bes
 
 # Custom Hook Creation Prompt
 
-Create a new custom React hook for [HOOK_DESCRIPTION] following these requirements:
+Create a new custom React hook for [HOOK_DESCRIPTION] following these requirements.
+
+Follow `AGENTS.md` and `.github/instructions/{coding-standards,patterns}.instructions.md` for formatting, naming, and recipes. The points below are hook-specific.
 
 ## Core Requirements
 
-### 1. Hook Structure
+### 1. Hook Structure & types
 
-- Use `use` prefix in function name (e.g., `useUserData`, `useApiCall`)
-- Implement proper TypeScript return types and generics
-- Follow React hooks rules and patterns
-- Include proper error handling and cleanup
+- Use `use` prefix (e.g., `useUserData`); follow the rules of hooks (no conditional calls).
+- Type the return value (interface or tuple) and use generics for reusable hooks; inline type imports (`import { type FC, useState } from 'react'`).
 
-### 2. TypeScript Integration
+### 2. State & dependencies
 
-- Define comprehensive return type interfaces
-- Use generics for reusable hooks
-- Include proper parameter typing
-- Export both hook and related types
+- Use `useState`/`useEffect`/`useCallback`/`useMemo` with correct dependency arrays; clean up effects and subscriptions.
+- Handle loading, error, and success states. Get services/config via `useInjection(...)` from the relative `app.ioc.ts` (never hardcode config).
 
-### 3. State Management
+### 3. Error handling
 
-- Use appropriate React hooks (useState, useEffect, useCallback, useMemo)
-- Handle loading, error, and success states
-- Implement proper cleanup with useEffect
-- Integrate with IoC container when needed (useInjection from #libs/ioc)
+- Surface meaningful messages; handle network/timeout errors. If logging, use `console.error`/`console.warn`.
+- `throw new Error('message')` (never throw a string); name catch params `error`.
 
-### 4. Error Handling
+### 4. Performance
 
-- Provide meaningful error messages
-- Handle network errors and timeouts
-- Include retry mechanisms where appropriate
-- Log errors for debugging purposes
-
-### 5. Performance
-
-- Use useMemo and useCallback for optimization
-- Prevent unnecessary re-renders
-- Implement proper dependency arrays
-- Handle subscription cleanup
+- Memoize stable references with `useMemo`/`useCallback`; avoid unnecessary re-renders.
 
 ## Implementation Patterns
 
 ### Basic Data Fetching Hook
 
 ```typescript
-import { useState, useEffect, useCallback } from 'react';
-import { useInjection } from '#libs/ioc';
+import { useCallback, useEffect, useState } from 'react';
+import { useInjection } from '../app.ioc.ts';
+import { HttpClient } from '../services/http-client.service.ts';
 
 interface UseApiResult<T> {
 	data: T | null;
@@ -94,11 +81,11 @@ export const useApi = <T>(
 			const result = await httpClient.get<T>(url);
 			setData(result);
 			onSuccess?.(result);
-		} catch (err) {
-			const errorMessage =
-				err instanceof Error ? err.message : 'Unknown error';
-			setError(errorMessage);
-			onError?.(err as Error);
+		} catch (error) {
+			const message =
+				error instanceof Error ? error.message : 'unknown error';
+			setError(message);
+			if (error instanceof Error) onError?.(error);
 		} finally {
 			setLoading(false);
 		}
@@ -151,22 +138,23 @@ export const useForm = <T extends Record<string, unknown>>({
 
 	const validateField = useCallback(
 		(field: keyof T, value: T[keyof T]) => {
-			try {
-				const fieldSchema = validationSchema.pick({ [field]: true });
-				fieldSchema.parse({ [field]: value });
+			const result = validationSchema.safeParse({
+				...values,
+				[field]: value,
+			});
+
+			if (result.success) {
 				setErrors((prev) => ({ ...prev, [field]: undefined }));
 				return true;
-			} catch (error) {
-				if (error instanceof z.ZodError) {
-					setErrors((prev) => ({
-						...prev,
-						[field]: error.errors[0].message,
-					}));
-				}
-				return false;
 			}
+
+			const issue = result.error.issues.find(
+				(item) => item.path[0] === field,
+			);
+			setErrors((prev) => ({ ...prev, [field]: issue?.message }));
+			return false;
 		},
-		[validationSchema],
+		[validationSchema, values],
 	);
 
 	const handleChange = useCallback(
@@ -188,11 +176,12 @@ export const useForm = <T extends Record<string, unknown>>({
 			} catch (error) {
 				if (error instanceof z.ZodError) {
 					const fieldErrors: Partial<Record<keyof T, string>> = {};
-					error.errors.forEach((err) => {
-						if (err.path[0]) {
-							fieldErrors[err.path[0] as keyof T] = err.message;
+					for (const issue of error.issues) {
+						const field = issue.path[0];
+						if (field) {
+							fieldErrors[field as keyof T] = issue.message;
 						}
-					});
+					}
 					setErrors(fieldErrors);
 				}
 			} finally {
@@ -303,23 +292,25 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 
 ### Hook Testing with IoC Dependencies
 
-```typescript
-import { renderHook, act } from '@testing-library/react';
+```tsx
+import { renderHook, waitFor } from '@testing-library/react';
+import { type FC, type ReactNode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { InversionOfControlProvider } from './app.ioc.ts'; // adjust path
-import { useApiData } from './useApiData.ts';
+import { InversionOfControlProvider } from '../app.ioc.ts';
+import { HttpClient } from '../services/http-client.service.ts';
+import { useApiData } from './use-api-data.ts';
 
 describe('useApiData with IoC', () => {
-	it('should fetch data using injected HTTP client', async () => {
+	it('should fetch data using injected http client', async () => {
 		const mockHttpClient = {
 			get: vi.fn().mockResolvedValue({ data: 'test data' }),
 		};
 
-		// Mock IoC container dependencies
+		// mock ioc container dependencies (key by the injection token)
 		const mockIoCValues = new Map();
-		mockIoCValues.set('HttpClient', mockHttpClient);
+		mockIoCValues.set(HttpClient, mockHttpClient);
 
-		const wrapper = ({ children }: { children: React.ReactNode }) => (
+		const wrapper: FC<{ children: ReactNode }> = ({ children }) => (
 			<InversionOfControlProvider values={mockIoCValues}>
 				{children}
 			</InversionOfControlProvider>
@@ -329,60 +320,21 @@ describe('useApiData with IoC', () => {
 			wrapper,
 		});
 
-		// Verify hook behavior with mocked dependencies
-		await act(async () => {
-			// Wait for hook to complete
+		await waitFor(() => {
+			expect(result.current.data).toEqual({ data: 'test data' });
 		});
-
 		expect(mockHttpClient.get).toHaveBeenCalledWith('/api/test');
-		expect(result.current.data).toBe('test data');
 	});
 });
 ```
 
 ## Technical Checklist
 
-### Essential Features
+- [ ] `use` prefix; follows rules of hooks (no conditional calls)
+- [ ] Typed return (interface/tuple) and generics for reusability; JSDoc on params
+- [ ] Correct dependency arrays; effects/subscriptions cleaned up; stable refs via `useMemo`/`useCallback`
+- [ ] Services/config via `useInjection` (no hardcoded values)
+- [ ] Error path handled with meaningful messages (`throw new Error(...)`, catch param `error`)
+- [ ] Tests cover initial state, success, error, and dependency changes; IoC mocked via `InversionOfControlProvider`; assert with `waitFor`/`findBy*`
 
-- [ ] `use` prefix in function name
-- [ ] Proper TypeScript return types and generics
-- [ ] Integration with React hooks patterns
-- [ ] Error handling and cleanup implementation
-- [ ] Loading states for async operations
-- [ ] Proper dependency arrays in useEffect/useCallback
-
-### Advanced Features
-
-- [ ] IoC container integration (useInjection from #libs/ioc)
-- [ ] Performance optimization (useMemo, useCallback)
-- [ ] Generic types for reusability
-- [ ] Proper subscription cleanup
-- [ ] Error boundaries integration
-- [ ] Retry mechanisms for failed operations
-
-### Code Quality
-
-- [ ] No hardcoded values (use configuration injection)
-- [ ] Comprehensive error handling
-- [ ] Proper TypeScript typing throughout
-- [ ] Clean and readable code structure
-- [ ] JSDoc documentation with parameter descriptions
-
-### Testing Coverage
-
-- [ ] Unit tests for hook behavior
-- [ ] Testing with different parameter combinations
-- [ ] IoC dependencies mocked with InversionOfControlProvider pattern
-- [ ] Error scenario testing
-- [ ] Cleanup and memory leak testing
-- [ ] Performance testing for optimization
-
-### Hook Patterns
-
-- [ ] Follows React hooks rules (no conditional calls)
-- [ ] Proper cleanup in useEffect
-- [ ] Stable references with useCallback/useMemo
-- [ ] Appropriate use of useState, useEffect, etc.
-- [ ] Integration with other hooks and context
-
-Generate the custom hook following these patterns and ensure it integrates seamlessly with the existing React TypeScript architecture.
+Generate the custom hook following these patterns and ensure it integrates seamlessly with the existing architecture.

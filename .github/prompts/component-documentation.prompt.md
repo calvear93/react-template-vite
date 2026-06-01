@@ -30,44 +30,41 @@ Create comprehensive component documentation for [COMPONENT_NAME] including:
 
 ### Component Interface Documentation:
 
-````typescript
+````tsx
+import { type FC } from 'react';
+import { type User } from './user.schema.ts';
+
 /**
- * Props for the UserCard component
- * @interface UserCardProps
+ * Props for the UserCard component.
  */
 interface UserCardProps {
-	/** User data to display in the card */
+	/** user data to display in the card */
 	user: User;
-	/** Callback fired when the edit button is clicked */
+	/** callback fired when the edit button is clicked */
 	onEdit?: (user: User) => void;
-	/** Whether the card should be in a loading state */
+	/** whether the card should be in a loading state */
 	isLoading?: boolean;
-	/** Additional CSS classes to apply */
+	/** additional css classes to apply */
 	className?: string;
 }
 
 /**
- * UserCard - A reusable card component for displaying user information
+ * UserCard - a reusable card component for displaying user information.
  *
- * @component
  * @example
  * ```tsx
- * const user = { id: 1, name: 'John Doe', email: 'john@example.com' };
+ * const user = { id: '1', name: 'John Doe', email: 'john@example.com' };
  *
- * <UserCard
- *   user={user}
- *   onEdit={(user) => console.log('Edit user:', user)}
- *   isLoading={false}
- * />
+ * <UserCard onEdit={handleEdit} user={user} />;
  * ```
  */
-export const UserCard: React.FC<UserCardProps> = ({
+export const UserCard: FC<UserCardProps> = ({
 	user,
 	onEdit,
 	isLoading,
 	className,
 }) => {
-	// Component implementation
+	// component implementation
 };
 ````
 

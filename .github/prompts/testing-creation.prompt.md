@@ -5,51 +5,44 @@ description: 'Create comprehensive tests for React components and hooks using Vi
 
 # Testing Creation Prompt
 
-Create comprehensive tests for [COMPONENT/HOOK_NAME] following React TypeScript template testing best practices:
+Create comprehensive tests for [COMPONENT/HOOK_NAME] following the project's testing best practices.
+
+Follow `AGENTS.md` → Testing and `.github/instructions/patterns.instructions.md` → Testing patterns. The points below are test-specific.
 
 ## Core Requirements
 
-### 1. Testing Framework Setup
+### 1. Framework & structure
 
-- Use Vitest as the testing framework
-- Use React Testing Library for component testing
-- Use @testing-library/user-event for user interactions
-- Follow testing best practices with proper setup and cleanup
+- Vitest + React Testing Library + `@testing-library/user-event` (happy-dom). Place specs as `*.spec.tsx`/`*.spec.ts` next to the source.
+- Group with `describe`; descriptive `it` names; reset mocks in `beforeEach`.
 
-### 2. Test Structure
+### 2. Queries & interactions
 
-- Organize tests in logical describe blocks
-- Use descriptive test names that explain the behavior
-- Include setup and teardown when necessary
-- Group related tests together
+- Use `screen.getBy*`/`queryBy*`/`findBy*` — never destructure `container` or use `container.querySelector` (`no-container`/`no-node-access`).
+- Async UI: assert with `findBy*` or `waitFor` (prefer `findBy*`). Drive interactions with `userEvent.setup()` and `await` every action.
 
-### 3. Coverage Requirements
+### 3. Coverage
 
-- Test component rendering with different props
-- Test user interactions and event handlers
-- Test loading, error, and success states
-- Test accessibility features
-- Test edge cases and error scenarios
+- Render with different props; user interactions; loading/error/success states; accessibility; edge cases.
 
-### 4. Mocking Strategy
+### 4. Mocking strategy
 
-- Mock external dependencies appropriately
-- Mock services and config by injecting mocked dependencies through the IoC container — wrap the component in `InversionOfControlProvider` with a `mockIoCValues` Map (see the example below)
-- Mock custom IoC container dependencies
-- Avoid over-mocking internal React behavior
+- Mock services/config through the IoC container: wrap in `InversionOfControlProvider` with a `mockIoCValues` Map keyed by the injection token (do NOT use MSW).
+- Avoid over-mocking React internals.
 
 ## Implementation Patterns
 
 ### Component Testing Template
 
-```typescript
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+```tsx
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { InversionOfControlProvider } from '../app.ioc.ts';
-import { ComponentName } from './ComponentName.tsx';
+import { DataService } from '../services/data.service.ts';
+import { ComponentName } from './component-name.tsx';
 
-// Mock dependencies
+// mock dependencies
 const mockOnAction = vi.fn();
 const mockService = {
 	getData: vi.fn(),
@@ -77,10 +70,9 @@ describe('ComponentName', () => {
 		it('should render with IoC dependencies', () => {
 			const props = { title: 'Test Title' };
 
-			// Mock IoC container dependencies
+			// mock ioc container dependencies (key by the injection token)
 			const mockIoCValues = new Map();
-			mockIoCValues.set('DATA_SERVICE', mockService);
-			mockIoCValues.set('CONFIG_SERVICE', { apiUrl: 'http://test.api' });
+			mockIoCValues.set(DataService, mockService);
 
 			render(
 				<InversionOfControlProvider values={mockIoCValues}>
@@ -92,7 +84,7 @@ describe('ComponentName', () => {
 		});
 
 		it('should render loading state correctly', () => {
-			render(<ComponentName title="Test" isLoading={true} />);
+			render(<ComponentName isLoading title="Test" />);
 
 			expect(screen.getByRole('progressbar')).toBeInTheDocument();
 			expect(screen.getByText(/loading/i)).toBeInTheDocument();
@@ -110,17 +102,18 @@ describe('ComponentName', () => {
 	describe('User Interactions', () => {
 		it('should call onAction when button is clicked', async () => {
 			const user = userEvent.setup();
-			render(<ComponentName title="Test" onAction={mockOnAction} />);
+			render(<ComponentName onAction={mockOnAction} title="Test" />);
 
-			const button = screen.getByRole('button', { name: /action/i });
-			await user.click(button);
+			await user.click(
+				screen.getByRole('button', { name: /action/i }),
+			);
 
 			expect(mockOnAction).toHaveBeenCalledTimes(1);
 		});
 
 		it('should handle form submission correctly', async () => {
 			const user = userEvent.setup();
-			render(<ComponentName title="Test" onSubmit={mockOnAction} />);
+			render(<ComponentName onSubmit={mockOnAction} title="Test" />);
 
 			const input = screen.getByLabelText(/name/i);
 			const submitButton = screen.getByRole('button', { name: /submit/i });
@@ -135,12 +128,10 @@ describe('ComponentName', () => {
 
 		it('should handle keyboard navigation', async () => {
 			const user = userEvent.setup();
-			render(<ComponentName title="Test" onAction={mockOnAction} />);
+			render(<ComponentName onAction={mockOnAction} title="Test" />);
 
-			const button = screen.getByRole('button', { name: /action/i });
-
-			// Focus and trigger with keyboard
-			button.focus();
+			// tab to the button and activate with the keyboard
+			await user.tab();
 			await user.keyboard('{Enter}');
 
 			expect(mockOnAction).toHaveBeenCalledTimes(1);
@@ -172,55 +163,57 @@ describe('ComponentName', () => {
 
 	describe('Error Handling', () => {
 		it('should handle async operation errors', async () => {
-			mockService.getData.mockRejectedValue(new Error('API Error'));
+			mockService.getData.mockRejectedValue(new Error('api error'));
 
 			render(<ComponentName title="Test" />);
 
-			await waitFor(() => {
-				expect(screen.getByText(/api error/i)).toBeInTheDocument();
-			});
+			expect(await screen.findByText(/api error/i)).toBeInTheDocument();
 		});
 
 		it('should retry failed operations', async () => {
 			const user = userEvent.setup();
 			mockService.getData
-				.mockRejectedValueOnce(new Error('First failure'))
+				.mockRejectedValueOnce(new Error('first failure'))
 				.mockResolvedValueOnce({ data: 'success' });
 
 			render(<ComponentName title="Test" />);
 
-			// Wait for initial error
-			await waitFor(() => {
-				expect(screen.getByText(/first failure/i)).toBeInTheDocument();
-			});
+			// wait for initial error
+			expect(
+				await screen.findByText(/first failure/i),
+			).toBeInTheDocument();
 
-			// Click retry button
-			const retryButton = screen.getByRole('button', { name: /retry/i });
-			await user.click(retryButton);
+			// click retry button
+			await user.click(
+				screen.getByRole('button', { name: /retry/i }),
+			);
 
-			// Wait for success
-			await waitFor(() => {
-				expect(screen.getByText('success')).toBeInTheDocument();
-			});
-
+			// wait for success
+			expect(await screen.findByText('success')).toBeInTheDocument();
 			expect(mockService.getData).toHaveBeenCalledTimes(2);
 		});
 	});
 
 	describe('Edge Cases', () => {
 		it('should handle empty data gracefully', () => {
-			render(<ComponentName title="Test" data={[]} />);
+			render(<ComponentName data={[]} title="Test" />);
 
-			expect(screen.getByText(/no data available/i)).toBeInTheDocument();
+			expect(
+				screen.getByText(/no data available/i),
+			).toBeInTheDocument();
 		});
 
 		it('should handle invalid props gracefully', () => {
-			// Suppress console.error for this test
-			const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+			// suppress console.error for this test
+			const consoleSpy = vi
+				.spyOn(console, 'error')
+				.mockImplementation(() => {});
 
 			render(<ComponentName title="" />);
 
-			expect(screen.getByText(/please provide a title/i)).toBeInTheDocument();
+			expect(
+				screen.getByText(/please provide a title/i),
+			).toBeInTheDocument();
 
 			consoleSpy.mockRestore();
 		});
@@ -230,20 +223,28 @@ describe('ComponentName', () => {
 
 ### Hook Testing Template
 
-```typescript
-import { renderHook, act } from '@testing-library/react';
-import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { useCustomHook } from './useCustomHook.ts';
+```tsx
+import { renderHook, waitFor } from '@testing-library/react';
+import { type FC, type ReactNode } from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { InversionOfControlProvider } from '../app.ioc.ts';
+import { HttpClient } from '../services/http-client.service.ts';
+import { useCustomHook } from './use-custom-hook.ts';
 
-// Mock dependencies
+// mock dependencies, injected through the ioc container
 const mockHttpClient = {
 	get: vi.fn(),
 	post: vi.fn(),
 };
 
-vi.mock('../app.ioc.ts', () => ({
-	useInjection: vi.fn(() => mockHttpClient),
-}));
+const mockIoCValues = new Map();
+mockIoCValues.set(HttpClient, mockHttpClient);
+
+const wrapper: FC<{ children: ReactNode }> = ({ children }) => (
+	<InversionOfControlProvider values={mockIoCValues}>
+		{children}
+	</InversionOfControlProvider>
+);
 
 describe('useCustomHook', () => {
 	beforeEach(() => {
@@ -252,7 +253,9 @@ describe('useCustomHook', () => {
 
 	describe('Initial State', () => {
 		it('should return initial state correctly', () => {
-			const { result } = renderHook(() => useCustomHook('test-url'));
+			const { result } = renderHook(() => useCustomHook('test-url'), {
+				wrapper,
+			});
 
 			expect(result.current.data).toBeNull();
 			expect(result.current.loading).toBe(false);
@@ -265,65 +268,48 @@ describe('useCustomHook', () => {
 			const mockData = { id: '1', name: 'Test Data' };
 			mockHttpClient.get.mockResolvedValue(mockData);
 
-			const { result } = renderHook(() => useCustomHook('test-url'));
-
-			act(() => {
-				result.current.refetch();
+			const { result } = renderHook(() => useCustomHook('test-url'), {
+				wrapper,
 			});
 
-			expect(result.current.loading).toBe(true);
-
-			await act(async () => {
-				await new Promise((resolve) => setTimeout(resolve, 0));
+			await waitFor(() => {
+				expect(result.current.data).toEqual(mockData);
 			});
-
-			expect(result.current.data).toEqual(mockData);
 			expect(result.current.loading).toBe(false);
 			expect(result.current.error).toBeNull();
 		});
 
 		it('should handle fetch errors', async () => {
-			const error = new Error('Network error');
-			mockHttpClient.get.mockRejectedValue(error);
+			mockHttpClient.get.mockRejectedValue(new Error('network error'));
 
-			const { result } = renderHook(() => useCustomHook('test-url'));
-
-			act(() => {
-				result.current.refetch();
+			const { result } = renderHook(() => useCustomHook('test-url'), {
+				wrapper,
 			});
 
-			await act(async () => {
-				await new Promise((resolve) => setTimeout(resolve, 0));
+			await waitFor(() => {
+				expect(result.current.error).toBe('network error');
 			});
-
 			expect(result.current.data).toBeNull();
 			expect(result.current.loading).toBe(false);
-			expect(result.current.error).toBe('Network error');
-		});
-	});
-
-	describe('Hook Cleanup', () => {
-		it('should cleanup properly on unmount', () => {
-			const { unmount } = renderHook(() => useCustomHook('test-url'));
-
-			// No errors should be thrown on unmount
-			expect(() => unmount()).not.toThrow();
 		});
 	});
 
 	describe('Hook Dependencies', () => {
-		it('should refetch when URL changes', async () => {
-			const { result, rerender } = renderHook(
+		it('should refetch when url changes', async () => {
+			const { rerender } = renderHook(
 				({ url }) => useCustomHook(url),
-				{ initialProps: { url: 'test-url-1' } },
+				{ initialProps: { url: 'test-url-1' }, wrapper },
 			);
 
-			expect(mockHttpClient.get).toHaveBeenCalledWith('test-url-1');
+			await waitFor(() => {
+				expect(mockHttpClient.get).toHaveBeenCalledWith('test-url-1');
+			});
 
 			rerender({ url: 'test-url-2' });
 
-			expect(mockHttpClient.get).toHaveBeenCalledWith('test-url-2');
-			expect(mockHttpClient.get).toHaveBeenCalledTimes(2);
+			await waitFor(() => {
+				expect(mockHttpClient.get).toHaveBeenCalledWith('test-url-2');
+			});
 		});
 	});
 });
@@ -331,15 +317,16 @@ describe('useCustomHook', () => {
 
 ### Integration Testing Template
 
-```typescript
+```tsx
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { type FC, type ReactNode } from 'react';
+import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from '#libs/router';
-import { PageComponent } from './PageComponent.tsx';
+import { PageComponent } from './page-component.tsx';
 
-// Wrapper for components that need router context
-const RouterWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+// wrapper for components that need router context
+const RouterWrapper: FC<{ children: ReactNode }> = ({ children }) => (
 	<MemoryRouter initialEntries={['/']}>{children}</MemoryRouter>
 );
 
@@ -349,57 +336,23 @@ describe('PageComponent Integration', () => {
 
 		render(<PageComponent />, { wrapper: RouterWrapper });
 
-		// User interaction flow
-		const nameInput = screen.getByLabelText(/name/i);
-		const emailInput = screen.getByLabelText(/email/i);
-		const submitButton = screen.getByRole('button', { name: /submit/i });
+		await user.type(screen.getByLabelText(/name/i), 'John Doe');
+		await user.type(screen.getByLabelText(/email/i), 'john@example.com');
+		await user.click(screen.getByRole('button', { name: /submit/i }));
 
-		await user.type(nameInput, 'John Doe');
-		await user.type(emailInput, 'john@example.com');
-		await user.click(submitButton);
-
-		// Verify the complete workflow
-		await waitFor(() => {
-			expect(screen.getByText(/success/i)).toBeInTheDocument();
-		});
+		// verify the complete workflow
+		expect(await screen.findByText(/success/i)).toBeInTheDocument();
 	});
 });
 ```
 
 ## Technical Checklist
 
-### Test Coverage
-
-- [ ] Component renders correctly with different props
-- [ ] User interactions trigger expected behaviors
-- [ ] Loading, error, and success states are tested
-- [ ] Accessibility features work as expected
-- [ ] Edge cases and error scenarios are handled
-- [ ] Form validation and submission tested
-- [ ] Navigation and routing tested (for pages)
-
-### Best Practices
-
-- [ ] Tests are independent and isolated
-- [ ] Proper mocking of external dependencies
-- [ ] Use of appropriate testing utilities
-- [ ] Descriptive test names and structure
-- [ ] Setup and cleanup handled correctly
-- [ ] No brittle implementation details tested
-
-### Accessibility Testing
-
-- [ ] ARIA attributes and roles tested
-- [ ] Keyboard navigation functionality
-- [ ] Screen reader compatibility
-- [ ] Focus management
-- [ ] Color contrast considerations
-
-### Performance Testing
-
-- [ ] No memory leaks in component tests
-- [ ] Proper cleanup of event listeners
-- [ ] Hook dependency optimization
-- [ ] Re-render behavior testing
+- [ ] Renders across prop variations; interactions via `userEvent` (awaited)
+- [ ] Loading/error/success states covered; async asserted with `findBy*`/`waitFor`
+- [ ] Accessibility checked via roles/labels (no `container.querySelector`)
+- [ ] Form validation/submission and routing (for pages) covered
+- [ ] Dependencies mocked through `InversionOfControlProvider` (no MSW); mocks reset in `beforeEach`
+- [ ] Tests independent; assert user-visible output, not internals; meaningful (mutation-aware) assertions
 
 Generate comprehensive tests following these patterns and ensure they cover all critical functionality and edge cases.

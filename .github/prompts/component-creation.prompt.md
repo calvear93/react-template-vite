@@ -7,64 +7,52 @@ description: 'Create a new React component following React TypeScript template b
 
 Create a new React component for [COMPONENT_DESCRIPTION] following these requirements:
 
+Follow `AGENTS.md` and `.github/instructions/{coding-standards,patterns}.instructions.md` for formatting, naming, and recipes. The points below are component-specific.
+
 ## Core Requirements
 
 ### 1. Component Structure
 
-- Use React.FC type with proper TypeScript props interface
-- Implement functional component with modern React patterns
-- Follow atomic design principles (atoms, molecules, organisms)
-- Use descriptive component and file naming (PascalCase for components)
+- Type as `React.FC<Props>` (or `({ ... }: Props) =>`); keep components declarative and move business logic into custom hooks.
+- Follow atomic design (`atoms`, `components`, `layouts`, `pages`); files `kebab-case`, components `PascalCase`.
 
-### 2. TypeScript Integration
+### 2. TypeScript & validation
 
-- Define comprehensive props interface with JSDoc comments
-- Use Zod validation for complex props or form data
-- Include proper generic types when applicable
-- Export both component and props interface
+- Define a props interface with JSDoc; use Zod schemas for complex props or form data.
+- Use inline type imports: `import { type FC, useState } from 'react'`. Prefer generics/`unknown` over `any`.
 
-### 3. Styling & Design
+### 3. Styling & design
 
-- Apply CSS Modules for component-specific styling
-- Use UnoCSS utilities for common patterns (spacing, colors, layout)
-- Implement responsive design that works on all screen sizes
-- Follow consistent design system patterns
+- CSS Modules for component-specific styles; UnoCSS utilities for spacing, colors, and layout.
+- Responsive by default.
 
 ### 4. Accessibility & UX
 
-- Include proper ARIA attributes (labels, roles, descriptions)
-- Use semantic HTML elements appropriately
-- Ensure keyboard navigation support
-- Handle focus management for interactive elements
-- Provide meaningful error messages and feedback
+- Semantic HTML and ARIA (labels, roles); keyboard navigation and focus management for interactive elements.
+- Self-closing tags (`<Spinner />`), boolean props shorthand (`disabled` not `disabled={true}`), string props without braces (`title="x"`). Never use `dangerouslySetInnerHTML`.
 
-### 5. State Management
+### 5. State management
 
-- Use React hooks for local component state
-- Integrate with custom IoC container when needed (useInjection hook from ./app.ioc.ts)
-- Handle loading, error, and success states appropriately
-- Implement proper cleanup with useEffect when necessary
+- React hooks for local state; get services/config via `useInjection(...)` from the relative `app.ioc.ts` (never hardcode config).
+- Handle loading, error, and success states; clean up effects.
 
-### 6. Error Handling
+### 6. Error handling
 
-- Include error boundaries for async operations
-- Validate inputs and provide user-friendly error messages
-- Handle edge cases gracefully
-- Log errors appropriately for debugging
+- Validate inputs and surface user-friendly messages; handle edge cases. If logging, use `console.error`/`console.warn` (no `console.log`).
 
-### 7. Testing & Documentation
+### 7. Testing & documentation
 
-- Create comprehensive unit tests with React Testing Library
-- Use InversionOfControlProvider for IoC dependency testing (import from ./app.ioc.ts)
-- Test user interactions and accessibility features
-- Include JSDoc comments with prop descriptions
-- Document complex business logic and patterns
+- Unit tests with React Testing Library; mock dependencies through `InversionOfControlProvider` + a `mockIoCValues` Map.
+- Query via `screen.getBy*`/`findBy*` (never `container.querySelector`); drive interactions with `userEvent`.
+- JSDoc on the component and props.
 
 ## Implementation Patterns
 
 ### Basic Component Template
 
-```typescript
+```tsx
+import { type FC } from 'react';
+
 interface ComponentNameProps {
 	/** Description of the prop with expected format */
 	propName: string;
@@ -82,50 +70,49 @@ interface ComponentNameProps {
  * @param props - Component props
  * @returns JSX element with [functionality description]
  */
-export const ComponentName: React.FC<ComponentNameProps> = ({
+export const ComponentName: FC<ComponentNameProps> = ({
 	propName,
 	onAction,
 	isLoading = false,
 	className,
 }) => {
-	// Component implementation
+	// component implementation
 };
 ```
 
 ### Component with IoC Integration
 
-```typescript
-import { useInjection } from '#libs/ioc';
+```tsx
+import { type FC } from 'react';
+import { useInjection } from '../app.ioc.ts';
+import { HttpClient } from '../services/http-client.service.ts';
 
-export const DataComponent: React.FC<DataComponentProps> = ({ userId }) => {
+export const DataComponent: FC<DataComponentProps> = ({ userId }) => {
 	const httpClient = useInjection(HttpClient);
-	const config = useInjection(AppConfig);
 
-	// Use injected dependencies
+	// use injected dependencies
 };
 ```
 
 ### IoC Component Testing Pattern
 
-```typescript
-import { render, screen, fireEvent } from '@testing-library/react';
+```tsx
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { InversionOfControlProvider } from './app.ioc.ts'; // adjust path
-import { DataComponent } from './DataComponent.tsx';
+import { InversionOfControlProvider } from '../app.ioc.ts';
+import { HttpClient } from '../services/http-client.service.ts';
+import { DataComponent } from './data-component.tsx';
 
 describe('DataComponent', () => {
-	it('should work with injected dependencies', () => {
+	it('should work with injected dependencies', async () => {
 		const mockHttpClient = {
 			get: vi.fn().mockResolvedValue({ data: 'test' }),
 		};
-		const mockConfig = {
-			apiBaseUrl: 'https://test-api.com',
-		};
 
-		// Mock IoC container dependencies
+		// mock ioc container dependencies (key by the injection token)
 		const mockIoCValues = new Map();
-		mockIoCValues.set('HttpClient', mockHttpClient);
-		mockIoCValues.set('AppConfig', mockConfig);
+		mockIoCValues.set(HttpClient, mockHttpClient);
 
 		render(
 			<InversionOfControlProvider values={mockIoCValues}>
@@ -133,62 +120,37 @@ describe('DataComponent', () => {
 			</InversionOfControlProvider>,
 		);
 
-		// Test component behavior with mocked dependencies
+		expect(await screen.findByText('test')).toBeInTheDocument();
 	});
 });
 ```
 
 ### Form Component with Validation
 
-```typescript
+```tsx
+import { type FC } from 'react';
+import { z } from 'zod';
+
 const FormSchema = z.object({
-	name: z.string().min(1, 'Name is required'),
-	email: z.string().email('Invalid email format'),
+	name: z.string().min(1, 'name is required'),
+	email: z.email('invalid email format'),
 });
 
 type FormData = z.infer<typeof FormSchema>;
 
-export const FormComponent: React.FC<FormProps> = ({ onSubmit }) => {
-	// Form implementation with Zod validation
+export const FormComponent: FC<FormProps> = ({ onSubmit }) => {
+	// form implementation with zod validation
 };
 ```
 
 ## Technical Checklist
 
-### Essential Features
+- [ ] Props interface typed with JSDoc; `React.FC`/destructured signature
+- [ ] CSS Modules + UnoCSS, responsive; accessible (ARIA, semantic HTML, keyboard)
+- [ ] Loading/error/success states handled; no `dangerouslySetInnerHTML`
+- [ ] Services/config via `useInjection` (no hardcoded values); logic extracted to hooks
+- [ ] Zod for complex data; memoization only where it measurably helps
+- [ ] Tests with `screen` queries + `userEvent`; IoC mocked via `InversionOfControlProvider`
+- [ ] Covers props variations, interactions, loading/error states, and an edge case
 
-- [ ] TypeScript interface defined with JSDoc comments
-- [ ] React.FC implementation with proper props typing
-- [ ] CSS Modules created with responsive styling
-- [ ] Accessibility features (ARIA attributes, semantic HTML)
-- [ ] Error handling for all user interactions
-- [ ] Loading states for async operations
-- [ ] Unit tests covering component behavior and interactions
-
-### Advanced Features
-
-- [ ] IoC container integration when needed (useInjection from #libs/ioc)
-- [ ] Zod validation for complex data structures
-- [ ] Error boundaries for async error handling
-- [ ] Performance optimization (React.memo, useMemo, useCallback)
-- [ ] Internationalization support if applicable
-- [ ] Dark mode support if part of design system
-
-### Code Quality
-
-- [ ] No hardcoded values (use configuration injection)
-- [ ] Proper separation of concerns (logic in custom hooks)
-- [ ] Consistent naming conventions throughout
-- [ ] Clean and readable code structure
-- [ ] Comprehensive error handling and user feedback
-
-### Testing Coverage
-
-- [ ] Component renders correctly with different props
-- [ ] User interactions trigger expected behaviors
-- [ ] IoC dependencies mocked with InversionOfControlProvider pattern
-- [ ] Loading and error states display appropriately
-- [ ] Accessibility features work as expected
-- [ ] Edge cases and error scenarios are handled
-
-Generate the component following these patterns and ensure it integrates seamlessly with the existing React TypeScript architecture.
+Generate the component following these patterns and ensure it integrates seamlessly with the existing architecture.

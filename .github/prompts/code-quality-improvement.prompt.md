@@ -5,6 +5,8 @@ description: 'Improve code quality following React TypeScript template standards
 
 # Code Quality Improvement Prompt
 
+Follow `AGENTS.md` and `.github/instructions/coding-standards.instructions.md` as the source of truth for style, naming, and anti-patterns; run `pnpm lint` and `pnpm format` to enforce them.
+
 Improve the code quality of [FILE/COMPONENT] by:
 
 1. Applying TypeScript and React best practices
@@ -31,10 +33,10 @@ Improve the code quality of [FILE/COMPONENT] by:
 
 ### TypeScript & React Best Practices:
 
-- Use explicit types instead of `any`
+- Use explicit types instead of `any` (prefer `unknown` + narrowing or generics)
+- Use inline type imports (`import { type FC, useState } from 'react'`) with `.ts`/`.tsx` extensions on relative imports
 - Implement proper interface definitions for props
-- Apply union types and generics appropriately
-- Use type guards for runtime type checking
+- Apply union types and generics appropriately; use type guards for runtime checks
 - Implement proper React patterns (hooks, functional components)
 
 ### Error Handling:
@@ -56,7 +58,7 @@ Improve the code quality of [FILE/COMPONENT] by:
 - Apply single responsibility principle to components
 - Remove code duplication across components
 - Improve component and variable naming
-- Organize imports properly (external → internal → relative)
+- Let import order be auto-sorted (perfectionist): external → `#libs/*` → relative
 - Extract custom hooks for reusable logic
 
 ### Accessibility & UX:

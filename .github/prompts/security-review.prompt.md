@@ -31,8 +31,8 @@ Review the security aspects of [COMPONENT] and ensure:
 ### Input Validation:
 
 - All user inputs validated with Zod schemas
-- XSS prevention through React's built-in protections
-- Avoiding dangerouslySetInnerHTML unless absolutely necessary
+- XSS prevention through React's built-in escaping
+- Never use `dangerouslySetInnerHTML` (`react/no-danger` is enforced as an error)
 - Form validation on both client and server side
 
 ### Authentication & State Management:
@@ -44,7 +44,7 @@ Review the security aspects of [COMPONENT] and ensure:
 
 ### Data Protection:
 
-- No sensitive data in client-side code
+- No secrets or sensitive data in client-side code; keep `import.meta.env` access centralized in the bootstrap/config layer and inject config via the IoC container (`useInjection`) — never hardcode
 - Secure data transmission over HTTPS
 - Proper handling of user input
 - PII protection and data privacy
