@@ -1,384 +1,155 @@
-# IOC (Inversion of Control)
+# 🧩 `#libs/ioc` — Inversion of Control
 
-This library provides a lightweight Inversion of Control (IoC) container for React applications using React Context. It enables dependency injection patterns with type safety and React integration.
+> A tiny, type-safe dependency-injection container for React — backed by a plain `Map` and React Context. No decorators, no reflection, no runtime magic.
 
-## Overview
+Bind services once in a bootstrap file, then pull them anywhere with a hook. Swap real implementations for mocks in tests by handing the provider a `Map` of values.
 
-The IOC library offers:
+## ✨ Highlights
 
-- **Dependency Injection**: Manage and inject dependencies throughout your application
-- **Type Safety**: Full TypeScript support with strongly typed injections
-- **React Integration**: Seamless integration with React components and hooks
-- **Context-based**: Built on React Context for optimal performance and component tree isolation
-- **Scoped Providers**: Support for multiple container scopes within the same application
+- **~80 lines, zero dependencies** — just `Map` + React Context.
+- **Type-safe injection** — class tokens infer their instance type automatically.
+- **Two token styles** — bind by **class** (`HttpClient`) or by **string token** (`'CONFIG'`).
+- **Scoped overrides** — wrap a subtree in a provider with custom `values` (perfect for tests and Storybook).
+- **Works outside React too** — `container.resolve()` for route loaders, services, and plain functions.
 
-## Core Concepts
+## 📦 API at a glance
 
-### Container
+`createContainer()` returns three things:
 
-A container manages dependency bindings and provides resolution mechanisms. Each container maintains its own isolated set of dependencies.
+| Export                       | Type                                   | Use it to…                                            |
+| ---------------------------- | -------------------------------------- | ----------------------------------------------------- |
+| `container`                  | `{ bind, resolve, unbind }`            | register and read bindings (outside React)            |
+| `useInjection(token)`        | hook → resolved instance               | read a dependency inside a component/hook             |
+| `InversionOfControlProvider` | `React.FC<{ values?: Map }>`           | scope/override bindings for a subtree (tests, mocks)  |
 
-### Binding
+| `container` method     | Signature                          | Notes                                          |
+| ---------------------- | ---------------------------------- | ---------------------------------------------- |
+| `bind`                 | `(token, value) => void`           | stores an **already-created instance**         |
+| `resolve`             | `(token) => T`                     | reads a binding; infers type from class tokens |
+| `unbind`               | `(token) => void`                  | removes a binding                              |
 
-The process of associating a token (class constructor or string) with a concrete implementation or instance.
+> `bind` stores the value as-is — bind **instances**, not factory functions.
 
-### Injection
+## 🚀 Quick start
 
-The process of retrieving a dependency from the container using its token.
-
-## Implementation Details
-
-### React Context Architecture
-
-This IoC implementation uses React Context to provide dependency injection throughout the component tree. The key benefits of this approach include:
-
-- **Component Tree Isolation**: Each provider creates its own context scope
-- **Performance**: Context values are memoized to prevent unnecessary re-renders
-- **Flexibility**: Supports both global container and local scoped containers
-- **Testing**: Easy to mock dependencies by providing custom container values
-
-### Container Behavior
-
-- **Global Container**: When using `container.bind()`, dependencies are stored in a global Map
-- **Scoped Container**: When using `InversionOfControlProvider` with `values` prop, a new isolated container is created
-- **Fallback Strategy**: If no provider is found, `useInjection` falls back to the global container
-- **Memoization**: Provider values are memoized using `useMemo` for optimal performance
-
-## Getting Started
-
-### Creating a Container
+**1. Create the container and declare tokens** (one bootstrap file):
 
 ```typescript
-// app.ioc.ts
+// app/app.ioc.ts
 import { createContainer } from '#libs/ioc';
+import { HttpClient } from '../services/http-client.ts';
+import { ConfigService } from '../services/config.service.ts';
 
-export const { InversionOfControlProvider, useInjection, container } =
+export const { container, useInjection, InversionOfControlProvider } =
 	createContainer();
 
-// Define tokens for string-based bindings
-export const HTTP_CLIENT = 'HTTP_CLIENT';
-export const CONFIG_SERVICE = 'CONFIG_SERVICE';
+// string tokens for interface-typed services
+export const CONFIG = 'config';
+
+// bind instances
+container.bind(HttpClient, new HttpClient());
+container.bind(CONFIG, new ConfigService());
 ```
 
-### Setting Up the Provider
-
-Wrap your application with the IoC provider:
+**2. Wrap the app** so scoped overrides become possible:
 
 ```tsx
-// App.tsx
+// app/App.tsx
 import { InversionOfControlProvider } from './app.ioc.ts';
 
 export const App = () => (
 	<InversionOfControlProvider>
-		<MyApplication />
+		<Routes />
 	</InversionOfControlProvider>
 );
 ```
 
-### Binding Dependencies
+**3. Inject anywhere:**
 
-#### Class-based Binding
+```tsx
+import { useInjection, CONFIG } from '../app/app.ioc.ts';
+import { HttpClient } from '../services/http-client.ts';
+import type { ConfigService } from '../services/config.service.ts';
+
+export const UserCard = () => {
+	const http = useInjection(HttpClient); //          ← inferred as HttpClient
+	const config = useInjection<ConfigService>(CONFIG); // ← typed via generic
+
+	// ...use http.get(config.apiUrl) inside a hook
+};
+```
+
+## 🔑 Class tokens vs string tokens
 
 ```typescript
-// services/HttpClient.ts
-export class HttpClient {
-	async get(url: string) {
-		return fetch(url);
-	}
-}
-
-// app.ioc.ts
-import { HttpClient } from './services/HttpClient.ts';
-
-// Bind using class constructor as token
+// Class token → instance type is inferred, no generic needed
 container.bind(HttpClient, new HttpClient());
+const http = useInjection(HttpClient); // HttpClient
+
+// String token → pass the type as a generic (interfaces have no runtime value)
+export const LOGGER = 'logger';
+container.bind(LOGGER, new ConsoleLogger());
+const logger = useInjection<Logger>(LOGGER); // Logger
 ```
 
-#### Token-based Binding
+Prefer **class tokens** when a concrete class exists; reach for **string tokens** when you bind against an interface or want to swap implementations freely.
+
+## 🍳 Recipes
+
+### Environment-specific bindings
 
 ```typescript
-// services/ConfigService.ts
-export interface IConfigService {
-	getApiUrl(): string;
-	isFeatureEnabled(feature: string): boolean;
-}
-
-export class ConfigService implements IConfigService {
-	getApiUrl() {
-		return import.meta.env.VITE_API_URL;
-	}
-
-	isFeatureEnabled(feature: string) {
-		return import.meta.env[`VITE_${feature}`] === 'true';
-	}
-}
-
-// app.ioc.ts
-export const CONFIG_SERVICE = 'CONFIG_SERVICE';
-
-container.bind(CONFIG_SERVICE, new ConfigService());
-```
-
-## Usage in Components
-
-### Using Class Tokens
-
-```tsx
-import { useInjection } from './app.ioc.ts';
-import { HttpClient } from './services/HttpClient.ts';
-
-export const UserProfile = () => {
-	const httpClient = useInjection(HttpClient);
-
-	const [user, setUser] = useState(null);
-
-	useEffect(() => {
-		httpClient
-			.get('/api/user/profile')
-			.then((response) => response.json())
-			.then(setUser);
-	}, [httpClient]);
-
-	return <div>{user?.name}</div>;
-};
-```
-
-### Using String Tokens
-
-```tsx
-import { useInjection, CONFIG_SERVICE } from './app.ioc.ts';
-import type { IConfigService } from './services/ConfigService.ts';
-
-export const ApiComponent = () => {
-	const config = useInjection<IConfigService>(CONFIG_SERVICE);
-	const apiUrl = config.getApiUrl();
-
-	const isNewFeatureEnabled = config.isFeatureEnabled('NEW_FEATURE');
-
-	return (
-		<div>
-			<p>API URL: {apiUrl}</p>
-			{isNewFeatureEnabled && <NewFeatureComponent />}
-		</div>
-	);
-};
-```
-
-## Advanced Patterns
-
-### Factory Pattern
-
-```typescript
-// factories/ApiClientFactory.ts
-export class ApiClientFactory {
-	constructor(
-		private baseUrl: string,
-		private timeout: number = 5000,
-	) {}
-
-	createClient() {
-		return new HttpClient(this.baseUrl, this.timeout);
-	}
-}
-
-// app.ioc.ts
-export const API_CLIENT_FACTORY = 'API_CLIENT_FACTORY';
-
+// app/app.ioc.ts
 container.bind(
-	API_CLIENT_FACTORY,
-	new ApiClientFactory(import.meta.env.VITE_API_URL),
+	CONFIG,
+	import.meta.env.DEV ? new DevConfigService() : new ProdConfigService(),
 );
 ```
 
-### Service Locator Pattern
+### Resolve outside React (route loaders, plain functions)
 
-```tsx
-export const ServiceComponent = () => {
-	const httpClient = useInjection(HttpClient);
-	const config = useInjection<IConfigService>(CONFIG_SERVICE);
-	const factory = useInjection<ApiClientFactory>(API_CLIENT_FACTORY);
+```typescript
+import { container } from '../app/app.ioc.ts';
+import { UserService } from '../services/user.service.ts';
 
-	// Use multiple services together
-	const apiClient = factory.createClient();
-	const endpoint = config.getApiUrl();
-
-	return <div>Service Component</div>;
+export const userLoader = async ({ params }) => {
+	const users = container.resolve(UserService);
+	return users.byId(params.id);
 };
 ```
 
-### Conditional Bindings
+### Feature-driven implementation swap
 
 ```typescript
-// app.ioc.ts
-import { DevConfigService } from './services/DevConfigService.ts';
-import { ProdConfigService } from './services/ProdConfigService.ts';
+import { container, API } from '../app/app.ioc.ts';
 
-// Bind different implementations based on environment
-const configService = import.meta.env.DEV
-	? new DevConfigService()
-	: new ProdConfigService();
-
-container.bind(CONFIG_SERVICE, configService);
+container.bind(API, useNewApi ? new NewApiClient() : new LegacyApiClient());
 ```
 
-## Multiple Containers
+## 🧪 Testing — scoped overrides
 
-You can create multiple containers for different scopes:
-
-```typescript
-// auth.ioc.ts - Authentication-specific container
-export const {
-	InversionOfControlProvider: AuthProvider,
-	useInjection: useAuthInjection,
-	container: authContainer,
-} = createContainer();
-
-export const AUTH_SERVICE = 'AUTH_SERVICE';
-authContainer.bind(AUTH_SERVICE, new AuthService());
-
-// app.ioc.ts - Application-wide container
-export const {
-	InversionOfControlProvider: AppProvider,
-	useInjection: useAppInjection,
-	container: appContainer,
-} = createContainer();
-```
-
-### Nested Providers
+The provider accepts a `values` map. When provided, the subtree resolves **only** from that map (the global container is bypassed), so list every dependency the tree needs:
 
 ```tsx
-export const App = () => (
-	<AppProvider>
-		<AuthProvider>
-			<MyApplication />
-		</AuthProvider>
-	</AppProvider>
-);
-```
-
-### Scoped Container Values
-
-You can also create a provider with specific values without creating a separate container:
-
-```tsx
-// Create a scoped container with specific dependencies
-const scopedValues = new Map();
-scopedValues.set(HTTP_CLIENT, new MockHttpClient());
-scopedValues.set(CONFIG_SERVICE, new TestConfigService());
-
-export const TestWrapper = ({ children }) => (
-	<InversionOfControlProvider values={scopedValues}>
-		{children}
-	</InversionOfControlProvider>
-);
-```
-
-This approach is particularly useful for:
-
-- **Testing**: Providing mock implementations
-- **Feature Flags**: Different implementations based on features
-- **Environment-specific**: Different services for dev/prod environments
-
-## Best Practices
-
-### Interface-Based Dependencies
-
-Define interfaces for better testability and flexibility:
-
-```typescript
-// interfaces/IUserService.ts
-export interface IUserService {
-	getCurrentUser(): Promise<User>;
-	updateUser(user: Partial<User>): Promise<void>;
-}
-
-// services/UserService.ts
-export class UserService implements IUserService {
-	// Implementation
-}
-
-// services/MockUserService.ts (for testing)
-export class MockUserService implements IUserService {
-	// Mock implementation
-}
-```
-
-### Centralized Binding Configuration
-
-Keep all bindings in a centralized configuration:
-
-```typescript
-// app.ioc.ts
-export const configureContainer = () => {
-	// Core services
-	container.bind(HttpClient, new HttpClient());
-	container.bind(USER_SERVICE, new UserService());
-	container.bind(CONFIG_SERVICE, createConfigService());
-
-	// Environment-specific bindings
-	if (import.meta.env.DEV) {
-		container.bind(LOGGER_SERVICE, new ConsoleLogger());
-	} else {
-		container.bind(LOGGER_SERVICE, new RemoteLogger());
-	}
-};
-```
-
-### Lazy Initialization
-
-Use factory functions for lazy initialization:
-
-```typescript
-export const EXPENSIVE_SERVICE = 'EXPENSIVE_SERVICE';
-
-container.bind(EXPENSIVE_SERVICE, () => {
-	// This will only be created when first injected
-	return new ExpensiveService();
-});
-```
-
-### Testing with IOC
-
-Mock dependencies for testing:
-
-```typescript
-// MyComponent.test.tsx
 import { render } from '@testing-library/react';
-import { createContainer } from '#libs/ioc';
+import { InversionOfControlProvider, CONFIG } from '../app/app.ioc.ts';
+import { HttpClient } from '../services/http-client.ts';
+import { mock } from 'vitest-mock-extended';
 
-describe('MyComponent', () => {
-	it('should render with mocked dependencies', () => {
-		const { InversionOfControlProvider, container } = createContainer();
+it('renders the user name', () => {
+	const mockIoCValues = new Map<unknown, unknown>([
+		[HttpClient, mock<HttpClient>({ get: async () => ({ name: 'Ada' }) })],
+		[CONFIG, { apiUrl: '/api' }],
+	]);
 
-		// Bind mocks
-		container.bind(HTTP_CLIENT, new MockHttpClient());
-		container.bind(CONFIG_SERVICE, new MockConfigService());
-
-		render(
-			<InversionOfControlProvider>
-				<MyComponent />
-			</InversionOfControlProvider>
-		);
-
-		// Test assertions
-	});
+	render(
+		<InversionOfControlProvider values={mockIoCValues}>
+			<UserCard />
+		</InversionOfControlProvider>,
+	);
 });
 ```
 
-## TypeScript Tips
+## 🧠 How it works
 
-### Strongly Typed Tokens
-
-```typescript
-// Create typed tokens
-export const createTypedToken = <T>(name: string) =>
-	name as string & { __type: T };
-
-export const HTTP_CLIENT = createTypedToken<HttpClient>('HTTP_CLIENT');
-export const CONFIG_SERVICE =
-	createTypedToken<IConfigService>('CONFIG_SERVICE');
-
-// Usage provides better type inference
-const httpClient = useInjection(HTTP_CLIENT); // Type: HttpClient
-const config = useInjection(CONFIG_SERVICE); // Type: IConfigService
-```
+`createContainer()` closes over a single `Map`. `bind`/`resolve`/`unbind` are thin `Map` operations. `InversionOfControlProvider` publishes a `Map` through React Context (`useMemo`-stabilized): with no `values`, it shares the global container; with `values`, it isolates a fresh map. `useInjection` reads the nearest provider's map, falling back to the global container when rendered outside a provider — which is why components keep working in isolation.

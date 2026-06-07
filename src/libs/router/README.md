@@ -1,458 +1,192 @@
-# Router
+# 🛣️ `#libs/router` — Declarative Routing
 
-This library provides enhanced routing capabilities for React applications, built on top of React Router. It offers simplified route configuration, layout management, and additional utilities for modern React applications.
+> A thin, type-safe layer over [React Router v7](https://reactrouter.com/) that turns a plain config object into a ready-to-render `<Router />` — with first-class **layouts**, **code-splitting**, and **multiple router types**.
 
-## Overview
+You write a tree of routes; the library wires up `RouterProvider`, `Suspense`, layout `Outlet`s, and lazy chunks for you. Everything from `react-router` is re-exported, so this is your single routing import.
 
-The Router library extends React Router with:
+## ✨ Highlights
 
-- **Simplified Configuration**: Declarative route definitions with automatic code splitting
-- **Layout Support**: Nested layouts with automatic route wrapping
-- **Type Safety**: Full TypeScript support with strongly typed route definitions
-- **Lazy Loading**: Built-in support for code splitting and lazy loading
-- **Multiple Router Types**: Support for browser, hash, and memory routers
-- **Custom Hooks**: Additional utilities for common routing patterns
+- **Config → component** — `createRouter(config)` returns a plain `React.FC`.
+- **Layouts as first-class nodes** — a `Layout` wraps its `children` via `<Outlet />`, nestable to any depth.
+- **Two ways to lazy-load** — pass `Component: lazy(() => import(...))`, or just `lazy: () => import(...)` and let the library wrap it.
+- **Three router types** — `browser` (default), `hash`, `memory`.
+- **One import surface** — re-exports `Link`, `useNavigate`, `useParams`, `useLocation`, `Outlet`, `Navigate`, … from `react-router`.
 
-## Core Components
+## 📦 API at a glance
 
-### createRouter
+| Export                | Signature                                              | Description                                       |
+| --------------------- | ----------------------------------------------------- | ------------------------------------------------- |
+| `createRouter`        | `(config) => React.FC`                                | builds a render-ready router component            |
+| `useHashValue`        | `() => string`                                        | current URL hash, without the leading `#`         |
+| `RouteDefinition`     | type                                                  | a component route **or** a layout route (XOR)     |
+| _…all of_ `react-router` | re-exported                                        | `Link`, `useNavigate`, `useParams`, `Outlet`, …   |
 
-Creates a router instance with pre-configured routes and layout support.
+**`createRouter(config)`**
 
-```typescript
-import { createRouter } from '#libs/router';
-import { AppLayout } from '../app/layouts/app/App.layout.tsx';
-import { lazy } from 'react';
+| Field     | Type                                  | Default     | Notes                                            |
+| --------- | ------------------------------------- | ----------- | ------------------------------------------------ |
+| `routes`  | `RouteDefinition[]`                   | —           | the route tree                                   |
+| `loading` | `React.ReactNode`                     | `undefined` | top-level `<Suspense>` fallback                  |
+| `type`    | `'browser' \| 'hash' \| 'memory'`     | `'browser'` | which React Router factory to use                |
+| `options` | router options                        | `undefined` | `{ basename }`; `memory` adds `initialEntries`   |
 
-const MyRouter = createRouter({
-	type: 'browser', // 'browser' | 'hash' | 'memory'
-	routes: [
-		{
-			Layout: AppLayout,
-			children: [
-				{
-					path: '/',
-					Component: lazy(() => import('../app/pages/main/Main.page.tsx')),
-				},
-				{
-					path: '/detail/:id?',
-					Component: lazy(() => import('../app/pages/detail/Detail.page.tsx')),
-				},
-			],
-		},
-	],
-	fallback: <div>Loading...</div>, // Optional loading fallback
-});
-
-export const App = () => <MyRouter />;
-```
-
-### Route Configuration
-
-#### Basic Route Structure
-
-```typescript
-import type { RouteDefinition } from '#libs/router';
-
-export const routes: RouteDefinition[] = [
-	{
-		path: '/',
-		Component: HomePage,
-	},
-	{
-		path: '/about',
-		Component: lazy(() => import('../app/pages/AboutPage.tsx')),
-	},
-];
-```
-
-#### Layout Routes
-
-```typescript
-export const routes: RouteDefinition[] = [
-	{
-		// Root layout (defaults to '/' if path not specified)
-		Layout: AppLayout,
-		children: [
-			{
-				path: '/',
-				Component: HomePage,
-			},
-			{
-				path: '/dashboard',
-				Layout: DashboardLayout, // Nested layout
-				children: [
-					{
-						path: '/dashboard/overview',
-						Component: DashboardOverview,
-					},
-					{
-						path: '/dashboard/settings',
-						Component: DashboardSettings,
-					},
-				],
-			},
-		],
-	},
-];
-```
-
-#### Protected Routes
-
-```typescript
-import { ProtectedLayout } from '../app/layouts/protected/Protected.layout.tsx';
-
-export const protectedRoutes: RouteDefinition[] = [
-	{
-		Layout: ProtectedLayout, // This layout handles authentication
-		children: [
-			{
-				path: '/profile',
-				Component: ProfilePage,
-			},
-			{
-				path: '/settings',
-				Component: SettingsPage,
-			},
-		],
-	},
-];
-```
-
-## Router Types
-
-### Browser Router
-
-Standard HTML5 history API routing (recommended for most applications):
-
-```typescript
-const router = createRouter({
-	type: 'browser',
-	routes: myRoutes,
-});
-```
-
-### Hash Router
-
-Uses URL hash for routing (useful for static hosting):
-
-```typescript
-const router = createRouter({
-	type: 'hash',
-	routes: myRoutes,
-});
-```
-
-### Memory Router
-
-In-memory routing (useful for testing and embedded applications):
-
-```typescript
-const router = createRouter({
-	type: 'memory',
-	routes: myRoutes,
-	initialEntries: ['/'], // Optional initial route
-});
-```
-
-## Custom Hooks
-
-### useHashValue
-
-Returns the current URL hash value without the '#' symbol:
-
-```typescript
-import { useHashValue } from '#libs/router';
-
-export const MyComponent = () => {
-	const hash = useHashValue();
-
-	return <div>Current hash: {hash}</div>;
-};
-```
-
-## Advanced Patterns
-
-### Multiple Router Setup
-
-Create separate routers for different application sections:
-
-```typescript
-// PublicRouter.tsx
-export const PublicRouter = createRouter({
-	type: 'browser',
-	routes: publicRoutes,
-});
-
-// PrivateRouter.tsx
-export const PrivateRouter = createRouter({
-	type: 'browser',
-	routes: privateRoutes,
-});
-
-// App.tsx
-export const App = () => {
-	const { isAuthenticated } = useAuth();
-
-	return isAuthenticated ? <PrivateRouter /> : <PublicRouter />;
-};
-```
-
-### Conditional Route Loading
-
-```typescript
-import { useFeature } from '#libs/feature';
-
-export const ConditionalRoutes = () => {
-	const [betaFeatures] = useFeature('BETA_FEATURES');
-
-	const routes = [
-		{
-			path: '/',
-			Component: HomePage,
-		},
-		...(betaFeatures
-			? [
-					{
-						path: '/beta',
-						Component: lazy(
-							() => import('../app/pages/BetaPage.tsx'),
-						),
-					},
-				]
-			: []),
-	];
-
-	return createRouter({ type: 'browser', routes });
-};
-```
-
-### Route Guards
-
-```typescript
-// guards/AuthGuard.tsx
-export const AuthGuard = ({ children }: PropsWithChildren) => {
-	const { isAuthenticated, isLoading } = useAuth();
-
-	if (isLoading) return <LoadingSpinner />;
-	if (!isAuthenticated) return <Navigate to="/login" replace />;
-
-	return <>{children}</>;
-};
-
-// Route configuration with guards
-export const protectedRoutes = [
-	{
-		Layout: ({ children }) => <AuthGuard>{children}</AuthGuard>,
-		children: [
-			{
-				path: '/dashboard',
-				Component: DashboardPage,
-			},
-		],
-	},
-];
-```
-
-### Error Boundaries
-
-```typescript
-// components/RouteErrorBoundary.tsx
-export const RouteErrorBoundary = ({ children }: PropsWithChildren) => (
-	<ErrorBoundary
-		fallback={<ErrorPage />}
-		onError={(error) => console.error('Route error:', error)}
-	>
-		{children}
-	</ErrorBoundary>
-);
-
-// Route configuration with error boundaries
-export const routes = [
-	{
-		Layout: ({ children }) => (
-			<RouteErrorBoundary>
-				<AppLayout>{children}</AppLayout>
-			</RouteErrorBoundary>
-		),
-		children: [
-			// Your routes here
-		],
-	},
-];
-```
-
-## Layout Patterns
-
-### Basic Layout
+## 🚀 Quick start
 
 ```tsx
-// layouts/AppLayout.tsx
-export const AppLayout = ({ children }: PropsWithChildren) => (
-	<div className='app-layout'>
+// app/app.routes.tsx
+import { lazy } from 'react';
+import type { RouteDefinition } from '#libs/router';
+import { AppLayout } from './layouts/app/App.layout.tsx';
+
+export const routes: RouteDefinition[] = [
+	{
+		Layout: AppLayout, // wraps all children with <Outlet />; path defaults to '/'
+		children: [
+			{ path: '/', lazy: () => import('./pages/main/Main.page.tsx') },
+			{
+				path: '/detail/:id?',
+				lazy: () => import('./pages/detail/Detail.page.tsx'),
+			},
+		],
+	},
+];
+```
+
+```tsx
+// app/App.tsx
+import { createRouter } from '#libs/router';
+import { routes } from './app.routes.tsx';
+
+const Router = createRouter({ routes, loading: <h1>Loading…</h1> });
+
+export const App = () => <Router />;
+```
+
+## 🧱 Routes: components & layouts
+
+A `RouteDefinition` is **either** a component route **or** a layout route:
+
+```tsx
+// Component route — renders a component at a path
+{ path: '/about', Component: AboutPage }
+{ path: '/posts/:id', lazy: () => import('./Post.page.tsx') } // auto-wrapped in React.lazy
+
+// Layout route — wraps its children (no Component of its own)
+{
+	Layout: DashboardLayout, // receives children via <Outlet />
+	loading: <Spinner />,    // optional Suspense fallback for this branch
+	children: [
+		{ path: '/dashboard', Component: Overview },
+		{ path: '/dashboard/settings', Component: Settings },
+	],
+}
+```
+
+Layouts nest freely — put a `Layout` route inside another layout's `children` to compose shells (app → dashboard → section).
+
+A layout is just a component that renders its children slot:
+
+```tsx
+// app/layouts/app/App.layout.tsx
+import { Outlet } from '#libs/router';
+
+export const AppLayout = ({ children }: React.PropsWithChildren) => (
+	<div className='app'>
 		<Header />
-		<main className='main-content'>{children}</main>
+		<main>{children}</main>
 		<Footer />
 	</div>
 );
 ```
 
-### Conditional Layout
+## 🔀 Router types
 
 ```tsx
-// layouts/ConditionalLayout.tsx
-export const ConditionalLayout = ({ children }: PropsWithChildren) => {
-	const location = useLocation();
-	const isFullScreen = location.pathname.includes('/fullscreen');
+createRouter({ routes }); // browser (HTML5 history) — the default
+createRouter({ routes, type: 'hash' }); // hash routing for static hosting
+createRouter({
+	routes,
+	type: 'memory',
+	options: { initialEntries: ['/'] }, // in-memory — ideal for tests & embeds
+});
+```
 
-	if (isFullScreen) {
-		return <>{children}</>;
-	}
+## 🍳 Recipes
 
-	return (
-		<div className='standard-layout'>
-			<Sidebar />
-			<main>{children}</main>
-		</div>
-	);
+### Public vs. private routers
+
+```tsx
+const PublicRouter = createRouter({ routes: publicRoutes });
+const PrivateRouter = createRouter({ routes: privateRoutes });
+
+export const App = () => {
+	const { isAuthenticated } = useAuth();
+	return isAuthenticated ? <PrivateRouter /> : <PublicRouter />;
 };
 ```
 
-### Layout with Context
+### Auth guard as a layout
 
 ```tsx
-// layouts/DashboardLayout.tsx
-export const DashboardLayout = ({ children }: PropsWithChildren) => {
-	const [sidebarOpen, setSidebarOpen] = useState(true);
+import { Navigate, Outlet } from '#libs/router';
 
-	return (
-		<DashboardProvider value={{ sidebarOpen, setSidebarOpen }}>
-			<div className='dashboard-layout'>
-				<DashboardSidebar />
-				<main className='dashboard-content'>{children}</main>
-			</div>
-		</DashboardProvider>
-	);
+const ProtectedLayout = () => {
+	const { isAuthenticated } = useAuth();
+	return isAuthenticated ? <Outlet /> : <Navigate to='/login' replace />;
 };
-```
 
-## Best Practices
-
-### Route Organization
-
-Organize routes by feature or section:
-
-```typescript
-// routes/index.ts
-export { authRoutes } from './auth.routes.ts';
-export { dashboardRoutes } from './dashboard.routes.ts';
-export { publicRoutes } from './public.routes.ts';
-
-// routes/dashboard.routes.ts
-export const dashboardRoutes = [
-	{
-		path: '/dashboard',
-		Layout: DashboardLayout,
-		children: [
-			{
-				path: '/dashboard/overview',
-				Component: lazy(
-					() => import('../app/pages/dashboard/Overview.page.tsx'),
-				),
-			},
-			// More dashboard routes...
-		],
-	},
+export const routes: RouteDefinition[] = [
+	{ Layout: ProtectedLayout, children: [{ path: '/profile', Component: Profile }] },
 ];
 ```
 
-### Code Splitting
+### Read params & navigate (straight from `react-router`)
 
-Use React.lazy() for automatic code splitting:
-
-```typescript
-import { lazy } from 'react';
-
-// Good: Lazy load pages
-const HomePage = lazy(() => import('../app/pages/Home.page.tsx'));
-const AboutPage = lazy(() => import('../app/pages/About.page.tsx'));
-
-// Better: Lazy load with named exports
-const HomePage = lazy(() =>
-	import('../app/pages/Home.page.tsx').then((module) => ({
-		default: module.HomePage,
-	})),
-);
-```
-
-### Route Parameters
-
-```typescript
-// Type-safe route parameters
-interface RouteParams {
-	id: string;
-	category?: string;
-}
+```tsx
+import { Link, useNavigate, useParams } from '#libs/router';
 
 export const DetailPage = () => {
-	const { id, category } = useParams<RouteParams>();
+	const { id } = useParams();
+	const navigate = useNavigate();
 
 	return (
-		<div>
-			<h1>Detail {id}</h1>
-			{category && <p>Category: {category}</p>}
-		</div>
+		<>
+			<h1>Item {id}</h1>
+			<Link to='/'>Home</Link>
+			<button onClick={() => navigate(-1)}>Back</button>
+		</>
 	);
 };
 ```
 
-### Navigation Utilities
+### The current hash
 
-```typescript
-// utils/navigation.ts
-export const navigationUtils = {
-	goToHome: () => navigate('/'),
-	goToProfile: (userId: string) => navigate(`/profile/${userId}`),
-	goBack: () => navigate(-1),
-	reload: () => globalThis.location.reload(),
-};
+```tsx
+import { useHashValue } from '#libs/router';
 
-// Usage in components
-export const MyComponent = () => {
-	const handleProfileClick = () => {
-		navigationUtils.goToProfile('123');
-	};
-
-	return <button onClick={handleProfileClick}>View Profile</button>;
-};
+const ActiveTab = () => <span>{useHashValue() || 'overview'}</span>;
 ```
 
-### Route Testing
+## 🧪 Testing
 
-```typescript
-// tests/routes.test.tsx
+Render against an in-memory router — no DOM history needed:
+
+```tsx
 import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from '#libs/router';
+import { createRouter } from '#libs/router';
 
-describe('Routes', () => {
-	it('should render home page', () => {
-		const router = createMemoryRouter(routes, {
-			initialEntries: ['/'],
-		});
-
-		render(<RouterProvider router={router} />);
-
-		expect(screen.getByText('Welcome')).toBeInTheDocument();
+it('shows the home page', () => {
+	const Router = createRouter({
+		routes,
+		type: 'memory',
+		options: { initialEntries: ['/'] },
 	});
 
-	it('should render 404 for unknown routes', () => {
-		const router = createMemoryRouter(routes, {
-			initialEntries: ['/unknown-route'],
-		});
-
-		render(<RouterProvider router={router} />);
-
-		expect(screen.getByText('Page Not Found')).toBeInTheDocument();
-	});
+	render(<Router />);
+	expect(screen.getByText('Welcome')).toBeInTheDocument();
 });
 ```
+
+## 🧠 How it works
+
+`createRouter` runs your config through `createRoutes`, which: converts each `Layout` route into a component that renders `<Layout><Outlet /></Layout>` (wrapped in `<Suspense>` when `loading` is set), turns any `lazy` import into `React.lazy`, defaults a missing `path` to `''`, and recurses into `children`. The normalized tree is handed to the matching React Router factory (`createBrowserRouter` / `createHashRouter` / `createMemoryRouter`), and the returned `React.FC` renders `<Suspense><RouterProvider /></Suspense>`.

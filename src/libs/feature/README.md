@@ -1,227 +1,169 @@
-# Feature
+# 🎛️ `#libs/feature` — Feature Flags
 
-This library provides a comprehensive feature flag management system for React applications. It offers a reactive approach to feature toggling with fine-grained control and type safety.
+> Runtime feature toggles with reactive React bindings. Flip a flag and every subscribed component re-renders — no reload, no prop-drilling.
 
-## Overview
+A small `FeatureHandler` holds the flag state and emits change events; React hooks and a component switch subscribe to it. Flags can also be driven live from `localStorage` / `sessionStorage`.
 
-The Feature library enables developers to:
+## ✨ Highlights
 
-- **Manage feature flags**: Toggle features on/off dynamically
-- **Reactive updates**: Components automatically re-render when feature flags change
-- **Type-safe**: Full TypeScript support with strongly typed feature definitions
-- **Storage integration**: Persist feature flags to localStorage or other storage providers
-- **Event-driven**: Listen to feature flag changes across the application
+- **Reactive** — `useFeature` re-renders only the components watching a flag that actually changed.
+- **Imperative or declarative** — read/set flags via the handler, or swap whole components with `withFeatures`.
+- **Component switching** — ship `v1`/`v2` side by side and pick by flag, with lazy-loading built in.
+- **Storage-driven** — toggle flags from devtools by setting a prefixed `localStorage`/`sessionStorage` key.
+- **Tiny & framework-agnostic core** — `FeatureHandler` is plain TS over `EventTarget`; the React layer is optional.
 
-## Core Components
+## 📦 API at a glance
 
-### FeatureHandler
+| Export                          | Type                                              | Use it to…                                          |
+| ------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
+| `FeatureHandler`                | class                                             | hold + mutate flag state (the source of truth)      |
+| `FeatureProvider`               | `React.FC<{ handler }>`                            | expose a handler to the React tree                  |
+| `useFeature(name)`              | `() => readonly [boolean, (v: boolean) => void]`  | read **and** set one flag, with re-render           |
+| `useFeatureHandler()`           | `() => FeatureHandler`                             | reach the handler without subscribing               |
+| `withFeatures(config)`          | HOC → component                                   | render different components per enabled flag        |
+| `linkStorageToFeatureHandler`   | `(handler, prefix?) => void`                      | drive flags from web storage (live)                 |
 
-The main class that manages feature flags and provides reactivity through event emission.
+**`FeatureHandler`**
 
-```typescript
-import { FeatureHandler } from '#libs/feature';
+| Member                                 | Description                                                   |
+| -------------------------------------- | ------------------------------------------------------------ |
+| `new FeatureHandler(lookup?)`          | seed with `{ FLAG: boolean }`                                |
+| `get(name) → boolean`                  | is the flag on?                                              |
+| `getAll() → Readonly<lookup>`          | snapshot of every flag                                      |
+| `set(name, value)`                     | toggle one flag (emits only if it actually changed)          |
+| `setAll(lookup)`                       | merge many flags (single event for the batch)               |
+| `add/removeOnChangeListener(fn)`       | subscribe to `{ changedFeatures }` events                   |
+| `FeatureHandler.fromArray(string[])`   | static · `['A','B']` → `{ A: true, B: true }`               |
 
-const features = new FeatureHandler({
-	FEATURE_X_V1: true,
-	FEATURE_Y_V2: import.meta.env.FEATURE_Y_V2 === 'true',
-	FEATURE_Z_V2: globalThis.FEATURES?.Z_V2 ?? false,
-});
+## 🚀 Quick start
 
-// Check if feature is enabled
-if (features.get('FEATURE_X_V1')) {
-	console.log('Feature X V1 is enabled!');
-}
-
-// Listen to changes
-features.addOnChangeListener(({ changedFeatures }) => {
-	console.log('Features changed:', changedFeatures);
-});
-
-// Update feature flag
-features.set('FEATURE_X_V1', false);
-```
-
-### FeatureProvider
-
-React context provider that makes the FeatureHandler available throughout the component tree.
+**1. Create a handler and provide it:**
 
 ```tsx
+// app/app.features.ts
+import { FeatureHandler } from '#libs/feature';
+
+export const features = new FeatureHandler({
+	NEW_CHECKOUT: true,
+	BETA_DASHBOARD: import.meta.env.BETA === 'true',
+	PROMO_BANNER: globalThis.FEATURES?.promo ?? false,
+});
+```
+
+```tsx
+// app/App.tsx
 import { FeatureProvider } from '#libs/feature';
+import { features } from './app.features.ts';
 
 export const App = () => (
 	<FeatureProvider handler={features}>
-		<MyApplication />
+		<Routes />
 	</FeatureProvider>
 );
 ```
 
-## React Hooks
-
-### useFeatureHandler
-
-Returns the FeatureHandler instance from context. Use this when you need direct access to the handler methods.
-
-```typescript
-import { useFeatureHandler } from '#libs/feature';
-
-export const MyComponent = () => {
-	const handler = useFeatureHandler();
-
-	const toggleFeature = () => {
-		const current = handler.get('MY_FEATURE');
-		handler.set('MY_FEATURE', !current);
-	};
-
-	return <button onClick={toggleFeature}>Toggle Feature</button>;
-};
-```
-
-### useFeature
-
-Returns a feature flag value and a setter function. The component will automatically re-render when the feature flag changes.
-
-```typescript
-import { useFeature } from '#libs/feature';
-
-export const MyComponent = () => {
-	const [isEnabled, setFeature] = useFeature('MY_FEATURE');
-
-	return (
-		<div>
-			<p>Feature is {isEnabled ? 'enabled' : 'disabled'}</p>
-			<button onClick={() => setFeature(!isEnabled)}>
-				Toggle Feature
-			</button>
-		</div>
-	);
-};
-```
-
-## Higher-Order Components
-
-### withFeatures
-
-A HOC that provides feature flags as props to wrapped components.
-
-```typescript
-import { withFeatures } from '#libs/feature';
-
-interface MyComponentProps {
-	myFeature: boolean;
-	anotherFeature: boolean;
-}
-
-const MyComponent = ({ myFeature, anotherFeature }: MyComponentProps) => (
-	<div>
-		{myFeature && <NewFeatureComponent />}
-		{anotherFeature && <AnotherFeatureComponent />}
-	</div>
-);
-
-export default withFeatures({
-	myFeature: 'MY_FEATURE',
-	anotherFeature: 'ANOTHER_FEATURE',
-})(MyComponent);
-```
-
-## Storage Integration
-
-### linkStorageToFeatureHandler
-
-Links a storage provider (like localStorage) to automatically persist and restore feature flags.
-
-```typescript
-import { FeatureHandler, linkStorageToFeatureHandler } from '#libs/feature';
-
-const features = new FeatureHandler({
-	FEATURE_A: false,
-	FEATURE_B: true,
-});
-
-// Link to localStorage with key 'app-features'
-linkStorageToFeatureHandler(features, 'app-features');
-
-// Features will now be persisted to and restored from localStorage
-```
-
-## Events
-
-### FeatureChangedEvent
-
-Event emitted when feature flags change, containing information about what changed.
-
-```typescript
-import type { FeatureOnChangeListener } from '#libs/feature';
-
-const listener: FeatureOnChangeListener = ({ changedFeatures, handler }) => {
-	Object.entries(changedFeatures).forEach(([feature, value]) => {
-		console.log(`Feature ${feature} changed to ${value}`);
-	});
-};
-
-features.addOnChangeListener(listener);
-```
-
-## Best Practices
-
-### Feature Flag Naming
-
-Use descriptive, uppercase names with version suffixes:
-
-```typescript
-const features = new FeatureHandler({
-	NEW_DASHBOARD_V2: true,
-	EXPERIMENTAL_SEARCH_V1: false,
-	BETA_NOTIFICATIONS_V3: import.meta.env.VITE_BETA_FEATURES === 'true',
-});
-```
-
-### Environment-Based Configuration
-
-Configure feature flags based on environment:
-
-```typescript
-const features = new FeatureHandler({
-	// Always enabled in development
-	DEBUG_TOOLBAR: import.meta.env.DEV,
-	// Controlled by environment variable
-	NEW_API_V2: import.meta.env.VITE_NEW_API === 'true',
-	// Enabled for specific environments
-	ANALYTICS: import.meta.env.VITE_ENV !== 'development',
-});
-```
-
-### Conditional Rendering
-
-Use feature flags for conditional component rendering:
+**2. Read & toggle a flag — the component re-renders on change:**
 
 ```tsx
+import { useFeature } from '#libs/feature';
+
 export const Dashboard = () => {
-	const [newDashboard] = useFeature('NEW_DASHBOARD_V2');
+	const [betaOn, setBeta] = useFeature('BETA_DASHBOARD');
 
-	return (
-		<div>
-			{newDashboard ? <NewDashboardComponent /> : <LegacyDashboard />}
-		</div>
+	return betaOn ? (
+		<BetaDashboard onClose={() => setBeta(false)} />
+	) : (
+		<StandardDashboard />
 	);
 };
 ```
 
-### Route Protection
+## 🔀 Component switching with `withFeatures`
 
-Combine with routing for feature-gated pages:
+Render the **first enabled** flag's component (priority follows key order); fall back when none match. Lazy components are wrapped in `<Suspense>` with your `loading` node:
 
 ```tsx
-import { useFeature } from '#libs/feature';
-import { Navigate } from 'react-router';
+import { lazy } from 'react';
+import { withFeatures } from '#libs/feature';
+import { CheckoutV2 } from './Checkout.v2.tsx';
 
-export const BetaFeaturePage = () => {
-	const [betaEnabled] = useFeature('BETA_FEATURES_V1');
+export const Checkout = withFeatures({
+	loading: <Spinner />,
+	fallback: <CheckoutLegacy />,
+	features: {
+		CHECKOUT_V2: CheckoutV2, // tried first
+		CHECKOUT_V1: lazy(() => import('./Checkout.v1.tsx')),
+	},
+});
 
-	if (!betaEnabled) {
-		return <Navigate to='/' replace />;
-	}
-
-	return <BetaContent />;
-};
+// elsewhere: <Checkout /> — picks the variant for whichever flag is on
 ```
+
+## 💾 Storage-driven flags
+
+Mirror web-storage keys into the handler so you (or QA) can flip flags from devtools and see them apply **live**:
+
+```tsx
+import { linkStorageToFeatureHandler } from '#libs/feature';
+import { features } from './app.features.ts';
+
+linkStorageToFeatureHandler(features); // default prefix '::'
+```
+
+```js
+// in the browser console — keys are coerced: '1' | 'true' → on
+localStorage.setItem('::BETA_DASHBOARD', 'true');
+sessionStorage.setItem('::PROMO_BANNER', '1'); // session wins over local
+```
+
+It seeds from existing prefixed keys on call and subscribes to the `storage` event for cross-tab updates.
+
+## 🍳 Recipes
+
+### React to changes outside the React tree
+
+```typescript
+features.addOnChangeListener(({ changedFeatures }) => {
+	analytics.track('feature_changed', changedFeatures);
+});
+```
+
+### Batch updates (one render, one event)
+
+```typescript
+features.setAll({ NEW_CHECKOUT: false, BETA_DASHBOARD: true });
+```
+
+### Read without subscribing (e.g. in a handler)
+
+```tsx
+const handler = useFeatureHandler();
+const onClick = () => handler.get('NEW_CHECKOUT') && doThing();
+```
+
+## 🧪 Testing
+
+Provide a handler seeded for the scenario under test:
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import { FeatureHandler, FeatureProvider } from '#libs/feature';
+
+it('shows the beta dashboard when enabled', () => {
+	const features = new FeatureHandler({ BETA_DASHBOARD: true });
+
+	render(
+		<FeatureProvider handler={features}>
+			<Dashboard />
+		</FeatureProvider>,
+	);
+
+	expect(screen.getByText('Beta')).toBeInTheDocument();
+});
+```
+
+> `useFeature` / `useFeatureHandler` throw a `FeatureContextException` when used outside a `FeatureProvider` — always wrap the tree under test.
+
+## 🧠 How it works
+
+`FeatureHandler` keeps a `{ name: boolean }` lookup and an `EventTarget`. `set`/`setAll` mutate the lookup and dispatch a `FeatureChangedEvent` **only for values that actually changed** (no-op writes stay silent). `FeatureProvider` puts the handler on React Context; `useFeature` reads the initial value, subscribes on mount, and `setState`s when its flag appears in `changedFeatures`. `withFeatures` listens too, recomputing which variant to show. `linkStorageToFeatureHandler` translates prefixed storage keys into `setAll` + a `storage` listener.
