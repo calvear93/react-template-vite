@@ -63,10 +63,15 @@ src/
   app/            feature code: pages, components, layouts, atoms, app.ioc, app.routes
   libs/           reusable libraries (ioc, router, feature) with their own README
 env/              environment configuration (appsettings.json + <env> files)
+.vscode/__templates__/  canonical code scaffolds for every pattern (component, page, atom, layout, schema, test, class, error/exception)
 ```
 
 Path aliases (see `package.json#imports`): `#libs/ioc`, `#libs/router`, `#libs/feature`.
 See **architecture-guide** for full folder topology and wiring.
+
+When creating a new file, start from the matching scaffold under
+[`.vscode/__templates__/`](.vscode/__templates__/) — it is the source of truth for
+suffixes, folder layout, and component/atom/schema/test signatures.
 
 ## Core principles
 
@@ -153,31 +158,48 @@ Common types: `feat` ✨, `fix` 🐛, `docs` 📚, `style` 🎨, `refactor` ♻�
 
 ## Spec-driven development (SDD)
 
-Build features through a spec-first loop. `AGENTS.md` is the constitution; the procedures
-live in [`.ai/skills/`](.ai/skills/):
+Build features through a spec-first loop that follows the **OpenSpec** convention
+([openspec.dev](https://openspec.dev)): living specs are the current truth, and each request
+is a **change** (like a DB migration) carrying spec **deltas** that get applied on ship.
+`AGENTS.md` is the constitution; the procedures live in [`.ai/skills/`](.ai/skills/):
 
 ```
-/specify  idea     → specs/NNN-slug/spec.md   (what + acceptance criteria)
-/plan     spec     → specs/NNN-slug/plan.md   (technical design)
-/tasks    plan     → specs/NNN-slug/tasks.md  (atomic, test-first tasks)
-/implement tasks   → code + tests (TDD, reusing .ai/prompts/*-creation skills)
-/verify   code     → lint + tests + coverage vs the spec
+/spec-intake    rough idea → an idea brief (optional on-ramp: shape a detailed input)
+/spec-propose   idea    → specs/changes/<id>/proposal.md + specs/<cap>/spec.md deltas (what + why)
+/spec-design    change  → specs/changes/<id>/design.md   (technical design; skip if trivial)
+/spec-tasks     change  → specs/changes/<id>/tasks.md    (atomic, test-first tasks)
+/spec-implement change  → code + tests (typecheck → run Vitest → fix)
+/spec-archive   change  → verify + apply deltas to specs/specs/ + move to specs/changes/archive/
 ```
 
-GitHub Copilot exposes these as `/spec-*` prompts under `.github/prompts/`; Claude, Gemini,
-and Codex follow the procedure files directly — point the agent at `.ai/skills/sdd-<step>.md`.
-The best-practice skills (`zod-schema`, `ioc-binding`, `vitest-tdd`, `vite-config`) live
-alongside them in [`.ai/skills/`](.ai/skills/).
+`/spec-intake` is optional: a guided interview that helps anyone (technical or not) turn a
+rough idea into a detailed brief, which `/spec-propose` then formalizes. Skip it when the
+request is already clear and complete.
+
+Folder model (root `specs/`): `specs/specs/` = **living truth** (one folder per capability);
+`specs/changes/<id>/` = **proposals** with `## ADDED|MODIFIED|REMOVED Requirements` deltas;
+`specs/changes/archive/YYYY-MM-DD-<id>/` = shipped changes (the durable decision log). See
+[`.ai/skills/spec-conventions.md`](.ai/skills/spec-conventions.md) for the exact format and
+[`specs/project.md`](specs/project.md) for project context. The official `openspec` CLI is not
+used (it hardcodes an `openspec/` root and can't target `specs/`); the skills are the engine.
+
+`/spec-implement` reuses the canonical task prompts in [`.ai/prompts/`](.ai/prompts/)
+(`component-creation`, `page-creation`, `custom-hook-creation`, `testing-creation`) instead of
+redefining them. GitHub Copilot exposes the loop as `/spec-*` prompts under `.github/prompts/`;
+Claude, Gemini, and Codex follow the procedure files directly. The best-practice skills
+(`typescript`, `react-patterns`, `zod-schema`, `ioc-binding`, `vitest-tdd`, `vite-config`) live alongside them in
+[`.ai/skills/`](.ai/skills/) — read the relevant one when its topic applies.
 
 ## Deep references
 
-| Document                                                                      | Scope                                                                          |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| [Architecture guide](.github/instructions/architecture-guide.instructions.md) | Folder topology, IoC/config wiring, routing, feature flags, import conventions |
-| [Coding standards](.github/instructions/coding-standards.instructions.md)     | Formatting, naming, file suffixes, TypeScript rules, comments, anti-patterns   |
-| [Patterns](.github/instructions/patterns.instructions.md)                     | Copy-paste recipes: components, hooks, services, schemas, forms, errors, tests |
-| [Code exemplars](exemplars.md)                                                | Pointers to high-quality real examples in this repo                            |
-| [README](README.md)                                                           | Human-facing project documentation and setup                                   |
+| Document                                                                      | Scope                                                                                                            |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [Architecture guide](.github/instructions/architecture-guide.instructions.md) | Folder topology, IoC/config wiring, routing, feature flags, import conventions                                   |
+| [Coding standards](.github/instructions/coding-standards.instructions.md)     | Formatting, naming, file suffixes, TypeScript rules, comments, anti-patterns                                     |
+| [Patterns](.github/instructions/patterns.instructions.md)                     | Copy-paste recipes: components, hooks, services, schemas, forms, errors, tests                                   |
+| [Code exemplars](exemplars.md)                                                | Pointers to high-quality real examples in this repo                                                              |
+| [README](README.md)                                                           | Human-facing project documentation and setup                                                                     |
+| [`.vscode/__templates__/`](.vscode/__templates__/)                            | Canonical code scaffolds for every pattern (component, page, atom, layout, schema, test, class, error/exception) |
 
 Task prompts and agent definitions have canonical bodies in `.ai/prompts/` and `.ai/agents/`.
 GitHub Copilot surfaces them natively via thin pointers in `.github/prompts/` and

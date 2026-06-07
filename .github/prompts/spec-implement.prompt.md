@@ -1,7 +1,7 @@
 ---
 mode: agent
-description: 'Spec-driven — execute the task list with TDD'
+description: 'Spec-driven — implement tasks with a typecheck → Vitest → fix loop'
 ---
 
-Follow the procedure defined in [`.ai/skills/sdd-implement.md`](../../.ai/skills/sdd-implement.md)
-for feature: ${input:feature}
+Follow the procedure defined in [`.ai/skills/spec-implement.md`](../../.ai/skills/spec-implement.md)
+for: ${input:change}

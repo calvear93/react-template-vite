@@ -5,6 +5,7 @@
 	"[javascript][typescript][javascriptreact][typescriptreact]": {
 		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
 	},
+	"codeTemplateTool.templatesPath": "{workspace}/.vscode/__templates__",
 	"css.lint.unknownAtRules": "ignore",
 	"editor.detectIndentation": true,
 	"editor.linkedEditing": true,
@@ -35,7 +36,7 @@
 		"*.ts": "${capture}.*",
 		"*.tsx": "${capture}.*",
 		".gitignore": ".gitattributes",
-		"agents.md": "claude.md, gemini.md, llms.txt, .copilotignore",
+		"agents.md": "claude.md, gemini.md, llms.txt, .copilotrc.json, .copilotignore",
 		"dockerfile": ".dockerignore, docker-compose.*, dockerfile*",
 		"eslint.config.js": ".prettierrc*, .prettierignore, .stylelintrc*, .stylelintignore",
 		"main.ts": "*.config.ts, *.d.ts",
