@@ -23,7 +23,7 @@ export type FeatureOnChangeListener = (event: FeatureChangedEvent) => void;
  *		FEATURE_Z_V2: globalThis.FEATURES.Z_V2,
  *	});
  *
- *	if(features.get(FEATURE_X_V1)) {
+ *	if(features.get('FEATURE_X_V1')) {
  *		console.log('feature X V1 enabled!');
  *	}
  *

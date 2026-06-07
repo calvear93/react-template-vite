@@ -78,5 +78,21 @@ describe('feature hooks', () => {
 			expect(removeSpy).toHaveBeenCalledOnce();
 			removeSpy.mockRestore();
 		});
+
+		test('re-syncs the value when the feature argument changes', () => {
+			_handler.set('FEATURE_ON', true);
+			_handler.set('FEATURE_OFF', false);
+
+			const { rerender, result } = renderHook(
+				({ name }: { name: string }) => useFeature(name),
+				{ initialProps: { name: 'FEATURE_ON' }, wrapper },
+			);
+
+			expect(result.current[0]).toBe(true);
+
+			rerender({ name: 'FEATURE_OFF' });
+
+			expect(result.current[0]).toBe(false);
+		});
 	});
 });

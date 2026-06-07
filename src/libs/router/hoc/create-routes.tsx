@@ -28,25 +28,28 @@ const renderLayout = (
 };
 
 export const createRoutes = (routes: RouteDefinition[]): RouteObject[] => {
-	for (const route of routes) {
+	return routes.map((route): RouteObject => {
+		// clone so the caller's route definitions are never mutated
+		const next = { ...route } as ComponentRoute;
+
 		if (isLayoutRoute(route)) {
-			const { Layout, loading } = route;
+			next.Component = renderLayout(route.Layout, route.loading);
 
-			(route as ComponentRoute).Component = renderLayout(Layout, loading);
-
-			(route as RouteDefinition).Layout = undefined;
+			(next as RouteDefinition).Layout = undefined;
 		}
 
-		route.path ??= '';
+		next.path ??= '';
 
 		// lazy load component for chunk splitting
-		if (route.lazy) {
-			route.Component ??= lazy(route.lazy);
-			route.lazy = undefined;
+		if (next.lazy) {
+			next.Component ??= lazy(next.lazy);
+			next.lazy = undefined;
 		}
 
-		if (route.children) createRoutes(route.children);
-	}
+		if (next.children) {
+			(next as RouteObject).children = createRoutes(next.children);
+		}
 
-	return routes as RouteObject[];
+		return next as RouteObject;
+	});
 };

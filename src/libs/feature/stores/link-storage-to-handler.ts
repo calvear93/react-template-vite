@@ -55,13 +55,13 @@ const getStorageFeatures = (
 export const linkStorageToFeatureHandler = (
 	handler: FeatureHandler,
 	prefix = '::',
-): void => {
+): (() => void) => {
 	handler.setAll({
 		...getStorageFeatures(localStorage, prefix),
 		...getStorageFeatures(sessionStorage, prefix),
 	});
 
-	addEventListener('storage', ({ key, newValue, storageArea }) => {
+	const listener = ({ key, newValue, storageArea }: StorageEvent) => {
 		const feature = getStorageKey(key, prefix);
 
 		if (!feature) return;
@@ -73,5 +73,10 @@ export const linkStorageToFeatureHandler = (
 		}
 
 		handler.set(feature, coerceStorageBoolean(newValue));
-	});
+	};
+
+	addEventListener('storage', listener);
+
+	// unsubscribe — detaches the storage listener
+	return () => removeEventListener('storage', listener);
 };

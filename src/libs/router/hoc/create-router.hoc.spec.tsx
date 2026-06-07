@@ -68,6 +68,7 @@ describe('create-router', () => {
 		render(<RouterWithLazy />);
 
 		await screen.findByRole('heading', { name: 'lazy children' });
-		expect(routes[0].lazy).toBeUndefined();
+		// the lazy component resolves, and the caller's route definition is left untouched
+		expect(routes[0].lazy).toBeDefined();
 	});
 });

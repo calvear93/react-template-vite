@@ -12,7 +12,7 @@ const IoCContext = createContext<Map<unknown, unknown> | null>(null);
  *	// app.ioc.ts
  *	import { createContainer } from '#libs/ioc';
  *
- *	export const { container, useInjection } = = createContainer();
+ *	export const { container, useInjection } = createContainer();
  *	// tokens
  *	export const MY_CUSTOM_PROVIDER = 'custom_provider';
  *	// bindings
