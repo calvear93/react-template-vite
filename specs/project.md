@@ -1,4 +1,4 @@
-# Project: React Template (Vite)
+# Project: (((app-title)))
 
 > OpenSpec project context. This is the stable, high-level description of **this** codebase
 > that every spec-driven change reads first. Keep it short and current; deep rules live in

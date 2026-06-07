@@ -19,22 +19,27 @@
 
 ## 📥 **Getting Started**
 
-- Replace globally these terms:
-    - `(((base-path)))` web base path, i.e. web (for get /web/\*)
-    - `(((app-name)))` app name, i.e. home-web
-    - `(((app-title)))` app title, i.e. Sample API
-    - `(((project-name)))` project name, i.e. my-project
+> ⚡ **Quick start:** run `pwsh ./INIT.ps1` to configure the project interactively — it fills the placeholders below, formats the result, and removes itself.
 
-- Install [Node.js](https://nodejs.org/) (see `engines.node` in `package.json`).
-- Install [pnpm](https://pnpm.io/installation) (see `engines.pnpm` in `package.json`).
-- Run `pnpm install`.
-- Run `pnpm env:schema` (keeps env schema in sync).
-- Start with `pnpm start:dev` (or run tests with `pnpm test:dev`).
+Otherwise, replace these terms across the project by hand:
 
-- Using Docker.
-    - Exec `docker build --no-cache --build-arg ENV=dev -f Dockerfile --tag image_name .`
-    - Exec `docker run -d -it -p 8080:8080/tcp --name container_name image_name`
-    - Open `http://localhost:8080/` in browser
+- `(((project-name)))` — project name, e.g. `my-project`
+- `(((app-name)))` — app name, e.g. `home-web`
+- `(((app-title)))` — app title, e.g. `Sample App`
+- `(((app-description)))` — short description of the app
+- `(((base-path)))` — public base path, e.g. `web` (empty = root `/`)
+
+1. Install [Node.js](https://nodejs.org/) — see `engines.node` in `package.json`.
+2. Install [pnpm](https://pnpm.io/installation) — see `engines.pnpm` in `package.json`.
+3. Run `pnpm install`.
+4. Run `pnpm env:schema` to keep the env JSON schema in sync.
+5. Start with `pnpm start:dev` (or run tests with `pnpm test:dev`).
+
+### 🐳 Docker
+
+- Build: `docker build --no-cache --build-arg ENV=dev -f Dockerfile --tag image_name .`
+- Run: `docker run -d -it -p 8080:8080/tcp --name container_name image_name`
+- Open `http://localhost:8080/` in your browser.
 
 ## 📋 **Environments**
 
@@ -50,19 +55,19 @@ You can add more environments (e.g. `qa`, `prod`) by creating the corresponding 
 Project uses **pnpm scripts** to run, test, and build.
 Many scripts are environment-scoped via `:<env>` where `<env>` is typically `dev` or `release`.
 
-| Command                         | Action                         |
-| ------------------------------- | ------------------------------ |
-| pnpm start:`<env>`              | executes the app               |
-| pnpm build:`<env>`              | build the app                  |
-| pnpm preview                    | builds and serves the app      |
-| pnpm test:`<env>`               | executes tests                 |
-| pnpm test:`<env>` --coverage    | executes tests with coverage   |
-| pnpm test:`<env>` --watch=false | executes tests without watcher |
-| pnpm env:schema                 | updates env JSON schema        |
-| pnpm format                     | code format                    |
-| pnpm lint                       | code/styles review             |
-| pnpm stylelint                  | CSS linting                    |
-| pnpm test:mutation              | mutation testing (Stryker)     |
+| Command                      | Action                         |
+| ---------------------------- | ------------------------------ |
+| pnpm start:`<env>`           | executes the app               |
+| pnpm build:`<env>`           | build the app                  |
+| pnpm preview                 | builds and serves the app      |
+| pnpm test:`<env>`            | executes tests                 |
+| pnpm test:`<env>` --coverage | executes tests with coverage   |
+| pnpm test:`<env>` --run      | executes tests without watcher |
+| pnpm env:schema              | updates env JSON schema        |
+| pnpm format                  | code format                    |
+| pnpm lint                    | code/styles review             |
+| pnpm stylelint               | CSS linting                    |
+| pnpm test:mutation           | mutation testing (Stryker)     |
 
 ## 🏗️ **Architecture Overview**
 

@@ -37,6 +37,7 @@
 		"*.tsx": "${capture}.*",
 		".gitignore": ".gitattributes",
 		"agents.md": "claude.md, gemini.md, llms.txt, .copilotrc.json, .copilotignore",
+		"INIT.ps1": "INIT.lib.ps1",
 		"dockerfile": ".dockerignore, docker-compose.*, dockerfile*",
 		"eslint.config.js": ".prettierrc*, .prettierignore, .stylelintrc*, .stylelintignore",
 		"main.ts": "*.config.ts, *.d.ts",
