@@ -96,41 +96,55 @@ describe('link storages to feature handler', () => {
 		expect(handler.get(feature)).toBe(false);
 	});
 
-	test('initial scan ignores storage keys not matching the prefix', () => {
+	test('localStorage event respects existing sessionStorage value when present', () => {
 		const prefix = 'feat:';
 		const feature = 'FEATURE_V1';
-		const unrelated = 'UNRELATED_KEY';
-		const handler = new FeatureHandler();
-
-		localStorage.setItem(`${prefix}${feature}`, 'true');
-		localStorage.setItem(unrelated, 'true');
-		linkStorageToFeatureHandler(handler, prefix);
-
-		expect(handler.get(feature)).toBe(true);
-		expect(handler.get(unrelated)).toBe(false);
-	});
-
-	test('on localStorage event, persisted sessionStorage value takes precedence', () => {
-		const prefix = 'feat:';
-		const feature = 'FEATURE_V1';
-		const key = `${prefix}${feature}`;
-		const eventLocal = {
-			key,
+		const event = {
+			key: `${prefix}${feature}`,
 			newValue: 'true',
 			storageArea: localStorage,
 		} as StorageEvent;
 		const handler = new FeatureHandler();
 
-		sessionStorage.setItem(key, 'false');
+		sessionStorage.setItem(`${prefix}${feature}`, 'false');
 		linkStorageToFeatureHandler(handler, prefix);
-		const [, callback] = vi
+		const calls = vi.mocked(addEventListener).mock.calls;
+		const [, callback] = calls.at(-1) as any as [
+			string,
+			(event: StorageEvent) => void,
+		];
+		callback(event);
+
+		expect(handler.get(feature)).toBe(false);
+	});
+
+	test('returned unsubscribe removes the storage listener', () => {
+		const removeSpy = vi.spyOn(globalThis, 'removeEventListener');
+		const handler = new FeatureHandler();
+
+		const unlink = linkStorageToFeatureHandler(handler, 'feat:');
+		const [, listener] = vi
 			.mocked(addEventListener)
 			.mock.calls.at(-1) as any as [
 			string,
 			(event: StorageEvent) => void,
 		];
-		callback(eventLocal);
+		unlink();
 
-		expect(handler.get(feature)).toBe(false);
+		expect(removeSpy).toHaveBeenCalledWith('storage', listener);
+	});
+
+	test('storage items without matching prefix are ignored on initial load', () => {
+		const prefix = 'feat:';
+		const ignored = 'NOT_A_FEATURE';
+		const matched = 'FEATURE_V1';
+		const handler = new FeatureHandler();
+
+		localStorage.setItem(ignored, 'true');
+		localStorage.setItem(`${prefix}${matched}`, '1');
+		linkStorageToFeatureHandler(handler, prefix);
+
+		expect(handler.get(matched)).toBe(true);
+		expect(handler.get(ignored)).toBe(false);
 	});
 });

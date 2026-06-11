@@ -14,21 +14,21 @@ You write a tree of routes; the library wires up `RouterProvider`, `Suspense`, l
 
 ## 📦 API at a glance
 
-| Export                | Signature                                              | Description                                       |
-| --------------------- | ----------------------------------------------------- | ------------------------------------------------- |
-| `createRouter`        | `(config) => React.FC`                                | builds a render-ready router component            |
-| `useHashValue`        | `() => string`                                        | current URL hash, without the leading `#`         |
-| `RouteDefinition`     | type                                                  | a component route **or** a layout route (XOR)     |
-| _…all of_ `react-router` | re-exported                                        | `Link`, `useNavigate`, `useParams`, `Outlet`, …   |
+| Export                   | Signature              | Description                                     |
+| ------------------------ | ---------------------- | ----------------------------------------------- |
+| `createRouter`           | `(config) => React.FC` | builds a render-ready router component          |
+| `useHashValue`           | `() => string`         | current URL hash, without the leading `#`       |
+| `RouteDefinition`        | type                   | a component route **or** a layout route (XOR)   |
+| _…all of_ `react-router` | re-exported            | `Link`, `useNavigate`, `useParams`, `Outlet`, … |
 
 **`createRouter(config)`**
 
-| Field     | Type                                  | Default     | Notes                                            |
-| --------- | ------------------------------------- | ----------- | ------------------------------------------------ |
-| `routes`  | `RouteDefinition[]`                   | —           | the route tree                                   |
-| `loading` | `React.ReactNode`                     | `undefined` | top-level `<Suspense>` fallback                  |
-| `type`    | `'browser' \| 'hash' \| 'memory'`     | `'browser'` | which React Router factory to use                |
-| `options` | router options                        | `undefined` | `{ basename }`; `memory` adds `initialEntries`   |
+| Field     | Type                              | Default     | Notes                                          |
+| --------- | --------------------------------- | ----------- | ---------------------------------------------- |
+| `routes`  | `RouteDefinition[]`               | —           | the route tree                                 |
+| `loading` | `React.ReactNode`                 | `undefined` | top-level `<Suspense>` fallback                |
+| `type`    | `'browser' \| 'hash' \| 'memory'` | `'browser'` | which React Router factory to use              |
+| `options` | router options                    | `undefined` | `{ basename }`; `memory` adds `initialEntries` |
 
 ## 🚀 Quick start
 
@@ -136,7 +136,10 @@ const ProtectedLayout = () => {
 };
 
 export const routes: RouteDefinition[] = [
-	{ Layout: ProtectedLayout, children: [{ path: '/profile', Component: Profile }] },
+	{
+		Layout: ProtectedLayout,
+		children: [{ path: '/profile', Component: Profile }],
+	},
 ];
 ```
 

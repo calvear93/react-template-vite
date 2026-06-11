@@ -80,22 +80,38 @@ describe('feature HOC', () => {
 		expect(component2).not.toBeInTheDocument();
 	});
 
-	test('when an unrelated feature changes, does not rerender', () => {
-		const fallback = <span data-testid='fallback'>fallback</span>;
+	test('renders fallback when no dependent feature is enabled', () => {
 		const Component = withFeatures({
-			fallback,
+			fallback: <span data-testid='fb'>fallback</span>,
 			features: {
 				FEATURE_V1: () => <span data-testid='id'>v1</span>,
 			},
 		});
 
-		const [handler] = renderFeature(<Component />);
-		act(() => handler.set('UNRELATED_FEATURE', true));
-		const component = screen.queryByTestId('id');
-		const fallbackElement = screen.getByTestId('fallback');
+		renderFeature(<Component />);
+		const fallback = screen.getByTestId('fb');
 
-		expect(component).not.toBeInTheDocument();
-		expect(fallbackElement).toBeInTheDocument();
+		expect(fallback?.innerHTML).toBe('fallback');
+	});
+
+	test('does not recompute feature when a non dependent feature changes', () => {
+		const renderSpy = vi.fn();
+		const Component = withFeatures({
+			features: {
+				FEATURE_V1: () => {
+					renderSpy();
+					return <span data-testid='id'>v1</span>;
+				},
+			},
+		});
+
+		const [handler] = renderFeature(<Component />);
+		act(() => handler.set('FEATURE_V1', true));
+		const initialCalls = renderSpy.mock.calls.length;
+		// triggers a change for an unrelated feature
+		act(() => handler.set('UNRELATED_FEATURE', true));
+
+		expect(renderSpy.mock.calls).toHaveLength(initialCalls);
 	});
 
 	describe('throws', () => {

@@ -51,6 +51,7 @@ const getStorageFeatures = (
  *
  * @param handler - feature handler
  * @param prefix - key prefix filter
+ * @returns unsubscribe function that removes the storage listener
  */
 export const linkStorageToFeatureHandler = (
 	handler: FeatureHandler,
@@ -77,6 +78,6 @@ export const linkStorageToFeatureHandler = (
 
 	addEventListener('storage', listener);
 
-	// unsubscribe — detaches the storage listener
+	// unsubscribe
 	return () => removeEventListener('storage', listener);
 };

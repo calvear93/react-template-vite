@@ -14,12 +14,12 @@ type ReactComponent<Props = unknown> =
  * Switches between components depending
  * of enabled features in FeatureHandler.
  */
-const FeatureSwitch: React.FC<FeatureSwitchProps> = ({
+const FeatureSwitch = <Props,>({
 	components,
 	fallback,
 	handler,
 	props,
-}) => {
+}: FeatureSwitchProps<Props>) => {
 	const [feature, setFeature] = useState<string | null>();
 
 	useEffect(() => {
@@ -55,7 +55,7 @@ const FeatureSwitch: React.FC<FeatureSwitchProps> = ({
 	}, [handler]);
 
 	const Component = feature ? components[feature] : null;
-	return Component ? <Component {...props} /> : fallback;
+	return Component ? <Component {...(props as Props & object)} /> : fallback;
 };
 
 /**
@@ -106,10 +106,10 @@ export const withFeatures = <Props,>({
 	);
 };
 
-interface FeatureSwitchProps {
-	components: Record<string, ReactComponent<any>>;
+interface FeatureSwitchProps<Props> {
+	components: Record<string, ReactComponent<Props>>;
 	handler: FeatureHandler;
-	props: any;
+	props: Props;
 	fallback?: React.ReactNode;
 }
 

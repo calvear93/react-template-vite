@@ -14,26 +14,26 @@ A small `FeatureHandler` holds the flag state and emits change events; React hoo
 
 ## 📦 API at a glance
 
-| Export                          | Type                                              | Use it to…                                          |
-| ------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
-| `FeatureHandler`                | class                                             | hold + mutate flag state (the source of truth)      |
-| `FeatureProvider`               | `React.FC<{ handler }>`                            | expose a handler to the React tree                  |
-| `useFeature(name)`              | `() => readonly [boolean, (v: boolean) => void]`  | read **and** set one flag, with re-render           |
-| `useFeatureHandler()`           | `() => FeatureHandler`                             | reach the handler without subscribing               |
-| `withFeatures(config)`          | HOC → component                                   | render different components per enabled flag        |
-| `linkStorageToFeatureHandler`   | `(handler, prefix?) => void`                      | drive flags from web storage (live)                 |
+| Export                        | Type                                             | Use it to…                                     |
+| ----------------------------- | ------------------------------------------------ | ---------------------------------------------- |
+| `FeatureHandler`              | class                                            | hold + mutate flag state (the source of truth) |
+| `FeatureProvider`             | `React.FC<{ handler }>`                          | expose a handler to the React tree             |
+| `useFeature(name)`            | `() => readonly [boolean, (v: boolean) => void]` | read **and** set one flag, with re-render      |
+| `useFeatureHandler()`         | `() => FeatureHandler`                           | reach the handler without subscribing          |
+| `withFeatures(config)`        | HOC → component                                  | render different components per enabled flag   |
+| `linkStorageToFeatureHandler` | `(handler, prefix?) => void`                     | drive flags from web storage (live)            |
 
 **`FeatureHandler`**
 
-| Member                                 | Description                                                   |
-| -------------------------------------- | ------------------------------------------------------------ |
-| `new FeatureHandler(lookup?)`          | seed with `{ FLAG: boolean }`                                |
-| `get(name) → boolean`                  | is the flag on?                                              |
-| `getAll() → Readonly<lookup>`          | snapshot of every flag                                      |
-| `set(name, value)`                     | toggle one flag (emits only if it actually changed)          |
-| `setAll(lookup)`                       | merge many flags (single event for the batch)               |
-| `add/removeOnChangeListener(fn)`       | subscribe to `{ changedFeatures }` events                   |
-| `FeatureHandler.fromArray(string[])`   | static · `['A','B']` → `{ A: true, B: true }`               |
+| Member                               | Description                                         |
+| ------------------------------------ | --------------------------------------------------- |
+| `new FeatureHandler(lookup?)`        | seed with `{ FLAG: boolean }`                       |
+| `get(name) → boolean`                | is the flag on?                                     |
+| `getAll() → Readonly<lookup>`        | snapshot of every flag                              |
+| `set(name, value)`                   | toggle one flag (emits only if it actually changed) |
+| `setAll(lookup)`                     | merge many flags (single event for the batch)       |
+| `add/removeOnChangeListener(fn)`     | subscribe to `{ changedFeatures }` events           |
+| `FeatureHandler.fromArray(string[])` | static · `['A','B']` → `{ A: true, B: true }`       |
 
 ## 🚀 Quick start
 

@@ -54,37 +54,31 @@ describe('feature hooks', () => {
 			expect(newValue).toBe(false);
 		});
 
-		test('does not update when an unrelated feature changes', () => {
-			const feature = 'FEATURE_OBSERVED';
+		test('does not update value when an unrelated feature changes', () => {
+			const feature = 'WATCHED_FEATURE';
 			const { result } = renderHook(() => useFeature(feature), {
 				wrapper,
 			});
 
-			act(() => _handler.set('FEATURE_UNRELATED', true));
-			const [value] = result.current;
+			const [initialValue] = result.current;
+			act(() => _handler.set('OTHER_FEATURE', true));
+			const [valueAfterUnrelatedChange] = result.current;
 
-			expect(value).toBe(false);
+			expect(initialValue).toBe(false);
+			expect(valueAfterUnrelatedChange).toBe(false);
 		});
 
-		test('unsubscribes from handler on unmount', () => {
-			const feature = 'FEATURE_UNMOUNT';
-			const removeSpy = vi.spyOn(_handler, 'removeOnChangeListener');
-			const { unmount } = renderHook(() => useFeature(feature), {
-				wrapper,
+		test('re-syncs value when the feature key changes', () => {
+			const handler = new FeatureHandler({
+				FEATURE_OFF: false,
+				FEATURE_ON: true,
 			});
-
-			unmount();
-
-			expect(removeSpy).toHaveBeenCalledOnce();
-			removeSpy.mockRestore();
-		});
-
-		test('re-syncs the value when the feature argument changes', () => {
-			_handler.set('FEATURE_ON', true);
-			_handler.set('FEATURE_OFF', false);
+			const wrapper: RenderOptions['wrapper'] = ({ children }) => (
+				<FeatureProvider handler={handler}>{children}</FeatureProvider>
+			);
 
 			const { rerender, result } = renderHook(
-				({ name }: { name: string }) => useFeature(name),
+				({ name }) => useFeature(name),
 				{ initialProps: { name: 'FEATURE_ON' }, wrapper },
 			);
 
@@ -93,6 +87,20 @@ describe('feature hooks', () => {
 			rerender({ name: 'FEATURE_OFF' });
 
 			expect(result.current[0]).toBe(false);
+		});
+
+		test('unsubscribes listener on unmount', () => {
+			const removeSpy = vi.spyOn(_handler, 'removeOnChangeListener');
+			const { unmount } = renderHook(
+				() => useFeature('UNMOUNT_FEATURE'),
+				{
+					wrapper,
+				},
+			);
+
+			unmount();
+
+			expect(removeSpy).toHaveBeenCalledTimes(1);
 		});
 	});
 });

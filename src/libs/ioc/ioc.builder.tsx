@@ -35,19 +35,19 @@ export const createContainer = () => {
 
 	return {
 		container: {
-			bind: (key: any, value: any) => {
+			bind: (key: unknown, value: unknown) => {
 				container.set(key, value);
 			},
 			resolve: <
 				T,
 				K = unknown,
-				R = K extends { new (...args: any): infer C } ? C : T,
+				R = K extends { new (...args: never[]): infer C } ? C : T,
 			>(
 				key: K,
 			): R => {
 				return container.get(key) as R;
 			},
-			unbind: (key: any) => {
+			unbind: (key: unknown) => {
 				container.delete(key);
 			},
 		},
@@ -70,7 +70,7 @@ export const createContainer = () => {
 		useInjection: <
 			T,
 			K = unknown,
-			R = K extends { new (...args: any): infer C } ? C : T,
+			R = K extends { new (...args: never[]): infer C } ? C : T,
 		>(
 			key: K,
 		): R => {

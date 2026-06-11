@@ -83,14 +83,14 @@ This React SPA is built around a few in-house libraries; each ships its own READ
 
 Conventions, patterns, and worked examples live in the docs — start with whichever fits:
 
-| Topic                                                | Where                                                |
-| ---------------------------------------------------- | ---------------------------------------------------- |
-| Project contract (stack, rules, conventions)         | [`AGENTS.md`](AGENTS.md)                             |
-| Architecture, coding standards, copy-paste patterns  | [`.github/instructions/`](.github/instructions/)     |
-| Reusable skills & the OpenSpec spec-driven workflow  | [`.ai/`](.ai/README.md)                              |
-| Canonical code scaffolds for new files               | [`.vscode/__templates__/`](.vscode/__templates__/)  |
-| High-quality examples already in this repo           | [`exemplars.md`](exemplars.md)                       |
-| Library usage (IoC · Router · Feature flags)         | [`src/libs/`](src/libs/)                             |
+| Topic                                               | Where                                              |
+| --------------------------------------------------- | -------------------------------------------------- |
+| Project contract (stack, rules, conventions)        | [`AGENTS.md`](AGENTS.md)                           |
+| Architecture, coding standards, copy-paste patterns | [`.github/instructions/`](.github/instructions/)   |
+| Reusable skills & the OpenSpec spec-driven workflow | [`.ai/`](.ai/README.md)                            |
+| Canonical code scaffolds for new files              | [`.vscode/__templates__/`](.vscode/__templates__/) |
+| High-quality examples already in this repo          | [`exemplars.md`](exemplars.md)                     |
+| Library usage (IoC · Router · Feature flags)        | [`src/libs/`](src/libs/)                           |
 
 ## 🧰 Configuring fnm (Fast Node Manager)
 

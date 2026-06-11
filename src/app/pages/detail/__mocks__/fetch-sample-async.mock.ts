@@ -1,6 +1,8 @@
+import type { AsyncSampleResult } from '../atoms/async.atom.ts';
+
 export const fetchSampleAsyncMock = (): Promise<{
 	status: number;
-	json: () => any;
+	json: () => Promise<AsyncSampleResult>;
 }> =>
 	new Promise((resolve) =>
 		setTimeout(
