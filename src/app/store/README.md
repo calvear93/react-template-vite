@@ -3,10 +3,6 @@
 Shared **application state** layer. The naming is **library-agnostic** (`*.store.ts`, `*Store`)
 so the state engine stays replaceable; today it is **backed by [Jotai](https://jotai.org)**.
 
-> **Not Atomic Design.** Here "store" = **state**. The _atoms / molecules / organisms_ of Atomic
-> Design are **components** and live in `src/app/components/` (see the
-> [`atomic-design`](../../../.ai/skills/atomic-design.md) skill).
-
 ## The pattern
 
 Each store module exposes a **private source** (`_inner*`, never exported) and a **public**
