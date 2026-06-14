@@ -12,14 +12,14 @@ This document identifies high-quality, representative code examples from the Rea
 **Key Features**:
 
 - Clean component structure with proper TypeScript typing
-- Integration with Jotai atoms for state management
+- Integration with the Jotai-backed store for state management
 - React Router Link components for navigation
 - CSS Modules for styling
 - Proper effect cleanup and state updates
 
 ```tsx
 export const MainPage: React.FC = (): React.ReactElement => {
-	const [message, setStatus] = useAtom(sampleAtom);
+	const [message, setStatus] = useAtom(sampleStore);
 
 	// effects
 	useEffect(() => {
@@ -124,9 +124,9 @@ export const createContainer = () => {
 
 ### Data Access Layer
 
-#### Jotai Atom Pattern (`src/app/atoms/sample.atom.ts`)
+#### Jotai-backed Store Pattern (`src/app/store/sample.store.ts`)
 
-**Pattern**: Atomic state management with derived state
+**Pattern**: Store module with derived state
 **Key Features**:
 
 - Read/write atom pattern with derived state
@@ -134,15 +134,15 @@ export const createContainer = () => {
 - Proper separation of concerns between read and write logic
 
 ```typescript
-const _innerAtom = atom<SampleState>({
+const _innerStore = atom<SampleState>({
 	message: 'loading',
 	status: 0,
 });
 
-export const sampleAtom = atom(
-	(get) => get(_innerAtom).message,
+export const sampleStore = atom(
+	(get) => get(_innerStore).message,
 	(_get, set, status: number) => {
-		set(_innerAtom, {
+		set(_innerStore, {
 			message: status === 200 ? 'success' : 'error',
 			status,
 		});
@@ -228,9 +228,9 @@ container.bind('injectionToken', { example: 'demo' });
 
 ### State Management
 
-#### Jotai Atom Test (`src/app/atoms/sample.atom.spec.ts`)
+#### Jotai-backed Store Test (`src/app/store/sample.store.spec.ts`)
 
-**Pattern**: Comprehensive atom testing with proper setup
+**Pattern**: Comprehensive store testing with proper setup
 **Key Features**:
 
 - Proper test setup with renderHook
@@ -238,12 +238,12 @@ container.bind('injectionToken', { example: 'demo' });
 - Clean test structure with beforeAll hooks
 
 ```typescript
-describe('sample atom', () => {
+describe('sample store', () => {
 	let hook: HookCurrent;
 	let rerender: () => void;
 
 	beforeAll(() => {
-		({ rerender, result: hook } = renderSampleAtom());
+		({ rerender, result: hook } = renderSampleStore());
 	});
 
 	test('initial state returns "loading"', () => {

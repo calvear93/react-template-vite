@@ -76,8 +76,8 @@ This React SPA is built around a few in-house libraries; each ships its own READ
 - **📦 Dependency Injection (IoC)** — React-context IoC container · [`src/libs/ioc`](src/libs/ioc/README.md)
 - **🛣️ Routing** — central route config with lazy loading and nested layouts · [`src/libs/router`](src/libs/router/README.md)
 - **🎛️ Feature Flags** — runtime feature toggles for controlled rollouts · [`src/libs/feature`](src/libs/feature/README.md)
-- **⚛️ State** — Jotai atoms for fine-grained reactive state
-- **🧩 Components** — co-located components, hooks, and CSS Modules
+- **⚛️ State** — Jotai-backed store (`src/app/store/`) for fine-grained reactive state
+- **🧩 Components** — Atomic Design (atoms/molecules/organisms), co-located hooks and CSS Modules
 
 ## 📚 **Documentation**
 

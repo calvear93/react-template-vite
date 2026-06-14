@@ -159,7 +159,7 @@ Before finalizing a change ensure:
 ## Pattern Fallback
 
 When no scaffolding template exists, derive patterns from existing code under `src/app/`
-(`atoms`, `pages`, `layouts`) and `src/libs/*` READMEs, plus the recipes in
+(`store`, `components` with atoms/molecules/organisms, `pages`, `layouts`) and `src/libs/*` READMEs, plus the recipes in
 `.github/instructions/patterns.instructions.md`. Maintain stylistic consistency with current
 implementations.
 

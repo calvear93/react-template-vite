@@ -6,7 +6,7 @@ architecture.** Optional for trivial changes.
 ## When to use
 
 After `/spec-propose`, once `proposal.md` + deltas are approved and the change is non-trivial
-(new page, shared component, custom hook, atom/state slice, route, schema, IoC binding,
+(new page, shared component, custom hook, store/state slice, route, schema, IoC binding,
 cross-cutting refactor). Skip it for a doc-only or one-line behavior tweak — note the skip in
 `tasks.md`. Input: `specs/changes/<change-id>/`.
 
@@ -21,12 +21,14 @@ cross-cutting refactor). Skip it for a doc-only or one-line behavior tweak — n
    backend or database layer — model everything as client-side UI, state, and API access:
     - **Pages** in `src/app/pages/<page-name>/` (`*.page.tsx` + `*.page.module.css` +
       `*.page.spec.tsx`), wired into `src/app/app.routes.tsx` through React Router
-      (`#libs/router`). Page-local components and atoms live under that page folder.
-    - **Components** in `src/app/components/<category>/` (`*.tsx` + `*.module.css` +
-      `*.spec.tsx`). Keep them declarative and accessible (semantic HTML + ARIA); push logic
-      into hooks. Styling is CSS Modules + UnoCSS.
-    - **State** with Jotai atoms (`*.atom.ts`: private `_inner…Atom` + public read/write
-      `atom`) plus React hooks. Custom hooks hold the business logic; components stay thin.
+      (`#libs/router`). Page-local components and store live under that page folder.
+    - **Components** in `src/app/components/<category>/` following **Atomic Design** —
+      `atoms/` → `molecules/` → `organisms/` (templates = `src/app/layouts/`); compose upward
+      (`*.tsx` + `*.module.css` + `*.spec.tsx`). Keep them declarative and accessible (semantic
+      HTML + ARIA); push logic into hooks. Styling is CSS Modules + UnoCSS. See the
+      `atomic-design` skill. Note: "atoms" (Atomic Design) = UI components; "store" = state.
+    - **State** with the Jotai-backed store (`*.store.ts`: private `_inner…Store` + public
+      read/write `atom`) plus React hooks. Custom hooks hold the business logic; components stay thin.
     - **Schemas / validation** with Zod (`*.schema.ts`): form data, API responses, and complex
       prop validation. Never use `any`; prefer `unknown` + narrowing. See `zod-schema` skill.
     - **Config & dependencies** flow through the IoC container — bind in the bootstrap layer

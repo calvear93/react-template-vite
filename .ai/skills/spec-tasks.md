@@ -12,14 +12,14 @@ After `/spec-design` (or directly after `/spec-propose` for trivial changes). In
 1. **Read** the proposal, deltas, and design.
 2. **Write `specs/changes/<change-id>/tasks.md`** from `.ai/templates/tasks.template.md`.
 3. **Make each task atomic and verifiable:**
-    - One coherent unit (a page, a component, a custom hook, a Jotai atom, a Zod schema, an IoC
+    - One coherent unit (a page, a component, a custom hook, a Jotai-backed store module, a Zod schema, an IoC
       binding, a route entry) — small enough to implement, typecheck, and test
       in isolation.
     - **Test-first:** each task names the co-located Vitest spec it adds/updates
       (`*.spec.tsx` / `*.spec.ts` next to the source) and the delta requirement it covers
       (`<capability> › <Requirement name>`).
     - Explicit "done when" (a passing assertion and a clean typecheck/lint).
-4. **Order by dependency:** schemas/types → atoms/state → IoC bindings → hooks → components →
+4. **Order by dependency:** schemas/types → store/state → IoC bindings → hooks → components →
    pages → routes → integration. A task should not depend on a later one.
 5. **Ensure full traceability:** every requirement/scenario in the change deltas maps to ≥ 1
    task in the traceability table. No orphan requirements, no tasks without a requirement.

@@ -6,7 +6,7 @@
 ## Stack
 
 - **Framework / language:** <e.g. React 19 + TypeScript 5 (Vite SPA)>
-- **Architecture:** <e.g. src/app (pages, components, atoms, IoC) + src/libs (router, ioc, feature, http)>
+- **Architecture:** <e.g. src/app (pages, components [Atomic Design: atoms/molecules/organisms], store, IoC) + src/libs (router, ioc, feature)>
 - **Testing:** <e.g. Vitest + React Testing Library>
 - **Runtime / tooling:** <e.g. Vite + pnpm; ESLint + Prettier + Stylelint>
 

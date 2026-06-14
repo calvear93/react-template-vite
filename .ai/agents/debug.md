@@ -111,7 +111,7 @@ pnpm format              # Auto-fix formatting
 2. **IoC Injection Failures**: Verify bindings in `src/app/app.ioc.ts`
 3. **Route Errors**: Check `src/app/app.routes.tsx` definitions
 4. **Feature Flag Issues**: Review `src/app/app.features.ts`
-5. **State Issues**: Inspect Jotai atoms in `src/app/atoms/`
+5. **State Issues**: Inspect the Jotai-backed store in `src/app/store/`
 6. **Import Path Errors**: Use `#libs/*` aliases or `./relative.ts` with extension
 
 ### Development Server
@@ -124,7 +124,7 @@ pnpm preview             # Test production build locally
 ### Browser DevTools
 
 - React DevTools for component inspection
-- Jotai DevTools for atom state debugging
+- Jotai DevTools for store state debugging
 - Network tab for API call analysis
 - Console for error stack traces
 
@@ -133,7 +133,7 @@ pnpm preview             # Test production build locally
 - **IoC Container**: Use `useInjection()` from `./app.ioc.ts`
 - **Feature Flags**: Check enabled features with `useFeature()` hook
 - **Routing**: Verify lazy-loaded components and route definitions
-- **Atoms**: Inspect Jotai atom values and subscriptions
+- **Store**: Inspect Jotai-backed store values and subscriptions
 - **Injected mocks (tests)**: Verify dependencies are overridden via `InversionOfControlProvider` with a `mockIoCValues` Map
 
 ### Logging

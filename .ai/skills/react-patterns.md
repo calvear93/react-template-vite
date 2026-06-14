@@ -29,8 +29,9 @@ Writing or reviewing any component, hook, page or layout.
 ## State
 
 - **Local UI state** with `useState` / `useReducer`.
-- **Shared / app state** with **Jotai atoms** — derived atoms for computed values, async atoms
-  for data fetching; inject services through the IoC container (see the `ioc-binding` skill).
+- **Shared / app state** with the **Jotai-backed store** (`src/app/store/`, `*.store.ts`) —
+  derived atoms for computed values, async atoms for data fetching; inject services through the
+  IoC container (see the `ioc-binding` skill).
 - Avoid global mutable singletons and unnecessary Context providers.
 
 ## Routing & features
@@ -48,10 +49,10 @@ Writing or reviewing any component, hook, page or layout.
 import { atom, useAtomValue } from 'jotai';
 import { Link } from '#libs/router';
 
-const userCountAtom = atom((get) => get(usersAtom).length);
+const userCountStore = atom((get) => get(usersStore).length);
 
 export const Header = ({ children }: { children: ReactNode }) => {
-	const count = useAtomValue(userCountAtom);
+	const count = useAtomValue(userCountStore);
 	return (
 		<header>
 			<Link to='/'>Inicio</Link>

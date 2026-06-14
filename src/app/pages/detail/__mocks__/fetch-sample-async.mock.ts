@@ -1,4 +1,4 @@
-import type { AsyncSampleResult } from '../atoms/async.atom.ts';
+import type { AsyncSampleResult } from '../store/async.store.ts';
 
 export const fetchSampleAsyncMock = (): Promise<{
 	status: number;

@@ -13,7 +13,7 @@ for copy-paste recipes see [patterns](patterns.instructions.md). This document d
 
 ```
 src/
-  app/                  feature code (pages, components, layouts, atoms) + app bootstrap
+  app/                  feature code (pages, components [Atomic Design], layouts, store) + app bootstrap
     app.config.ts       environment config layer (the only place reading import.meta.env)
     app.ioc.ts          IoC container creation + bindings (bootstrap layer)
     app.routes.tsx      route table
@@ -33,14 +33,20 @@ Each page lives under `src/app/pages/{page-name}/`:
 {PageName}.page.module.css    page styles
 {PageName}.page.spec.tsx      page tests
 components/                   page-local components ({Component}.tsx + .module.css + .spec.tsx)
-atoms/                        page-local Jotai atoms ({feature}.atom.ts + .atom.spec.ts)
+store/                        page-local Jotai-backed store ({feature}.store.ts + .store.spec.ts)
 __mocks__/                    test mock data ({name}.mock.ts)
 ```
 
 ## Reusable component structure pattern
 
+Components follow **Atomic Design** — `{category}` is the component's level: `atoms/`
+(smallest, presentational), `molecules/` (atoms combined), or `organisms/` (complex sections
+that may hold state). Atoms/molecules are presentational; state and IoC enter at organisms or
+pages; compose upward. Templates = `src/app/layouts/`, pages = `src/app/pages/`. See the
+`atomic-design` skill. Note: "atoms" (Atomic Design) = UI components; "store" = state.
+
 ```
-src/app/components/{category}/
+src/app/components/{atoms|molecules|organisms}/
   {ComponentName}.tsx
   {ComponentName}.module.css
   {ComponentName}.spec.tsx

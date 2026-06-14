@@ -21,7 +21,7 @@
 
 - **Pages:** `src/app/pages/<page-name>/<PageName>.page.tsx` — wired into `app.routes.tsx`
 - **Components:** `src/app/components/<category>/<ComponentName>.tsx` — declarative + accessible
-- **State (atoms / hooks):** `src/app/.../<feature>.atom.ts` (Jotai) + custom hooks for logic
+- **State (store / hooks):** `src/app/.../<feature>.store.ts` (Jotai-backed) + custom hooks for logic
 - **Schemas:** `src/app/.../<name>.schema.ts` (Zod) — form/API/prop validation
 - **IoC / config:** bindings in `src/app/app.ioc.ts` (`createContainer()` from `#libs/ioc`),
   consumed via `useInjection`
@@ -32,7 +32,7 @@
 ## Data & validation
 
 - Zod schemas for inputs and API responses; explicit types (no `any`, prefer `unknown` +
-  narrowing). Atom shape and derived/read-write split. See `zod-schema` skill.
+  narrowing). Store shape and derived/read-write split. See `zod-schema` skill.
 
 ## Config & dependency injection
 

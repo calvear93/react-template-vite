@@ -2,12 +2,12 @@
 import { renderHook } from '@testing-library/react';
 import { useAtom } from 'jotai';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
-import { asyncAtom, type AsyncSampleState } from './async.atom.ts';
+import { type AsyncSampleState, asyncStore } from './async.store.ts';
 
-const renderAsyncAtom = () => renderHook(() => useAtom(asyncAtom));
-type HookCurrent = ReturnType<typeof renderAsyncAtom>['result'];
+const renderAsyncStore = () => renderHook(() => useAtom(asyncStore));
+type HookCurrent = ReturnType<typeof renderAsyncStore>['result'];
 
-describe('async atom', () => {
+describe('async store', () => {
 	let hook: HookCurrent;
 	let rerender: () => void;
 
@@ -15,7 +15,7 @@ describe('async atom', () => {
 	beforeAll(() => {
 		vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
 		// renders the hook
-		({ rerender, result: hook } = renderAsyncAtom());
+		({ rerender, result: hook } = renderAsyncStore());
 	});
 
 	afterAll(() => {

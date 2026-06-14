@@ -1,19 +1,19 @@
 import { renderHook } from '@testing-library/react';
 import { useAtom } from 'jotai';
 import { beforeAll, describe, expect, test } from 'vitest';
-import { sampleAtom } from './sample.atom.ts';
+import { sampleStore } from './sample.store.ts';
 
-const renderSampleAtom = () => renderHook(() => useAtom(sampleAtom));
-type HookCurrent = ReturnType<typeof renderSampleAtom>['result'];
+const renderSampleStore = () => renderHook(() => useAtom(sampleStore));
+type HookCurrent = ReturnType<typeof renderSampleStore>['result'];
 
-describe('sample atom', () => {
+describe('sample store', () => {
 	let hook: HookCurrent;
 	let rerender: () => void;
 
 	// hooks
 	beforeAll(() => {
 		// renders the hook
-		({ rerender, result: hook } = renderSampleAtom());
+		({ rerender, result: hook } = renderSampleStore());
 	});
 
 	// tests

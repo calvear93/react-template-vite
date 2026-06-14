@@ -1,14 +1,14 @@
 import { atom } from 'jotai';
 
-const _innerAtom = atom<SampleState>({
+const _innerStore = atom<SampleState>({
 	message: 'loading',
 	status: 0,
 });
 
-export const sampleAtom = atom(
-	(get) => get(_innerAtom).message,
+export const sampleStore = atom(
+	(get) => get(_innerStore).message,
 	(_get, set, status: number) => {
-		set(_innerAtom, {
+		set(_innerStore, {
 			message: status === 200 ? 'success' : 'error',
 			status,
 		});

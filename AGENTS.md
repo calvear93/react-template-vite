@@ -14,26 +14,37 @@ feature flags, type-safe routing, and comprehensive testing.
   duplicate guidance into those pointers.
 - Keep this file as the high-level contract (stack, rules, conventions). Long-form
   detail lives in the deep references at the bottom; link to them instead of repeating.
-- User instructions (a direct request in chat) always take precedence over this file.
+- **Operating manual:** read [`.ai/skills/ways-of-working.md`](.ai/skills/ways-of-working.md) first — the autonomy policy, the Definition of Done, and how to talk to a (possibly non-technical) user.
+- User instructions always take precedence — see Priority order below.
+
+## Priority order
+
+When guidance conflicts, resolve in this order:
+
+1. **User instructions** — a direct request in chat.
+2. **This file (`AGENTS.md`)** — the canonical, tool-agnostic contract.
+3. **Deep references** in [`.github/instructions/`](.github/instructions/) and the canonical
+   scaffolds in [`.vscode/__templates__/`](.vscode/__templates__/).
+4. **Existing patterns** in the codebase (`src/`, and `docs/` where present).
 
 ## Tech stack
 
-| Area              | Choice                                     |
-| ----------------- | ------------------------------------------ |
-| Framework         | React 19+ with TypeScript 5+               |
-| Build tool        | Vite (HMR dev server + production builds)  |
-| Router            | React Router 7+ via `#libs/router`         |
-| Validation        | Zod 4+ (TypeScript-first schemas)          |
-| Local/atom state  | Jotai + React hooks                        |
-| Dependency inject | Custom IoC container via `#libs/ioc`       |
-| Feature flags     | Custom system via `#libs/feature`          |
-| Styling           | CSS Modules + UnoCSS (atomic CSS)          |
-| Testing           | Vitest + React Testing Library (happy-dom) |
-| Coverage          | Vitest Coverage V8 (target ≥ 80%)          |
-| Mutation testing  | Stryker Mutator                            |
-| Env loading       | `@calvear/env` (`env/` folder)             |
-| Tooling           | ESLint + Prettier + Stylelint, pnpm        |
-| Runtime           | Node `>=24`, pnpm `>=11`                   |
+| Area               | Choice                                              |
+| ------------------ | --------------------------------------------------- |
+| Framework          | React 19+ with TypeScript 5+                        |
+| Build tool         | Vite (HMR dev server + production builds)           |
+| Router             | React Router 7+ via `#libs/router`                  |
+| Validation         | Zod 4+ (TypeScript-first schemas)                   |
+| Local/shared state | React hooks + Jotai-backed store (`src/app/store/`) |
+| Dependency inject  | Custom IoC container via `#libs/ioc`                |
+| Feature flags      | Custom system via `#libs/feature`                   |
+| Styling            | CSS Modules + UnoCSS (atomic CSS)                   |
+| Testing            | Vitest + React Testing Library (happy-dom)          |
+| Coverage           | Vitest Coverage V8 (target ≥ 80%)                   |
+| Mutation testing   | Stryker Mutator                                     |
+| Env loading        | `@calvear/env` (`env/` folder)                      |
+| Tooling            | ESLint + Prettier + Stylelint, pnpm                 |
+| Runtime            | Node `>=24`, pnpm `>=11`                            |
 
 ## Commands
 
@@ -60,10 +71,10 @@ non-trivial changes.
 
 ```
 src/
-  app/            feature code: pages, components, layouts, atoms, app.ioc, app.routes
+  app/            feature code: pages, components (atoms/molecules/organisms), layouts, store, app.ioc, app.routes
   libs/           reusable libraries (ioc, router, feature) with their own README
 env/              environment configuration (appsettings.json + <env> files)
-.vscode/__templates__/  canonical code scaffolds for every pattern (component, page, atom, layout, schema, test, class, error/exception)
+.vscode/__templates__/  canonical code scaffolds for every pattern (component, page, store, layout, schema, test, class, error/exception)
 ```
 
 Path aliases (see `package.json#imports`): `#libs/ioc`, `#libs/router`, `#libs/feature`.
@@ -71,13 +82,14 @@ See **architecture-guide** for full folder topology and wiring.
 
 When creating a new file, start from the matching scaffold under
 [`.vscode/__templates__/`](.vscode/__templates__/) — it is the source of truth for
-suffixes, folder layout, and component/atom/schema/test signatures.
+suffixes, folder layout, and component/store/schema/test signatures.
 
 ## Core principles
 
 - **Type safety first** — leverage TypeScript and Zod from UI to data layer; never `any`.
 - **Inject, never hardcode** — all config and services flow through the IoC container.
 - **Logic in hooks** — keep components declarative; move business logic into custom hooks.
+- **Atomic Design** — UI is atoms → molecules → organisms (`src/app/components/`); templates = layouts, pages = pages; compose upward. See the `atomic-design` skill.
 - **Accessibility by default** — semantic HTML and ARIA on every interactive component.
 - **Test what you ship** — unit + integration tests; meaningful assertions (mutation-aware).
 - **YAGNI** — minimal, atomic changes; no speculative abstractions.
@@ -99,8 +111,8 @@ These are non-negotiable. Violations should be fixed before code is considered d
 
 ### Language policy
 
-- All code and documentation is in **English**: identifiers, comments, props, errors, docs.
-- **Exception:** preserve business-domain terms in their original language when the user
+- Code and documentation are in **English** — identifiers, comments, props, errors, docs.
+- **Domain exception:** preserve business-domain terms in their original language when the user
   explicitly defines them as domain entities (e.g. `Siniestro`, `Episodio`). Implementation
   around them stays in English.
 
@@ -184,22 +196,23 @@ Folder model (root `specs/`): `specs/specs/` = **living truth** (one folder per 
 used (it hardcodes an `openspec/` root and can't target `specs/`); the skills are the engine.
 
 `/spec-implement` reuses the canonical task prompts in [`.ai/prompts/`](.ai/prompts/)
-(`component-creation`, `page-creation`, `custom-hook-creation`, `testing-creation`) instead of
+(`create-component`, `create-page`, `create-hook`, `create-test`) instead of
 redefining them. GitHub Copilot exposes the loop as `/spec-*` prompts under `.github/prompts/`;
 Claude, Gemini, and Codex follow the procedure files directly. The best-practice skills
-(`typescript`, `react-patterns`, `zod-schema`, `ioc-binding`, `vitest-tdd`, `vite-config`) live alongside them in
+(`typescript`, `react-patterns`, `atomic-design`, `zod-schema`, `ioc-binding`, `vitest-tdd`, `vite-config`) live alongside them in
 [`.ai/skills/`](.ai/skills/) — read the relevant one when its topic applies.
 
 ## Deep references
 
-| Document                                                                      | Scope                                                                                                            |
-| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| [Architecture guide](.github/instructions/architecture-guide.instructions.md) | Folder topology, IoC/config wiring, routing, feature flags, import conventions                                   |
-| [Coding standards](.github/instructions/coding-standards.instructions.md)     | Formatting, naming, file suffixes, TypeScript rules, comments, anti-patterns                                     |
-| [Patterns](.github/instructions/patterns.instructions.md)                     | Copy-paste recipes: components, hooks, services, schemas, forms, errors, tests                                   |
-| [Code exemplars](exemplars.md)                                                | Pointers to high-quality real examples in this repo                                                              |
-| [README](README.md)                                                           | Human-facing project documentation and setup                                                                     |
-| [`.vscode/__templates__/`](.vscode/__templates__/)                            | Canonical code scaffolds for every pattern (component, page, atom, layout, schema, test, class, error/exception) |
+| Document                                                                      | Scope                                                                                                             |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| [Operating manual](.ai/skills/ways-of-working.md)                             | Autonomy, default technical decisions, Definition of Done, non-technical-user comms                               |
+| [Architecture guide](.github/instructions/architecture-guide.instructions.md) | Folder topology, IoC/config wiring, routing, feature flags, import conventions                                    |
+| [Coding standards](.github/instructions/coding-standards.instructions.md)     | Formatting, naming, file suffixes, TypeScript rules, comments, anti-patterns                                      |
+| [Patterns](.github/instructions/patterns.instructions.md)                     | Copy-paste recipes: components, hooks, services, schemas, forms, errors, tests                                    |
+| [Code exemplars](exemplars.md)                                                | Pointers to high-quality real examples in this repo                                                               |
+| [README](README.md)                                                           | Human-facing project documentation and setup                                                                      |
+| [`.vscode/__templates__/`](.vscode/__templates__/)                            | Canonical code scaffolds for every pattern (component, page, store, layout, schema, test, class, error/exception) |
 
 Task prompts and agent definitions have canonical bodies in `.ai/prompts/` and `.ai/agents/`.
 GitHub Copilot surfaces them natively via thin pointers in `.github/prompts/` and

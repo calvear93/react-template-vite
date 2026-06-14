@@ -83,7 +83,7 @@ const canEdit = true;
 | `.layout.tsx`   | Layout component       | `App.layout.tsx`       |
 | `.provider.tsx` | React context provider | `Feature.provider.tsx` |
 | `.hook.ts`      | Custom hook            | `use-user.hook.ts`     |
-| `.atom.ts`      | Jotai state atom       | `user.atom.ts`         |
+| `.store.ts`     | Jotai-backed store     | `user.store.ts`        |
 | `.service.ts`   | Service / API client   | `user.service.ts`      |
 | `.schema.ts`    | Zod validation schema  | `user.schema.ts`       |
 | `.type.ts`      | Type definitions       | `user.type.ts`         |

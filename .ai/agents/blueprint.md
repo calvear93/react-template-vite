@@ -71,7 +71,7 @@ This is a **React + TypeScript + Vite SPA template** with:
 - **Stack**: React 19, TypeScript 5, Vite 8, React Router 7, Zod 4, Jotai 2
 - **Testing**: Vitest, React Testing Library, Stryker (mutation testing)
 - **Quality**: ESLint, Prettier, Stylelint, UnoCSS
-- **Architecture**: IoC container, feature flags, modular routing, Jotai atoms
+- **Architecture**: IoC container, feature flags, modular routing, Jotai-backed store, Atomic Design components
 
 ### Key Project Commands
 
@@ -105,8 +105,9 @@ src/
 │   ├── app.ioc.ts          # IoC container setup
 │   ├── app.routes.tsx      # Route definitions
 │   ├── app.features.ts     # Feature flags
-│   ├── atoms/              # Jotai atoms
-│   ├── layouts/            # Layout components
+│   ├── store/              # Jotai-backed store (app state)
+│   ├── components/         # UI components (Atomic Design: atoms/molecules/organisms)
+│   ├── layouts/            # Layout components (Atomic Design templates)
 │   ├── pages/              # Page components
 │   └── styles/             # Global styles
 ├── libs/

@@ -38,7 +38,7 @@ ${CATEGORIZATION="Technology Type|Layer|Purpose"} <!-- Organization method -->
 #### React Analysis
 
 - React version and key patterns (function components + hooks)
-- State management approach (Jotai atoms, custom IoC via `#libs/ioc`)
+- State management approach (Jotai-backed store, custom IoC via `#libs/ioc`)
 - Styling approach (UnoCSS + CSS Modules)
 - Routing implementation (`#libs/router`)
 - Validation (Zod) and feature flags (`#libs/feature`)

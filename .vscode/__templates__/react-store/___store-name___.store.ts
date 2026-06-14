@@ -1,22 +1,22 @@
 import { atom } from 'jotai';
 
-export interface ___AtomName___State {
+export interface ___StoreName___State {
 	anyValue: number;
 }
 
-const _inner___AtomName___Atom = atom<___AtomName___State>({
+const _inner___StoreName___Store = atom<___StoreName___State>({
 	anyValue: 1,
 });
 
 /**
- * ___AtomName___ atom for jotai store.
+ * ___StoreName___ store module (Jotai-backed).
  *
- * @returns atom
+ * @returns store primitive (read/write)
  */
-export const ___atomName___Atom = atom(
-	(get) => get(_inner___AtomName___Atom),
+export const ___storeName___Store = atom(
+	(get) => get(_inner___StoreName___Store),
 	(get, set, val: number) => {
-		set(_inner___AtomName___Atom, {
+		set(_inner___StoreName___Store, {
 			anyValue: val,
 		});
 	},

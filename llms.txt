@@ -13,7 +13,8 @@ This template serves as a starting point for creating enterprise-grade React app
 - [Patterns](.github/instructions/patterns.instructions.md): Copy-paste recipes for components, hooks, services, schemas, forms and tests
 - [Environment Configuration](env/README.md): Guide for configuring environment variables and settings
 - [Pages Structure](src/app/pages/README.md): Documentation for page components and routing structure
-- [Atoms Documentation](src/app/atoms/README.md): Guide for Jotai atoms and global state management
+- [Store Documentation](src/app/store/README.md): Guide for the Jotai-backed store and global app state management
+- [Components Documentation](src/app/components/README.md): Guide for UI components organized by Atomic Design (atoms/molecules/organisms)
 - [Layouts Documentation](src/app/layouts/README.md): Documentation for application layouts and common structures
 - [Code Exemplars](exemplars.md): High-quality code examples demonstrating coding standards and patterns
 - [Change Log](CHANGELOG.md): Project change history and release notes
@@ -58,12 +59,12 @@ Note: Environment names are project-defined. This repo ships with `dev` and `rel
 - [Architecture Blueprint Generator](.github/prompts/architecture-blueprint-generator.prompt.md): Prompt for generating architecture documentation
 - [Code Exemplars Generator](.github/prompts/code-exemplars-blueprint-generator.prompt.md): Prompt for generating code examples and patterns
 - [Code Quality Improvement](.github/prompts/code-quality-improvement.prompt.md): Guidelines for improving code quality
-- [Component Creation](.github/prompts/component-creation.prompt.md): Best practices for creating React components
+- [Create Component](.github/prompts/create-component.prompt.md): Best practices for creating React components
 - [Component Documentation](.github/prompts/component-documentation.prompt.md): Guidelines for documenting React components
-- [Custom Hook Creation](.github/prompts/custom-hook-creation.prompt.md): Patterns for creating reusable custom hooks
-- [Page Creation](.github/prompts/page-creation.prompt.md): Guidelines for creating application pages
+- [Create Hook](.github/prompts/create-hook.prompt.md): Patterns for creating reusable custom hooks
+- [Create Page](.github/prompts/create-page.prompt.md): Guidelines for creating application pages
 - [README Generator](.github/prompts/readme-blueprint-generator.prompt.md): Prompt for generating comprehensive README files
 - [Review and Refactor](.github/prompts/review-and-refactor.prompt.md): Guidelines for code review and refactoring
 - [Security Review](.github/prompts/security-review.prompt.md): Security considerations and review guidelines
 - [Technology Stack Generator](.github/prompts/technology-stack-blueprint-generator.prompt.md): Prompt for documenting technology stack and architecture
-- [Testing Creation](.github/prompts/testing-creation.prompt.md): Best practices for writing comprehensive tests
+- [Create Test](.github/prompts/create-test.prompt.md): Best practices for writing comprehensive tests

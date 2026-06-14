@@ -30,11 +30,16 @@ This is a **React + TypeScript + Vite SPA template** with specific architectural
     - Lazy loading with React Router 7
     - Layout-based route organization
 
-4. **Atomic State Management**:
-    - Jotai atoms for fine-grained reactivity
-    - Located in `src/app/atoms/` and page-specific `atoms/`
+4. **State Management**:
+    - Jotai-backed store for fine-grained reactivity
+    - Located in `src/app/store/` and page-specific `store/`
 
-5. **Environment Configuration**:
+5. **Atomic Design (UI components)**:
+    - Components organized as atoms → molecules → organisms under `src/app/components/`
+    - Templates = `src/app/layouts/`, pages = `src/app/pages/`; compose upward
+    - See the `atomic-design` skill. Note: "atoms" (Atomic Design) = UI components; "store" = state
+
+6. **Environment Configuration**:
     - JSON-based config in `env/appsettings.json`
     - Environment-specific overrides in `env/*.env.json`
     - Zod validation for type safety
@@ -48,13 +53,17 @@ src/
 │   ├── app.ioc.ts          # IoC container (bind dependencies here)
 │   ├── app.routes.tsx      # Route definitions (centralized)
 │   ├── app.features.ts     # Feature flag definitions
-│   ├── atoms/              # Global Jotai atoms
-│   ├── layouts/            # Layout components
+│   ├── store/              # Global Jotai-backed store (app state)
+│   ├── components/         # UI components (Atomic Design)
+│   │   ├── atoms/          # Smallest presentational components
+│   │   ├── molecules/      # Atoms combined
+│   │   └── organisms/      # Complex sections (may hold state)
+│   ├── layouts/            # Layout components (Atomic Design templates)
 │   │   └── app/            # Main app layout
 │   ├── pages/              # Page components
 │   │   ├── main/           # Example: Main page
 │   │   ├── detail/         # Example: Detail page
-│   │   │   ├── atoms/      # Page-specific atoms
+│   │   │   ├── store/      # Page-specific store (state)
 │   │   │   └── components/ # Page-specific components
 │   └── styles/             # Global styles
 └── libs/                   # Reusable libraries

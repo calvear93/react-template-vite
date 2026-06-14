@@ -1,4 +1,4 @@
 {
-	"name": "React Jotai: Atom",
-	"variables": ["atomName"]
+	"name": "React: Store",
+	"variables": ["storeName"]
 }

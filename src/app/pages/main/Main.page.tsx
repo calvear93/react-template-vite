@@ -3,11 +3,11 @@ import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import Logo from '../../assets/logo.svg';
 import viteLogoUrl from '../../assets/vite.png';
-import { sampleAtom } from '../../atoms/sample.atom.ts';
+import { sampleStore } from '../../store/sample.store.ts';
 import styles from './Main.page.module.css';
 
 export const MainPage: React.FC = (): React.ReactElement => {
-	const [message, setStatus] = useAtom(sampleAtom);
+	const [message, setStatus] = useAtom(sampleStore);
 
 	// effects
 	useEffect(() => {

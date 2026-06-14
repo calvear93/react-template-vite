@@ -1,13 +1,19 @@
-# Pages
+# Pages (Atomic Design — routed)
 
-This directory contains all the page components for the application. Pages are the main route components that get rendered when users navigate to different URLs. Each page represents a distinct view or functionality within the application.
+This directory contains all the page components for the application. Pages are the **Pages** level
+of Atomic Design: routed views that fill a template (layout) with real data and state, wiring the
+`store/`, IoC services, and routing. Each page represents a distinct view or functionality within
+the application.
+
+> Methodology and the other Atomic Design levels: the [`atomic-design`](../../../.ai/skills/atomic-design.md) skill.
+> Reusable UI lives in `src/app/components/`; app **state** lives in `src/app/store/`.
 
 ## Overview
 
 Pages in this application follow a structured approach where each page:
 
 - Is a React component that serves as a route endpoint
-- Has its own directory with related files (styles, tests, components, atoms)
+- Has its own directory with related files (styles, tests, components, store)
 - Follows naming conventions for consistency and maintainability
 - Integrates with the routing system defined in `app/app.routes.tsx`
 
@@ -19,12 +25,12 @@ The application's homepage that displays:
 
 - Application logos and branding
 - Navigation links to other pages
-- Sample atom integration demonstration
+- Sample store integration demonstration
 - Basic application information
 
 **Features:**
 
-- Uses Jotai atoms for state management
+- Uses the Jotai-backed store for state management
 - Demonstrates asset imports (SVG, PNG)
 - Shows navigation patterns with `Link` component
 
@@ -53,7 +59,7 @@ pages/
     ├── MyNewPage.page.module.css  # Page styles
     ├── MyNewPage.page.spec.tsx    # Page tests
     ├── components/                # Page-specific components
-    ├── atoms/                     # Page-specific atoms
+    ├── store/                     # Page-specific state (store)
     └── __mocks__/                 # Page-specific mocks
 ```
 
@@ -112,8 +118,8 @@ complex-page/
 │   ├── PageHeader.tsx
 │   ├── PageContent.tsx
 │   └── PageSidebar.tsx
-├── atoms/
-│   └── page-state.atom.ts
+├── store/
+│   └── page-state.store.ts
 └── hooks/
     └── use-page-logic.ts
 ```
@@ -131,7 +137,7 @@ feature-page/
 │   ├── feature-a/
 │   ├── feature-b/
 │   └── shared/
-├── atoms/
+├── store/
 ├── hooks/
 ├── utils/
 └── __mocks__/
@@ -369,8 +375,8 @@ describe('DetailPage feature variations', () => {
 describe('DetailPage with mocks', () => {
 	beforeAll(() => {
 		// Mock page-specific modules
-		vi.mock('./atoms/async.atom.ts', () => ({
-			asyncAtom: vi.fn(),
+		vi.mock('./store/async.store.ts', () => ({
+			asyncStore: vi.fn(),
 		}));
 
 		// Mock external API calls
@@ -439,8 +445,8 @@ describe('DetailPage with mocks', () => {
 
 ### State Management
 
-- **Page-specific atoms**: Keep atoms close to where they're used
-- **Global state**: Use atoms from `app/atoms/` for shared state
+- **Page-specific state**: Keep the page's store close to where it's used
+- **Global state**: Use the shared store from `app/store/`
 - **Local state**: Use `useState` for simple, local component state
 - **Effect cleanup**: Always clean up effects and subscriptions
 
@@ -525,10 +531,10 @@ export const FeaturePage: React.FC = () => {
 
 ```tsx
 import { useAtomValue } from 'jotai';
-import { userAtom } from '../../atoms/user.atom.ts';
+import { userStore } from '../../store/user.store.ts';
 
 export const ProtectedPage: React.FC = () => {
-	const user = useAtomValue(userAtom);
+	const user = useAtomValue(userStore);
 
 	if (!user) {
 		return <LoginPrompt />;
@@ -572,7 +578,7 @@ export const AdminPage: React.FC = () => {
 1. Ensure backward compatibility for routes
 2. Update tests to match new functionality
 3. Consider data migration for state changes
-4. Update related components and atoms
+4. Update related components and store
 
 ### Performance Monitoring
 

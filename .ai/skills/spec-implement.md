@@ -32,10 +32,10 @@ Work tasks **in order**. For each unchecked task:
    (`pnpm test:dev <pattern>`). See the `vitest-tdd` skill for structure and mocking.
 2. **Green** — implement the minimum to pass, reusing the matching prompt instead of
    reinventing patterns:
-    - Component → `.ai/prompts/component-creation.md`
-    - Page → `.ai/prompts/page-creation.md`
-    - Custom hook → `.ai/prompts/custom-hook-creation.md`
-    - Tests → `.ai/prompts/testing-creation.md`
+    - Component → `.ai/prompts/create-component.md`
+    - Page → `.ai/prompts/create-page.md`
+    - Custom hook → `.ai/prompts/create-hook.md`
+    - Tests → `.ai/prompts/create-test.md`
     - Zod schemas → `zod-schema` skill · IoC bindings → `ioc-binding` skill
     - Vite/build config → `vite-config` skill
 3. **Typecheck clean** — keep the build green (`pnpm build:dev`) and fix every type error

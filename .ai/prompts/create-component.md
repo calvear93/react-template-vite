@@ -9,7 +9,7 @@ Follow `AGENTS.md` and `.github/instructions/{coding-standards,patterns}.instruc
 ### 1. Component Structure
 
 - Type as `React.FC<Props>` (or `({ ... }: Props) =>`); keep components declarative and move business logic into custom hooks.
-- Follow atomic design (`atoms`, `components`, `layouts`, `pages`); files `kebab-case`, components `PascalCase`.
+- **Atomic Design placement:** decide the component's level and place the file accordingly — `src/app/components/atoms/` (smallest, presentational), `molecules/` (a few atoms combined), or `organisms/` (complex sections that may hold state). Atoms/molecules are presentational (props in, JSX out; no store reads, fetching, or routing); state and IoC enter at organisms or pages. Compose upward only; templates = `src/app/layouts/`, pages = `src/app/pages/`. See the `atomic-design` skill. Files `kebab-case`, components `PascalCase`.
 
 ### 2. TypeScript & validation
 

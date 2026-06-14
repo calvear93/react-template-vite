@@ -140,7 +140,7 @@ ${PROJECT_TYPE == "Auto-detect" ? "For each detected technology stack, document 
 #### React Architectural Patterns
 
 - Component composition and reuse strategies
-- State management architecture (Jotai atoms, custom IoC via `#libs/ioc`)
+- State management architecture (Jotai-backed store, custom IoC via `#libs/ioc`)
 - Side effect handling patterns and custom hooks
 - Routing and navigation approach (`#libs/router`)
 - Data fetching, validation (Zod), and feature flags (`#libs/feature`)

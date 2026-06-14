@@ -1,16 +1,16 @@
 import { atom } from 'jotai';
 import { fetchSampleAsyncMock } from '../__mocks__/fetch-sample-async.mock.ts';
 
-const _innerAtom = atom<AsyncSampleState>({
+const _innerStore = atom<AsyncSampleState>({
 	content: {},
 	loading: false,
 	ready: false,
 });
 
-export const asyncAtom = atom(
-	(get) => get(_innerAtom),
+export const asyncStore = atom(
+	(get) => get(_innerStore),
 	async (_get, set) => {
-		set(_innerAtom, (state) => ({
+		set(_innerStore, (state) => ({
 			...state,
 			loading: true,
 			ready: false,
@@ -19,7 +19,7 @@ export const asyncAtom = atom(
 		const response = await fetchSampleAsyncMock();
 		const content = await response.json();
 
-		set(_innerAtom, (state) => ({
+		set(_innerStore, (state) => ({
 			...state,
 			content,
 			loading: false,
