@@ -34,6 +34,8 @@ const TRANSPARENT = { alpha: 0, b: 0, g: 0, r: 0 };
 // per-side padding fractions applied only to transparent symbols (not solid icons).
 const MASKABLE_PADDING = 0.2;
 const APPLE_PADDING = 0.12;
+// resolutions packed into the multi-size favicon.ico (legacy browsers pick the best).
+const ICO_SIZES = [16, 32, 48];
 // opaque-pixel coverage above which the source SVG is treated as a solid icon.
 const SOLID_COVERAGE = 0.6;
 
@@ -68,24 +70,25 @@ const detectSolid = async () => {
 const SOLID = await detectSolid();
 
 /**
- * Renders one square icon. A solid source is always full-bleed; a transparent
- * source gets safe-zone padding + an opaque background for maskable/apple icons.
+ * Resolves the padding/opacity for an icon. A solid source is always full-bleed;
+ * a transparent source gets safe-zone padding + an opaque background for
+ * maskable/apple icons (iOS has no alpha; maskable needs a safe zone).
  */
-const renderIcon = async (icon, out) => {
-	const size = largestSize(icon.sizes);
-	let padding = 0;
-	let opaque = false;
-
+const optionsFor = (icon) => {
 	if (!SOLID) {
 		if (isMaskable(icon.purpose)) {
-			padding = MASKABLE_PADDING;
-			opaque = true;
-		} else if (isApple(icon.src)) {
-			padding = APPLE_PADDING;
-			opaque = true;
+			return { opaque: true, padding: MASKABLE_PADDING };
+		}
+		if (isApple(icon.src)) {
+			return { opaque: true, padding: APPLE_PADDING };
 		}
 	}
 
+	return { opaque: false, padding: 0 };
+};
+
+/** Builds a sharp pipeline that renders the source at `size` with optional padding. */
+const buildPipeline = (size, { opaque, padding }) => {
 	const fill = opaque ? BACKGROUND : TRANSPARENT;
 	const inner = Math.round(size * (1 - 2 * padding));
 	const pad = size - inner;
@@ -111,7 +114,57 @@ const renderIcon = async (icon, out) => {
 		pipeline = pipeline.flatten({ background: BACKGROUND });
 	}
 
-	await pipeline.png().toFile(out);
+	return pipeline;
+};
+
+/** Renders one square icon to a PNG file. */
+const renderIcon = async (icon, out) => {
+	const size = largestSize(icon.sizes);
+	await buildPipeline(size, optionsFor(icon)).png().toFile(out);
+};
+
+/**
+ * Packs PNG buffers into a valid multi-resolution ICO container (sharp can only
+ * emit PNG). Layout: 6-byte ICONDIR header, one 16-byte ICONDIRENTRY per image,
+ * then the PNG payloads — all little-endian.
+ */
+const encodeIco = (pngs) => {
+	const header = Buffer.alloc(6);
+	header.writeUInt16LE(0, 0); // reserved
+	header.writeUInt16LE(1, 2); // type: 1 = icon
+	header.writeUInt16LE(pngs.length, 4); // image count
+
+	const entries = Buffer.alloc(16 * pngs.length);
+	let offset = header.length + entries.length;
+
+	for (const [index, { data, size }] of pngs.entries()) {
+		const at = 16 * index;
+		entries.writeUInt8(size >= 256 ? 0 : size, at + 0); // width (0 = 256)
+		entries.writeUInt8(size >= 256 ? 0 : size, at + 1); // height (0 = 256)
+		entries.writeUInt8(0, at + 2); // palette colors
+		entries.writeUInt8(0, at + 3); // reserved
+		entries.writeUInt16LE(1, at + 4); // color planes
+		entries.writeUInt16LE(32, at + 6); // bits per pixel
+		entries.writeUInt32LE(data.length, at + 8); // payload size
+		entries.writeUInt32LE(offset, at + 12); // payload offset
+		offset += data.length;
+	}
+
+	return Buffer.concat([header, entries, ...pngs.map(({ data }) => data)]);
+};
+
+/** Renders the multi-resolution favicon.ico (full-bleed, transparency preserved). */
+const renderIco = async (out) => {
+	const pngs = await Promise.all(
+		ICO_SIZES.map(async (size) => ({
+			size,
+			data: await buildPipeline(size, { opaque: false, padding: 0 })
+				.png()
+				.toBuffer(),
+		})),
+	);
+
+	await writeFile(out, encodeIco(pngs));
 };
 
 /** Generates every icon file declared in the manifest. */
@@ -121,6 +174,8 @@ const generateIcons = async () => {
 
 		if (icon.type === 'image/svg+xml') {
 			await copyFile(SOURCE, out);
+		} else if (icon.type === 'image/x-icon') {
+			await renderIco(out);
 		} else {
 			await renderIcon(icon, out);
 		}
