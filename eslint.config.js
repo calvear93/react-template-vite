@@ -392,7 +392,7 @@ export default [
 			'unicorn/expiring-todo-comments': ERROR,
 			'unicorn/explicit-length-check': WARN,
 			'unicorn/new-for-builtins': ERROR,
-			'unicorn/no-array-for-each': WARN,
+			'unicorn/no-for-each': WARN,
 			'unicorn/no-array-method-this-argument': ERROR,
 			'unicorn/no-array-push-push': ERROR,
 			'unicorn/no-array-reverse': WARN,
