@@ -24,11 +24,11 @@ const OUT = join(__dirname, '../public/icons');
 const MANIFEST = join(__dirname, '../public/site.webmanifest');
 const HTML = join(__dirname, '../index.html');
 
-// SVG render resolution (DPI). High value keeps large PNGs sharp before downscale.
+// render density (DPI) for the SVG; higher keeps large PNGs sharp on downscale.
 const DENSITY = 384;
-const TRANSPARENT = { r: 0, g: 0, b: 0, alpha: 0 };
-// Per-side padding fractions. Maskable content must sit inside the central
-// 40%-radius safe circle; 20% per side keeps the landscape logo comfortably inside.
+const TRANSPARENT = { alpha: 0, b: 0, g: 0, r: 0 };
+// per-side padding fractions; maskable content must sit inside the central
+// 40%-radius safe circle, so 20% per side keeps the landscape logo well inside.
 const MASKABLE_PADDING = 0.2;
 const APPLE_PADDING = 0.12;
 
@@ -46,38 +46,38 @@ const eolOf = (text) => (text.includes('\r\n') ? '\r\n' : '\n');
 const ICONS = [
 	{
 		file: 'favicon.ico',
-		size: 48,
 		manifest: { sizes: '48x48', type: 'image/x-icon' },
+		size: 48,
 	},
 	{
-		file: 'apple-touch-icon.png',
-		size: 180,
-		padding: APPLE_PADDING,
 		background: BACKGROUND,
+		file: 'apple-touch-icon.png',
+		padding: APPLE_PADDING,
+		size: 180,
 	},
 	{
 		file: 'icon-192.png',
+		manifest: { purpose: 'any', sizes: '192x192', type: 'image/png' },
 		size: 192,
-		manifest: { sizes: '192x192', type: 'image/png', purpose: 'any' },
 	},
 	{
 		file: 'icon-512.png',
+		manifest: { purpose: 'any', sizes: '512x512', type: 'image/png' },
 		size: 512,
-		manifest: { sizes: '512x512', type: 'image/png', purpose: 'any' },
 	},
 	{
+		background: BACKGROUND,
 		file: 'icon-maskable-192.png',
-		size: 192,
+		manifest: { purpose: 'maskable', sizes: '192x192', type: 'image/png' },
 		padding: MASKABLE_PADDING,
-		background: BACKGROUND,
-		manifest: { sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+		size: 192,
 	},
 	{
-		file: 'icon-maskable-512.png',
-		size: 512,
-		padding: MASKABLE_PADDING,
 		background: BACKGROUND,
-		manifest: { sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+		file: 'icon-maskable-512.png',
+		manifest: { purpose: 'maskable', sizes: '512x512', type: 'image/png' },
+		padding: MASKABLE_PADDING,
+		size: 512,
 	},
 ];
 
@@ -86,7 +86,7 @@ const ICONS = [
  * padded out to the target size, and flattened onto an opaque background when one
  * is provided.
  */
-const renderIcon = async ({ file, size, padding = 0, background = null }) => {
+const renderIcon = async ({ background = null, file, padding = 0, size }) => {
 	const inner = Math.round(size * (1 - 2 * padding));
 	const pad = size - inner;
 	const before = Math.floor(pad / 2);
@@ -96,17 +96,17 @@ const renderIcon = async ({ file, size, padding = 0, background = null }) => {
 	const fill = background ?? TRANSPARENT;
 
 	let pipeline = sharp(SRC, { density: DENSITY }).resize(inner, inner, {
-		fit: 'contain',
 		background: fill,
+		fit: 'contain',
 	});
 
 	if (pad > 0) {
 		pipeline = pipeline.extend({
-			top: before,
+			background: fill,
 			bottom: after,
 			left: before,
 			right: after,
-			background: fill,
+			top: before,
 		});
 	}
 
@@ -115,7 +115,7 @@ const renderIcon = async ({ file, size, padding = 0, background = null }) => {
 	}
 
 	await pipeline.png().toFile(join(OUT, file));
-	console.log(`✓ ${file}`);
+	console.info(`✓ ${file}`);
 };
 
 /** Rewrites the manifest `icons` array (and ensures a stable `id`) from the spec. */
@@ -129,22 +129,24 @@ const updateManifest = async () => {
 	const eol = eolOf(manifestRaw);
 	const json = JSON.stringify(manifest, null, '\t').replaceAll('\n', eol);
 	await writeFile(MANIFEST, `${json}${eol}`);
-	console.log('✓ site.webmanifest');
+	console.info('✓ site.webmanifest');
 };
 
 /** Regenerates the favicon `<link>` block in index.html between its markers. */
 const updateHtml = async () => {
+	const start = '<!-- favicons:start -->';
+	const end = '<!-- favicons:end -->';
 	const links = [
 		'<link rel="icon" href="/icons/favicon.ico" sizes="48x48" />',
 		'<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />',
 		'<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />',
 	];
-	const markers =
-		/([ \t]*<!-- favicons:start -->)[\s\S]*?([ \t]*<!-- favicons:end -->)/u;
 
 	const html = await readFile(HTML, 'utf8');
+	const startIndex = html.indexOf(start);
+	const endIndex = html.indexOf(end);
 
-	if (!markers.test(html)) {
+	if (startIndex === -1 || endIndex === -1) {
 		console.warn(
 			'⚠ favicons markers not found in index.html — skipping HTML update',
 		);
@@ -152,9 +154,13 @@ const updateHtml = async () => {
 	}
 
 	const eol = eolOf(html);
-	const block = links.map((link) => `\t\t${link}`).join(eol);
-	await writeFile(HTML, html.replace(markers, `$1${eol}${block}${eol}$2`));
-	console.log('✓ index.html');
+	// keep the markers and their indentation; rewrite only the block between them.
+	const head = html.slice(0, startIndex + start.length);
+	const tail = html.slice(html.lastIndexOf('\n', endIndex) + 1);
+	const block = links.map((link) => `${eol}\t\t${link}`).join('');
+
+	await writeFile(HTML, `${head}${block}${eol}${tail}`);
+	console.info('✓ index.html');
 };
 
 for (const icon of ICONS) {
@@ -162,7 +168,7 @@ for (const icon of ICONS) {
 }
 
 await copyFile(SRC, join(OUT, 'favicon.svg'));
-console.log('✓ favicon.svg');
+console.info('✓ favicon.svg');
 
 await updateManifest();
 await updateHtml();

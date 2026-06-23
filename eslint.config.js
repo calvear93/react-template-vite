@@ -392,7 +392,6 @@ export default [
 			'unicorn/expiring-todo-comments': ERROR,
 			'unicorn/explicit-length-check': WARN,
 			'unicorn/new-for-builtins': ERROR,
-			'unicorn/no-for-each': WARN,
 			'unicorn/no-array-method-this-argument': ERROR,
 			'unicorn/no-array-push-push': ERROR,
 			'unicorn/no-array-reverse': WARN,
@@ -401,6 +400,7 @@ export default [
 			'unicorn/no-console-spaces': WARN,
 			'unicorn/no-document-cookie': ERROR,
 			'unicorn/no-empty-file': ERROR,
+			'unicorn/no-for-each': WARN,
 			'unicorn/no-hex-escape': WARN,
 			'unicorn/no-instanceof-array': WARN,
 			'unicorn/no-invalid-fetch-options': ERROR,
@@ -485,6 +485,8 @@ export default [
 				ERROR,
 				{
 					cases: { kebabCase: true, pascalCase: true },
+					// allow conventional double-underscore test/mock/fixture folders
+					ignore: [/^__(?:fixtures|mocks|tests)__$/u],
 				},
 			],
 		},
