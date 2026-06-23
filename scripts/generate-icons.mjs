@@ -1,17 +1,14 @@
 /**
  * Generates the app icon set declared in `public/site.webmanifest` and keeps the
- * `index.html` favicon links in sync with it.
+ * `index.html` favicon links in sync with it. The manifest is the single source
+ * of truth — this script only reads it.
  *
- * `site.webmanifest` is the single source of truth: it lists every icon
- * (`src`, `sizes`, `type`, `purpose`) and this script only consumes it — it never
- * writes it. Each icon's render rules are derived from its entry:
- * - `image/svg+xml`      → the source SVG is copied verbatim (scalable favicon).
- * - `purpose: maskable`  → opaque background + safe-zone padding (Lighthouse audit).
- * - `apple-touch-icon.*` → opaque background + light padding (iOS has no alpha).
- * - everything else      → transparent, full-bleed.
- *
- * Quality: `fit: 'contain'` never crops/distorts and a high `density` keeps large
- * PNGs crisp before downscaling.
+ * The renderer respects the source SVG: it detects whether `logo.svg` is a solid
+ * filled icon (e.g. a squircle) or a transparent symbol, and adapts:
+ * - solid source       → full-bleed (resize only).
+ * - transparent source → `any` stays transparent full-bleed; `maskable` gets
+ *   safe-zone padding + opaque background; `apple-touch-icon` gets light padding +
+ *   opaque background (iOS has no alpha). `image/svg+xml` entries copy the SVG.
  */
 import { copyFile, readFile, writeFile } from 'node:fs/promises';
 import { basename, dirname, join } from 'node:path';
@@ -20,54 +17,80 @@ import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
-const SOURCE = join(ROOT, 'public/icons/logo.svg');
 const PUBLIC = join(ROOT, 'public');
+const SOURCE = join(PUBLIC, 'icons/logo.svg');
 const MANIFEST = join(PUBLIC, 'site.webmanifest');
 const HTML = join(ROOT, 'index.html');
 
-// render density (DPI) for the SVG; higher keeps large PNGs sharp on downscale.
-const DENSITY = 384;
+// rasterize the source SVG at ~1536px so downscales to any icon size stay crisp;
+// deriving density from the SVG's own size avoids sharp's pixel limit on huge SVGs.
+const RASTER = 1536;
+const { height, width } = await sharp(SOURCE).metadata();
+const DENSITY = Math.max(
+	1,
+	Math.round((RASTER * 72) / Math.max(width ?? RASTER, height ?? RASTER)),
+);
 const TRANSPARENT = { alpha: 0, b: 0, g: 0, r: 0 };
-// per-side padding fractions; maskable content must sit inside the central
-// 40%-radius safe circle, so 20% per side keeps the landscape logo well inside.
+// per-side padding fractions applied only to transparent symbols (not solid icons).
 const MASKABLE_PADDING = 0.2;
 const APPLE_PADDING = 0.12;
+// opaque-pixel coverage above which the source SVG is treated as a solid icon.
+const SOLID_COVERAGE = 0.6;
 
 const manifest = JSON.parse(await readFile(MANIFEST, 'utf8'));
 const BACKGROUND = manifest.background_color ?? '#ffffff';
 
-/** Detects the dominant line ending so partial rewrites preserve the file's EOL. */
 const eolOf = (text) => (text.includes('\r\n') ? '\r\n' : '\n');
-
 const isApple = (src) => basename(src).startsWith('apple-touch-icon');
 const isMaskable = (purpose) => (purpose ?? '').split(' ').includes('maskable');
 const largestSize = (sizes) =>
 	Math.max(...sizes.split(' ').map((size) => Number.parseInt(size, 10)));
 
-/** Maps a manifest icon to its raster options (opaqueness + padding derived from intent). */
-const optionsFor = ({ purpose, src }) => {
-	if (isMaskable(purpose)) {
-		return { background: BACKGROUND, padding: MASKABLE_PADDING };
+/** Detects whether the source SVG is a solid/filled icon vs a transparent symbol. */
+const detectSolid = async () => {
+	const size = 128;
+	const { data } = await sharp(SOURCE, { density: DENSITY })
+		.resize(size, size, { background: TRANSPARENT, fit: 'contain' })
+		.ensureAlpha()
+		.raw()
+		.toBuffer({ resolveWithObject: true });
+
+	let opaque = 0;
+	for (let index = 3; index < data.length; index += 4) {
+		if (data[index] > 250) {
+			opaque += 1;
+		}
 	}
-	if (isApple(src)) {
-		return { background: BACKGROUND, padding: APPLE_PADDING };
-	}
-	return { background: null, padding: 0 };
+
+	return opaque / (size * size) >= SOLID_COVERAGE;
 };
 
+const SOLID = await detectSolid();
+
 /**
- * Renders a single square icon: the logo is fit (contained) into a centered box,
- * padded out to the target size, and flattened onto an opaque background when one
- * is provided.
+ * Renders one square icon. A solid source is always full-bleed; a transparent
+ * source gets safe-zone padding + an opaque background for maskable/apple icons.
  */
-const renderIcon = async ({ background, out, padding, size }) => {
+const renderIcon = async (icon, out) => {
+	const size = largestSize(icon.sizes);
+	let padding = 0;
+	let opaque = false;
+
+	if (!SOLID) {
+		if (isMaskable(icon.purpose)) {
+			padding = MASKABLE_PADDING;
+			opaque = true;
+		} else if (isApple(icon.src)) {
+			padding = APPLE_PADDING;
+			opaque = true;
+		}
+	}
+
+	const fill = opaque ? BACKGROUND : TRANSPARENT;
 	const inner = Math.round(size * (1 - 2 * padding));
 	const pad = size - inner;
 	const before = Math.floor(pad / 2);
 	const after = pad - before;
-	// `contain` only fills the letterbox; the logo's own transparency is composited
-	// onto `background` by `flatten`. Both must use the opaque fill to stay opaque.
-	const fill = background ?? TRANSPARENT;
 
 	let pipeline = sharp(SOURCE, { density: DENSITY }).resize(inner, inner, {
 		background: fill,
@@ -84,8 +107,8 @@ const renderIcon = async ({ background, out, padding, size }) => {
 		});
 	}
 
-	if (background) {
-		pipeline = pipeline.flatten({ background });
+	if (opaque) {
+		pipeline = pipeline.flatten({ background: BACKGROUND });
 	}
 
 	await pipeline.png().toFile(out);
@@ -99,11 +122,7 @@ const generateIcons = async () => {
 		if (icon.type === 'image/svg+xml') {
 			await copyFile(SOURCE, out);
 		} else {
-			await renderIcon({
-				...optionsFor(icon),
-				out,
-				size: largestSize(icon.sizes),
-			});
+			await renderIcon(icon, out);
 		}
 
 		console.info(`✓ ${basename(icon.src)}`);
