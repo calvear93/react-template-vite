@@ -3,7 +3,7 @@ import { asyncStore } from '../store/async.store.ts';
 import type { FetchBoxProps } from './FetchBox.tsx';
 import styles from './FetchBox.module.css';
 
-export const FetchBox_v2a: React.FC<FetchBoxProps> = ({ logoSrc }) => {
+export const FetchBox_v2a = ({ logoSrc }: FetchBoxProps) => {
 	const [{ content, loading }, dispatchFetch] = useAtom(asyncStore);
 
 	return (

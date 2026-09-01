@@ -305,9 +305,7 @@ describe('useApiData with IoC', () => {
 		const mockIoCValues = new Map();
 		mockIoCValues.set(HttpClient, mockHttpClient);
 
-		const wrapper: React.FC<{ children: ReactNode }> = ({
-			children,
-		}): React.ReactElement => (
+		const wrapper = ({ children }: { children: ReactNode }) => (
 			<InversionOfControlProvider values={mockIoCValues}>
 				{children}
 			</InversionOfControlProvider>

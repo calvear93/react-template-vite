@@ -1,7 +1,7 @@
 import { isRouteErrorResponse, useRouteError } from '#libs/router';
 import styles from './Error.page.module.css';
 
-export const ErrorPage: React.FC = (): React.ReactElement => {
+export const ErrorPage = () => {
 	const error = useRouteError();
 
 	// jsx

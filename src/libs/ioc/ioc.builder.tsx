@@ -22,7 +22,7 @@ const IoCContext = createContext<Map<unknown, unknown> | null>(null);
  *	// AnyComponent.ts
  *	import { useInjection, MY_CUSTOM_PROVIDER } from './app.ioc.ts';
  *
- *	export const AnyComponent: React.FC = (): React.ReactElement => {
+ *	export const AnyComponent = () => {
  *		const httpClient = useInjection(HttpClient);
  *		const myCustomProvider = useInjection<MyCustomProvider>(MY_CUSTOM_PROVIDER);
  *

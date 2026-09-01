@@ -20,7 +20,7 @@ Bind services once in a bootstrap file, then pull them anywhere with a hook. Swa
 | ---------------------------- | ---------------------------- | ---------------------------------------------------- |
 | `container`                  | `{ bind, resolve, unbind }`  | register and read bindings (outside React)           |
 | `useInjection(token)`        | hook → resolved instance     | read a dependency inside a component/hook            |
-| `InversionOfControlProvider` | `React.FC<{ values?: Map }>` | scope/override bindings for a subtree (tests, mocks) |
+| `InversionOfControlProvider` | `({ values? }) => Component`  | scope/override bindings for a subtree (tests, mocks) |
 
 | `container` method | Signature                | Notes                                          |
 | ------------------ | ------------------------ | ---------------------------------------------- |

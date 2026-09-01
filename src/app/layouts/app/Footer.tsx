@@ -3,7 +3,7 @@
  *
  * @returns footer component
  */
-export const Footer: React.FC<FooterProps> = ({ text }): React.ReactElement => {
+export const Footer = ({ text }: FooterProps) => {
 	return <footer>{text}</footer>;
 };
 

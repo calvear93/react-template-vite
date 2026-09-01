@@ -8,13 +8,13 @@ Follow `AGENTS.md` and `.github/instructions/{coding-standards,patterns}.instruc
 
 ### 1. Component Structure
 
-- Type as `React.FC<Props>` (or `({ ... }: Props) =>`); keep components declarative and move business logic into custom hooks.
+- Type as `({ ... }: Props) =>`; keep components declarative and move business logic into custom hooks.
 - **Atomic Design placement:** decide the component's level and place the file accordingly — `src/app/components/atoms/` (smallest, presentational), `molecules/` (a few atoms combined), or `organisms/` (complex sections that may hold state). Atoms/molecules are presentational (props in, JSX out; no store reads, fetching, or routing); state and IoC enter at organisms or pages. Compose upward only; templates = `src/app/layouts/`, pages = `src/app/pages/`. See the `atomic-design` skill. Files `kebab-case`, components `PascalCase`.
 
 ### 2. TypeScript & validation
 
 - Define a props interface with JSDoc; use Zod schemas for complex props or form data.
-- Use inline type imports: `import { useState } from 'react'`; type components as `React.FC<Props>` (global namespace, no `FC` import). Prefer generics/`unknown` over `any`.
+- Use inline type imports: `import { useState } from 'react'`; type components by annotating the destructured parameter (`({ ... }: Props) =>`) and let TS infer the return type. Prefer generics/`unknown` over `any`.
 
 ### 3. Styling & design
 
@@ -63,12 +63,12 @@ interface ComponentNameProps {
  * @param props - Component props
  * @returns JSX element with [functionality description]
  */
-export const ComponentName: React.FC<ComponentNameProps> = ({
+export const ComponentName = ({
 	propName,
 	onAction,
 	isLoading = false,
 	className,
-}): React.ReactElement => {
+}: ComponentNameProps) => {
 	// component implementation
 };
 ```
@@ -79,9 +79,7 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
 import { useInjection } from '../app.ioc.ts';
 import { HttpClient } from '../services/http-client.service.ts';
 
-export const DataComponent: React.FC<DataComponentProps> = ({
-	userId,
-}): React.ReactElement => {
+export const DataComponent = ({ userId }: DataComponentProps) => {
 	const httpClient = useInjection(HttpClient);
 
 	// use injected dependencies
@@ -131,16 +129,14 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-export const FormComponent: React.FC<FormProps> = ({
-	onSubmit,
-}): React.ReactElement => {
+export const FormComponent = ({ onSubmit }: FormProps) => {
 	// form implementation with zod validation
 };
 ```
 
 ## Technical Checklist
 
-- [ ] Props interface typed with JSDoc; `React.FC`/destructured signature
+- [ ] Props interface typed with JSDoc; destructured parameter signature
 - [ ] CSS Modules + UnoCSS, responsive; accessible (ARIA, semantic HTML, keyboard)
 - [ ] Loading/error/success states handled; no `dangerouslySetInnerHTML`
 - [ ] Services/config via `useInjection` (no hardcoded values); logic extracted to hooks

@@ -63,10 +63,7 @@ interface MyNewLayoutProps extends React.PropsWithChildren {
 	title?: string;
 }
 
-export const MyNewLayout: React.FC<MyNewLayoutProps> = ({
-	children,
-	title,
-}) => (
+export const MyNewLayout = ({ children, title }: MyNewLayoutProps) => (
 	<div className={styles.container}>
 		<nav>Navigation</nav>
 		<main>
@@ -106,7 +103,7 @@ export const routes: RouteDefinition[] = [
 
 ```tsx
 // Example for auth pages
-export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => (
+export const AuthLayout = ({ children }: AuthLayoutProps) => (
 	<div className={styles.authContainer}>
 		<div className={styles.authCard}>
 			<Logo />
@@ -120,7 +117,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => (
 
 ```tsx
 // Example for admin pages
-export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => (
+export const AdminLayout = ({ children }: AdminLayoutProps) => (
 	<div className={styles.adminWrapper}>
 		<Sidebar />
 		<div className={styles.adminContent}>

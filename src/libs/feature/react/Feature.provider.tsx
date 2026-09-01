@@ -16,7 +16,7 @@ export const FeatureContext = createContext<FeatureHandler | null>(null);
  *		FEATURE_Z_V2: globalThis.FEATURES.Z_V2,
  *	});
  *
- *	export const App: React.FC = () => {
+ *	export const App = () => {
  *		return (
  *			<FeatureProvider handler={features}>
  *				<App />
@@ -25,10 +25,10 @@ export const FeatureContext = createContext<FeatureHandler | null>(null);
  *	};
  *```
  */
-export const FeatureProvider: React.FC<FeatureProviderProps> = ({
+export const FeatureProvider = ({
 	children,
 	handler,
-}) => {
+}: FeatureProviderProps) => {
 	return (
 		<FeatureContext.Provider value={handler}>
 			{children}

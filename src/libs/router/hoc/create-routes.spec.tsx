@@ -3,8 +3,8 @@ import type { RouteDefinition } from '../types/route.d.ts';
 import { createRoutes } from './create-routes.tsx';
 
 describe(createRoutes, () => {
-	const Page: React.FC = () => <div>page</div>;
-	const Layout: React.FC<React.PropsWithChildren> = ({ children }) => (
+	const Page = () => <div>page</div>;
+	const Layout = ({ children }: React.PropsWithChildren) => (
 		<div>{children}</div>
 	);
 

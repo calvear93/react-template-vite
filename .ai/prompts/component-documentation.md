@@ -52,12 +52,12 @@ interface UserCardProps {
  * <UserCard onEdit={handleEdit} user={user} />;
  * ```
  */
-export const UserCard: React.FC<UserCardProps> = ({
+export const UserCard = ({
 	user,
 	onEdit,
 	isLoading,
 	className,
-}): React.ReactElement => {
+}: UserCardProps) => {
 	// component implementation
 };
 ````

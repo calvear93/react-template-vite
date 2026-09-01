@@ -8,7 +8,7 @@ Follow `AGENTS.md` and `.github/instructions/{architecture-guide,patterns}.instr
 
 ### 1. Page Structure
 
-- Use the `.page.tsx` suffix; type as `React.FC`. Keep data/business logic in custom hooks.
+- Use the `.page.tsx` suffix; a plain function component with an inferred return type. Keep data/business logic in custom hooks.
 - Import routing primitives from `#libs/router` (React Router 8); lazy-load routes. The route's
   `Layout:` field supplies the wrapping layout — pages never wrap themselves.
 
@@ -37,7 +37,7 @@ import { useNavigate, useParams } from '#libs/router';
  * [page description explaining purpose and functionality]
  * handles [specific features] with proper error handling and loading states.
  */
-export const PageName: React.FC = (): React.ReactElement => {
+export const PageName = () => {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ import { useInjection } from '../app.ioc.ts';
 import { HttpClient } from '../services/http-client.service.ts';
 import { type User } from './user.schema.ts';
 
-export const UserPage: React.FC = (): React.ReactElement => {
+export const UserPage = () => {
 	const { id } = useParams<{ id: string }>();
 	const httpClient = useInjection(HttpClient);
 
@@ -108,7 +108,7 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-export const CreateItemPage: React.FC = (): React.ReactElement => {
+export const CreateItemPage = () => {
 	const navigate = useNavigate();
 	const httpClient = useInjection(HttpClient);
 
@@ -145,7 +145,7 @@ export const CreateItemPage: React.FC = (): React.ReactElement => {
 
 ## Technical Checklist
 
-- [ ] `.page.tsx` suffix; typed via `React.FC`; registered under a route with a `Layout:`
+- [ ] `.page.tsx` suffix; plain function component; registered under a route with a `Layout:`
 - [ ] Typed `useParams`; navigation via `useNavigate`; routing primitives from `#libs/router`
 - [ ] Services/config via `useInjection` (no hardcoded values); data/logic in custom hooks
 - [ ] Loading/error/success states; error boundary; Zod for form validation
@@ -176,7 +176,7 @@ import { useEffect } from 'react';
 import { useNavigate } from '#libs/router';
 import { useAuth } from '../hooks/use-auth.ts';
 
-export const ProtectedPage: React.FC = (): React.ReactElement => {
+export const ProtectedPage = () => {
 	const { isAuthenticated } = useAuth();
 	const navigate = useNavigate();
 

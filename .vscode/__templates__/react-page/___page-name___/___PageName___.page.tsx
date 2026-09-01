@@ -5,7 +5,7 @@ import styles from './___PageName___.page.module.css';
  *
  * @returns page
  */
-export const ___PageName___Page: React.FC = (): React.ReactElement => {
+export const ___PageName___Page = () => {
 	return (
 		<section className={styles.page}>
 			<title>___title___</title>

@@ -29,7 +29,7 @@ Improve the code quality of [FILE/COMPONENT] by:
 ### TypeScript & React Best Practices:
 
 - Use explicit types instead of `any` (prefer `unknown` + narrowing or generics)
-- Use inline type imports (e.g. `import { useState } from 'react'`) with `.ts`/`.tsx` extensions on relative imports; type components as `React.FC<Props>` (global namespace, no `FC` import) per this repo's convention
+- Use inline type imports (e.g. `import { useState } from 'react'`) with `.ts`/`.tsx` extensions on relative imports; type components by annotating the destructured parameter (`({ ... }: Props) =>`) and let TS infer the return type, per this repo's convention
 - Implement proper interface definitions for props
 - Apply union types and generics appropriately; use type guards for runtime checks
 - Implement proper React patterns (hooks, functional components)

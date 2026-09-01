@@ -71,7 +71,7 @@ import { useEffect } from 'react';
 import { Link } from '#libs/router';
 import styles from './MyNewPage.page.module.css';
 
-export const MyNewPage: React.FC = (): React.ReactElement => {
+export const MyNewPage = () => {
 	// hooks and init logic
 
 	return (
@@ -512,7 +512,7 @@ describe('DetailPage with mocks', () => {
 ```tsx
 import { useFeature } from '#libs/feature';
 
-export const FeaturePage: React.FC = () => {
+export const FeaturePage = () => {
 	const isNewFeatureEnabled = useFeature('NEW_FEATURE_V2');
 
 	return (
@@ -533,7 +533,7 @@ export const FeaturePage: React.FC = () => {
 import { useAtomValue } from 'jotai';
 import { userStore } from '../../store/user.store.ts';
 
-export const ProtectedPage: React.FC = () => {
+export const ProtectedPage = () => {
 	const user = useAtomValue(userStore);
 
 	if (!user) {
@@ -553,7 +553,7 @@ export const ProtectedPage: React.FC = () => {
 
 ```tsx
 // Different layout for specific pages
-export const AdminPage: React.FC = () => {
+export const AdminPage = () => {
 	return (
 		// Content will be wrapped by AdminLayout in routes
 		<section>

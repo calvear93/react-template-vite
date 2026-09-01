@@ -6,7 +6,7 @@ You write a tree of routes; the library wires up `RouterProvider`, `Suspense`, l
 
 ## ✨ Highlights
 
-- **Config → component** — `createRouter(config)` returns a plain `React.FC`.
+- **Config → component** — `createRouter(config)` returns a plain function component.
 - **Layouts as first-class nodes** — a `Layout` wraps its `children` via `<Outlet />`, nestable to any depth.
 - **Two ways to lazy-load** — pass `Component: lazy(() => import(...))`, or just `lazy: () => import(...)` and let the library wrap it.
 - **Three router types** — `browser` (default), `hash`, `memory`.
@@ -16,7 +16,7 @@ You write a tree of routes; the library wires up `RouterProvider`, `Suspense`, l
 
 | Export                   | Signature              | Description                                     |
 | ------------------------ | ---------------------- | ----------------------------------------------- |
-| `createRouter`           | `(config) => React.FC` | builds a render-ready router component          |
+| `createRouter`           | `(config) => Component` | builds a render-ready router component          |
 | `useHashValue`           | `() => string`         | current URL hash, without the leading `#`       |
 | `RouteDefinition`        | type                   | a component route **or** a layout route (XOR)   |
 | _…all of_ `react-router` | re-exported            | `Link`, `useNavigate`, `useParams`, `Outlet`, … |
@@ -192,4 +192,4 @@ it('shows the home page', () => {
 
 ## 🧠 How it works
 
-`createRouter` runs your config through `createRoutes`, which: converts each `Layout` route into a component that renders `<Layout><Outlet /></Layout>` (wrapped in `<Suspense>` when `loading` is set), turns any `lazy` import into `React.lazy`, defaults a missing `path` to `''`, and recurses into `children`. The normalized tree is handed to the matching React Router factory (`createBrowserRouter` / `createHashRouter` / `createMemoryRouter`), and the returned `React.FC` renders `<Suspense><RouterProvider /></Suspense>`.
+`createRouter` runs your config through `createRoutes`, which: converts each `Layout` route into a component that renders `<Layout><Outlet /></Layout>` (wrapped in `<Suspense>` when `loading` is set), turns any `lazy` import into `React.lazy`, defaults a missing `path` to `''`, and recurses into `children`. The normalized tree is handed to the matching React Router factory (`createBrowserRouter` / `createHashRouter` / `createMemoryRouter`), and the returned function component renders `<Suspense><RouterProvider /></Suspense>`.

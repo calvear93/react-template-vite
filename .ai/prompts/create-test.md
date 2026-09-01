@@ -231,9 +231,7 @@ const mockHttpClient = {
 const mockIoCValues = new Map();
 mockIoCValues.set(HttpClient, mockHttpClient);
 
-const wrapper: React.FC<{ children: ReactNode }> = ({
-	children,
-}): React.ReactElement => (
+const wrapper = ({ children }: { children: ReactNode }) => (
 	<InversionOfControlProvider values={mockIoCValues}>
 		{children}
 	</InversionOfControlProvider>
@@ -319,9 +317,7 @@ import { MemoryRouter } from '#libs/router';
 import { PageComponent } from './page-component.tsx';
 
 // wrapper for components that need router context
-const RouterWrapper: React.FC<{ children: ReactNode }> = ({
-	children,
-}): React.ReactElement => (
+const RouterWrapper = ({ children }: { children: ReactNode }) => (
 	<MemoryRouter initialEntries={['/']}>{children}</MemoryRouter>
 );
 

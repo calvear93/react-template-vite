@@ -158,11 +158,11 @@ const Router = createRouter({
 	routes: routes.app,
 });
 
-export const AppRouter: React.FC = () => <Router />;
+export const AppRouter = () => <Router />;
 ```
 
-A layout component (e.g. `AppLayout`) is a plain `React.FC<React.PropsWithChildren>` that renders
-`{children}` — `createRouter()` wraps whatever you assign to `Layout:` and supplies react-router's
+A layout component (e.g. `AppLayout`) is a plain function component that takes `React.PropsWithChildren`
+(or a named props interface extending it) and renders `{children}` — `createRouter()` wraps whatever you assign to `Layout:` and supplies react-router's
 `<Outlet />` as that `children` prop automatically, so the layout itself never imports `Outlet` or
 knows about routing. Use typed params (`useParams<{ userId: string }>()`) and `useNavigate` for
 programmatic navigation, both re-exported from `#libs/router`.

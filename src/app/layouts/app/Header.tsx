@@ -3,9 +3,7 @@
  *
  * @returns header component
  */
-export const Header: React.FC<HeaderProps> = ({
-	title,
-}): React.ReactElement => {
+export const Header = ({ title }: HeaderProps) => {
 	return <header>{title}</header>;
 };
 

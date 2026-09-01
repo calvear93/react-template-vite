@@ -7,9 +7,7 @@ import styles from './App.layout.module.css';
  *
  * @returns app layout
  */
-export const AppLayout: React.FC<AppLayoutProps> = ({
-	children,
-}): React.ReactElement => (
+export const AppLayout = ({ children }: AppLayoutProps) => (
 	<main className={styles.layout}>
 		<Header title='App' />
 

@@ -26,7 +26,7 @@ worked recipes are in [patterns](patterns.instructions.md). This document does n
 ### Classes, interfaces, types, enums — PascalCase
 
 ```typescript
-export const UserCard: React.FC = () => {};
+export const UserCard = () => {};
 export interface UserData {}
 export type UserRole = 'admin' | 'user';
 
@@ -155,7 +155,7 @@ config.timeout ??= 10000;
 Inside a component, follow a consistent order:
 
 ```typescript
-export const UserCard: React.FC<UserCardProps> = ({ user, onEdit }) => {
+export const UserCard = ({ user, onEdit }: UserCardProps) => {
 	// 1. state and refs
 	const [isLoading, setIsLoading] = useState(false);
 	const cardRef = useRef<HTMLDivElement>(null);

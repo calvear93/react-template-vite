@@ -123,11 +123,11 @@ interface UserCardProps {
 /**
  * Displays user information with an optional edit action.
  */
-export const UserCard: React.FC<UserCardProps> = ({
+export const UserCard = ({
 	user,
 	onEdit,
 	isLoading = false,
-}) => {
+}: UserCardProps) => {
 	const handleEdit = useCallback(() => onEdit?.(user), [onEdit, user]);
 
 	if (isLoading) return <div className={styles.loading}>Loading…</div>;
@@ -156,7 +156,7 @@ import { useUser } from './hooks/use-user.hook.ts';
 import { UserCard } from './components/UserCard.tsx';
 import styles from './User.page.module.css';
 
-export const UserPage: React.FC = () => {
+export const UserPage = () => {
 	const { userId } = useParams<{ userId: string }>();
 	const { user, isLoading, error } = useUser(
 		userId ? Number.parseInt(userId, 10) : undefined,
@@ -315,12 +315,7 @@ interface ModalProps {
 	children: React.ReactNode;
 }
 
-export const Modal: React.FC<ModalProps> = ({
-	isOpen,
-	title,
-	onClose,
-	children,
-}) => {
+export const Modal = ({ isOpen, title, onClose, children }: ModalProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {

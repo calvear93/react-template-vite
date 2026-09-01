@@ -62,7 +62,7 @@ const getRouterFactory = {
  *		loader: <h1>Loading</h1>,
  *	});
  *
- *	export const AppRouter: React.FC = (): React.ReactElement => {
+ *	export const AppRouter = () => {
  *		// authorization or any other logic
  *
  *		return <Router />;
@@ -74,13 +74,13 @@ export const createRouter = ({
 	options,
 	routes: routesDef,
 	type = 'browser',
-}: MemoryRouterConfig | RouterConfig): React.FC => {
+}: MemoryRouterConfig | RouterConfig) => {
 	const routes = createRoutes(routesDef);
 
 	const create = getRouterFactory[type];
 	const router = create(routes, options);
 
-	return (): React.ReactElement => (
+	return () => (
 		<Suspense fallback={loading}>
 			<RouterProvider router={router} />
 		</Suspense>

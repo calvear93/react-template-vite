@@ -10,7 +10,7 @@ import { FeatureHandler, linkStorageToFeatureHandler } from '#libs/feature';
  * ```tsx
  * import { useFeature } from '#libs/feature';
  *
- * export const UserDashboard: React.FC = () => {
+ * export const UserDashboard = () => {
  * 	const isV2Enabled = useFeature('FEATURE_V2');
  *
  * 	return (

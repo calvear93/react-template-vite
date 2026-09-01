@@ -4,7 +4,7 @@ import Logo from '../../assets/logo.svg';
 import { FetchBox } from './components/FetchBox.tsx';
 import styles from './Detail.page.module.css';
 
-export const DetailPage: React.FC = (): React.ReactElement => {
+export const DetailPage = () => {
 	const { id } = useParams();
 	const aMessage = useLoaderData<string>();
 	const { example } = useInjection<{ example: string }>('injectionToken');

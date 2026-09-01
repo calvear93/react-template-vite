@@ -17,7 +17,7 @@ A small `FeatureHandler` holds the flag state and emits change events; React hoo
 | Export                        | Type                                             | Use it to…                                     |
 | ----------------------------- | ------------------------------------------------ | ---------------------------------------------- |
 | `FeatureHandler`              | class                                            | hold + mutate flag state (the source of truth) |
-| `FeatureProvider`             | `React.FC<{ handler }>`                          | expose a handler to the React tree             |
+| `FeatureProvider`             | `({ handler }) => Component`                     | expose a handler to the React tree             |
 | `useFeature(name)`            | `() => readonly [boolean, (v: boolean) => void]` | read **and** set one flag, with re-render      |
 | `useFeatureHandler()`         | `() => FeatureHandler`                           | reach the handler without subscribing          |
 | `withFeatures(config)`        | HOC → component                                  | render different components per enabled flag   |

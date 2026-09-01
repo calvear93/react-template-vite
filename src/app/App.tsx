@@ -9,7 +9,7 @@ import './styles/app.css';
  *
  * @returns app container
  */
-export const App: React.FC = (): React.ReactElement => {
+export const App = () => {
 	return (
 		<FeatureProvider handler={featureHandler}>
 			<AppRouter />

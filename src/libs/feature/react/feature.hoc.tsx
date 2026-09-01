@@ -86,7 +86,7 @@ export const withFeatures = <Props,>({
 	features,
 	loading,
 }: WithFeaturesConfig<Props>): ReactComponent<Props> => {
-	return (props: Props): React.ReactElement => (
+	return (props: Props) => (
 		<FeatureContext.Consumer>
 			{(handler) => {
 				if (!handler) throw new FeatureContextException();

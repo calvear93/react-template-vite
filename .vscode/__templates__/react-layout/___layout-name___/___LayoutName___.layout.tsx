@@ -5,8 +5,10 @@ import styles from './___LayoutName___.layout.module.css';
  *
  * @returns layout
  */
-export const ___LayoutName___Layout: React.FC<React.PropsWithChildren> = ({
+export const ___LayoutName___Layout = ({
 	children,
-}): React.ReactElement => {
+}: ___LayoutName___LayoutProps) => {
 	return <main className={styles.layout}>{children}</main>;
 };
+
+export interface ___LayoutName___LayoutProps extends React.PropsWithChildren {}

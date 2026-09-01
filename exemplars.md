@@ -18,7 +18,7 @@ This document identifies high-quality, representative code examples from the Rea
 - Proper effect cleanup and state updates
 
 ```tsx
-export const MainPage: React.FC = (): React.ReactElement => {
+export const MainPage = () => {
 	const [message, setStatus] = useAtom(sampleStore);
 
 	// effects
@@ -51,7 +51,7 @@ export const MainPage: React.FC = (): React.ReactElement => {
 - Minimal, focused component structure
 
 ```tsx
-export const App: React.FC = (): React.ReactElement => {
+export const App = () => {
 	return (
 		<FeatureProvider handler={featureHandler}>
 			<AppRouter />
@@ -193,10 +193,10 @@ export const useFeature = (feature: string) => {
 - Comprehensive JSDoc documentation with examples
 
 ```tsx
-export const FeatureProvider: React.FC<FeatureProviderProps> = ({
+export const FeatureProvider = ({
 	children,
 	handler,
-}) => {
+}: FeatureProviderProps) => {
 	return (
 		<FeatureContext.Provider value={handler}>
 			{children}
@@ -273,12 +273,12 @@ export const createRouter = ({
 	options,
 	routes: routesDef,
 	type = 'browser',
-}: RouterConfig): React.FC => {
+}: RouterConfig) => {
 	const routes = createRoutes(routesDef);
 	const create = getRouterFactory[type];
 	const router = create(routes, options);
 
-	return (): React.ReactElement => (
+	return () => (
 		<Suspense fallback={loading}>
 			<RouterProvider router={router} />
 		</Suspense>
