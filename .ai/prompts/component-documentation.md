@@ -26,7 +26,6 @@ Create comprehensive component documentation for [COMPONENT_NAME] including:
 ### Component Interface Documentation:
 
 ````tsx
-import { type FC } from 'react';
 import { type User } from './user.schema.ts';
 
 /**
@@ -53,12 +52,12 @@ interface UserCardProps {
  * <UserCard onEdit={handleEdit} user={user} />;
  * ```
  */
-export const UserCard: FC<UserCardProps> = ({
+export const UserCard: React.FC<UserCardProps> = ({
 	user,
 	onEdit,
 	isLoading,
 	className,
-}) => {
+}): React.ReactElement => {
 	// component implementation
 };
 ````

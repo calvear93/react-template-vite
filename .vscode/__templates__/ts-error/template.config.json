@@ -4,7 +4,7 @@
 		"errorName",
 		{
 			"name": "message",
-			"defaultValue": "An error has ocurred!",
+			"defaultValue": "An error has occurred!",
 			"style": {
 				"noTransformation": true
 			}

@@ -216,7 +216,7 @@ describe('ComponentName', () => {
 
 ```tsx
 import { renderHook, waitFor } from '@testing-library/react';
-import { type FC, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { InversionOfControlProvider } from '../app.ioc.ts';
 import { HttpClient } from '../services/http-client.service.ts';
@@ -231,7 +231,9 @@ const mockHttpClient = {
 const mockIoCValues = new Map();
 mockIoCValues.set(HttpClient, mockHttpClient);
 
-const wrapper: FC<{ children: ReactNode }> = ({ children }) => (
+const wrapper: React.FC<{ children: ReactNode }> = ({
+	children,
+}): React.ReactElement => (
 	<InversionOfControlProvider values={mockIoCValues}>
 		{children}
 	</InversionOfControlProvider>
@@ -311,13 +313,15 @@ describe('useCustomHook', () => {
 ```tsx
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { type FC, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from '#libs/router';
 import { PageComponent } from './page-component.tsx';
 
 // wrapper for components that need router context
-const RouterWrapper: FC<{ children: ReactNode }> = ({ children }) => (
+const RouterWrapper: React.FC<{ children: ReactNode }> = ({
+	children,
+}): React.ReactElement => (
 	<MemoryRouter initialEntries={['/']}>{children}</MemoryRouter>
 );
 

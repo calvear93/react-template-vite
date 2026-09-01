@@ -9,7 +9,8 @@ Follow `AGENTS.md` and `.github/instructions/{architecture-guide,patterns}.instr
 ### 1. Page Structure
 
 - Use the `.page.tsx` suffix; type as `React.FC`. Keep data/business logic in custom hooks.
-- Import routing primitives from `#libs/router` (React Router 8); lazy-load routes. Wrap in a layout component.
+- Import routing primitives from `#libs/router` (React Router 8); lazy-load routes. The route's
+  `Layout:` field supplies the wrapping layout — pages never wrap themselves.
 
 ### 2. Data & state
 
@@ -30,14 +31,13 @@ Follow `AGENTS.md` and `.github/instructions/{architecture-guide,patterns}.instr
 ### Basic Page Template
 
 ```tsx
-import { type FC } from 'react';
 import { useNavigate, useParams } from '#libs/router';
 
 /**
  * [page description explaining purpose and functionality]
  * handles [specific features] with proper error handling and loading states.
  */
-export const PageName: FC = () => {
+export const PageName: React.FC = (): React.ReactElement => {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 
@@ -50,13 +50,13 @@ export const PageName: FC = () => {
 ### Page with Data Fetching
 
 ```tsx
-import { type FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from '#libs/router';
 import { useInjection } from '../app.ioc.ts';
 import { HttpClient } from '../services/http-client.service.ts';
 import { type User } from './user.schema.ts';
 
-export const UserPage: FC = () => {
+export const UserPage: React.FC = (): React.ReactElement => {
 	const { id } = useParams<{ id: string }>();
 	const httpClient = useInjection(HttpClient);
 
@@ -95,7 +95,7 @@ export const UserPage: FC = () => {
 ### Page with Form Handling
 
 ```tsx
-import { type FC, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from '#libs/router';
 import { z } from 'zod';
 import { useInjection } from '../app.ioc.ts';
@@ -108,7 +108,7 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-export const CreateItemPage: FC = () => {
+export const CreateItemPage: React.FC = (): React.ReactElement => {
 	const navigate = useNavigate();
 	const httpClient = useInjection(HttpClient);
 
@@ -172,11 +172,11 @@ Register the page in `app.routes.tsx` as a lazy route (see **architecture-guide*
 ### Protected Routes
 
 ```tsx
-import { type FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from '#libs/router';
 import { useAuth } from '../hooks/use-auth.ts';
 
-export const ProtectedPage: FC = () => {
+export const ProtectedPage: React.FC = (): React.ReactElement => {
 	const { isAuthenticated } = useAuth();
 	const navigate = useNavigate();
 

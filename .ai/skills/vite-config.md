@@ -12,9 +12,11 @@ Touching `vite.config.ts`, env handling, build modes, aliases, or plugins.
   `env -e <env> -m <mode> : vite ...`). Environments here are `dev` and `release` (extendable).
 - Non-secret values live in `env/appsettings.json`; secrets in `env/<env>.env.json` /
   `env/<env>.local.env.json`. After adding a variable, run `pnpm env:schema`.
-- Vite's `envPrefix` is `APP_`. Read `import.meta.env.APP_*` only in a centralized config
-  layer (a small `app.config.ts` parsed with Zod) — not scattered across components/hooks.
-  Then expose it through the IoC container (`ioc-binding` skill).
+- Vite's `envPrefix` is `APP_`. The shipped sample pages read `import.meta.env.APP_*` inline for
+  simplicity (see `Main.page.tsx`/`Detail.page.tsx`) — fine for one or two flags. Once a page or
+  service needs several env values, centralize them in a config layer (a small `app.config.ts`
+  parsed with Zod) instead of scattering reads across components/hooks, and expose it through the
+  IoC container (`ioc-binding` skill).
 
 ## vite.config.ts
 

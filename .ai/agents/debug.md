@@ -124,9 +124,10 @@ pnpm preview             # Test production build locally
 ### Browser DevTools
 
 - React DevTools for component inspection
-- Jotai DevTools for store state debugging
 - Network tab for API call analysis
 - Console for error stack traces
+- Jotai has a DevTools package (`jotai-devtools` + `useAtomsDevtools()`) if you need store-state
+  inspection — it isn't wired into this template by default
 
 ### Architecture-Specific Debugging
 
@@ -138,9 +139,9 @@ pnpm preview             # Test production build locally
 
 ### Logging
 
-Environment loader supports log levels:
+`pnpm start:dev` already runs with debug-level logging
+(`env -e dev -m debug --log debug : vite`, see `package.json`):
 
 ```bash
-pnpm start:dev           # Default logging
-env -e dev -m debug --log debug : vite    # Verbose logging
+pnpm start:dev
 ```

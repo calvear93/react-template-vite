@@ -4,7 +4,7 @@
 		"exceptionName",
 		{
 			"name": "message",
-			"defaultValue": "An exception has ocurred!",
+			"defaultValue": "An exception has occurred!",
 			"style": {
 				"noTransformation": true
 			}

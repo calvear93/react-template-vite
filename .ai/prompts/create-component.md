@@ -14,7 +14,7 @@ Follow `AGENTS.md` and `.github/instructions/{coding-standards,patterns}.instruc
 ### 2. TypeScript & validation
 
 - Define a props interface with JSDoc; use Zod schemas for complex props or form data.
-- Use inline type imports: `import { type FC, useState } from 'react'`. Prefer generics/`unknown` over `any`.
+- Use inline type imports: `import { useState } from 'react'`; type components as `React.FC<Props>` (global namespace, no `FC` import). Prefer generics/`unknown` over `any`.
 
 ### 3. Styling & design
 
@@ -46,8 +46,6 @@ Follow `AGENTS.md` and `.github/instructions/{coding-standards,patterns}.instruc
 ### Basic Component Template
 
 ```tsx
-import { type FC } from 'react';
-
 interface ComponentNameProps {
 	/** Description of the prop with expected format */
 	propName: string;
@@ -65,12 +63,12 @@ interface ComponentNameProps {
  * @param props - Component props
  * @returns JSX element with [functionality description]
  */
-export const ComponentName: FC<ComponentNameProps> = ({
+export const ComponentName: React.FC<ComponentNameProps> = ({
 	propName,
 	onAction,
 	isLoading = false,
 	className,
-}) => {
+}): React.ReactElement => {
 	// component implementation
 };
 ```
@@ -78,11 +76,12 @@ export const ComponentName: FC<ComponentNameProps> = ({
 ### Component with IoC Integration
 
 ```tsx
-import { type FC } from 'react';
 import { useInjection } from '../app.ioc.ts';
 import { HttpClient } from '../services/http-client.service.ts';
 
-export const DataComponent: FC<DataComponentProps> = ({ userId }) => {
+export const DataComponent: React.FC<DataComponentProps> = ({
+	userId,
+}): React.ReactElement => {
 	const httpClient = useInjection(HttpClient);
 
 	// use injected dependencies
@@ -123,7 +122,6 @@ describe('DataComponent', () => {
 ### Form Component with Validation
 
 ```tsx
-import { type FC } from 'react';
 import { z } from 'zod';
 
 const FormSchema = z.object({
@@ -133,7 +131,9 @@ const FormSchema = z.object({
 
 type FormData = z.infer<typeof FormSchema>;
 
-export const FormComponent: FC<FormProps> = ({ onSubmit }) => {
+export const FormComponent: React.FC<FormProps> = ({
+	onSubmit,
+}): React.ReactElement => {
 	// form implementation with zod validation
 };
 ```

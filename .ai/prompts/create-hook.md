@@ -9,7 +9,7 @@ Follow `AGENTS.md` and `.github/instructions/{coding-standards,patterns}.instruc
 ### 1. Hook Structure & types
 
 - Use `use` prefix (e.g., `useUserData`); follow the rules of hooks (no conditional calls).
-- Type the return value (interface or tuple) and use generics for reusable hooks; inline type imports (`import { type FC, useState } from 'react'`).
+- Type the return value (interface or tuple) and use generics for reusable hooks; inline type imports (`import { useState } from 'react'`).
 
 ### 2. State & dependencies
 
@@ -289,7 +289,7 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 
 ```tsx
 import { renderHook, waitFor } from '@testing-library/react';
-import { type FC, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { InversionOfControlProvider } from '../app.ioc.ts';
 import { HttpClient } from '../services/http-client.service.ts';
@@ -305,7 +305,9 @@ describe('useApiData with IoC', () => {
 		const mockIoCValues = new Map();
 		mockIoCValues.set(HttpClient, mockHttpClient);
 
-		const wrapper: FC<{ children: ReactNode }> = ({ children }) => (
+		const wrapper: React.FC<{ children: ReactNode }> = ({
+			children,
+		}): React.ReactElement => (
 			<InversionOfControlProvider values={mockIoCValues}>
 				{children}
 			</InversionOfControlProvider>

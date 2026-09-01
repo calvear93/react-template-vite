@@ -39,7 +39,7 @@ Review the security aspects of [COMPONENT] and ensure:
 
 ### Data Protection:
 
-- No secrets or sensitive data in client-side code; keep `import.meta.env` access centralized in the bootstrap/config layer and inject config via the IoC container (`useInjection`) — never hardcode
+- No secrets or sensitive data in client-side code; once env access grows past a couple of flags, centralize `import.meta.env` reads in a bootstrap/config layer and inject config via the IoC container (`useInjection`) instead of scattering reads across components — never hardcode
 - Secure data transmission over HTTPS
 - Proper handling of user input
 - PII protection and data privacy

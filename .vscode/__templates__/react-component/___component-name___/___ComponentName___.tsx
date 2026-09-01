@@ -6,7 +6,9 @@ import styles from './___ComponentName___.module.css';
  *
  * @returns component
  */
-export const ___ComponentName___ = ({ title }: ___ComponentName___Props) => {
+export const ___ComponentName___: React.FC<___ComponentName___Props> = ({
+	title,
+}): React.ReactElement => {
 	const [value, setValue] = useState('___ComponentName___');
 
 	return (

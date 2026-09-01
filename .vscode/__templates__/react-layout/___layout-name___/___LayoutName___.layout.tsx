@@ -1,4 +1,3 @@
-import { type PropsWithChildren } from 'react';
 import styles from './___LayoutName___.layout.module.css';
 
 /**
@@ -6,10 +5,8 @@ import styles from './___LayoutName___.layout.module.css';
  *
  * @returns layout
  */
-export const ___LayoutName___Layout = ({
+export const ___LayoutName___Layout: React.FC<React.PropsWithChildren> = ({
 	children,
-}: ___LayoutName___LayoutProps) => {
+}): React.ReactElement => {
 	return <main className={styles.layout}>{children}</main>;
 };
-
-export interface ___LayoutName___LayoutProps extends Required<PropsWithChildren> {}
