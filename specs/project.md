@@ -10,7 +10,7 @@
 - **Build tool:** Vite (HMR dev server + production builds)
 - **Architecture:** SPA — `src/app` (pages, components (atoms/molecules/organisms), store,
   layouts, `app.ioc`, `app.routes`) + `src/libs` (`ioc`, `router`, `feature`)
-- **Router:** React Router 7+ via `#libs/router`
+- **Router:** React Router 8+ via `#libs/router`
 - **Validation:** Zod 4+ (TypeScript-first schemas)
 - **State:** Jotai-backed store + React hooks
 - **Dependency injection:** custom IoC container via `#libs/ioc`

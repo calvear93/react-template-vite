@@ -1,4 +1,4 @@
-import { MemoryRouter } from '#libs/router';
+import { createRouter } from '#libs/router';
 import { beforeAll, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ___PageName___Page } from './___PageName___.page.tsx';
@@ -6,11 +6,12 @@ import { ___PageName___Page } from './___PageName___.page.tsx';
 describe(___PageName___Page, () => {
 	// hooks
 	beforeAll(() => {
-		render(
-			<MemoryRouter>
-				<___PageName___Page />
-			</MemoryRouter>,
-		);
+		const Router = createRouter({
+			type: 'memory',
+			routes: [{ Component: ___PageName___Page }],
+		});
+
+		render(<Router />);
 	});
 
 	// tests

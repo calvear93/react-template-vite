@@ -50,7 +50,7 @@ src/app/components/{atoms|molecules|organisms}/
   {ComponentName}.tsx
   {ComponentName}.module.css
   {ComponentName}.spec.tsx
-  types/{component}.types.ts   (optional, component-specific types)
+  {component}.type.ts   (optional, component-specific types — see coding-standards)
 ```
 
 ## Library structure pattern
@@ -120,38 +120,52 @@ Components import `useInjection` from the relative path to `app.ioc.ts` (e.g.
 
 ## Routing architecture
 
-Route definitions are centralized and lazy-loaded; the router is composed from a layout
-shell plus the route table, all via `#libs/router`:
+Route definitions are centralized and lazy-loaded; the router is composed from a
+`RouteDefinition[]` tree (grouped by namespace) plus `createRouter()`, all via `#libs/router`:
 
 ```typescript
 // src/app/app.routes.tsx
-import { lazy } from 'react';
-import type { RouteObject } from '#libs/router';
+import { type RouteDefinition } from '#libs/router';
+import { AppLayout } from './layouts/app/App.layout.tsx';
+import ErrorPage from './pages/error/Error.page.tsx';
+import MainPage from './pages/main/Main.page.tsx';
 
-const HomePage = lazy(() => import('./pages/main/Main.page.tsx'));
-const UserPage = lazy(() => import('./pages/user/User.page.tsx'));
-
-export const routes: RouteObject[] = [
-	{ path: '/', element: <HomePage /> },
-	{ path: '/users/:userId', element: <UserPage /> },
-];
+export const routes = {
+	app: [
+		{
+			ErrorBoundary: ErrorPage,
+			Layout: AppLayout,
+			children: [
+				{ Component: MainPage },
+				{
+					path: 'users/:userId',
+					lazy: () => import('./pages/user/User.page.tsx'),
+				},
+			],
+		},
+	],
+} satisfies Record<string, RouteDefinition[]>;
 ```
 
 ```typescript
 // src/app/App.router.tsx
-import { createBrowserRouter, RouterProvider } from '#libs/router';
-import { AppLayout } from './layouts/app/App.layout.tsx';
+import { createRouter } from '#libs/router';
 import { routes } from './app.routes.tsx';
 
-const router = createBrowserRouter([
-	{ path: '/', element: <AppLayout />, children: routes },
-]);
+const Router = createRouter({
+	loading: <h1>Loading</h1>,
+	options: { basename: import.meta.env.BASE_URL },
+	routes: routes.app,
+});
 
-export const AppRouter: React.FC = () => <RouterProvider router={router} />;
+export const AppRouter: React.FC = () => <Router />;
 ```
 
-Use typed params (`useParams<{ userId: string }>()`) and `useNavigate` for programmatic
-navigation, both from `#libs/router`.
+A layout component (e.g. `AppLayout`) is a plain `React.FC<React.PropsWithChildren>` that renders
+`{children}` — `createRouter()` wraps whatever you assign to `Layout:` and supplies react-router's
+`<Outlet />` as that `children` prop automatically, so the layout itself never imports `Outlet` or
+knows about routing. Use typed params (`useParams<{ userId: string }>()`) and `useNavigate` for
+programmatic navigation, both re-exported from `#libs/router`.
 
 ## Feature flags
 

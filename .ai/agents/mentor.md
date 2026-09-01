@@ -16,7 +16,7 @@ This is a **React + TypeScript + Vite SPA template** with specific architectural
 ### Architecture Principles
 
 1. **Dependency Injection (IoC)**:
-    - Custom React Context-based IoC container using Jotai
+    - Custom React Context-based IoC container (`#libs/ioc`) — unrelated to Jotai
     - All services/config injected via `useInjection()` from `./app.ioc.ts`
     - Promotes testability and loose coupling
 
@@ -27,7 +27,7 @@ This is a **React + TypeScript + Vite SPA template** with specific architectural
 
 3. **Modular Routing**:
     - Centralized route definitions in `app.routes.tsx`
-    - Lazy loading with React Router 7
+    - Lazy loading with React Router 8
     - Layout-based route organization
 
 4. **State Management**:
@@ -74,7 +74,7 @@ src/
 
 ### Key Technologies
 
-React 19+ (concurrent), TypeScript 5+ (strict), Vite, React Router 7+, Zod 4+,
+React 19+ (concurrent), TypeScript 5+ (strict), Vite, React Router 8+, Zod 4+,
 Jotai (atomic state), Vitest + React Testing Library, Stryker (mutation), UnoCSS.
 See `package.json` for exact versions and `AGENTS.md` for the stack overview.
 
@@ -91,7 +91,7 @@ See `package.json` for exact versions and `AGENTS.md` for the stack overview.
 ```typescript
 // Package aliases (from package.json)
 import { createContainer } from '#libs/ioc';
-import { useRouter } from '#libs/router';
+import { useHashValue } from '#libs/router';
 import { useFeature } from '#libs/feature';
 
 // Relative imports MUST include extension

@@ -9,7 +9,7 @@ Follow `AGENTS.md` and `.github/instructions/{architecture-guide,patterns}.instr
 ### 1. Page Structure
 
 - Use the `.page.tsx` suffix; type as `React.FC`. Keep data/business logic in custom hooks.
-- Import routing primitives from `#libs/router` (React Router 7); lazy-load routes. Wrap in a layout component.
+- Import routing primitives from `#libs/router` (React Router 8); lazy-load routes. Wrap in a layout component.
 
 ### 2. Data & state
 
@@ -32,7 +32,6 @@ Follow `AGENTS.md` and `.github/instructions/{architecture-guide,patterns}.instr
 ```tsx
 import { type FC } from 'react';
 import { useNavigate, useParams } from '#libs/router';
-import { AppLayout } from '../layouts/app.layout.tsx';
 
 /**
  * [page description explaining purpose and functionality]
@@ -42,8 +41,9 @@ export const PageName: FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 
-	// page implementation
-	return <AppLayout>{/* page content */}</AppLayout>;
+	// page implementation — the layout wrapping this page is applied centrally
+	// by the route's `Layout:` field in app.routes.tsx, not by the page itself
+	return <section>{/* page content */}</section>;
 };
 ```
 
@@ -53,7 +53,6 @@ export const PageName: FC = () => {
 import { type FC, useEffect, useState } from 'react';
 import { useParams } from '#libs/router';
 import { useInjection } from '../app.ioc.ts';
-import { AppLayout } from '../layouts/app.layout.tsx';
 import { HttpClient } from '../services/http-client.service.ts';
 import { type User } from './user.schema.ts';
 
@@ -89,11 +88,7 @@ export const UserPage: FC = () => {
 	if (error) return <ErrorMessage error={error} />;
 	if (!user) return <NotFound />;
 
-	return (
-		<AppLayout>
-			<UserProfile user={user} />
-		</AppLayout>
-	);
+	return <UserProfile user={user} />;
 };
 ```
 
@@ -139,20 +134,18 @@ export const CreateItemPage: FC = () => {
 	};
 
 	return (
-		<AppLayout>
-			<CreateItemForm
-				onSubmit={handleSubmit}
-				isSubmitting={isSubmitting}
-				error={error}
-			/>
-		</AppLayout>
+		<CreateItemForm
+			onSubmit={handleSubmit}
+			isSubmitting={isSubmitting}
+			error={error}
+		/>
 	);
 };
 ```
 
 ## Technical Checklist
 
-- [ ] `.page.tsx` suffix; typed via `React.FC`; wrapped in a layout
+- [ ] `.page.tsx` suffix; typed via `React.FC`; registered under a route with a `Layout:`
 - [ ] Typed `useParams`; navigation via `useNavigate`; routing primitives from `#libs/router`
 - [ ] Services/config via `useInjection` (no hardcoded values); data/logic in custom hooks
 - [ ] Loading/error/success states; error boundary; Zod for form validation
@@ -168,15 +161,11 @@ export const CreateItemPage: FC = () => {
 Register the page in `app.routes.tsx` as a lazy route (see **architecture-guide**):
 
 ```tsx
-import { lazy } from 'react';
-
-const UserPage = lazy(async () => import('./pages/user.page.tsx'));
-
-// inside the routes array
+// inside the routes array (RouteDefinition[])
 {
-	path: '/users/:id',
-	element: <UserPage />,
-	errorElement: <ErrorBoundary />,
+	path: 'users/:id',
+	lazy: () => import('./pages/user/User.page.tsx'),
+	ErrorBoundary: ErrorPage,
 }
 ```
 
@@ -185,7 +174,6 @@ const UserPage = lazy(async () => import('./pages/user.page.tsx'));
 ```tsx
 import { type FC, useEffect } from 'react';
 import { useNavigate } from '#libs/router';
-import { AppLayout } from '../layouts/app.layout.tsx';
 import { useAuth } from '../hooks/use-auth.ts';
 
 export const ProtectedPage: FC = () => {
@@ -198,7 +186,7 @@ export const ProtectedPage: FC = () => {
 
 	if (!isAuthenticated) return <LoadingSpinner />;
 
-	return <AppLayout>{/* protected content */}</AppLayout>;
+	return <section>{/* protected content */}</section>;
 };
 ```
 

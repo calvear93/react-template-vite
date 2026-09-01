@@ -48,15 +48,15 @@ export const routes: RouteDefinition[] = [
 ```
 layouts/
 └── my-new-layout/
-    ├── MyNewLayout.tsx
-    ├── MyNewLayout.module.css
+    ├── MyNewLayout.layout.tsx
+    ├── MyNewLayout.layout.module.css
     └── components/      # Layout-specific components
 ```
 
 ### 2. Layout Component Template
 
 ```tsx
-import styles from './MyNewLayout.module.css';
+import styles from './MyNewLayout.layout.module.css';
 
 interface MyNewLayoutProps extends React.PropsWithChildren {
 	// Add layout-specific props
@@ -82,7 +82,7 @@ export const MyNewLayout: React.FC<MyNewLayoutProps> = ({
 
 ```tsx
 // app/app.routes.tsx
-import { MyNewLayout } from './layouts/my-new-layout/MyNewLayout.tsx';
+import { MyNewLayout } from './layouts/my-new-layout/MyNewLayout.layout.tsx';
 
 export const routes: RouteDefinition[] = [
 	{

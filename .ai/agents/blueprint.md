@@ -68,7 +68,7 @@ When faced with ambiguity, replace direct user questions with a confidence-based
 
 This is a **React + TypeScript + Vite SPA template** with:
 
-- **Stack**: React 19, TypeScript 5, Vite 8, React Router 7, Zod 4, Jotai 2
+- **Stack**: React 19, TypeScript 5, Vite 8, React Router 8, Zod 4, Jotai 2
 - **Testing**: Vitest, React Testing Library, Stryker (mutation testing)
 - **Quality**: ESLint, Prettier, Stylelint, UnoCSS
 - **Architecture**: IoC container, feature flags, modular routing, Jotai-backed store, Atomic Design components

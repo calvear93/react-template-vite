@@ -130,7 +130,7 @@ Always run `pnpm lint` + `pnpm format` + `pnpm test:dev --coverage --run` before
 ## Project Stack
 
 See `package.json` for exact dependency versions and `AGENTS.md` for the stack overview
-(React 19+, React Router 7+, TypeScript 5+, Vite, Zod 4+, Jotai, Vitest, UnoCSS).
+(React 19+, React Router 8+, TypeScript 5+, Vite, Zod 4+, Jotai, Vitest, UnoCSS).
 Runtime: Node `>=24`, pnpm `>=11`.
 
 ## Documentation Requirements

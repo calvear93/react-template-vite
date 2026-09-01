@@ -1,6 +1,6 @@
 # 🛣️ `#libs/router` — Declarative Routing
 
-> A thin, type-safe layer over [React Router v7](https://reactrouter.com/) that turns a plain config object into a ready-to-render `<Router />` — with first-class **layouts**, **code-splitting**, and **multiple router types**.
+> A thin, type-safe layer over [React Router v8](https://reactrouter.com/) that turns a plain config object into a ready-to-render `<Router />` — with first-class **layouts**, **code-splitting**, and **multiple router types**.
 
 You write a tree of routes; the library wires up `RouterProvider`, `Suspense`, layout `Outlet`s, and lazy chunks for you. Everything from `react-router` is re-exported, so this is your single routing import.
 

@@ -33,7 +33,7 @@ When guidance conflicts, resolve in this order:
 | ------------------ | --------------------------------------------------- |
 | Framework          | React 19+ with TypeScript 5+                        |
 | Build tool         | Vite (HMR dev server + production builds)           |
-| Router             | React Router 7+ via `#libs/router`                  |
+| Router             | React Router 8+ via `#libs/router`                  |
 | Validation         | Zod 4+ (TypeScript-first schemas)                   |
 | Local/shared state | React hooks + Jotai-backed store (`src/app/store/`) |
 | Dependency inject  | Custom IoC container via `#libs/ioc`                |

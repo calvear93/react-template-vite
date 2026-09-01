@@ -37,7 +37,8 @@ Writing or reviewing any component, hook, page or layout.
 ## Routing & features
 
 - **File-based routing** via `#libs/router`: lazy `Component`, `loader` for pre-fetch, nested
-  layouts. Navigate with the `Link` component or `useRouter()` — not raw `history`.
+  layouts. Navigate with the `Link` component or `useNavigate()` (re-exported from `react-router`)
+  — not raw `history`.
 - **Feature flags** via `#libs/feature` (`useFeature('FLAG')`) for controlled rollout.
 
 ## Styling

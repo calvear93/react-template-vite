@@ -26,8 +26,8 @@ Writing or reviewing any `.ts` / `.tsx` in this repository.
 
 ## Imports & modules
 
-- Order (perfectionist, auto-fixable): external packages → `#`-aliases (`#libs/*`, `#app/*`,
-  `#utils/*`) → relative.
+- Order (perfectionist, auto-fixable): external packages → `#libs/*` aliases (`#libs/ioc`,
+  `#libs/router`, `#libs/feature`) → relative.
 - **Type-only imports:** `import type { Foo } from '...'` (kept out of the JS output).
 - Relative imports include the file extension (`.ts` / `.tsx`); aliases and node_modules do not.
 - Named exports over default exports (including components).
