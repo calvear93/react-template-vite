@@ -7,7 +7,7 @@ import { useLocation } from 'react-router';
  * @returns URL hash.
  *
  * @example
- *	const hash = useHash();
+ *	const hash = useHashValue();
  */
 export const useHashValue = (): string => {
 	const { hash } = useLocation();

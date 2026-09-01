@@ -84,19 +84,25 @@ A `RouteDefinition` is **either** a component route **or** a layout route:
 
 Layouts nest freely — put a `Layout` route inside another layout's `children` to compose shells (app → dashboard → section).
 
-A layout is just a component that renders its children slot:
+A layout is just a component that renders its children slot — `createRouter()` supplies the
+matched route's `<Outlet />` as that `children` prop automatically, so the layout itself never
+imports `Outlet` or knows about routing:
 
 ```tsx
 // app/layouts/app/App.layout.tsx
-import { Outlet } from '#libs/router';
+import { Footer } from './Footer.tsx';
+import { Header } from './Header.tsx';
+import styles from './App.layout.module.css';
 
-export const AppLayout = ({ children }: React.PropsWithChildren) => (
-	<div className='app'>
-		<Header />
-		<main>{children}</main>
-		<Footer />
-	</div>
+export const AppLayout = ({ children }: AppLayoutProps) => (
+	<main className={styles.layout}>
+		<Header title='App' />
+		{children}
+		<Footer text='Footer' />
+	</main>
 );
+
+export interface AppLayoutProps extends React.PropsWithChildren {}
 ```
 
 ## 🔀 Router types

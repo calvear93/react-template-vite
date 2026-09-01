@@ -1,5 +1,4 @@
 import { createContext, useContext, useMemo } from 'react';
-import type { PropsWithChildren } from 'react';
 
 // react context for the IoC container
 const IoCContext = createContext<Map<unknown, unknown> | null>(null);
@@ -83,6 +82,7 @@ export const createContainer = () => {
 	};
 };
 
-export interface InversionOfControlProviderProps extends PropsWithChildren {
+export interface InversionOfControlProviderProps
+	extends React.PropsWithChildren {
 	values?: Map<unknown, unknown>;
 }

@@ -30,11 +30,20 @@ export const MainPage = () => {
 	return (
 		<section className={styles.page}>
 			<title>Main Page</title>
+
 			<Link to='/detail'>Go To Detail</Link>
 			<Link to='/detail/123'>Go To Detail 123</Link>
-			<h1 className='text-primary font-bold underline'>hello world</h1>
+
+			<h1 className='text-primary font-bold underline'>
+				hello world
+				<div className='i-mdi-alarm text-size-4xl text-orange-400' />
+			</h1>
+
 			<h2>{import.meta.env.APP_ENV}</h2>
 			<h3 className='text-green-700 font-bold'>{message}</h3>
+
+			<img alt='logo' src={Logo} width='10%' />
+			<img alt='vite logo' src={viteLogoUrl} width='10%' />
 		</section>
 	);
 };
@@ -168,6 +177,10 @@ export const useFeature = (feature: string) => {
 	const [value, setFeature] = useState(handler.get(feature));
 
 	useEffect(() => {
+		// re-sync the value when the feature key (or handler) changes,
+		// otherwise the state keeps the previously observed feature's value
+		setFeature(handler.get(feature));
+
 		const listener: FeatureOnChangeListener = ({ changedFeatures }) => {
 			const newValue = changedFeatures?.[feature];
 			if (newValue !== undefined) {
@@ -176,8 +189,9 @@ export const useFeature = (feature: string) => {
 		};
 
 		handler.addOnChangeListener(listener);
+
 		return () => handler.removeOnChangeListener(listener);
-	}, [feature]);
+	}, [feature, handler]);
 
 	return [value, (value: boolean) => handler.set(feature, value)] as const;
 };
@@ -273,7 +287,7 @@ export const createRouter = ({
 	options,
 	routes: routesDef,
 	type = 'browser',
-}: RouterConfig) => {
+}: MemoryRouterConfig | RouterConfig) => {
 	const routes = createRoutes(routesDef);
 	const create = getRouterFactory[type];
 	const router = create(routes, options);
@@ -322,15 +336,27 @@ test('InversionOfControlProvider replace the inner container', () => {
 		const provider = useInjection(TestClass);
 		return <h1 data-testid={id}>{provider?.test()}</h1>;
 	};
+	const TestContainer = () => {
+		return (
+			<>
+				<TestComponent id='c1' />
+				<InversionOfControlProvider values={new Map()}>
+					<TestComponent id='c2' />
+				</InversionOfControlProvider>
+				<TestComponent id='c3' />
+			</>
+		);
+	};
 
-	render(
-		<>
-			<TestComponent id='c1' />
-			<InversionOfControlProvider values={new Map()}>
-				<TestComponent id='c2' />
-			</InversionOfControlProvider>
-		</>,
-	);
+	render(<TestContainer />);
+
+	const c1 = screen.getByTestId('c1');
+	const c2 = screen.getByTestId('c2');
+	const c3 = screen.getByTestId('c3');
+
+	expect(c1).toHaveTextContent('test');
+	expect(c2).toHaveTextContent('');
+	expect(c3).toHaveTextContent('test');
 });
 ```
 
