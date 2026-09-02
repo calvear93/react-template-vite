@@ -29,22 +29,22 @@ When guidance conflicts, resolve in this order:
 
 ## Tech stack
 
-| Area               | Choice                                              |
-| ------------------ | --------------------------------------------------- |
-| Framework          | React 19+ with TypeScript 5+                        |
-| Build tool         | Vite (HMR dev server + production builds)           |
-| Router             | React Router 8+ via `#libs/router`                  |
-| Validation         | Zod 4+ (TypeScript-first schemas)                   |
-| Local/shared state | React hooks + Jotai-backed store (`src/app/store/`) |
-| Dependency inject  | Custom IoC container via `#libs/ioc`                |
-| Feature flags      | Custom system via `#libs/feature`                   |
-| Styling            | CSS Modules + UnoCSS (atomic CSS)                   |
-| Testing            | Vitest + React Testing Library (happy-dom)          |
-| Coverage           | Vitest Coverage V8 (target ≥ 80%)                   |
-| Mutation testing   | Stryker Mutator                                     |
-| Env loading        | `@calvear/env` (`env/` folder)                      |
-| Tooling            | ESLint + Prettier + Stylelint, pnpm                 |
-| Runtime            | Node `>=24`, pnpm `>=11`                            |
+| Area               | Choice                                                                  |
+| ------------------ | ----------------------------------------------------------------------- |
+| Framework          | React 19+ with TypeScript 5+                                            |
+| Build tool         | Vite (HMR dev server + production builds)                               |
+| Router             | React Router 8+ via `#libs/router`                                      |
+| Validation         | Zod 4.5+ (TypeScript-first schemas; `z.compile()` opt-in for hot paths) |
+| Local/shared state | React hooks + Jotai-backed store (`src/app/store/`)                     |
+| Dependency inject  | Custom IoC container via `#libs/ioc`                                    |
+| Feature flags      | Custom system via `#libs/feature`                                       |
+| Styling            | CSS Modules + UnoCSS (atomic CSS)                                       |
+| Testing            | Vitest + React Testing Library (happy-dom)                              |
+| Coverage           | Vitest Coverage V8 (target ≥ 80%)                                       |
+| Mutation testing   | Stryker Mutator                                                         |
+| Env loading        | `@calvear/env` (`env/` folder)                                          |
+| Tooling            | ESLint + Prettier + Stylelint, pnpm                                     |
+| Runtime            | Node `>=24`, pnpm `>=11`                                                |
 
 ## Commands
 
@@ -130,7 +130,9 @@ These are non-negotiable. Violations should be fixed before code is considered d
 ## Code style (essentials)
 
 - Tabs for indentation (width 4); single quotes; semicolons; trailing commas (all); ~80 col width.
-- Arrow functions with parens around params; named exports preferred over default exports.
+- Arrow functions with parens around params; named exports preferred over default exports
+  (pages keep **both** — `lazy: () => import('./X.page.tsx')` in `app.routes.tsx` needs the
+  default export; the named export stays for direct imports and tests).
 - Include `.ts`/`.tsx` extensions in relative imports; use `#libs/*` aliases for libraries.
 - Import order: external packages → `#libs/*` → relative imports.
 - Files `kebab-case`, components `PascalCase`, functions/vars `camelCase`,

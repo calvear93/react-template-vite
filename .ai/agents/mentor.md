@@ -45,59 +45,8 @@ This is a **React + TypeScript + Vite SPA template** with specific architectural
     - Zod validation for type safety
     - **NEVER hardcode config values**
 
-### Project Structure
-
-```
-src/
-├── app/
-│   ├── app.ioc.ts          # IoC container (bind dependencies here)
-│   ├── app.routes.tsx      # Route definitions (centralized)
-│   ├── app.features.ts     # Feature flag definitions
-│   ├── store/              # Global Jotai-backed store (app state)
-│   ├── components/         # UI components (Atomic Design)
-│   │   ├── atoms/          # Smallest presentational components
-│   │   ├── molecules/      # Atoms combined
-│   │   └── organisms/      # Complex sections (may hold state)
-│   ├── layouts/            # Layout components (Atomic Design templates)
-│   │   └── app/            # Main app layout
-│   ├── pages/              # Page components
-│   │   ├── main/           # Example: Main page
-│   │   ├── detail/         # Example: Detail page
-│   │   │   ├── store/      # Page-specific store (state)
-│   │   │   └── components/ # Page-specific components
-│   └── styles/             # Global styles
-└── libs/                   # Reusable libraries
-    ├── ioc/                # IoC container implementation
-    ├── router/             # Routing utilities
-    └── feature/            # Feature flag system
-```
-
-### Key Technologies
-
-React 19+ (concurrent), TypeScript 5+ (strict), Vite, React Router 8+, Zod 4+,
-Jotai (atomic state), Vitest + React Testing Library, Stryker (mutation), UnoCSS.
-See `package.json` for exact versions and `AGENTS.md` for the stack overview.
-
-### Testing Strategy
-
-- **Vitest + React Testing Library** for unit/integration tests
-- Mock dependencies through the IoC container: `InversionOfControlProvider` + `mockIoCValues` Map
-- **Stryker** for mutation testing (ensures test quality)
-- Test files: `*.spec.ts` or `*.spec.tsx`
-- All new features must have tests
-
-### Import Conventions
-
-```typescript
-// Package aliases (from package.json)
-import { createContainer } from '#libs/ioc';
-import { useHashValue } from '#libs/router';
-import { useFeature } from '#libs/feature';
-
-// Relative imports MUST include extension
-import { useInjection } from './app.ioc.ts';
-import { UserCard } from './UserCard.tsx';
-```
+Project structure, exact dependency versions, testing strategy, and import conventions are in
+[`AGENTS.md`](../../AGENTS.md) — don't re-derive them here.
 
 Your tasks are:
 

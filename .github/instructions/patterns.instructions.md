@@ -34,6 +34,10 @@ export const UpdateUserSchema = UserSchema.partial();
 export type UpdateUserData = z.infer<typeof UpdateUserSchema>;
 ```
 
+On a hot path (validating many API responses per second), wrap the export in `z.compile()`
+(Zod 4.5 AOT compile) — see the `zod-schema` skill, "AOT compilation". Not needed for
+one-off/startup validation.
+
 ## Service
 
 Services receive their dependencies (e.g. the configured HTTP client) rather than reading

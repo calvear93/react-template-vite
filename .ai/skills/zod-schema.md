@@ -43,6 +43,27 @@ Form validation uses Zod directly via a small hook (this template has no `react-
 collect with `useState`, validate with `safeParse`, surface `error.issues` per field. See
 `.github/instructions/patterns.instructions.md` → "Form with Zod validation".
 
+## AOT compilation (`z.compile()`, Zod 4.5) — opt-in
+
+`z.compile(schema)` returns a clone whose validator runs a generated fast path first and falls
+back to the runtime parser for anything it can't model. **No API or type change** —
+`.parse`/`.safeParse`, `z.infer`, `.omit`/`.partial`, `.refine`/`.transform` all behave
+identically. Measured ~2–4x faster on valid payloads.
+
+This template validates schemas mostly at **startup** or on form submit (parsed once, not per
+render) — a one-time cost, not a hot path — so `z.compile()` isn't applied by default; the
+~85 KB it adds to whichever bundle imports it usually isn't worth it there. Reach for it if a
+schema genuinely sits on a hot path (e.g. an API layer parsing many responses per second):
+
+```typescript
+const _UserSchema = z.object({/* ... */});
+
+export const UserSchema = z.compile(_UserSchema);
+
+// derived schemas are not compiled by inheritance — re-wrap them
+export const CreateUserSchema = z.compile(_UserSchema.omit({ id: true }));
+```
+
 ## Lint notes
 
 Single quotes, inline `type` imports, sorted object members (id-like first). No `any`.

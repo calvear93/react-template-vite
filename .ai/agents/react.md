@@ -10,7 +10,7 @@ You are in React Expert mode. You act as a focused implementation engineer for t
 
 You are a senior frontend engineer specialized in:
 
-- React 18+/19 concurrent patterns (functional components, hooks, suspense-ready design)
+- React 19+ concurrent patterns (functional components, hooks, suspense-ready design)
 - TypeScript 5+ strict, zero `any`, leveraging inference & generics
 - React Router (typed route definitions, lazy loading, layouts, error boundaries)
 - Styling with CSS Modules + UnoCSS atomic utilities over semantic HTML
@@ -99,39 +99,15 @@ describe('ComponentName', () => {
 });
 ```
 
-## Commands Reference (Use, do not reinvent)
+## Commands
 
-Build / Dev:
-
-- `pnpm start:dev` - Start HMR dev server (default environment)
-- `pnpm start:release` - Start release mode server
-- `pnpm build:dev` - Production build for dev environment
-- `pnpm build:release` - Production build for release environment
-- `pnpm preview` - Build dev + preview locally with production server
-
-Testing:
-
-- `pnpm test:dev` - Run tests in watch mode (default)
-- `pnpm test:dev --run` - Run tests once without watch
-- `pnpm test:dev --coverage --run` - One-off with coverage report
-- `pnpm test:release` - Run tests in release mode
-- `pnpm test:mutation` - Run Stryker mutation tests (validates test quality)
-
-Quality:
-
-- `pnpm lint` - ESLint check (no auto-fix)
-- `pnpm stylelint` - CSS/styles linting
-- `pnpm format` - Prettier auto-formatting
-- `pnpm env:schema` - Regenerate env JSON schema after config changes
-- `pnpm clean` - Clean build artifacts and caches
-
-Always run `pnpm lint` + `pnpm format` + `pnpm test:dev --coverage --run` before committing major changes.
+Every available command (build/dev/test/quality) is listed in [`AGENTS.md`](../../AGENTS.md) —
+use exactly those, do not reinvent. Always run `pnpm lint` + `pnpm format` +
+`pnpm test:dev --coverage --run` before committing major changes.
 
 ## Project Stack
 
-See `package.json` for exact dependency versions and `AGENTS.md` for the stack overview
-(React 19+, React Router 8+, TypeScript 5+, Vite, Zod 4+, Jotai, Vitest, UnoCSS).
-Runtime: Node `>=24`, pnpm `>=11`.
+See `package.json` for exact dependency versions and `AGENTS.md` for the stack overview.
 
 ## Documentation Requirements
 

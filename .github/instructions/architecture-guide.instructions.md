@@ -14,7 +14,8 @@ for copy-paste recipes see [patterns](patterns.instructions.md). This document d
 ```
 src/
   app/                  feature code (pages, components [Atomic Design], layouts, store) + app bootstrap
-    app.config.ts       environment config layer (the only place reading import.meta.env)
+    app.config.ts       environment config layer — recommended pattern, not shipped by default;
+                         see "Configuration architecture" below before assuming it exists
     app.ioc.ts          IoC container creation + bindings (bootstrap layer)
     app.routes.tsx      route table
   libs/                 reusable libraries, each with its own README + public index.ts
@@ -71,17 +72,23 @@ src/libs/{library-name}/
 
 Centralize `import.meta.env` access in a config layer instead of scattering it across
 components and hooks. Vite's `envPrefix` is `APP_` (see `vite.config.ts`). The recommended
-pattern is a small `app.config.ts` that validates and parses the environment with Zod:
+pattern is a small `app.config.ts` that validates and parses the environment with Zod — **this
+file is not shipped by default** (the bare template's `app.ioc.ts` has no config binding yet);
+add it the first time a component needs a validated env value:
 
 ```typescript
-// src/app/app.config.ts (recommended pattern)
+// src/app/app.config.ts (recommended pattern — create this file)
 import { z } from 'zod';
 
-const AppConfigSchema = z.object({
-	apiUrl: z.string().url(),
+// private `_`-prefixed base; the exported schema is its `z.compile()` clone
+// (Zod 4.5 AOT fast path, runtime-parser fallback — same API and type)
+const _AppConfigSchema = z.object({
+	apiUrl: z.url(),
 	timeout: z.coerce.number().default(10000),
 	enableFeatureFlags: z.coerce.boolean().default(false),
 });
+
+const AppConfigSchema = z.compile(_AppConfigSchema);
 
 export type AppConfig = z.infer<typeof AppConfigSchema>;
 

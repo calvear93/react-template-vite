@@ -29,7 +29,7 @@
 			"id": "environmentName",
 			"description": "Select execution environment",
 			"type": "pickString",
-			"options": ["dev", "qa", "prod"],
+			"options": ["dev", "release"],
 			"default": "dev"
 		}
 	]

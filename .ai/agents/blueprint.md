@@ -66,66 +66,8 @@ When faced with ambiguity, replace direct user questions with a confidence-based
 
 ## Project-Specific Context
 
-This is a **React + TypeScript + Vite SPA template** with:
-
-- **Stack**: React 19, TypeScript 5, Vite 8, React Router 8, Zod 4, Jotai 2
-- **Testing**: Vitest, React Testing Library, Stryker (mutation testing)
-- **Quality**: ESLint, Prettier, Stylelint, UnoCSS
-- **Architecture**: IoC container, feature flags, modular routing, Jotai-backed store, Atomic Design components
-
-### Key Project Commands
-
-```bash
-# Development
-pnpm start:dev              # Start dev server
-pnpm start:release          # Start release mode
-
-# Testing
-pnpm test:dev               # Run tests (watch mode)
-pnpm test:dev --coverage --run  # Tests with coverage
-pnpm test:mutation          # Mutation testing
-
-# Quality
-pnpm lint                   # ESLint check
-pnpm stylelint              # CSS linting
-pnpm format                 # Prettier format
-pnpm env:schema             # Update env schema
-
-# Build
-pnpm build:dev              # Build dev
-pnpm build:release          # Build release
-pnpm preview                # Preview build
-```
-
-### Project Structure
-
-```
-src/
-├── app/
-│   ├── app.ioc.ts          # IoC container setup
-│   ├── app.routes.tsx      # Route definitions
-│   ├── app.features.ts     # Feature flags
-│   ├── store/              # Jotai-backed store (app state)
-│   ├── components/         # UI components (Atomic Design: atoms/molecules/organisms)
-│   ├── layouts/            # Layout components (Atomic Design templates)
-│   ├── pages/              # Page components
-│   └── styles/             # Global styles
-├── libs/
-│   ├── ioc/                # IoC library
-│   ├── router/             # Router library
-│   └── feature/            # Feature flags library
-└── env.d.ts                # Environment types
-```
-
-### Critical Rules
-
-1. **Never hardcode config**: Use IoC + env files (`env/appsettings.json`, `env/*.env.json`)
-2. **Path aliases**: Use `#libs/ioc`, `#libs/router`, `#libs/feature` (see `package.json`)
-3. **Relative imports**: Include `.ts/.tsx` extension
-4. **IoC usage**: Import from `./app.ioc.ts` (adjust path), use `useInjection()`
-5. **Feature flags**: Define in `app.features.ts`, use `useFeature()` hook
-6. **Testing**: All features require Vitest + RTL tests, aim for mutation test quality
-7. **Environment**: After changing env vars, run `pnpm env:schema`
+This is a **React + TypeScript + Vite SPA template**. Stack, commands, project structure, and
+critical rules are in [`AGENTS.md`](../../AGENTS.md) — don't re-derive them here.
 
 ## Workflows
 
@@ -214,27 +156,27 @@ Mandatory First Step: Before any other action, you MUST analyze the user's reque
 
 ## Artifacts
 
-These are for internal use only; keep concise, absolute minimum.
+This template's durable decision log is the spec-driven workflow, not a separate memory file:
 
 ```yaml
 artifacts:
-    - name: memory
-      path: .github/instructions/memory.instruction.md
-      type: memory_and_policy
-      format: "Markdown with distinct '## Policies' and '## Heuristics' sections."
-      purpose: 'Single source for guiding agent behavior. Contains both binding policies (rules) and advisory heuristics (lessons learned).'
-      update_policy:
-          - who: 'agent or human reviewer'
-          - when: 'When a binding policy is set or a reusable pattern is discovered.'
-          - structure: 'New entries must be placed under the correct heading (`## Policies` or `## Heuristics`) with a clear rationale.'
-
-    - name: agent_work
-      path: docs/specs/agent_work/
+    - name: change
+      path: specs/changes/<change-id>/
       type: workspace
-      format: markdown / txt / generated artifacts
-      purpose: 'Temporary and final artifacts produced during agent runs (summaries, intermediate outputs).'
-      filename_convention: 'summary_YYYY-MM-DD_HH-MM-SS.md'
+      format: 'proposal.md, design.md (optional), tasks.md, specs/<capability>/spec.md deltas'
+      purpose: 'Unit of work for one request: intent, design, tasks, and spec deltas.'
       update_policy:
-          - who: 'agent'
-          - when: 'during execution'
+          - who: 'agent, via the spec-* skills'
+          - when: 'during the spec-intake/propose/design/tasks/implement/archive loop'
+
+    - name: archived_change
+      path: specs/changes/archive/YYYY-MM-DD-<change-id>/
+      type: log
+      format: 'same as change, moved after shipping'
+      purpose: 'Durable decision log of shipped changes.'
+      update_policy:
+          - who: 'agent, via spec-archive'
+          - when: 'after deltas are applied to living specs (specs/specs/)'
 ```
+
+See [`.ai/skills/spec-conventions.md`](../skills/spec-conventions.md) for the full format.

@@ -11,7 +11,7 @@
 - **Architecture:** SPA — `src/app` (pages, components (atoms/molecules/organisms), store,
   layouts, `app.ioc`, `app.routes`) + `src/libs` (`ioc`, `router`, `feature`)
 - **Router:** React Router 8+ via `#libs/router`
-- **Validation:** Zod 4+ (TypeScript-first schemas)
+- **Validation:** Zod 4.5+ (TypeScript-first schemas; `z.compile()` opt-in for hot paths)
 - **State:** Jotai-backed store + React hooks
 - **Dependency injection:** custom IoC container via `#libs/ioc`
 - **Testing:** Vitest + React Testing Library (happy-dom), coverage target ≥ 80%

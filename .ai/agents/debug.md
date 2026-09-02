@@ -80,30 +80,9 @@ Remember: Always reproduce and understand the bug before attempting to fix it. A
 
 ## Project-Specific Debugging Tools
 
-This React + TypeScript + Vite template provides:
-
-### Testing & Verification
-
-```bash
-# Run tests to reproduce issues
-pnpm test:dev --run              # One-time test run
-pnpm test:dev --coverage --run   # With coverage
-pnpm test:dev                    # Watch mode for debugging
-
-# Run specific test file
-pnpm test:dev src/path/to/test.spec.tsx --run
-
-# Mutation testing for test quality
-pnpm test:mutation
-```
-
-### Code Quality Checks
-
-```bash
-pnpm lint                 # ESLint errors/warnings
-pnpm stylelint           # CSS issues
-pnpm format              # Auto-fix formatting
-```
+Commands are in [`AGENTS.md`](../../AGENTS.md) — the ones most relevant to debugging are
+`pnpm lint`, `pnpm stylelint`, `pnpm test:dev --coverage --run`, and `pnpm start:dev`. Run a
+single spec file with `pnpm test:dev src/path/to/test.spec.tsx --run`.
 
 ### Common Debug Scenarios
 
@@ -113,13 +92,6 @@ pnpm format              # Auto-fix formatting
 4. **Feature Flag Issues**: Review `src/app/app.features.ts`
 5. **State Issues**: Inspect the Jotai-backed store in `src/app/store/`
 6. **Import Path Errors**: Use `#libs/*` aliases or `./relative.ts` with extension
-
-### Development Server
-
-```bash
-pnpm start:dev           # Start dev server with HMR
-pnpm preview             # Test production build locally
-```
 
 ### Browser DevTools
 
@@ -139,9 +111,5 @@ pnpm preview             # Test production build locally
 
 ### Logging
 
-`pnpm start:dev` already runs with debug-level logging
-(`env -e dev -m debug --log debug : vite`, see `package.json`):
-
-```bash
-pnpm start:dev
-```
+`pnpm start:dev` already runs with debug-level logging (`env -e dev -m debug --log debug :
+vite`, see `package.json`).
