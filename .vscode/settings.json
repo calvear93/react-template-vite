@@ -102,6 +102,24 @@
 	"js/ts.tsdk.path": "node_modules\\typescript\\lib",
 	"js/ts.tsserver.web.typeAcquisition.enabled": false,
 	"js/ts.validate.enabled": true,
+	"json.schemas": [
+		{
+			"fileMatch": ["/env/appsettings.json"],
+			"url": "./node_modules/@calvear/env/schemas/env.schema.json"
+		},
+		{
+			"fileMatch": ["/env/settings/settings.json"],
+			"url": "./node_modules/@calvear/env/schemas/settings.schema.json"
+		},
+		{
+			"fileMatch": ["/env/*.local.env.json"],
+			"url": "./.vscode/schemas/env-local.schema.json"
+		},
+		{
+			"fileMatch": ["/.vscode/__templates__/**/template.config.json"],
+			"url": "./.vscode/schemas/template-config.schema.json"
+		}
+	],
 	"npm.packageManager": "pnpm",
 	"npm.scriptRunner": "pnpm",
 	"prettier.useTabs": true,

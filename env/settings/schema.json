@@ -1,0 +1,11 @@
+{
+	"package-json": {
+		"type": "object"
+	},
+	"app-settings": {
+		"type": "object"
+	},
+	"local": {
+		"type": "object"
+	}
+}
