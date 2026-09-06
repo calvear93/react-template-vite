@@ -87,6 +87,9 @@ describe('link storages to feature handler', () => {
 		} as StorageEvent;
 		const handler = new FeatureHandler();
 
+		// the listener reads sessionStorage back to resolve precedence, so the
+		// session event has to be backed by a real write to have any effect
+		sessionStorage.setItem(`${prefix}${feature}`, 'false');
 		linkStorageToFeatureHandler(handler, prefix);
 		const [, callback] = vi.mocked(addEventListener).mock
 			.calls[0] as any as [string, (event: StorageEvent) => void];

@@ -44,7 +44,7 @@ When guidance conflicts, resolve in this order:
 | Mutation testing   | Stryker Mutator                                                         |
 | Env loading        | `@calvear/env` (`env/` folder)                                          |
 | Tooling            | ESLint + Prettier + Stylelint, pnpm                                     |
-| Runtime            | Node `>=24`, pnpm `>=11`                                                |
+| Runtime            | Node `>=24`, pnpm `>=12`                                                |
 
 ## Commands
 

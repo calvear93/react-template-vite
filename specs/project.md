@@ -15,7 +15,7 @@
 - **State:** Jotai-backed store + React hooks
 - **Dependency injection:** custom IoC container via `#libs/ioc`
 - **Testing:** Vitest + React Testing Library (happy-dom), coverage target ≥ 80%
-- **Runtime:** Node `>=24`, pnpm `>=11`
+- **Runtime:** Node `>=24`, pnpm `>=12`
 
 ## Conventions
 

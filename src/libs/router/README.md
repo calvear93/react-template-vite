@@ -14,12 +14,12 @@ You write a tree of routes; the library wires up `RouterProvider`, `Suspense`, l
 
 ## 📦 API at a glance
 
-| Export                   | Signature              | Description                                     |
-| ------------------------ | ---------------------- | ----------------------------------------------- |
+| Export                   | Signature               | Description                                     |
+| ------------------------ | ----------------------- | ----------------------------------------------- |
 | `createRouter`           | `(config) => Component` | builds a render-ready router component          |
-| `useHashValue`           | `() => string`         | current URL hash, without the leading `#`       |
-| `RouteDefinition`        | type                   | a component route **or** a layout route (XOR)   |
-| _…all of_ `react-router` | re-exported            | `Link`, `useNavigate`, `useParams`, `Outlet`, … |
+| `useHashValue`           | `() => string`          | current URL hash, without the leading `#`       |
+| `RouteDefinition`        | type                    | a component route **or** a layout route (XOR)   |
+| _…all of_ `react-router` | re-exported             | `Link`, `useNavigate`, `useParams`, `Outlet`, … |
 
 **`createRouter(config)`**
 
