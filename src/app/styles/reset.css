@@ -1,0 +1,65 @@
+/*
+ * Modern minimal CSS reset.
+ *
+ * Replaces UnoCSS preset-wind4's Preflight (disabled in `uno.config.ts`).
+ * App-specific base styles (fonts, viewport sizing, headings) live in `app.css`,
+ * which imports this file. Link styling and heading weight are left to the
+ * browser / component modules.
+ */
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+}
+
+html {
+	tab-size: 4;
+}
+
+:where(img, picture, video, canvas, svg) {
+	display: block;
+	max-width: 100%;
+}
+
+:where(img, video) {
+	height: auto;
+}
+
+:where(input, button, textarea, select) {
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+}
+
+:where(textarea) {
+	resize: vertical;
+}
+
+:where(p, h1, h2, h3, h4, h5, h6) {
+	overflow-wrap: break-word;
+}
+
+:where(ol, ul)[role='list'] {
+	padding: 0;
+	list-style: none;
+}
+
+:where(:target) {
+	scroll-margin-block: 5ex;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*:before,
+	*:after {
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}

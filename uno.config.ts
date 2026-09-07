@@ -10,7 +10,7 @@ import wind from 'unocss/preset-wind4';
 const FONT_FAMILY = process.env.FONT_FAMILY;
 
 export default {
-	presets: [typography(), wind(), icons()],
+	presets: [typography(), wind({ preflights: { reset: false } }), icons()],
 	transformers: [transformerDirectives(), transformerVariantGroup()],
 	theme: {
 		colors: {

@@ -1,5 +1,18 @@
+/*
+ * App base styles: viewport sizing, typography defaults, and app-identity rules.
+ * The generic reset lives in `reset.css` (imported below).
+ */
+
+@import url('./reset.css');
+
+html,
+body,
+#app {
+	height: 100dvh;
+}
+
 body {
-	margin: 0;
+	font-family: 'Quicksand', sans-serif;
 	line-height: 1.5;
 	letter-spacing: 0.025em;
 	color-scheme: light dark;
@@ -7,13 +20,8 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-html,
-body,
 #app {
-	box-sizing: border-box;
-	width: 100dvw;
-	height: 100dvh;
-	font-family: 'Quicksand', sans-serif;
+	isolation: isolate;
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
