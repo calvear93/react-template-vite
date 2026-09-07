@@ -5,7 +5,7 @@ import {
 } from 'unocss';
 import icons from 'unocss/preset-icons';
 import typography from 'unocss/preset-typography';
-import wind from 'unocss/preset-wind3';
+import wind from 'unocss/preset-wind4';
 
 const FONT_FAMILY = process.env.FONT_FAMILY;
 

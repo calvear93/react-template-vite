@@ -44,7 +44,7 @@
 		"package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, package.*.json, .npmrc, .pnp.cjs",
 		"readme*": "changelog.md, license.md, code_of_conduct.md, contributing.md, architecture.md, exemplars.md",
 		"tsconfig.json": "tsconfig.*.json",
-		"vite.config.ts": "vitest.config.ts, unocss.config.ts, stryker.conf.*"
+		"vite.config.ts": "vitest.config.ts, uno.config.ts, stryker.conf.*"
 	},
 	"explorer.incrementalNaming": "smart",
 	"explorer.sortOrder": "type",
