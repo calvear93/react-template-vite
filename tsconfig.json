@@ -11,7 +11,7 @@
 
 		"jsx": "react-jsx",
 		"lib": ["dom", "es2025"],
-		"types": ["vite/client", "@testing-library/jest-dom"],
+		"types": ["vite/client", "@testing-library/jest-dom/vitest"],
 
 		"incremental": true,
 		"sourceMap": true,

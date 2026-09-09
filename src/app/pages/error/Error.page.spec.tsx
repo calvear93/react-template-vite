@@ -6,8 +6,9 @@ import { ErrorPage } from './Error.page.tsx';
 describe(ErrorPage, () => {
 	// hooks
 	beforeAll(() => {
-		// avoid React Router's noisy uncaught error logging in tests
+		// avoid React Router's noisy uncaught error logging and warnings in tests
 		vi.spyOn(console, 'error').mockImplementation(() => null);
+		vi.spyOn(console, 'warn').mockImplementation(() => null);
 	});
 
 	afterEach(() => {
@@ -21,6 +22,8 @@ describe(ErrorPage, () => {
 			routes: [
 				{
 					ErrorBoundary: ErrorPage,
+					Component: () => null,
+					HydrateFallback: () => null,
 					loader: () => {
 						throw new Response('Not Found', {
 							status: 404,
@@ -42,6 +45,8 @@ describe(ErrorPage, () => {
 			routes: [
 				{
 					ErrorBoundary: ErrorPage,
+					Component: () => null,
+					HydrateFallback: () => null,
 					loader: () => {
 						throw new Error('boom');
 					},

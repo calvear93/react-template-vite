@@ -3,7 +3,7 @@ import uno from 'unocss/vite';
 import { normalizePath, type UserConfigExport } from 'vite';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
 import fonts from 'vite-plugin-webfont-dl';
-import { compilerOptions as tsconfig } from './tsconfig.json';
+import { compilerOptions as tsconfig } from './tsconfig.json' with { type: 'json' };
 
 const FONT_FAMILY = process.env.FONT_FAMILY;
 const FONT_WEIGHTS = process.env.FONT_WEIGHTS;
