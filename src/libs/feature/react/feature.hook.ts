@@ -25,17 +25,17 @@ export const useFeatureHandler = (): FeatureHandler => {
  */
 export const useFeature = (feature: string) => {
 	const handler = useFeatureHandler();
-	const [value, setFeature] = useState(handler.get(feature));
+	const [value, setValue] = useState(handler.get(feature));
 
 	useEffect(() => {
 		// re-sync the value when the feature key (or handler) changes,
 		// otherwise the state keeps the previously observed feature's value
-		setFeature(handler.get(feature));
+		setValue(handler.get(feature));
 
 		const listener: FeatureOnChangeListener = ({ changedFeatures }) => {
 			const newValue = changedFeatures?.[feature];
 			if (newValue !== undefined) {
-				setFeature(newValue);
+				setValue(newValue);
 			}
 		};
 
@@ -44,5 +44,8 @@ export const useFeature = (feature: string) => {
 		return () => handler.removeOnChangeListener(listener);
 	}, [feature, handler]);
 
-	return [value, (value: boolean) => handler.set(feature, value)] as const;
+	return [
+		value,
+		(newValue: boolean) => handler.set(feature, newValue),
+	] as const;
 };
