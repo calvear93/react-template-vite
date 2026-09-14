@@ -143,7 +143,7 @@ export class FeatureHandler {
 	/**
 	 * Event sourcing, for features changes propagation.
 	 */
-	private _emitter = new EventTarget();
+	private readonly _emitter = new EventTarget();
 
 	/**
 	 * Maps a list of feature to a features

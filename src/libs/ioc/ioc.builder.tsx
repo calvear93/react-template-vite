@@ -40,7 +40,9 @@ export const createContainer = () => {
 			resolve: <
 				T,
 				K = unknown,
-				R = K extends { new (...args: never[]): infer C } ? C : T,
+				R = K extends abstract new (...args: never[]) => infer C
+					? C
+					: T,
 			>(
 				key: K,
 			): R => {
@@ -69,7 +71,7 @@ export const createContainer = () => {
 		useInjection: <
 			T,
 			K = unknown,
-			R = K extends { new (...args: never[]): infer C } ? C : T,
+			R = K extends abstract new (...args: never[]) => infer C ? C : T,
 		>(
 			key: K,
 		): R => {
