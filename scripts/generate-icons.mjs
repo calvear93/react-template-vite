@@ -44,7 +44,7 @@ const BACKGROUND = manifest.background_color ?? '#ffffff';
 
 const eolOf = (text) => (text.includes('\r\n') ? '\r\n' : '\n');
 const isApple = (src) => basename(src).startsWith('apple-touch-icon');
-const isMaskable = (purpose) => (purpose ?? '').split(' ').includes('maskable');
+const isMaskable = (purpose = '') => purpose.split(' ').includes('maskable');
 const largestSize = (sizes) =>
 	Math.max(...sizes.split(' ').map((size) => Number.parseInt(size, 10)));
 
