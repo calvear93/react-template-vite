@@ -6,6 +6,7 @@ import perfectionist from 'eslint-plugin-perfectionist';
 import prettier from 'eslint-plugin-prettier/recommended';
 import promise from 'eslint-plugin-promise';
 import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import regexp from 'eslint-plugin-regexp';
 import sonarjs from 'eslint-plugin-sonarjs';
 import testingLibrary from 'eslint-plugin-testing-library';
@@ -188,7 +189,6 @@ export default [
 			'@typescript-eslint/interface-name-prefix': OFF,
 			'@typescript-eslint/no-empty-function': WARN,
 			'@typescript-eslint/no-empty-object-type': OFF,
-			'@typescript-eslint/no-explicit-any': OFF,
 			'@typescript-eslint/no-extraneous-class': OFF,
 			'@typescript-eslint/no-non-null-assertion': OFF,
 			'@typescript-eslint/no-redundant-type-constituents': ERROR,
@@ -205,6 +205,10 @@ export default [
 			'@typescript-eslint/no-empty-interface': [
 				ERROR,
 				{ allowSingleExtends: true },
+			],
+			'@typescript-eslint/no-explicit-any': [
+				WARN,
+				{ ignoreRestArgs: true },
 			],
 			'@typescript-eslint/no-floating-promises': [
 				WARN,
@@ -264,6 +268,13 @@ export default [
 				},
 			],
 		},
+	},
+	// #endregion
+
+	// #region react hooks
+	{
+		files: [REACT_GLOB],
+		...reactHooks.configs.flat['recommended-latest'],
 	},
 	// #endregion
 
@@ -539,7 +550,7 @@ export default [
 			'perfectionist/sort-imports': [
 				WARN,
 				{
-					internalPattern: ['#*/*'],
+					internalPattern: ['^#'],
 					newlinesBetween: 'ignore',
 					type: 'alphabetical',
 					groups: [
@@ -778,6 +789,50 @@ export default [
 	},
 	// #endregion
 
+	// #region boundaries
+	{
+		files: ['src/**/*.{ts,tsx}'],
+		rules: {
+			'no-restricted-exports': [
+				ERROR,
+				{
+					restrictDefaultExports: {
+						defaultFrom: true,
+						direct: true,
+						named: true,
+						namedFrom: true,
+						namespaceFrom: true,
+					},
+				},
+			],
+			'no-restricted-globals': [
+				ERROR,
+				{
+					name: 'process',
+					message:
+						'process.env is build-time only (vite.config.ts); use import.meta.env in the browser.',
+				},
+			],
+			'no-restricted-imports': [
+				ERROR,
+				{
+					patterns: [
+						{
+							message: 'Import libraries through #libs/*.',
+							regex: String.raw`^(?:\.\./)+libs/`,
+						},
+					],
+				},
+			],
+		},
+	},
+	{
+		// lazy() route targets need a default export
+		files: ['src/**/*.page.tsx'],
+		rules: { 'no-restricted-exports': OFF },
+	},
+	// #endregion
+
 	// #region prettier
 	{
 		files: [CODE_STYLE_GLOB],
@@ -810,6 +865,7 @@ export default [
 		files: [TEST_GLOB],
 		plugins: { vitest },
 		rules: {
+			'@typescript-eslint/no-explicit-any': OFF,
 			'max-classes-per-file': OFF,
 			'react/no-multi-comp': OFF,
 			'testing-library/no-manual-cleanup': OFF,
@@ -853,6 +909,10 @@ export default [
 			'vitest/prefer-to-have-length': WARN,
 			'vitest/prefer-todo': WARN,
 			'vitest/valid-title': OFF,
+			'vitest/consistent-test-it': [
+				ERROR,
+				{ fn: 'test', withinDescribe: 'test' },
+			],
 		},
 	},
 	// #endregion

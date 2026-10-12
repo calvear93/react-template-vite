@@ -65,7 +65,7 @@ Many scripts are environment-scoped via `:<env>` where `<env>` is typically `dev
 | pnpm test:`<env>` --run      | executes tests without watcher |
 | pnpm env:schema              | updates env JSON schema        |
 | pnpm format                  | code format                    |
-| pnpm lint                    | code/styles review             |
+| pnpm lint                    | ESLint + Prettier              |
 | pnpm stylelint               | CSS linting                    |
 | pnpm test:mutation           | mutation testing (Stryker)     |
 
@@ -83,14 +83,14 @@ This React SPA is built around a few in-house libraries; each ships its own READ
 
 Conventions, patterns, and worked examples live in the docs — start with whichever fits:
 
-| Topic                                               | Where                                              |
-| --------------------------------------------------- | -------------------------------------------------- |
-| Project contract (stack, rules, conventions)        | [`AGENTS.md`](AGENTS.md)                           |
-| Architecture, coding standards, copy-paste patterns | [`.github/instructions/`](.github/instructions/)   |
-| Reusable skills & the OpenSpec spec-driven workflow | [`.ai/`](.ai/README.md)                            |
-| Canonical code scaffolds for new files              | [`.vscode/__templates__/`](.vscode/__templates__/) |
-| High-quality examples already in this repo          | [`exemplars.md`](exemplars.md)                     |
-| Library usage (IoC · Router · Feature flags)        | [`src/libs/`](src/libs/)                           |
+| Topic                                        | Where                                              |
+| -------------------------------------------- | -------------------------------------------------- |
+| Project contract (stack, rules, conventions) | [`AGENTS.md`](AGENTS.md)                           |
+| AI skills (structure/state, libs, testing)   | [`.ai/`](.ai/README.md)                            |
+| Change records (plans + decisions)           | [`docs/changes/`](docs/changes/README.md)          |
+| Canonical code scaffolds for new files       | [`.vscode/__templates__/`](.vscode/__templates__/) |
+| Environment configuration                    | [`env/README.md`](env/README.md)                   |
+| Library usage (IoC · Router · Feature flags) | [`src/libs/`](src/libs/)                           |
 
 ## 🧰 Configuring fnm (Fast Node Manager)
 

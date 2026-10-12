@@ -14,3 +14,6 @@ export const ___PageName___Page = () => {
 		</section>
 	);
 };
+
+// lazy() route targets need a default export
+export default ___PageName___Page;

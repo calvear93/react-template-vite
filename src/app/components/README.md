@@ -3,7 +3,7 @@
 **Global, reusable** components shared across pages and features, organized with **Atomic Design**.
 Page-specific pieces live in `src/app/pages/<page>/components/`.
 
-> Full methodology and rules: the [`atomic-design`](../../../.ai/skills/atomic-design.md) skill.
+> Full methodology and rules: the [`structure-state`](../../../.ai/skills/structure-state.md) skill.
 > Remember: here "atoms" are UI **components**; **state** lives in `src/app/store/`.
 
 ## Structure

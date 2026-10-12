@@ -11,4 +11,4 @@ Reusable and "dumb".
 - Co-located CSS Modules (`*.module.css`); typed props; a single responsibility.
 - Scaffold: `react-component-stateless`.
 
-Full methodology: the [`atomic-design`](../../../../.ai/skills/atomic-design.md) skill.
+Full methodology: the [`structure-state`](../../../../.ai/skills/structure-state.md) skill.

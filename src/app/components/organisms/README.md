@@ -12,4 +12,4 @@ as props.
 - Extract logic into hooks (`useX`); CSS Modules; typed props.
 - Scaffold: `react-component` (stateful) or `react-component-versioned` (feature-flagged).
 
-Full methodology: the [`atomic-design`](../../../../.ai/skills/atomic-design.md) skill.
+Full methodology: the [`structure-state`](../../../../.ai/skills/structure-state.md) skill.

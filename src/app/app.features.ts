@@ -11,7 +11,7 @@ import { FeatureHandler, linkStorageToFeatureHandler } from '#libs/feature';
  * import { useFeature } from '#libs/feature';
  *
  * export const UserDashboard = () => {
- * 	const isV2Enabled = useFeature('FEATURE_V2');
+ * 	const [isV2Enabled] = useFeature('FEATURE_V2');
  *
  * 	return (
  * 		<div>

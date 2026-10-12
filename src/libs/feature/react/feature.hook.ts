@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useSyncExternalStore } from 'react';
 import type {
 	FeatureHandler,
 	FeatureOnChangeListener,
@@ -25,24 +25,21 @@ export const useFeatureHandler = (): FeatureHandler => {
  */
 export const useFeature = (feature: string) => {
 	const handler = useFeatureHandler();
-	const [value, setValue] = useState(handler.get(feature));
 
-	useEffect(() => {
-		// re-sync the value when the feature key (or handler) changes,
-		// otherwise the state keeps the previously observed feature's value
-		setValue(handler.get(feature));
+	// the handler is an external store: subscribe to its changes and read
+	// the current value on every render (also when the feature key changes)
+	const value = useSyncExternalStore(
+		(onStoreChange) => {
+			const listener: FeatureOnChangeListener = ({ changedFeatures }) => {
+				if (changedFeatures?.[feature] !== undefined) onStoreChange();
+			};
 
-		const listener: FeatureOnChangeListener = ({ changedFeatures }) => {
-			const newValue = changedFeatures?.[feature];
-			if (newValue !== undefined) {
-				setValue(newValue);
-			}
-		};
+			handler.addOnChangeListener(listener);
 
-		handler.addOnChangeListener(listener);
-
-		return () => handler.removeOnChangeListener(listener);
-	}, [feature, handler]);
+			return () => handler.removeOnChangeListener(listener);
+		},
+		() => handler.get(feature),
+	);
 
 	return [
 		value,

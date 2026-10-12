@@ -5,7 +5,7 @@ of Atomic Design: routed views that fill a template (layout) with real data and 
 `store/`, IoC services, and routing. Each page represents a distinct view or functionality within
 the application.
 
-> Methodology and the other Atomic Design levels: the [`atomic-design`](../../../.ai/skills/atomic-design.md) skill.
+> Methodology and the other Atomic Design levels: the [`structure-state`](../../../.ai/skills/structure-state.md) skill.
 > Reusable UI lives in `src/app/components/`; app **state** lives in `src/app/store/`.
 
 ## Overview
@@ -513,7 +513,7 @@ describe('DetailPage with mocks', () => {
 import { useFeature } from '#libs/feature';
 
 export const FeaturePage = () => {
-	const isNewFeatureEnabled = useFeature('NEW_FEATURE_V2');
+	const [isNewFeatureEnabled] = useFeature('NEW_FEATURE_V2');
 
 	return (
 		<section>

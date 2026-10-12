@@ -6,8 +6,8 @@
 .DESCRIPTION
 	Guides you through configuring a fresh copy of the template: collects project
 	metadata and replaces the (((...))) placeholders across the curated file set
-	(package.json, env/appsettings.json, README.md, public/site.webmanifest,
-	specs/project.md), then formats the result.
+	(package.json, env/appsettings.json, README.md, public/site.webmanifest),
+	then formats the result.
 
 	Reliability features (shared via INIT.lib.ps1): UTF-8 (no BOM) I/O with full accent
 	support; a .init-tmp/ journal that backs up every file (-Rollback / resume); -DryRun
@@ -108,7 +108,7 @@ $tokens = [ordered]@{
 	'(((app-description)))' = $appDescription
 	'(((base-path)))' = $basePath
 }
-$tokenFiles = @('package.json', 'env/appsettings.json', 'public/site.webmanifest', 'specs/project.md')
+$tokenFiles = @('package.json', 'env/appsettings.json', 'public/site.webmanifest')
 foreach ($rel in $tokenFiles) {
 	$path = Join-Path $root $rel
 	if (-not (Test-Path $path)) { continue }
@@ -168,7 +168,7 @@ Write-Ui "  $appTitleFormatted" 'Green'
 Write-Host ''
 Write-Ui '  Próximos pasos:' 'Yellow'
 Write-Next 'pnpm install'
-Write-Next 'configurar secretos en env/dev.local.env.json'
+Write-Next 'configurar valores por ambiente en env/dev.env.json (sin secretos: todo llega al bundle)'
 Write-Next 'pnpm test:dev --coverage --run'
 Write-Next "pnpm start:dev   ·   $startUrl"
 Write-Host ''

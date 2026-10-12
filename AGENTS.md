@@ -1,222 +1,91 @@
 # AGENTS.md
 
-> Single source of truth for **all** AI coding assistants working in this repository
-> (GitHub Copilot, Claude, Gemini, Codex, Cursor, and any agent that reads `AGENTS.md`).
+These are the canonical, tool-agnostic instructions for every AI assistant in this repo.
+`CLAUDE.md` and `GEMINI.md` only import this file, and the skills live in [`.ai/`](.ai/README.md).
+Precedence: user instructions, then this file, then existing code patterns.
 
-This is a modern, production-ready **React + TypeScript SPA template** built on Vite. It
-emphasizes type safety end-to-end, dependency injection via a custom IoC container,
-feature flags, type-safe routing, and comprehensive testing.
+This is a **React 19 SPA template on Vite**: IoC, feature flags, a typed router, Atomic Design, and a PWA.
 
-## How to use this document
+## Stack
 
-- This file is the canonical, tool-agnostic instruction set. `CLAUDE.md` and `GEMINI.md`
-  are thin pointers to it, and GitHub Copilot reads this file natively — **do not**
-  duplicate guidance into those pointers.
-- Keep this file as the high-level contract (stack, rules, conventions). Long-form
-  detail lives in the deep references at the bottom; link to them instead of repeating.
-- **Operating manual:** read [`.ai/skills/ways-of-working.md`](.ai/skills/ways-of-working.md) first — the autonomy policy, the Definition of Done, and how to talk to a (possibly non-technical) user.
-- User instructions always take precedence — see Priority order below.
-
-## Priority order
-
-When guidance conflicts, resolve in this order:
-
-1. **User instructions** — a direct request in chat.
-2. **This file (`AGENTS.md`)** — the canonical, tool-agnostic contract.
-3. **Deep references** in [`.github/instructions/`](.github/instructions/) and the canonical
-   scaffolds in [`.vscode/__templates__/`](.vscode/__templates__/).
-4. **Existing patterns** in the codebase (`src/`, and `docs/` where present).
-
-## Tech stack
-
-| Area               | Choice                                                                  |
-| ------------------ | ----------------------------------------------------------------------- |
-| Framework          | React 19+ with TypeScript 5+                                            |
-| Build tool         | Vite (HMR dev server + production builds)                               |
-| Router             | React Router 8+ via `#libs/router`                                      |
-| Validation         | Zod 4.5+ (TypeScript-first schemas; `z.compile()` opt-in for hot paths) |
-| Local/shared state | React hooks + Jotai-backed store (`src/app/store/`)                     |
-| Dependency inject  | Custom IoC container via `#libs/ioc`                                    |
-| Feature flags      | Custom system via `#libs/feature`                                       |
-| Styling            | CSS Modules + UnoCSS (atomic CSS)                                       |
-| Testing            | Vitest + React Testing Library (happy-dom)                              |
-| Coverage           | Vitest Coverage V8 (target ≥ 80%)                                       |
-| Mutation testing   | Stryker Mutator                                                         |
-| Env loading        | `@calvear/env` (`env/` folder)                                          |
-| Tooling            | ESLint + Prettier + Stylelint, pnpm                                     |
-| Runtime            | Node `>=24`, pnpm `>=12`                                                |
+- **Core:** React 19 with the **React Compiler** on, TypeScript 6 (strict), Vite 8.
+- **App libs:** react-router 8 via `#libs/router`, Zod 4, jotai 3.
+- **Styling:** UnoCSS + CSS Modules.
+- **Build:** vite-plugin-pwa, `@calvear/env`.
+- **Tests:** Vitest 5 + Testing Library (happy-dom), Stryker.
+- **Runtime:** Node ≥ 24, pnpm ≥ 12.
 
 ## Commands
 
 ```bash
-pnpm start:dev                   # dev server with HMR (dev environment)
-pnpm start:release               # dev server (release environment)
-pnpm test:dev                    # tests in watch mode
-pnpm test:dev --run              # tests once (no watch)
-pnpm test:dev --coverage --run   # tests once with coverage (CI/validation)
-pnpm test:mutation               # Stryker mutation tests (validate test quality)
-pnpm lint                        # ESLint (cached)
-pnpm stylelint                   # CSS linting
-pnpm format                      # Prettier (write)
-pnpm env:schema                  # regenerate env JSON schema after config changes
-pnpm build:dev                   # build (dev environment)
-pnpm build:release               # build (release environment)
-pnpm preview                     # build dev + preview locally
+pnpm start:dev                  # dev server with HMR (http://localhost:3003)
+pnpm test:dev --run [path]      # tests once (drop --run for watch)
+pnpm test:mutation              # Stryker, for critical logic
+pnpm lint --fix                 # ESLint + Prettier (style is enforced here)
+pnpm stylelint                  # CSS lint
+pnpm env:schema                 # after adding or renaming an env var
+pnpm build:dev                  # production build (dist/)
+pnpm gen:icons                  # regenerate PWA icons from the source SVG
 ```
 
-Run `pnpm lint && pnpm format && pnpm test:dev --coverage --run` before finalizing
-non-trivial changes.
+**Gate** (must be green before a change is done):
+`pnpm lint && pnpm stylelint && pnpm build:dev && pnpm test:dev --coverage --run`
 
-## Project structure
-
-```
-src/
-  app/            feature code: pages, components (atoms/molecules/organisms), layouts, store, app.ioc, app.routes
-  libs/           reusable libraries (ioc, router, feature) with their own README
-env/              environment configuration (appsettings.json + <env> files)
-.vscode/__templates__/  canonical code scaffolds for every pattern (component, page, store, layout, schema, test, class, error/exception)
-```
-
-Path aliases (see `package.json#imports`): `#libs/ioc`, `#libs/router`, `#libs/feature`.
-See **architecture-guide** for full folder topology and wiring.
-
-When creating a new file, start from the matching scaffold under
-[`.vscode/__templates__/`](.vscode/__templates__/) — it is the source of truth for
-suffixes, folder layout, and component/store/schema/test signatures.
-
-## Core principles
-
-- **Type safety first** — leverage TypeScript and Zod from UI to data layer; never `any`.
-- **Inject, never hardcode** — all config and services flow through the IoC container.
-- **Logic in hooks** — keep components declarative; move business logic into custom hooks.
-- **Atomic Design** — UI is atoms → molecules → organisms (`src/app/components/`); templates = layouts, pages = pages; compose upward. See the `atomic-design` skill.
-- **Accessibility by default** — semantic HTML and ARIA on every interactive component.
-- **Test what you ship** — unit + integration tests; meaningful assertions (mutation-aware).
-- **YAGNI** — minimal, atomic changes; no speculative abstractions.
-
-## Critical rules
-
-These are non-negotiable. Violations should be fixed before code is considered done.
-
-### Configuration & dependency injection
-
-- **NEVER** hardcode URLs, API keys, or configuration inside components, hooks, or services.
-- Keep `import.meta.env` access centralized in a config/bootstrap layer (e.g. an
-  `app.config.ts` parsed with Zod) instead of scattering it across components and hooks.
-- Define non-secret config in `env/appsettings.json`; secrets in `env/<env>.env.json` /
-  `env/<env>.local.env.json` (this template ships `dev` and `release` as examples).
-- Bind config and services in the bootstrap layer (`app.ioc.ts`, which calls
-  `createContainer()` from `#libs/ioc`) and consume them with the `useInjection` hook.
-  See **architecture-guide** → Configuration architecture.
-
-### Language policy
-
-- Code and documentation are in **English** — identifiers, comments, props, errors, docs.
-- **Domain exception:** preserve business-domain terms in their original language when the user
-  explicitly defines them as domain entities (e.g. `Siniestro`, `Episodio`). Implementation
-  around them stays in English.
-
-### TypeScript & validation
-
-- Explicit types everywhere; no `any` (prefer `unknown` + narrowing).
-- Use Zod schemas for form data, API responses, and complex prop validation.
-- Prefer `async`/`await` over raw Promises; always handle the error path.
-
-### Accessibility
-
-- Use semantic elements and proper ARIA roles/labels; ensure keyboard navigation and
-  focus management for interactive components.
-
-## Code style (essentials)
-
-- Tabs for indentation (width 4); single quotes; semicolons; trailing commas (all); ~80 col width.
-- Arrow functions with parens around params; named exports preferred over default exports
-  (pages keep **both** — `lazy: () => import('./X.page.tsx')` in `app.routes.tsx` needs the
-  default export; the named export stays for direct imports and tests).
-- Include `.ts`/`.tsx` extensions in relative imports; use `#libs/*` aliases for libraries.
-- Import order: external packages → `#libs/*` → relative imports.
-- Files `kebab-case`, components `PascalCase`, functions/vars `camelCase`,
-  module constants `SCREAMING_SNAKE_CASE`, private members prefixed `_`.
-
-Full ruleset, file-suffix table, and anti-patterns: **coding-standards**.
-
-## Testing
-
-- Vitest + React Testing Library; assert on user-visible output, not internals.
-- Inject mocked dependencies with `InversionOfControlProvider` + a `mockIoCValues` Map.
-- Cover happy path, loading/error states, and at least one edge case. Target ≥ 80% coverage.
-- Place `*.spec.tsx`/`*.spec.ts` alongside source files.
-
-Worked test recipes: **patterns** → Testing patterns.
-
-## Commit conventions
-
-Use **Conventional Commits with Gitmoji**:
+## Layout
 
 ```
-<type>(<optional scope>) <gitmoji>: <description>
+src/main.tsx, src/app/App.tsx   bootstrap + providers (IoC, features, router)
+src/app/app.{ioc,features,routes}.ts(x)   DI bindings · feature flags · route table
+src/app/components/{atoms,molecules,organisms}/   shared UI (Atomic Design)
+src/app/layouts/<name>/         <Name>.layout.tsx (templates)
+src/app/pages/<name>/           <Name>.page.tsx (+ .module.css, .spec.tsx, components/, store/)
+src/app/store/                  app-wide jotai stores (*.store.ts)
+src/libs/{ioc,feature,router}   #libs/* (each has a README: the API reference)
+env/                            appsettings.json + <env>.env.json (see env/README.md)
+.vscode/__templates__/          scaffolds: start every new file from one
 ```
 
-Examples:
+The reference implementation is `src/app/pages/detail/` (page, lazy route, IoC, feature flags,
+store and specs).
 
-```
-feat(auth) ✨: add token refresh flow
-fix(router) 🐛: resolve lazy route fallback
-refactor(hooks) ♻️: extract data-fetching logic
-test(user) ✅: cover edit error state
-chore(deps) 🔧: bump vite
-```
+## Rules (the ones lint can't check)
 
-Common types: `feat` ✨, `fix` 🐛, `docs` 📚, `style` 🎨, `refactor` ♻️, `perf` ⚡,
-`test` ✅, `chore` 🔧, `ci`, `build`. Security 🔒, UI 💄, remove 🗑️, move 🚚.
+- **No manual memoization.** The React Compiler handles it, so don't add `useMemo`,
+  `useCallback` or `memo` unless profiling proves a need. Effects are only for syncing with
+  external systems.
+- **Config:** never hardcode URLs or keys. Use `import.meta.env.APP_*` directly, since Vite
+  inlines it at build time. Only `APP_*` vars reach the browser, and everything there is
+  **public**: no secrets in a SPA. `process` doesn't exist in the browser (lint-enforced);
+  `process.env` is build-time only (`vite.config.ts`, `uno.config.ts`).
+- **Services:** data access is a service bound in `app.ioc.ts` and resolved with `useInjection`,
+  never a raw `fetch` in a component. Validate external data with Zod.
+- **UI states:** every async UI handles loading, empty and error.
+- **Structure and state:** follow [`structure-state`](.ai/skills/structure-state.md) for
+  Atomic Design levels, page and layout files, and jotai stores.
+- **App libs:** IoC, feature flags and routing work as described in
+  [`app-libs`](.ai/skills/app-libs.md). Pages need a default export (`lazy()`).
+- **Tests:** ship tests with the code, ≥ 80% coverage. See [`testing`](.ai/skills/testing.md).
+  Auto-cleanup is **off**.
+- **Types and checks:** prefer `unknown` or generics. `any` (a lint warning) is fine when an exact
+  type adds complexity without safety. No `@ts-expect-error` or `eslint-disable` to dodge an
+  error.
+- **Style is tooling-owned.** Formatting, import, prop and member order, file naming and hooks
+  rules are enforced by ESLint, Prettier and Stylelint. Run `pnpm lint --fix`.
 
-## Spec-driven development (SDD)
+## Language
 
-Build features through a spec-first loop that follows the **OpenSpec** convention
-([openspec.dev](https://openspec.dev)): living specs are the current truth, and each request
-is a **change** (like a DB migration) carrying spec **deltas** that get applied on ship.
-`AGENTS.md` is the constitution; the procedures live in [`.ai/skills/`](.ai/skills/):
+Code, comments, docs and commits are in **English**. Exception: business-domain terms the user
+defines as entities (e.g. `Siniestro`) keep their original name. Talk to the user in their
+language.
 
-```
-/spec-intake    rough idea → an idea brief (optional on-ramp: shape a detailed input)
-/spec-propose   idea    → specs/changes/<id>/proposal.md + specs/<cap>/spec.md deltas (what + why)
-/spec-design    change  → specs/changes/<id>/design.md   (technical design; skip if trivial)
-/spec-tasks     change  → specs/changes/<id>/tasks.md    (atomic, test-first tasks)
-/spec-implement change  → code + tests (typecheck → run Vitest → fix)
-/spec-archive   change  → verify + apply deltas to specs/specs/ + move to specs/changes/archive/
-```
+## Commits
 
-`/spec-intake` is optional: a guided interview that helps anyone (technical or not) turn a
-rough idea into a detailed brief, which `/spec-propose` then formalizes. Skip it when the
-request is already clear and complete.
+Use Conventional Commits + Gitmoji: `<type>(<scope>) <gitmoji>: <description>`.
+For example: `feat(cart) ✨: add coupon field`, `fix(router) 🐛: …`, `refactor ♻️`, `test ✅`,
+`docs 📚`, `chore(deps) 🔧`. For non-trivial changes, add `Refs: docs/changes/<file>.md` to the
+commit body.
 
-Folder model (root `specs/`): `specs/specs/` = **living truth** (one folder per capability);
-`specs/changes/<id>/` = **proposals** with `## ADDED|MODIFIED|REMOVED Requirements` deltas;
-`specs/changes/archive/YYYY-MM-DD-<id>/` = shipped changes (the durable decision log). See
-[`.ai/skills/spec-conventions.md`](.ai/skills/spec-conventions.md) for the exact format and
-[`specs/project.md`](specs/project.md) for project context. The official `openspec` CLI is not
-used (it hardcodes an `openspec/` root and can't target `specs/`); the skills are the engine.
+## How to work
 
-`/spec-implement` reuses the canonical task prompts in [`.ai/prompts/`](.ai/prompts/)
-(`create-component`, `create-page`, `create-hook`, `create-test`) instead of
-redefining them. GitHub Copilot exposes the loop as `/spec-*` prompts under `.github/prompts/`;
-Claude, Gemini, and Codex follow the procedure files directly. The best-practice skills
-(`typescript`, `react-patterns`, `atomic-design`, `zod-schema`, `ioc-binding`, `vitest-tdd`, `vite-config`) live alongside them in
-[`.ai/skills/`](.ai/skills/) — read the relevant one when its topic applies.
-
-## Deep references
-
-| Document                                                                      | Scope                                                                                                             |
-| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| [Operating manual](.ai/skills/ways-of-working.md)                             | Autonomy, default technical decisions, Definition of Done, non-technical-user comms                               |
-| [Architecture guide](.github/instructions/architecture-guide.instructions.md) | Folder topology, IoC/config wiring, routing, feature flags, import conventions                                    |
-| [Coding standards](.github/instructions/coding-standards.instructions.md)     | Formatting, naming, file suffixes, TypeScript rules, comments, anti-patterns                                      |
-| [Patterns](.github/instructions/patterns.instructions.md)                     | Copy-paste recipes: components, hooks, services, schemas, forms, errors, tests                                    |
-| [Code exemplars](exemplars.md)                                                | Pointers to high-quality real examples in this repo                                                               |
-| [README](README.md)                                                           | Human-facing project documentation and setup                                                                      |
-| [`.vscode/__templates__/`](.vscode/__templates__/)                            | Canonical code scaffolds for every pattern (component, page, store, layout, schema, test, class, error/exception) |
-
-Task prompts and agent definitions have canonical bodies in `.ai/prompts/` and `.ai/agents/`.
-GitHub Copilot surfaces them natively via thin pointers in `.github/prompts/` and
-`.github/agents/`; Claude, Gemini, and Codex read the `.ai/` files directly (see `CLAUDE.md`,
-`GEMINI.md`, and this file).
+Follow [`ways-of-working`](.ai/skills/ways-of-working.md). It covers autonomy, how to right-size
+a change, change records ([`docs/changes/`](docs/changes/README.md)), and the Definition of Done.

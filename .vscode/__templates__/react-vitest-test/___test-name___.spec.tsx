@@ -1,5 +1,5 @@
 import { cleanup, render } from '@testing-library/react';
-import { afterEach, beforeAll, describe, expect, test } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 
 describe('___TestName___', () => {
 	// hooks
@@ -7,7 +7,7 @@ describe('___TestName___', () => {
 		render(<h1>Hello World</h1>);
 	});
 
-	afterEach(cleanup); // remove if you want to render once in hook
+	afterAll(cleanup); // auto-cleanup is off: render once, clean up at the end
 
 	// tests
 	test('1 to be 1', () => {

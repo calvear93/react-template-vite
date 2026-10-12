@@ -45,7 +45,7 @@ import { FeatureHandler } from '#libs/feature';
 
 export const features = new FeatureHandler({
 	NEW_CHECKOUT: true,
-	BETA_DASHBOARD: import.meta.env.BETA === 'true',
+	BETA_DASHBOARD: import.meta.env.APP_BETA === 'true',
 	PROMO_BANNER: globalThis.FEATURES?.promo ?? false,
 });
 ```

@@ -7,13 +7,17 @@ import styles from './___ComponentName___.module.css';
  * @returns component
  */
 export const ___ComponentName___ = ({ title }: ___ComponentName___Props) => {
-	const [value, setValue] = useState('___ComponentName___');
+	const [clicks, setClicks] = useState(0);
 
 	return (
 		<div className={styles.container}>
 			<h1>{title}</h1>
 
-			<span>{value}</span>
+			<span>___ComponentName___</span>
+
+			<button onClick={() => setClicks(clicks + 1)} type='button'>
+				clicks: {clicks}
+			</button>
 		</div>
 	);
 };

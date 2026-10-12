@@ -11,19 +11,10 @@ Static assets like images, icons, fonts, and other media files that are used thr
 ### Importing Assets
 
 ```tsx
-// Import as URL string (recommended for most cases)
+// Imports resolve to a URL string (there is no SVG-as-component plugin)
 import logoUrl from './logo.svg';
 
-// Import as React component (for SVGs only)
-import { ReactComponent as Logo } from './logo.svg';
-
-// Usage in component
-export const MyComponent = () => (
-	<div>
-		<img src={logoUrl} alt='Logo' />
-		<Logo className='svg-logo' />
-	</div>
-);
+export const MyComponent = () => <img alt='Logo' src={logoUrl} />;
 ```
 
 ### Supported File Types

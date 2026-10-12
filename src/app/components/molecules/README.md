@@ -11,4 +11,4 @@ A few **atoms** combined into one simple unit with a clear purpose. They stay pr
 - Co-located CSS Modules; typed props; one responsibility.
 - Scaffold: `react-component-stateless`.
 
-Full methodology: the [`atomic-design`](../../../../.ai/skills/atomic-design.md) skill.
+Full methodology: the [`structure-state`](../../../../.ai/skills/structure-state.md) skill.

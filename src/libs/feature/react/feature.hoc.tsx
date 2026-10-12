@@ -52,7 +52,7 @@ const FeatureSwitch = <Props,>({
 		calcFeatureOn();
 
 		return () => handler.removeOnChangeListener(listener);
-	}, [handler]);
+	}, [components, handler]);
 
 	const Component = feature ? components[feature] : null;
 	return Component ? <Component {...(props as Props & object)} /> : fallback;

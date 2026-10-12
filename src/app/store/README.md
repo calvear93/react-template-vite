@@ -7,7 +7,7 @@ so the state engine stays replaceable; today it is **backed by [Jotai](https://j
 
 Each store module exposes a **private source** (`_inner*`, never exported) and a **public**
 read/write primitive. It is consumed by **stateful** components (organisms and pages, not
-atoms/molecules — see [`atomic-design`](../../../.ai/skills/atomic-design.md)) with the matching
+atoms/molecules — see [`structure-state`](../../../.ai/skills/structure-state.md)) with the matching
 hook (`useAtom` / `useAtomValue` / `useSetAtom`).
 
 ```ts

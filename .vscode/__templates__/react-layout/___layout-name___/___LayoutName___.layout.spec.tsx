@@ -1,5 +1,5 @@
-import { beforeAll, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { beforeAll, describe, expect, test } from 'vitest';
 import { ___LayoutName___Layout } from './___LayoutName___.layout.tsx';
 
 describe(___LayoutName___Layout, () => {
@@ -14,6 +14,6 @@ describe(___LayoutName___Layout, () => {
 	test('child must be rendered with "Any Content"', () => {
 		const article = screen.getByRole('article');
 
-		expect(article.textContent).toBe('Any Content');
+		expect(article).toHaveTextContent('Any Content');
 	});
 });

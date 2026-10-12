@@ -5,9 +5,11 @@ import styles from './___ComponentName___.module.css';
  *
  * @returns component
  */
-export const ___ComponentName___ = ({ anyProp }: ___ComponentName___Props) => (
+export const ___ComponentName___ = ({
+	anyProp = '___ComponentName___',
+}: ___ComponentName___Props) => (
 	<div className={styles.container}>
-		<h1>___ComponentName___</h1>
+		<h1>{anyProp}</h1>
 	</div>
 );
 
