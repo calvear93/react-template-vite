@@ -52,22 +52,9 @@ You can add more environments (e.g. `qa`, `prod`) by creating the corresponding 
 
 ## 🧪 **Executing**
 
-Project uses **pnpm scripts** to run, test, and build.
-Many scripts are environment-scoped via `:<env>` where `<env>` is typically `dev` or `release`.
-
-| Command                      | Action                         |
-| ---------------------------- | ------------------------------ |
-| pnpm start:`<env>`           | executes the app               |
-| pnpm build:`<env>`           | build the app                  |
-| pnpm preview                 | builds and serves the app      |
-| pnpm test:`<env>`            | executes tests                 |
-| pnpm test:`<env>` --coverage | executes tests with coverage   |
-| pnpm test:`<env>` --run      | executes tests without watcher |
-| pnpm env:schema              | updates env JSON schema        |
-| pnpm format                  | code format                    |
-| pnpm lint                    | ESLint + Prettier              |
-| pnpm stylelint               | CSS linting                    |
-| pnpm test:mutation           | mutation testing (Stryker)     |
+Scripts are environment-scoped via `:<env>` (`dev` or `release`), e.g. `pnpm start:dev`. The
+day-to-day commands and the quality gate live in [AGENTS.md → Commands](AGENTS.md#commands);
+`package.json` has the full list.
 
 ## 🏗️ **Architecture Overview**
 

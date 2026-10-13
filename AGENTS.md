@@ -4,7 +4,8 @@ These are the canonical, tool-agnostic instructions for every AI assistant in th
 `CLAUDE.md` and `GEMINI.md` only import this file, and the skills live in [`.ai/`](.ai/README.md).
 Precedence: user instructions, then this file, then existing code patterns.
 
-This is a **React 19 SPA template on Vite**: IoC, feature flags, a typed router, Atomic Design, and a PWA.
+This is a **React 19 SPA template on Vite**: IoC, feature flags, a typed router, Atomic Design,
+and a PWA.
 
 ## Stack
 
@@ -12,7 +13,7 @@ This is a **React 19 SPA template on Vite**: IoC, feature flags, a typed router,
 - **App libs:** react-router 8 via `#libs/router`, Zod 4, jotai 3.
 - **Styling:** UnoCSS + CSS Modules.
 - **Build:** vite-plugin-pwa, `@calvear/env`.
-- **Tests:** Vitest 5 + Testing Library (happy-dom), Stryker.
+- **Tests:** Vitest 5 + Testing Library (happy-dom).
 - **Runtime:** Node ≥ 24, pnpm ≥ 12.
 
 ## Commands
@@ -20,7 +21,6 @@ This is a **React 19 SPA template on Vite**: IoC, feature flags, a typed router,
 ```bash
 pnpm start:dev                  # dev server with HMR (http://localhost:3003)
 pnpm test:dev --run [path]      # tests once (drop --run for watch)
-pnpm test:mutation              # Stryker, for critical logic
 pnpm lint --fix                 # ESLint + Prettier (style is enforced here)
 pnpm stylelint                  # CSS lint
 pnpm env:schema                 # after adding or renaming an env var
@@ -29,7 +29,7 @@ pnpm gen:icons                  # regenerate PWA icons from the source SVG
 ```
 
 **Gate** (must be green before a change is done):
-`pnpm lint && pnpm stylelint && pnpm build:dev && pnpm test:dev --coverage --run`
+`pnpm lint && pnpm stylelint && pnpm exec tsc --noEmit && pnpm build:dev && pnpm test:dev --coverage --run`
 
 ## Layout
 

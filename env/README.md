@@ -42,7 +42,7 @@ pnpm test:dev        # the tests with the dev configuration
 **The environment is inferred from the script name:** `pnpm start:dev` loads `dev` without `-e`,
 because `env` takes the last segment after `:`. A suffix that is not a defined environment (a typo
 like `build:relase`) aborts the command. Scripts whose suffix is not an environment pass `-e`
-(`preview`, `test:mutation`, `env:schema`), and so does any call outside a pnpm script.
+(`preview`, `env:schema`), and so does any call outside a pnpm script.
 
 **There is one build per environment** (`build:dev`, `build:release`): the `APP_*` variables are
 written into the bundle when it is built, so each environment needs its own.
@@ -120,7 +120,6 @@ validated against it before the command runs. `pnpm env:schema` rebuilds it from
 | `build:dev` / `build:release` | `env -m build : vite build`          |
 | `preview`                     | `env -e dev -m build : vite preview` |
 | `test:dev` / `test:release`   | `env -m test : vitest`               |
-| `test:mutation`               | `env -e dev -m test : stryker run`   |
 | `env:schema`                  | `env schema -e dev -m build`         |
 
 `start:dev` and the `build:*` scripts add `--log debug`. Every `env` option is described in the

@@ -14,9 +14,6 @@ vite.config.ts.*
 vitest.config.ts.*
 vite.config.js.timestamp-*
 
-# Stryker cache
-.stryker-tmp
-
 # test reports and coverage directory
 .reports
 .coverage

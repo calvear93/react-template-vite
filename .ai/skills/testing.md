@@ -42,4 +42,4 @@ describe(UserCard, () => {
 - To test a store, call `renderHook(() => useAtom(store))`.
 - To change env in a test, use `vi.stubEnv('APP_X', '…')`, then `vi.unstubAllEnvs()`.
 - Cover the happy path, edge cases and the error path. Coverage target is ≥ 80% (bootstrap
-  `app*`, mocks and `__tests__` are excluded). Use `pnpm test:mutation` for critical logic.
+  `app*`, mocks and `__tests__` are excluded).

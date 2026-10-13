@@ -25,8 +25,8 @@ The first tier that matches wins:
     Write a [change record](../../docs/changes/README.md) first (`status: planned`), share the plan
     in plain words, build, pass the DoD, then close the record.
 
-- **Small:** behavior changes inside one page or component. State a 2–4 bullet plan in chat, build, pass the
-  DoD.
+- **Small:** behavior changes inside one page or component. State a 2–4 bullet plan in chat,
+  build, pass the DoD.
 - **Trivial:** no behavior change (typo, comment, rename, patch bump). Do it, pass the gate.
 
 When unsure between small and non-trivial, write the record (~20 lines).
