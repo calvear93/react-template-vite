@@ -48,6 +48,7 @@ export default [
 		},
 		rules: {
 			'array-callback-return': ERROR,
+			'capitalized-comments': OFF,
 			complexity: [WARN, 15],
 			'constructor-super': ERROR,
 			'default-case': WARN,
@@ -148,17 +149,6 @@ export default [
 			'use-isnan': ERROR,
 			'valid-typeof': ERROR,
 			yoda: WARN,
-			'capitalized-comments': [
-				WARN,
-				'never',
-				{
-					block: { ignorePattern: '.*' },
-					line: {
-						ignoreConsecutiveComments: true,
-						ignorePattern: '[A-Z]*:.*',
-					},
-				},
-			],
 			quotes: [
 				WARN,
 				'single',

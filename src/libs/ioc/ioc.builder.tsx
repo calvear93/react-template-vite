@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo } from 'react';
 
-// react context for the IoC container
+// React context for the IoC container
 const IoCContext = createContext<Map<unknown, unknown> | null>(null);
 
 /**
