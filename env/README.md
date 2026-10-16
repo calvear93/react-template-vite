@@ -108,8 +108,12 @@ validated against it before the command runs. `pnpm env:schema` rebuilds it from
   `PROD`). Everything `APP_*` is written into the bundle and is public.
 - **The rest is for the build:** `vite.config.ts` reads `BASE_URL`, `PORT`, `FONT_FAMILY`,
   `FONT_WEIGHTS` and `SERVICE_WORKER` from `process.env` (base path, dev server, fonts, PWA).
-- **Types:** `src/env.d.ts` declares `ImportMetaEnv`. Every value is a `string`
-  (`import.meta.env.APP_ENV`).
+- **Types:** `src/env.d.ts` registers `appsettings.json` and `settings/schema.json` in
+  `@calvear/env`, which types `import.meta.env` (the `APP_*` variables) and `process.env` (every
+  variable, for `vite.config.ts`) by itself: a new variable in `appsettings.json` is typed without
+  touching that file. Booleans are `'false' | 'true'` and the rest `string`. `import.meta.env` is
+  strict (Vite's `strictImportMetaEnv`): a variable that is not in `appsettings.json` or lacks the
+  `APP_` prefix does not compile, instead of being `any` and reaching the browser `undefined`.
 - **Logs:** with `--log debug` (`start:dev`, `build:*`) every resolved variable is printed.
 
 ## 7. Reference

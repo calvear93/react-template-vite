@@ -33,7 +33,7 @@
 		"zod": "4.6.6"
 	},
 	"devDependencies": {
-		"@calvear/env": "3.4.2",
+		"@calvear/env": "3.5.0",
 		"@iconify-json/mdi": "1.2.3",
 		"@testing-library/dom": "10.4.2",
 		"@testing-library/jest-dom": "7.0.1",

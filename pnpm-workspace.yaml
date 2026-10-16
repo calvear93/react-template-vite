@@ -1,1 +1,3 @@
+minimumReleaseAgeExclude:
+    - '@calvear/env@3.5.0'
 savePrefix: ''
