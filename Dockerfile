@@ -50,6 +50,12 @@ COPY --from=builder ${APP_DIR}${OUT_DIR} .
 COPY --from=builder ${APP_DIR}'nginx.conf' '/etc/nginx/conf.d/default.conf'
 # alpine security updates
 RUN apk --no-cache -U upgrade
+# runs as the image's unprivileged nginx user: the server listens on 8080,
+# the pid file moves to /tmp and the cache dir changes owner, the only
+# places nginx writes to ("user" only applies when the master is root)
+RUN sed -i -e '/^user /d' -e 's#^pid .*#pid /tmp/nginx.pid;#' /etc/nginx/nginx.conf \
+	&& chown -R nginx:nginx /var/cache/nginx
+USER nginx
 
 # exec command
 ENTRYPOINT ["nginx"]

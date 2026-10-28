@@ -66,13 +66,18 @@ export default {
 				`https://fonts.googleapis.com/css2?family=${FONT_FAMILY}:wght@${FONT_WEIGHTS}&display=swap`,
 			],
 			{
+				// async loading uses an inline onload handler, which the
+				// nginx.conf CSP (script-src 'self') blocks: fonts never apply
+				async: false,
 				injectAsStyleTag: false,
 				minifyCss: true,
 			},
 		),
 		pwa({
 			disable: process.env.SERVICE_WORKER === 'false',
-			injectRegister: 'inline',
+			// an external registerSW.js: an inline registration script would
+			// be blocked by the nginx.conf CSP (script-src 'self')
+			injectRegister: 'script',
 			manifest: false,
 			registerType: 'autoUpdate',
 			devOptions: {
@@ -88,11 +93,9 @@ export default {
 		}),
 	],
 	preview: {
-		cors: true,
 		open: false,
 	},
 	server: {
-		cors: true,
 		open: false,
 		port: +process.env.PORT!,
 	},
