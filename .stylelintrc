@@ -1,12 +1,10 @@
 {
 	"$schema": "https://json.schemastore.org/stylelintrc.json",
 	"defaultSeverity": "warning",
-	"extends": ["stylelint-config-standard"],
+	"extends": ["stylelint-config-standard", "./.stylelintrc.order.json"],
 	"plugins": [
-		"stylelint-prettier",
 		"stylelint-order",
-		"stylelint-use-nesting",
-		"stylelint-config-rational-order/plugin"
+		"stylelint-use-nesting"
 	],
 	"rules": {
 		"alpha-value-notation": "number",
@@ -95,15 +93,6 @@
 				"severity": "warning"
 			}
 		],
-		"order/properties-order": [],
-		"plugin/rational-order": [
-			true,
-			{
-				"border-in-box-model": false,
-				"empty-line-between-groups": false
-			}
-		],
-		"prettier/prettier": true,
 		"selector-attribute-quotes": "always",
 		"selector-pseudo-class-no-unknown": null,
 		"selector-pseudo-element-colon-notation": "single",
