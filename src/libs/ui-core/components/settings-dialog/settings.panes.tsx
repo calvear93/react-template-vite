@@ -57,8 +57,8 @@ const ThemeCard = ({
 );
 
 /**
- * The category «Appearance» of a SettingsDialog: the theme, the size of the text and the
- * language.
+ * The category «Appearance» of a SettingsDialog: the theme and whether its dark is a pure
+ * black, the size of the text and the language.
  *
  * @returns the options of the appearance
  */
@@ -69,7 +69,8 @@ export const AppearanceSettings = ({
 	languages: readonly SettingsLanguage[];
 	texts: SettingsLabels;
 }) => {
-	const { setTextSize, setTheme, textSize, theme } = useTheme();
+	const { pureBlack, setPureBlack, setTextSize, setTheme, textSize, theme } =
+		useTheme();
 	const { locale, setLocale } = useLocale();
 	// the language of the page among those offered: its locale, or one of its language
 	const spoken =
@@ -104,6 +105,14 @@ export const AppearanceSettings = ({
 					value={theme}
 					variant='cards'
 				/>
+				<SettingsRow hint={texts.pureBlackHint} label={texts.pureBlack}>
+					<Switch
+						checked={pureBlack}
+						// a light theme has no black to choose
+						disabled={theme === 'light'}
+						onChange={(event) => setPureBlack(event.target.checked)}
+					/>
+				</SettingsRow>
 			</SettingsGroup>
 
 			<SettingsGroup title={texts.text}>

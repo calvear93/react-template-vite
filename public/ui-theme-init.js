@@ -1,4 +1,4 @@
-// The theme, the contrast, the motion, the text size and the links of the page before its first
+// The theme (and its pure black), the contrast, the motion, the text size and the links of the page before its first
 // paint, so a dark page never flashes white and nothing animates for someone who asked it not
 // to. A classic script in the <head> of index.html: a file, not an inline script, because the
 // Content-Security-Policy runs only scripts of the app. Same keys and rules as
@@ -21,6 +21,8 @@
 		(theme !== 'light' && matches('(prefers-color-scheme: dark)'));
 
 	root.dataset.theme = isDark ? 'dark' : 'light';
+
+	if (isDark && read('ui.black') === 'true') root.dataset.dark = 'black';
 
 	if (
 		contrast === 'more' ||

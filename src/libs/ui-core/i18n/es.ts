@@ -167,6 +167,7 @@ export const UI_TEXTS_ES: UiTexts = {
 		motionFull: 'Completas',
 		motionReduce: 'Reducidas',
 		normal: 'Normal',
+		pureBlack: 'Negro puro',
 		reading: 'Lectura',
 		sections: 'Secciones de la configuración',
 		systemContrast: 'Su sistema pide más contraste.',
@@ -183,6 +184,8 @@ export const UI_TEXTS_ES: UiTexts = {
 			'Reducidas: nada se desplaza ni aparece de a poco; lo que carga se sigue viendo.',
 		contrastHint:
 			'Alto: texto más oscuro, bordes más marcados y el foco del teclado más visible.',
+		pureBlackHint:
+			'En el tema oscuro, un fondo negro de verdad: para pantallas OLED.',
 		underlineLinksHint:
 			'Los enlaces se distinguen por algo más que su color.',
 	},

@@ -3,6 +3,7 @@ import {
 	getThemeSnapshot,
 	setContrast,
 	setMotion,
+	setPureBlack,
 	setTextSize,
 	setTheme,
 	setUnderlineLinks,
@@ -11,8 +12,8 @@ import {
 
 /**
  * How the page looks and behaves for this person, and the functions that choose it:
- * the theme, the contrast, how much it moves, the size of its text and whether its
- * links are always underlined. Each choice applies at once and is remembered in the
+ * the theme and whether its dark is a pure black, the contrast, how much it moves, the
+ * size of its text and whether its links are always underlined. Each choice applies at once and is remembered in the
  * browser; theme, contrast and motion follow the system until one is made (`system`
  * says what it asks for).
  *
@@ -30,6 +31,7 @@ export const useTheme = () => {
 		contrast,
 		highContrast,
 		motion,
+		pureBlack,
 		reducedMotion,
 		resolvedTheme,
 		system,
@@ -42,10 +44,12 @@ export const useTheme = () => {
 		contrast,
 		highContrast,
 		motion,
+		pureBlack,
 		reducedMotion,
 		resolvedTheme,
 		setContrast,
 		setMotion,
+		setPureBlack,
 		setTextSize,
 		setTheme,
 		setUnderlineLinks,

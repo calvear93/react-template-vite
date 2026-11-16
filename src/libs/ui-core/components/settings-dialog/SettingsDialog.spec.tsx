@@ -1,10 +1,11 @@
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { act, cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { afterEach, describe, expect, test } from 'vitest';
 import { inChile } from '../../__mocks__/locale.mock.ts';
 import { mockMatchMedia } from '../../__mocks__/match-media.mock.ts';
 import {
+	BLACK_STORAGE_KEY,
 	CONTRAST_STORAGE_KEY,
 	LINKS_STORAGE_KEY,
 	MOTION_STORAGE_KEY,
@@ -14,6 +15,7 @@ import {
 import {
 	setContrast,
 	setMotion,
+	setPureBlack,
 	setTextSize,
 	setTheme,
 	setUnderlineLinks,
@@ -84,6 +86,7 @@ describe(SettingsDialog, () => {
 		setMotion(null);
 		setTextSize('normal');
 		setUnderlineLinks(false);
+		setPureBlack(false);
 		localStorage.clear();
 	});
 
@@ -216,6 +219,26 @@ describe(SettingsDialog, () => {
 		await userEvent.click(choice('Animaciones', AUTO));
 
 		expect(localStorage.getItem(MOTION_STORAGE_KEY)).toBeNull();
+	});
+
+	test('paints the dark theme in pure black from a switch, which a light theme has no use for', async () => {
+		render(<Opener />);
+
+		const black = () => screen.getByRole('switch', { name: 'Negro puro' });
+
+		act(() => setTheme('light'));
+
+		expect(black()).toBeDisabled();
+
+		act(() => setTheme('dark'));
+		await userEvent.click(black());
+
+		expect(black()).toBeChecked();
+		expect(root).toHaveAttribute('data-dark', 'black');
+		expect(localStorage.getItem(BLACK_STORAGE_KEY)).toBe('true');
+		expect(black()).toHaveAccessibleDescription(
+			'En el tema oscuro, un fondo negro de verdad: para pantallas OLED.',
+		);
 	});
 
 	test('underlines the links from a switch named and described by its row', async () => {

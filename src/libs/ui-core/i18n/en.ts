@@ -168,6 +168,7 @@ export const UI_TEXTS_EN = {
 		motionFull: 'Full',
 		motionReduce: 'Reduced',
 		normal: 'Normal',
+		pureBlack: 'Pure black',
 		reading: 'Reading',
 		sections: 'Sections of the settings',
 		systemContrast: 'Your system asks for more contrast.',
@@ -185,6 +186,8 @@ export const UI_TEXTS_EN = {
 			'Reduced: nothing slides or fades in; what is loading still shows.',
 		contrastHint:
 			'High: darker text, stronger borders and a more visible keyboard focus.',
+		pureBlackHint:
+			'In the dark theme, a truly black background: for OLED screens.',
 	},
 	spinner: {
 		label: 'Loading',

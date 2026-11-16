@@ -221,4 +221,24 @@ describe(UiCatalogPage, () => {
 
 		expect(root.dataset.contrast).toBeUndefined();
 	});
+
+	test('paints the dark theme in pure black, and back', async () => {
+		renderAt('/ui');
+
+		const black = () =>
+			screen.getByRole('checkbox', { name: 'Pure black (AMOLED)' });
+
+		await userEvent.selectOptions(
+			screen.getByRole('combobox', { name: 'Theme' }),
+			'Dark',
+		);
+		await userEvent.click(black());
+
+		expect(root.dataset.dark).toBe('black');
+
+		await userEvent.click(black());
+
+		expect(root.dataset.dark).toBeUndefined();
+		expect(black()).not.toBeChecked();
+	});
 });

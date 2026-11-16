@@ -3,6 +3,7 @@ import {
 	writePreference as write,
 } from '../internal/preference.ts';
 import {
+	BLACK_STORAGE_KEY,
 	CONTRAST_STORAGE_KEY,
 	type ContrastPreference,
 	LINKS_STORAGE_KEY,
@@ -17,10 +18,11 @@ import {
 } from './theme.constants.ts';
 
 /**
- * The appearance of the page: the theme (auto follows the system, light, dark) and the contrast
- * (more, normal, or the system's while the person did not choose). It lives on <html> as
- * data-theme="light|dark" and data-contrast="more", which the tokens read (styles/), and the
- * choices are remembered per browser. A blocked storage keeps them for the page only.
+ * The appearance of the page: the theme (auto follows the system, light, dark), whether its
+ * dark is a pure black (for OLED screens) and the contrast (more, normal, or the system's while
+ * the person did not choose). It lives on <html> as data-theme="light|dark", data-dark="black"
+ * and data-contrast="more", which the tokens read (styles/), and the choices are remembered per
+ * browser. A blocked storage keeps them for the page only.
  *
  * `public/ui-theme-init.js` applies the same rules before the first paint; this store keeps
  * them in step afterwards. Importing it has no side effect: UiProvider starts the sync.
@@ -30,6 +32,8 @@ export interface ThemeSnapshot {
 	highContrast: boolean;
 	/** The motion the person chose; `null` while they follow the system. */
 	motion: MotionPreference;
+	/** Whether the dark theme is a pure black: a choice, kept while the page is light too. */
+	pureBlack: boolean;
 	/** Whether the page moves less: the choice of the person, or what the system asks. */
 	reducedMotion: boolean;
 	resolvedTheme: ResolvedTheme;
@@ -74,6 +78,7 @@ const compute = (): ThemeSnapshot => {
 	return {
 		contrast,
 		motion,
+		pureBlack: read(BLACK_STORAGE_KEY) === 'true',
 		resolvedTheme: isDark ? 'dark' : 'light',
 		system,
 		textSize: read(TEXT_STORAGE_KEY) === 'large' ? 'large' : 'normal',
@@ -109,6 +114,11 @@ const apply = () => {
 	if (!isSame) snapshot = next;
 
 	mark('theme', next.resolvedTheme);
+	// of the dark theme only: a light page never wears it
+	mark(
+		'dark',
+		next.resolvedTheme === 'dark' && next.pureBlack ? 'black' : undefined,
+	);
 	mark('contrast', next.highContrast ? 'more' : undefined);
 	// always said, either way: the stylesheet stops asking the system once the kit knows
 	mark('motion', next.reducedMotion ? 'reduce' : 'full');
@@ -150,6 +160,17 @@ export const subscribeTheme = (listener: () => void) => {
  */
 export const setTheme = (theme: ThemePreference) => {
 	write(THEME_STORAGE_KEY, theme === 'auto' ? null : theme);
+	apply();
+};
+
+/**
+ * Chooses whether the dark theme is a pure black and remembers it. It shows when the page is
+ * dark, by choice or because the system is.
+ *
+ * @param isPureBlack - whether the dark theme has a black background
+ */
+export const setPureBlack = (isPureBlack: boolean) => {
+	write(BLACK_STORAGE_KEY, isPureBlack ? 'true' : null);
 	apply();
 };
 

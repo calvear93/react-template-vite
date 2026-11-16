@@ -36,7 +36,14 @@ export const CatalogToolbar = () => {
 	const languageId = useId();
 	const themeId = useId();
 	const { locale, setLocale } = useLocale();
-	const { highContrast, setContrast, setTheme, theme } = useTheme();
+	const {
+		highContrast,
+		pureBlack,
+		setContrast,
+		setPureBlack,
+		setTheme,
+		theme,
+	} = useTheme();
 	// a locale chosen elsewhere (the settings dialog) shows as its language here
 	const language =
 		LANGUAGES.find(({ value }) => languageOf(value) === languageOf(locale))
@@ -92,6 +99,15 @@ export const CatalogToolbar = () => {
 				}
 			>
 				Increase contrast
+			</Checkbox>
+
+			<Checkbox
+				checked={pureBlack}
+				// of the dark theme: a light one has no black to choose
+				disabled={theme === 'light'}
+				onChange={({ target }) => setPureBlack(target.checked)}
+			>
+				Pure black (AMOLED)
 			</Checkbox>
 		</div>
 	);

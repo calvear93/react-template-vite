@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { mockMatchMedia } from '../__mocks__/match-media.mock.ts';
 import initScript from '../../../../public/ui-theme-init.js?raw';
 import {
+	BLACK_STORAGE_KEY,
 	CONTRAST_STORAGE_KEY,
 	LINKS_STORAGE_KEY,
 	MOTION_STORAGE_KEY,
@@ -12,6 +13,7 @@ import {
 	getThemeSnapshot,
 	setContrast,
 	setMotion,
+	setPureBlack,
 	setTextSize,
 	setTheme,
 	setUnderlineLinks,
@@ -38,6 +40,7 @@ describe('theme store', () => {
 		setMotion(null);
 		setTextSize('normal');
 		setUnderlineLinks(false);
+		setPureBlack(false);
 		delete root.dataset.motion;
 		delete root.dataset.theme;
 		localStorage.clear();
@@ -177,6 +180,40 @@ describe('theme store', () => {
 		expect(localStorage.getItem(LINKS_STORAGE_KEY)).toBeNull();
 	});
 
+	test('paints the dark theme in pure black when asked, and remembers it', () => {
+		setTheme('dark');
+		setPureBlack(true);
+
+		expect(root.dataset.dark).toBe('black');
+		expect(localStorage.getItem(BLACK_STORAGE_KEY)).toBe('true');
+		expect(getThemeSnapshot().pureBlack).toBe(true);
+
+		setPureBlack(false);
+
+		expect(root.dataset.dark).toBeUndefined();
+		expect(localStorage.getItem(BLACK_STORAGE_KEY)).toBeNull();
+	});
+
+	test('keeps pure black for the dark theme: a light page never wears it', () => {
+		const stop = startThemeSync();
+
+		setPureBlack(true);
+
+		// the system is light, and the theme follows it
+		expect(root.dataset.dark).toBeUndefined();
+		expect(getThemeSnapshot().pureBlack).toBe(true);
+
+		media.set(DARK, true);
+
+		expect(root.dataset.dark).toBe('black');
+
+		setTheme('light');
+
+		expect(root.dataset.dark).toBeUndefined();
+
+		stop();
+	});
+
 	test('keeps the same snapshot until something changes', () => {
 		const before = getThemeSnapshot();
 
@@ -220,7 +257,7 @@ describe('theme store', () => {
 			written
 				.takeRecords()
 				.filter(({ attributeName }) =>
-					/^data-(?:contrast|links|motion|text|theme)$/u.test(
+					/^data-(?:contrast|dark|links|motion|text|theme)$/u.test(
 						attributeName ?? '',
 					),
 				),
@@ -260,6 +297,7 @@ describe('theme store', () => {
 		// a fresh page has nothing written on its root yet
 		beforeEach(() => {
 			delete root.dataset.contrast;
+			delete root.dataset.dark;
 			delete root.dataset.links;
 			delete root.dataset.motion;
 			delete root.dataset.text;
@@ -285,12 +323,14 @@ describe('theme store', () => {
 			localStorage.setItem(MOTION_STORAGE_KEY, 'none');
 			localStorage.setItem(TEXT_STORAGE_KEY, 'huge');
 			localStorage.setItem(LINKS_STORAGE_KEY, 'yes');
+			localStorage.setItem(BLACK_STORAGE_KEY, 'yes');
 
 			const store = await freshStore();
 
 			expect(store.getThemeSnapshot()).toMatchObject({
 				contrast: null,
 				motion: null,
+				pureBlack: false,
 				textSize: 'normal',
 				theme: 'auto',
 				underlineLinks: false,
@@ -344,6 +384,33 @@ describe('theme store', () => {
 				dark: true,
 				stored: { [MOTION_STORAGE_KEY]: 'reduce' },
 				system: false,
+			},
+			// pure black: on a dark page, chosen or the system's, and never on a light one
+			{
+				dark: true,
+				stored: { [BLACK_STORAGE_KEY]: 'true' },
+				system: false,
+			},
+			{
+				dark: false,
+				stored: { [BLACK_STORAGE_KEY]: 'true' },
+				system: false,
+			},
+			{
+				dark: false,
+				system: false,
+				stored: {
+					[BLACK_STORAGE_KEY]: 'true',
+					[THEME_STORAGE_KEY]: 'dark',
+				},
+			},
+			{
+				dark: true,
+				system: false,
+				stored: {
+					[BLACK_STORAGE_KEY]: 'true',
+					[THEME_STORAGE_KEY]: 'light',
+				},
 			},
 		])(
 			'the pre-paint script writes what the store would (stored $stored, system dark $dark, contrast and motion $system)',
