@@ -54,10 +54,15 @@
 		padding: 14px var(--ui-space-16);
 		color: var(--ui-toast-text);
 		overflow-wrap: anywhere;
-		background-color: var(--ui-toast-fill);
+		background-color: color-mix(
+			in srgb,
+			var(--ui-toast-fill) var(--ui-material-popup),
+			transparent
+		);
 		border: 1px solid var(--ui-color-line-soft);
 		border-radius: var(--ui-radius-surface);
-		box-shadow: var(--ui-shadow-lg);
+		box-shadow: var(--ui-material-edge), var(--ui-shadow-lg);
+		backdrop-filter: var(--ui-material-filter);
 		animation: enter var(--ui-duration-normal) var(--ui-easing-default);
 		pointer-events: auto;
 

@@ -1,10 +1,11 @@
 /* The frame of an application: the header across the page, the side bar and the content, the
-   only area that scrolls. Below 900 px the side bar leaves the grid and becomes a panel over
+   only area that scrolls: it does so under the header, which is glass. Below 900 px the side bar leaves the grid and becomes a panel over
    the page; folding it to icons is of the desktop only. Folding moves nothing but the edge of
    the side bar: the icons, the titles and the fold button keep their place, the texts fade. */
 @layer ui.components {
 	.root {
 		--ui-shell-sidebar: 248px;
+		--ui-shell-header: 56px;
 
 		position: relative;
 		display: grid;
@@ -71,15 +72,21 @@
 
 	.header {
 		position: relative;
+		z-index: var(--ui-z-header);
 		display: flex;
 		grid-area: header;
 		gap: var(--ui-space-20);
 		align-items: center;
-		min-block-size: 60px;
-		padding: var(--ui-space-8) var(--ui-space-32) var(--ui-space-8)
-			var(--ui-space-12);
-		background-color: var(--ui-color-card);
-		border-block-end: 1px solid var(--ui-color-border);
+		padding: 0 var(--ui-space-24) 0 var(--ui-space-12);
+		background-color: color-mix(
+			in srgb,
+			var(--ui-color-card) var(--ui-material-bar),
+			transparent
+		);
+		box-shadow: var(--ui-material-edge);
+		backdrop-filter: var(--ui-material-filter);
+		block-size: var(--ui-shell-header);
+		border-block-end: 1px solid var(--ui-color-line-soft);
 
 		@media (width <= 900px) {
 			gap: var(--ui-space-8);
@@ -96,15 +103,15 @@
 		}
 
 		& > .logo {
-			--ui-logo-height: 36px;
+			--ui-logo-height: 30px;
 
 			@media (width <= 900px) {
-				--ui-logo-height: 28px;
+				--ui-logo-height: 26px;
 			}
 		}
 	}
 
-	/* the name of the application in a notch that hangs from the header at its center; on a
+	/* the name of the application at the center of the bar, as the title of a window; on a
 	   narrow screen it is a plain text next to the logo */
 	.title {
 		position: absolute;
@@ -113,22 +120,11 @@
 		gap: 1px;
 		align-items: center;
 		justify-content: center;
-		padding: 0 26px var(--ui-space-2);
 		white-space: nowrap;
 		text-align: center;
-		background-color: color-mix(
-			in srgb,
-			var(--ui-color-secondary) 22%,
-			var(--ui-color-card)
-		);
-		border: 1px solid var(--ui-color-line-soft);
-		box-shadow: var(--ui-shadow-sm);
-		inset-block: 0 -10px;
+		inset-block: 0;
 		inset-inline-start: 50%;
 		max-inline-size: min(560px, 40vw);
-		border-block-start: 0;
-		border-end-start-radius: 16px;
-		border-end-end-radius: 16px;
 		translate: -50% 0;
 
 		@media (width <= 900px) {
@@ -137,11 +133,7 @@
 			align-items: flex-start;
 			min-inline-size: 0;
 			max-inline-size: none;
-			padding: 0;
 			text-align: start;
-			background: none;
-			border: 0;
-			box-shadow: none;
 			translate: none;
 		}
 	}
@@ -154,21 +146,20 @@
 	}
 
 	.app {
-		color: var(--ui-color-secondary-foreground);
+		color: var(--ui-color-foreground);
 		font-weight: 600;
-		font-size: var(--ui-font-size-17);
+		font-size: var(--ui-font-size-14);
 		font-family: var(--ui-font-heading);
 		line-height: 1.2;
 
 		@media (width <= 900px) {
-			color: var(--ui-color-foreground);
 			font-size: var(--ui-font-size-16);
 		}
 	}
 
 	.area {
 		color: var(--ui-color-foreground-soft);
-		font-size: var(--ui-font-size-12);
+		font-size: var(--ui-font-size-11);
 		line-height: 1.3;
 	}
 
@@ -185,10 +176,10 @@
 		flex-direction: column;
 		grid-area: sidebar;
 		overflow: hidden;
-		background-color: var(--ui-color-card);
+		background-color: var(--ui-color-surface-2);
 		min-inline-size: 0;
 		min-block-size: 0;
-		border-inline-end: 1px solid var(--ui-color-border);
+		border-inline-end: 1px solid var(--ui-color-line-soft);
 
 		@media (width <= 900px) {
 			position: fixed;
@@ -320,23 +311,22 @@
 			outline-offset: -2px;
 		}
 
+		/* the current page: a quiet pill, its name heavier and in the color of the app. With
+		   forced colors a fill is not drawn, so a bar at its start says it */
 		&[aria-current='page'] {
-			color: var(--ui-color-secondary-foreground);
+			color: var(--ui-color-link);
 			font-weight: 600;
 			background-color: var(--ui-color-secondary);
 
-			/* the current page is not told by a tint alone: a bar at its start */
-			&:before {
-				position: absolute;
-				background-color: var(--ui-color-control-checked);
-				border-radius: var(--ui-radius-full);
-				content: '';
-				inset-block: var(--ui-space-8);
-				inset-inline-start: 0;
-				inline-size: 3px;
-
-				@media (forced-colors: active) {
+			@media (forced-colors: active) {
+				&:before {
+					position: absolute;
 					background-color: Highlight;
+					border-radius: var(--ui-radius-full);
+					content: '';
+					inset-block: var(--ui-space-8);
+					inset-inline-start: 0;
+					inline-size: 3px;
 				}
 			}
 		}
@@ -369,7 +359,7 @@
 		display: flex;
 		flex: none;
 		padding: var(--ui-space-8) var(--ui-space-16);
-		border-block-start: 1px solid var(--ui-color-border);
+		border-block-start: 1px solid var(--ui-color-line-soft);
 
 		@media (width <= 900px) {
 			display: none;
@@ -438,15 +428,22 @@
 		}
 	}
 
+	/* from the top of the frame: the page scrolls under the header, and starts below it */
 	.content {
 		grid-area: content;
+		grid-row: 1 / -1;
 		min-block-size: 0;
 		padding: var(--ui-space-32);
 		overflow-y: auto;
 		background-color: var(--ui-color-page);
+		padding-block-start: calc(var(--ui-shell-header) + var(--ui-space-32));
+		scroll-padding-block-start: var(--ui-shell-header);
 
 		@media (width <= 900px) {
 			padding: var(--ui-space-16);
+			padding-block-start: calc(
+				var(--ui-shell-header) + var(--ui-space-16)
+			);
 		}
 
 		/* it takes the focus by program (a new page, the skip link), never by Tab */

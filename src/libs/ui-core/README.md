@@ -22,9 +22,10 @@ import { UiProvider } from '#libs/ui-core';
   app's router link (see [Links](#links)).
 - `index.html` loads `/ui-theme-init.js` in its `<head>`, so a dark page never flashes white. It
   is a file (not inline) because the app's CSP is `script-src 'self'`.
-- The kit names its font in `--ui-font-body` (**Inter**, then the system's): the app loads it
-  (`FONT_FAMILY` in `env/appsettings.json`, downloaded by `vite-plugin-webfont-dl`). An app with
-  another font sets that token.
+- The kit names its font in `--ui-font-body`: the font of the system where it is Apple's (San
+  Francisco), and **Inter** everywhere else, which the app loads (`FONT_FAMILY` in
+  `env/appsettings.json`, downloaded by `vite-plugin-webfont-dl`). An app with another font sets
+  that token.
 
 ## Layers
 
@@ -49,7 +50,7 @@ All custom properties are `--ui-<category>-<role>[-<variant>]`. Use them in the 
 | `--ui-heading-*`        | `display`, `1 … 6`, `module` × `size`, `weight` (smaller below 1024 px)                                                                                                                |
 | `--ui-space-*`          | `2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80` (px)                                                                                                                                 |
 | `--ui-size-*`           | `control-xs/sm/md/lg` (32/36/42/48), `icon-xs/sm/md/lg` (12/16/20/24), `touch-min` (44), `container-max`                                                                               |
-| `--ui-radius-*`         | `base` (8), `control` (10), `surface` (12), `full`                                                                                                                                     |
+| `--ui-radius-*`         | `base` (8), `control` (10), `surface` (16), `full`                                                                                                                                     |
 | `--ui-shadow-*`         | one scale: `xs` (a knob, the chosen tab), `sm` (a card at rest), `md` (hover on what navigates), `lg` (popups, toasts), `xl` (dialogs); `side-start` / `side-end` (a panel at an edge) |
 | `--ui-z-*`              | `base, raised, sticky, header, overlay, panel, dialog, toast`                                                                                                                          |
 | `--ui-duration-*`       | `fast` (.12s, states), `normal` (.2s, what appears), `slow` (.28s, what crosses the screen); `--ui-easing-default`, `--ui-easing-exit`                                                 |
@@ -62,16 +63,28 @@ All custom properties are `--ui-<category>-<role>[-<variant>]`. Use them in the 
 | `--ui-color-*` controls | `control-checked` (+ `-foreground`): what is on or chosen, and the color of the app as a graphic (a progress bar, a spinner, the line of a tab)                                        |
 | `--ui-color-neutral-*`  | `50, 100, 200, 300, 400, 500, 900`                                                                                                                                                     |
 
-**The palette.** The color of the app is royal blue (`#4169e1`: white text on it is 4.85:1, so it
-is its own fill). The neutrals are cool, with a breath of that blue; the information color is a
-teal, so it is never taken for the color of the app; `accent` is a gold, for what must be found
-at a glance, sparingly. The dark theme is a night blue with a lighter blue for what is chosen.
+**The palette.** Surfaces are neutral: a page of light gray, white cards and near-black text in
+light; near-black grays in dark. The color of the app, royal blue (`#4169e1`: white text on it is
+4.85:1, so it is its own fill), is **an accent and never a surface**: it paints what acts (a
+solid button), what is on or chosen (a checked box, the current tab, the current page of the
+menu), the focus ring and a link. `secondary` is the quiet gray fill of a second action. The
+information color is a teal, so it is never taken for the color of the app; `accent` is a gold,
+for what must be found at a glance, sparingly.
+
+**Glass.** What floats over the page lets a little of it through, blurred: the bar of
+`AppShell` (the page scrolls under it), menus and every other popup, toasts, and the page behind
+a dialog (out of focus, hardly). It is one material in the tokens (`--ui-material-bar`,
+`--ui-material-popup`: how much of its own color a surface keeps; `--ui-material-filter`,
+`--ui-material-veil`, `--ui-material-edge`), mixed by each of those components with its own
+surface. Cards, fields, tables, tooltips and the panel of a dialog are never glass. It turns
+itself off — the tokens become opaque, no component has a rule for it — with more contrast
+(`data-contrast='more'`), when the system asks for less transparency, with forced colors and in
+a browser without `backdrop-filter`.
 
 **Another color.** `styles/tokens/primary.css` holds the color of the app and what follows it. An
 app with its own sets, on `:root` and after the kit's sheet, `--ui-color-primary` (and
-`--ui-color-primary-fill`, when white on it is under 4.5:1), `--ui-color-secondary`,
-`--ui-color-secondary-foreground`, `--ui-color-heading` and `--ui-color-link`; the dark theme and
-the high contrast work the rest out from `--ui-color-primary`.
+`--ui-color-primary-fill`, when white on it is under 4.5:1) and `--ui-color-link`; the dark theme
+and the high contrast work the rest out from `--ui-color-primary`.
 
 **Contrast.** Text reaches 4.5:1; the borders of controls, the graphics that say a state and the
 focus ring, 3:1 — in light, dark and both with high contrast. Two colors are **not** for text
@@ -85,6 +98,7 @@ level also carries a light top edge and the surfaces step up (page → card → 
 | Attribute on `<html>` | Values                                     | Written by       |
 | --------------------- | ------------------------------------------ | ---------------- |
 | `data-theme`          | `light`, `dark` (always the resolved one)  | the theme store  |
+| `data-dark`           | `black` on a dark page (absent otherwise)  | the theme store  |
 | `data-contrast`       | `more` (absent otherwise)                  | the theme store  |
 | `data-motion`         | `reduce`, `full` (always the resolved one) | the theme store  |
 | `data-text`           | `large` (absent otherwise)                 | the theme store  |
@@ -96,12 +110,14 @@ const { theme, resolvedTheme, highContrast, reducedMotion, system } =
 	useTheme();
 const { setTheme, setContrast, setMotion, setTextSize, setUnderlineLinks } =
 	useTheme();
+const { pureBlack, setPureBlack } = useTheme();
 
 setTheme('auto'); // 'auto' follows the system · 'light' · 'dark'
 setContrast('more'); // 'more' · 'normal' · null follows the system (prefers-contrast)
 setMotion('reduce'); // 'reduce' · 'full' · null follows the system (prefers-reduced-motion)
 setTextSize('large'); // 'large' · 'normal'
 setUnderlineLinks(true);
+setPureBlack(true); // the dark theme on a black page (OLED screens); `pureBlack` says it
 ```
 
 `SettingsDialog` is where a person chooses all of it, and their language; `system` says what the
@@ -129,11 +145,14 @@ before the first paint (a dark page never flashes white, nothing animates for wh
 to); until it has run, the tokens ask the system directly.
 
 - The preferences are remembered per browser (`localStorage`: `ui.theme`, `ui.contrast`,
-  `ui.motion`, `ui.text`, `ui.links`, `ui.locale`). A blocked storage keeps the choice for the
+  `ui.motion`, `ui.text`, `ui.links`, `ui.black`, `ui.locale`). A blocked storage keeps the choice for the
   page.
+- **Pure black** is a choice for the dark theme, not a theme: with it a dark page (chosen, or
+  the system's at night) is black, each surface over it a step of near black told by its line. A
+  light page never wears it; the settings dialog has its switch.
 - The dark theme lives in `styles/themes/dark.css` and redefines tokens only. The browser's high
   contrast (`forced-colors`) is respected by each component.
-- A new component is checked in the four modes (light, dark, and both with high contrast) and in
+- A new component is checked in the modes (light, dark, pure black, and each with high contrast) and in
   both languages: the catalog's toolbar switches them.
 
 ## Language
@@ -383,7 +402,7 @@ Every format takes an optional `locale` last (see [Language](#language)).
 | Amounts     | `maskAmount`, `parseAmount`, `formatAmount`, `isAmountText`, `amountShape`, `AMOUNT_MAX_DIGITS`                                                                                                                                                               |
 | Names, more | `shortName`, `initials`, `formatNumber`                                                                                                                                                                                                                       |
 | RUT (Chile) | `formatRut`, `normalizeRut`, `maskRut`, `RUT_MAX_LENGTH`, `rutStatus`, `cleanRut`, `checkDigit`                                                                                                                                                               |
-| Preferences | `useTheme()` (theme, contrast, motion, text size, links, what the system asks), `THEMES`, the `*_STORAGE_KEY`s                                                                                                                                                |
+| Preferences | `useTheme()` (theme, pure black, contrast, motion, text size, links, what the system asks), `THEMES`, the `*_STORAGE_KEY`s                                                                                                                                    |
 
 ### Known limits
 
@@ -442,6 +461,8 @@ Every format takes an optional `locale` last (see [Language](#language)).
   needs.
 - Not verified with a real screen reader, nor in Safari or Firefox (developed against Chromium);
   forced colors were checked in Chromium's emulation only.
+- Glass has no setting of its own: it follows the system («reduce transparency») and the
+  contrast chosen. Text over it is measured on a surface that keeps at least 74 % of its color.
 - Charts are not part of the kit.
 
 ## Conventions for components

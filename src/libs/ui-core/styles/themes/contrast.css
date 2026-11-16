@@ -11,7 +11,6 @@
 		--ui-color-foreground: #000000;
 		--ui-color-foreground-soft: #1a1a1a;
 		--ui-color-foreground-faint: #1a1a1a;
-		--ui-color-heading: #000000;
 		--ui-color-page: #ffffff;
 		--ui-color-background: #ffffff;
 		--ui-color-card: #ffffff;
@@ -26,12 +25,11 @@
 			var(--ui-color-primary) 60%,
 			black
 		);
-		--ui-color-secondary-foreground: color-mix(
+		--ui-color-link: color-mix(
 			in srgb,
 			var(--ui-color-primary) 45%,
 			black
 		);
-		--ui-color-link: var(--ui-color-secondary-foreground);
 		--ui-color-ring: #000000;
 		--ui-ring-width: 3px;
 
@@ -47,7 +45,6 @@
 		--ui-color-foreground: #ffffff;
 		--ui-color-foreground-soft: #f0f0f0;
 		--ui-color-foreground-faint: #f0f0f0;
-		--ui-color-heading: #ffffff;
 		--ui-color-page: #000000;
 		--ui-color-background: #000000;
 		--ui-color-card: #0b0b0b;
@@ -58,12 +55,11 @@
 		--ui-color-placeholder: #b3b3b3;
 		--ui-color-line: #b3b3b3;
 		--ui-color-line-soft: #8c8c8c;
-		--ui-color-secondary-foreground: color-mix(
+		--ui-color-link: color-mix(
 			in srgb,
 			var(--ui-color-primary) 30%,
 			#ffffff
 		);
-		--ui-color-link: var(--ui-color-secondary-foreground);
 		--ui-color-ring: #ffffff;
 
 		/* on black a deeper fill would sink: fills go light, with a dark text on them */

@@ -57,6 +57,17 @@
 		margin: 0 0 var(--ui-space-12);
 	}
 
+	/* a scroll bar as thin as the system draws one, in the ink of the page */
+	* {
+		scrollbar-color: color-mix(
+				in srgb,
+				var(--ui-color-foreground) 30%,
+				transparent
+			)
+			transparent;
+		scrollbar-width: thin;
+	}
+
 	a {
 		color: var(--ui-color-link);
 		text-underline-offset: 2px;

@@ -47,6 +47,10 @@ under `src/libs/**`: non-trivial, with a change record.
   `var(--ui-duration-*)` — never a hex. A focus ring is
   `outline: var(--ui-ring-width) solid var(--ui-color-ring)`; a state is never told by a color
   alone.
+- **The color of the app is an accent, never a surface:** a page, a card or a quiet fill is
+  neutral (`--ui-color-page`, `-card`, `-muted`, `-secondary`); royal blue is for what acts, what
+  is chosen, the focus and a link (`--ui-color-primary-fill`, `-control-checked`, `-ring`,
+  `-link`). Glass (`--ui-material-*`) is for what floats over the page, not for content.
 - **Motion:** animate with `var(--ui-duration-*)` and nothing else is needed for reduced motion
   (the tokens become `0s`). Never `@media (prefers-reduced-motion)`: what needs its own rule uses
   `:root[data-motion='reduce'] &`. The kit's CSS lives in cascade layers, so a class passed

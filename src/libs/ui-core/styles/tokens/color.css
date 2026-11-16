@@ -3,18 +3,18 @@
  * the status colors. The color of the app and everything that follows it are in primary.css; the
  * dark theme and the high contrast redefine these tokens (themes/).
  *
- * The neutrals are cool, with a breath of the royal blue of the kit: a gray next to a blue reads
- * warmer than it is, and a neutral of its own temperature sits still.
+ * The neutrals are neutral: a gray with the faintest cool cast, as a Mac draws its windows. No
+ * surface is tinted with the color of the app.
  */
 
 @layer ui.tokens {
 	:root {
-		--ui-color-neutral-50: #eef1f8;
-		--ui-color-neutral-100: #d5dbea;
-		--ui-color-neutral-200: #bcc4d6;
-		--ui-color-neutral-300: #7a849b;
-		--ui-color-neutral-400: #5d6780;
-		--ui-color-neutral-500: #343c52;
+		--ui-color-neutral-50: #ededf0;
+		--ui-color-neutral-100: #d2d2d7;
+		--ui-color-neutral-200: #b8b8be;
+		--ui-color-neutral-300: #86868b;
+		--ui-color-neutral-400: #646468;
+		--ui-color-neutral-500: #3a3a3c;
 		--ui-color-neutral-900: #000000;
 
 		/* surfaces */
@@ -27,11 +27,11 @@
 		/* the edge of a control is what tells it from the page: 3:1 on every surface */
 		--ui-color-input: var(--ui-color-neutral-300);
 		--ui-color-input-hover: var(--ui-color-neutral-400);
-		--ui-color-placeholder: #636d85;
+		--ui-color-placeholder: #6e6e73;
 
 		/* a hovered row, item or day: a breath of its own ink, visible on any surface */
 		--ui-color-hover: color-mix(in srgb, currentcolor 8%, transparent);
-		--ui-color-overlay: rgb(11, 15, 26, 0.5);
+		--ui-color-overlay: rgb(0, 0, 0, 0.32);
 		--ui-color-disabled: var(--ui-color-neutral-200);
 		--ui-color-disabled-subtle: var(--ui-color-neutral-50);
 
