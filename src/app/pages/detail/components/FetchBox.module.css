@@ -1,16 +1,33 @@
 .box {
 	display: flex;
-	flex-direction: column;
-	gap: var(--ui-space-16);
+	gap: var(--ui-space-20);
 	align-items: center;
 	overflow-wrap: break-word;
 }
 
 .logo {
-	block-size: 72px;
-	inline-size: auto;
+	flex: none;
+	padding: var(--ui-space-8);
+	background-color: var(--ui-color-muted);
+	border-radius: var(--ui-radius-base);
+	inline-size: 64px;
+	block-size: 64px;
+}
+
+.answer {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ui-space-4);
+	min-inline-size: 0;
+}
+
+.label {
+	color: var(--ui-color-foreground-soft);
+	font-size: var(--ui-font-size-13);
 }
 
 .result {
 	margin: 0;
+	font-weight: 600;
+	font-size: var(--ui-font-size-20);
 }

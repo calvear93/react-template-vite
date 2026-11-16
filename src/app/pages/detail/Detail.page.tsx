@@ -1,12 +1,5 @@
 import { useLoaderData, useParams } from '#libs/router';
-import {
-	Badge,
-	Button,
-	DataGrid,
-	InfoNote,
-	Page,
-	PageHeader,
-} from '#libs/ui-core';
+import { Badge, Button, Card, DataGrid, Page, PageHeader } from '#libs/ui-core';
 import { useInjection } from '../../app.ioc.ts';
 import Logo from '../../assets/logo.svg';
 import { FetchBox } from './components/FetchBox.tsx';
@@ -19,7 +12,7 @@ export const DetailPage = () => {
 
 	// jsx
 	return (
-		<Page className={styles.page} narrow>
+		<Page>
 			<title>Detail Page</title>
 
 			<PageHeader
@@ -28,24 +21,41 @@ export const DetailPage = () => {
 						Go To Main
 					</Button>
 				}
-				meta={<Badge tone='info'>{import.meta.env.APP_ENV}</Badge>}
+				breadcrumb={[{ href: '/', label: 'Home' }, { label: 'Detail' }]}
+				meta={
+					<span className={styles.meta}>
+						{id && <Badge tone='primary'>ID: {id}</Badge>}
+						<Badge tone='info'>{import.meta.env.APP_ENV}</Badge>
+					</span>
+				}
 				title='Detail'
 			/>
 
-			<h2>{import.meta.env.APP_ENV}</h2>
-			{id && <h2>ID: {id}</h2>}
+			<div className={styles.columns}>
+				<Card
+					description='What the router and the container gave this page.'
+					title='Route'
+				>
+					<DataGrid
+						entries={[
+							{ label: 'Route id', value: id },
+							{
+								label: 'Environment',
+								value: import.meta.env.APP_ENV,
+							},
+							{ label: 'Message of the loader', value: aMessage },
+							{
+								label: 'Injected example data',
+								value: (
+									<b data-testid='injected-data'>{example}</b>
+								),
+							},
+						]}
+					/>
+				</Card>
 
-			<DataGrid
-				entries={[{ label: 'Message of the loader', value: aMessage }]}
-			/>
-
-			<InfoNote>
-				<span data-testid='injected-data'>
-					Injected example data: <b>{example}</b>
-				</span>
-			</InfoNote>
-
-			<FetchBox logoSrc={Logo} />
+				<FetchBox logoSrc={Logo} />
+			</div>
 		</Page>
 	);
 };

@@ -54,13 +54,22 @@ describe(DetailPage, () => {
 		screen.getByRole('heading', { name: 'anyValue' });
 	});
 
+	test('says where it is in the app: a trail back to the home page', () => {
+		const trail = screen.getByRole('navigation', { name: 'Breadcrumb' });
+
+		expect(trail).toHaveTextContent('Home');
+		expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute(
+			'href',
+			'/',
+		);
+	});
+
 	test('should display injected data from IoC container', () => {
 		const injectedDataElement = screen.getByTestId('injected-data');
 
-		expect(injectedDataElement).toBeInTheDocument();
-		expect(injectedDataElement).toHaveTextContent(
-			'Injected example data: mocked-demo-value',
-		);
+		// a pair of the record of the route: its name, and the value the container gave
+		expect(screen.getByText('Injected example data')).toBeVisible();
+		expect(injectedDataElement).toHaveTextContent('mocked-demo-value');
 	});
 
 	describe('with route id param', () => {
@@ -92,8 +101,11 @@ describe(DetailPage, () => {
 		});
 
 		// tests
-		test('renders heading with the id from the URL', () => {
-			screen.getByRole('heading', { name: 'ID: 42' });
+		test('renders the id from the URL next to the title', () => {
+			expect(screen.getByText('ID: 42')).toBeVisible();
+			expect(
+				screen.getByRole('heading', { level: 1, name: 'Detail' }),
+			).toBeVisible();
 		});
 	});
 });

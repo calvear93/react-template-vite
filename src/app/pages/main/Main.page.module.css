@@ -1,25 +1,61 @@
-.cards {
+/* the welcome: the mark of the app, its name and what it is, and the two ways in */
+.hero {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-	gap: var(--ui-space-24);
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	gap: var(--ui-space-20);
+	align-items: center;
+	padding-block: var(--ui-space-16) var(--ui-space-8);
+
+	@media (width <= 720px) {
+		grid-template-columns: auto minmax(0, 1fr);
+	}
 }
 
-.status {
+.mark {
+	padding: var(--ui-space-12);
+	background-color: var(--ui-color-card);
+	border: 1px solid var(--ui-color-line-soft);
+	border-radius: 22%;
+	box-shadow: var(--ui-shadow-md);
+	inline-size: 72px;
+	block-size: 72px;
+}
+
+.intro {
 	display: flex;
+	flex-direction: column;
+	gap: var(--ui-space-8);
+	align-items: flex-start;
+	min-inline-size: 0;
+}
+
+.name {
+	margin: 0;
+	font-size: var(--ui-font-size-30);
+	line-height: 1.15;
+	overflow-wrap: anywhere;
+}
+
+.lead {
+	margin: 0;
+	color: var(--ui-color-foreground-soft);
+	max-inline-size: 56ch;
+}
+
+/* what a feature says of itself: a dot of its state and the word for it */
+.state {
+	display: inline-flex;
 	gap: var(--ui-space-8);
 	align-items: center;
-	margin: 0;
-	color: var(--ui-color-success-text);
 	font-weight: 600;
 }
 
-.logos {
+.actions {
 	display: flex;
-	gap: var(--ui-space-24);
-	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--ui-space-8);
 
-	& img {
-		block-size: 56px;
-		inline-size: auto;
+	@media (width <= 720px) {
+		grid-column: 1 / -1;
 	}
 }

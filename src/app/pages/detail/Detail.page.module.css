@@ -1,6 +1,14 @@
-.page {
-	display: flex;
-	flex-direction: column;
-	gap: var(--ui-space-16);
+.meta {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: var(--ui-space-8);
+}
+
+/* the facts of the route beside what the page fetches; one under the other when narrow */
+.columns {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+	gap: var(--ui-space-24);
+	align-items: start;
 	overflow-wrap: break-word;
 }

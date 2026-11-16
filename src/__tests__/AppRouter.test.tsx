@@ -59,12 +59,16 @@ describe('App', () => {
 		const anchor = screen.getByRole('link', { name: 'Go To Detail' });
 		await userEvent.click(anchor);
 
-		const asyncMessage = await screen.findByRole('heading', {
-			level: 2,
-			name: env,
+		const title = await screen.findByRole('heading', {
+			level: 1,
+			name: 'Detail',
 		});
 
-		expect(asyncMessage).toBeVisible();
+		expect(title).toBeVisible();
+		// the environment, among the facts of the route
+		expect(
+			within(screen.getByRole('main')).getAllByText(env).length,
+		).toBeGreaterThan(0);
 		expect(
 			screen.getByRole('link', { name: 'Go To Main' }),
 		).toHaveAttribute('href', '/');
