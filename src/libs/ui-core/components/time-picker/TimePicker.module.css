@@ -1,0 +1,302 @@
+/* A field for a time and its panel, which is one of three: columns of hours and minutes, a
+   list of times, or a clock face. Whatever is chosen is told by a fill and a heavier number,
+   never by a tint alone. */
+@layer ui.components {
+	.root {
+		display: block;
+	}
+
+	.field {
+		position: relative;
+		display: block;
+	}
+
+	.input {
+		padding-inline-end: var(--ui-space-48);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.opener {
+		position: absolute;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		color: var(--ui-color-foreground-soft);
+		background: none;
+		border: 0;
+		border-radius: calc(var(--ui-radius-control) - 1px);
+		cursor: pointer;
+		inset-block: 1px;
+		inset-inline-end: 1px;
+		inline-size: var(--ui-space-40);
+
+		&:hover {
+			color: var(--ui-color-foreground);
+			background-color: var(--ui-color-hover);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -2px;
+		}
+
+		&[aria-expanded='true'] {
+			color: var(--ui-color-foreground);
+		}
+
+		&:disabled {
+			background: none;
+			cursor: not-allowed;
+			opacity: var(--ui-opacity-disabled);
+		}
+	}
+
+	/* the popup does not scroll: its lists do, each by itself */
+	.root > .popup {
+		display: flex;
+		flex-direction: column;
+		padding: var(--ui-space-8);
+		overflow: hidden;
+	}
+
+	.footer {
+		display: flex;
+		flex: none;
+		gap: var(--ui-space-8);
+		justify-content: space-between;
+		margin-block-start: var(--ui-space-8);
+		padding-block-start: var(--ui-space-8);
+		border-block-start: 1px solid var(--ui-color-line-soft);
+	}
+
+	/* ---- columns of hours and minutes, and the list of times ---- */
+
+	.columns {
+		display: flex;
+		flex: 1;
+		gap: var(--ui-space-4);
+		min-block-size: 0;
+	}
+
+	.list {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: var(--ui-space-2);
+		padding: var(--ui-space-2);
+		overflow-y: auto;
+		min-inline-size: 4.5rem;
+		max-block-size: 15rem;
+		scrollbar-width: thin;
+
+		& + & {
+			border-inline-start: 1px solid var(--ui-color-line-soft);
+			padding-inline-start: 6px;
+		}
+	}
+
+	.option {
+		flex: none;
+		padding: 0 var(--ui-space-12);
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-14);
+		font-family: inherit;
+		text-align: center;
+		background: none;
+		border: 0;
+		border-radius: var(--ui-radius-base);
+		cursor: pointer;
+		min-block-size: var(--ui-size-control-xs);
+		font-variant-numeric: tabular-nums;
+
+		&:hover {
+			background-color: var(--ui-color-hover);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -2px;
+		}
+
+		&[aria-selected='true'] {
+			color: var(--ui-color-control-checked-foreground);
+			font-weight: bold;
+			background-color: var(--ui-color-control-checked);
+
+			@media (forced-colors: active) {
+				outline: 2px solid Highlight;
+				outline-offset: -2px;
+			}
+		}
+
+		&:disabled {
+			color: var(--ui-color-foreground-faint);
+			background: none;
+			cursor: not-allowed;
+			opacity: var(--ui-opacity-disabled);
+		}
+	}
+
+	/* ---- the clock face ---- */
+
+	.clock {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ui-space-8);
+		align-items: center;
+		padding: var(--ui-space-4);
+	}
+
+	/* the time being set, in two parts: the one the face is on is filled */
+	.readout {
+		display: flex;
+		gap: var(--ui-space-4);
+		align-items: center;
+		color: var(--ui-color-foreground-soft);
+		font-weight: 600;
+		font-size: var(--ui-font-size-24);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.part {
+		padding: var(--ui-space-2) var(--ui-space-8);
+		color: var(--ui-color-foreground);
+		font: inherit;
+		background-color: var(--ui-color-muted);
+		border: 1px solid transparent;
+		border-radius: var(--ui-radius-base);
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+
+		&[aria-pressed='true'] {
+			color: var(--ui-color-control-checked-foreground);
+			background-color: var(--ui-color-control-checked);
+
+			@media (forced-colors: active) {
+				border-color: Highlight;
+			}
+		}
+	}
+
+	.dial {
+		position: relative;
+		background-color: var(--ui-color-muted);
+		border-radius: var(--ui-radius-full);
+		user-select: none;
+		touch-action: none;
+		inline-size: 15rem;
+		block-size: 15rem;
+
+		@media (forced-colors: active) {
+			border: 1px solid CanvasText;
+		}
+
+		/* the pin the hand turns on */
+		&:before {
+			position: absolute;
+			background-color: var(--ui-color-control-checked);
+			border-radius: var(--ui-radius-full);
+			content: '';
+			inset-block-start: calc(50% - 3px);
+			inset-inline-start: calc(50% - 3px);
+			inline-size: 6px;
+			block-size: 6px;
+		}
+	}
+
+	/* from the center to the mark chosen: as long as the ring of that mark is far */
+	.hand {
+		--ui-clock-reach: 41%;
+
+		position: absolute;
+		background-color: var(--ui-color-control-checked);
+		transform-origin: 50% 100%;
+		pointer-events: none;
+		inset-block-end: 50%;
+		inset-inline-start: calc(50% - 1px);
+		inline-size: 2px;
+		block-size: var(--ui-clock-reach);
+
+		@media (forced-colors: active) {
+			background-color: Highlight;
+		}
+
+		&[data-ring='inner'] {
+			--ui-clock-reach: 26%;
+		}
+	}
+
+	.mark {
+		position: absolute;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-14);
+		font-family: inherit;
+		background: none;
+		border: 0;
+		border-radius: var(--ui-radius-full);
+		cursor: pointer;
+		inline-size: 2rem;
+		block-size: 2rem;
+		font-variant-numeric: tabular-nums;
+		translate: -50% -50%;
+
+		&:hover {
+			background-color: var(--ui-color-hover);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 1px;
+		}
+
+		&[aria-selected='true'] {
+			color: var(--ui-color-control-checked-foreground);
+			font-weight: bold;
+			background-color: var(--ui-color-control-checked);
+
+			@media (forced-colors: active) {
+				outline: 2px solid Highlight;
+			}
+		}
+
+		&:disabled {
+			color: var(--ui-color-foreground-faint);
+			background: none;
+			cursor: not-allowed;
+			opacity: var(--ui-opacity-disabled);
+		}
+	}
+
+	/* the hours of the inner ring (13 to 00) read as the second turn of the clock */
+	.mark[data-ring='inner']:not([aria-selected='true']) {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+	}
+
+	/* a minute between two numbers: a point, as wide to press as the gap allows */
+	.dot {
+		inline-size: 0.75rem;
+		block-size: 0.75rem;
+
+		&:after {
+			background-color: var(--ui-color-foreground-faint);
+			border-radius: var(--ui-radius-full);
+			content: '';
+			inline-size: 3px;
+			block-size: 3px;
+		}
+
+		&[aria-selected='true']:after {
+			background-color: var(--ui-color-control-checked-foreground);
+		}
+	}
+}

@@ -1,0 +1,137 @@
+@layer ui.components {
+	@keyframes enter {
+		from {
+			opacity: 0;
+			translate: 0 -8px;
+		}
+	}
+
+	@keyframes leave {
+		to {
+			opacity: 0;
+			scale: 0.98;
+		}
+	}
+
+	.region {
+		position: fixed;
+		z-index: var(--ui-z-toast);
+		display: flex;
+		flex-direction: column;
+		gap: var(--ui-space-8);
+		inline-size: min(380px, calc(100vw - var(--ui-space-32)));
+		font-family: var(--ui-font-body);
+		pointer-events: none;
+	}
+
+	.topRight {
+		inset-block-start: var(--ui-space-16);
+		inset-inline-end: var(--ui-space-16);
+	}
+
+	.topLeft {
+		inset-block-start: var(--ui-space-16);
+		inset-inline-start: var(--ui-space-16);
+	}
+
+	.bottomRight {
+		inset-block-end: var(--ui-space-16);
+		inset-inline-end: var(--ui-space-16);
+	}
+
+	.bottomLeft {
+		inset-block-end: var(--ui-space-16);
+		inset-inline-start: var(--ui-space-16);
+	}
+
+	.toast {
+		--ui-toast-fill: var(--ui-color-info-subtle);
+		--ui-toast-text: var(--ui-color-info-text);
+
+		display: flex;
+		gap: 10px;
+		align-items: flex-start;
+		padding: 14px var(--ui-space-16);
+		color: var(--ui-toast-text);
+		overflow-wrap: anywhere;
+		background-color: var(--ui-toast-fill);
+		border: 1px solid var(--ui-color-line-soft);
+		border-radius: var(--ui-radius-surface);
+		box-shadow: var(--ui-shadow-lg);
+		animation: enter var(--ui-duration-normal) var(--ui-easing-default);
+		pointer-events: auto;
+
+		@media (forced-colors: active) {
+			border-color: CanvasText;
+		}
+
+		&[data-leaving] {
+			animation: leave var(--ui-duration-fast) var(--ui-easing-exit)
+				forwards;
+			pointer-events: none;
+		}
+	}
+
+	.success {
+		--ui-toast-fill: var(--ui-color-success-subtle);
+		--ui-toast-text: var(--ui-color-success-text);
+	}
+
+	.warning {
+		--ui-toast-fill: var(--ui-color-warning-subtle);
+		--ui-toast-text: var(--ui-color-warning-text);
+	}
+
+	.danger {
+		--ui-toast-fill: var(--ui-color-danger-subtle);
+		--ui-toast-text: var(--ui-color-danger-text);
+	}
+
+	.icon {
+		margin-block-start: 1px;
+	}
+
+	.body {
+		flex: 1;
+		min-inline-size: 0;
+	}
+
+	.message {
+		margin: 0;
+		font-weight: 600;
+		font-size: var(--ui-font-size-14);
+		line-height: 1.4;
+	}
+
+	.description {
+		margin: var(--ui-space-2) 0 0;
+		font-size: var(--ui-font-size-13);
+		line-height: 1.4;
+	}
+
+	.close {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		margin: -7px -6px -7px 0;
+		padding: 0;
+		color: inherit;
+		background: none;
+		border: 0;
+		border-radius: var(--ui-radius-full);
+		cursor: pointer;
+		inline-size: var(--ui-size-control-sm);
+		block-size: var(--ui-size-control-sm);
+
+		&:hover {
+			background-color: var(--ui-color-hover);
+		}
+
+		/* on a tinted surface the ring takes the colour of the text: always over 4.5:1 */
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid currentcolor;
+			outline-offset: 2px;
+		}
+	}
+}

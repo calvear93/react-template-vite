@@ -1,0 +1,21 @@
+@layer ui.components {
+	.root {
+		display: block;
+		color: var(--ui-color-foreground-soft);
+		font-weight: 600;
+		font-size: var(--ui-font-size-14);
+		font-family: var(--ui-font-body);
+		line-height: 1.4;
+		cursor: pointer;
+		margin-block-end: 6px;
+	}
+
+	.mark {
+		margin-inline-start: var(--ui-space-2);
+		color: var(--ui-color-danger-text);
+	}
+
+	.optional {
+		font-weight: normal;
+	}
+}

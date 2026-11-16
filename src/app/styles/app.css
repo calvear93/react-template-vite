@@ -1,6 +1,7 @@
 /*
- * App base styles: viewport sizing, typography defaults, and app-identity rules.
- * The generic reset lives in `reset.css` (imported below).
+ * App base styles: viewport sizing and app-identity rules. The generic reset lives in
+ * `reset.css` (imported below); the typography, colors and headings of the page come from
+ * #libs/ui-core (its `ui.base` layer, on the design tokens).
  */
 
 @import url('./reset.css');
@@ -11,20 +12,6 @@ body,
 	height: 100dvh;
 }
 
-body {
-	font-family: 'Quicksand', sans-serif;
-	line-height: 1.5;
-	letter-spacing: 0.025em;
-	color-scheme: light dark;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
 #app {
 	isolation: isolate;
-}
-
-:where(h1, h2, h3, h4, h5, h6) {
-	margin-block: 0.67em;
-	font-size: 1rem;
 }

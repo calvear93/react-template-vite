@@ -1,0 +1,23 @@
+/* One surface with a line between its sections; each section is a Collapsible, so its look
+   comes from there. The rule that pads a section goes through the root, so it wins whatever
+   the order of the sheets. */
+@layer ui.components {
+	.root {
+		font-family: var(--ui-font-body);
+		background-color: var(--ui-color-card);
+		border: 1px solid var(--ui-color-line-soft);
+		border-radius: var(--ui-radius-surface);
+
+		@media (forced-colors: active) {
+			border-color: CanvasText;
+		}
+
+		& > .item {
+			padding-inline: var(--ui-space-16);
+
+			& + .item {
+				border-block-start: 1px solid var(--ui-color-line-soft);
+			}
+		}
+	}
+}

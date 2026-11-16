@@ -2,64 +2,83 @@
  * Modern minimal CSS reset.
  *
  * Replaces UnoCSS preset-wind4's Preflight (disabled in `uno.config.ts`).
- * App-specific base styles (fonts, viewport sizing, headings) live in `app.css`,
- * which imports this file. Link styling and heading weight are left to the
- * browser / component modules.
+ * It lives in the `reset` cascade layer, below every layer of #libs/ui-core (its page base and
+ * its components) and below any unlayered rule: an unlayered reset would beat the whole kit.
+ * App-specific base styles (viewport sizing) live in `app.css`, which imports this file.
  */
 
-*,
-*:before,
-*:after {
-	box-sizing: border-box;
-}
-
-* {
-	margin: 0;
-}
-
-html {
-	tab-size: 4;
-}
-
-:where(img, picture, video, canvas, svg) {
-	display: block;
-	max-width: 100%;
-}
-
-:where(img, video) {
-	height: auto;
-}
-
-:where(input, button, textarea, select) {
-	color: inherit;
-	font: inherit;
-	letter-spacing: inherit;
-}
-
-:where(textarea) {
-	resize: vertical;
-}
-
-:where(p, h1, h2, h3, h4, h5, h6) {
-	overflow-wrap: break-word;
-}
-
-:where(ol, ul)[role='list'] {
-	padding: 0;
-	list-style: none;
-}
-
-:where(:target) {
-	scroll-margin-block: 5ex;
-}
-
-@media (prefers-reduced-motion: reduce) {
+@layer reset {
 	*,
 	*:before,
 	*:after {
-		scroll-behavior: auto !important;
-		transition-duration: 0.01ms !important;
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
+		box-sizing: border-box;
+	}
+
+	* {
+		margin: 0;
+	}
+
+	html {
+		tab-size: 4;
+	}
+
+	:where(img, picture, video, canvas, svg) {
+		display: block;
+		max-width: 100%;
+	}
+
+	:where(img, video) {
+		height: auto;
+	}
+
+	:where(input, button, textarea, select) {
+		color: inherit;
+		font: inherit;
+		letter-spacing: inherit;
+	}
+
+	:where(textarea) {
+		resize: vertical;
+	}
+
+	:where(p, h1, h2, h3, h4, h5, h6) {
+		overflow-wrap: break-word;
+	}
+
+	:where(ol, ul)[role='list'] {
+		padding: 0;
+		list-style: none;
+	}
+
+	:where(:target) {
+		scroll-margin-block: 5ex;
+	}
+
+	/* with reduced motion (data-motion on the root: the person's choice in the settings, or
+	   the system's) state changes apply at once. Animations are not cut here: an !important in
+	   this layer beats every other rule, and would freeze a spinner or leave an indeterminate
+	   progress looking complete. Each animation says itself what it does with reduced motion
+	   (the kit's do). */
+	:root[data-motion='reduce'] {
+		&,
+		& *,
+		& *:before,
+		& *:after {
+			scroll-behavior: auto !important;
+			transition-duration: 0.01ms !important;
+		}
+	}
+
+	/* before the kit has said how much the page moves (data-motion), the system is asked */
+	:root:not([data-motion]) {
+		@media (prefers-reduced-motion: reduce) {
+			&,
+			& *,
+			& *:before,
+			& *:after {
+				scroll-behavior: auto !important;
+				transition-duration: 0.01ms !important;
+			}
+		}
 	}
 }

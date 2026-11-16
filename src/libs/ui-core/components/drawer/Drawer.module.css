@@ -1,0 +1,122 @@
+@layer ui.components {
+	/* a panel that crosses its whole width takes a little longer to leave than a dialog */
+	.stage {
+		--ui-modal-leave: var(--ui-duration-normal);
+
+		padding: 0;
+	}
+
+	.panel {
+		position: absolute;
+		inset-block: 0;
+		display: flex;
+		flex-direction: column;
+		inline-size: 100%;
+		max-inline-size: 480px;
+		color: var(--ui-color-foreground);
+		background-color: var(--ui-color-popover);
+	}
+
+	/* it slides from its side, and back to it */
+	.right {
+		--ui-modal-from: 100% 0;
+		--ui-modal-to: 100% 0;
+		--ui-modal-scale: 1;
+
+		inset-inline-end: 0;
+		border-inline-start: 1px solid var(--ui-color-line-soft);
+		box-shadow: var(--ui-shadow-side-end);
+	}
+
+	.left {
+		--ui-modal-from: -100% 0;
+		--ui-modal-to: -100% 0;
+		--ui-modal-scale: 1;
+
+		inset-inline-start: 0;
+		border-inline-end: 1px solid var(--ui-color-line-soft);
+		box-shadow: var(--ui-shadow-side-start);
+	}
+
+	.sm {
+		max-inline-size: 380px;
+	}
+
+	.lg {
+		max-inline-size: 640px;
+	}
+
+	.xl {
+		max-inline-size: 880px;
+	}
+
+	.header {
+		display: flex;
+		flex: none;
+		gap: var(--ui-space-16);
+		align-items: center;
+		padding: var(--ui-space-12) var(--ui-space-12) var(--ui-space-12)
+			var(--ui-space-20);
+		border-block-end: 1px solid var(--ui-color-line);
+	}
+
+	.title {
+		flex: 1;
+		margin: 0;
+		color: var(--ui-color-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-20);
+		font-family: var(--ui-font-heading);
+		line-height: 1.3;
+		min-inline-size: 0;
+	}
+
+	.close {
+		display: flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		color: var(--ui-color-foreground-soft);
+		background: none;
+		border: 0;
+		border-radius: var(--ui-radius-full);
+		cursor: pointer;
+		inline-size: var(--ui-size-control-sm);
+		block-size: var(--ui-size-control-sm);
+
+		&:hover {
+			color: var(--ui-color-foreground);
+			background-color: var(--ui-color-hover);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+	}
+
+	.body {
+		flex: 1;
+		min-block-size: 0;
+		padding: var(--ui-space-20);
+		overflow-y: auto;
+		font-size: var(--ui-font-size-14);
+		line-height: 1.6;
+	}
+
+	.footer {
+		display: flex;
+		flex: none;
+		flex-wrap: wrap;
+		gap: var(--ui-space-8);
+		justify-content: flex-end;
+		padding: var(--ui-space-16) var(--ui-space-20);
+		border-block-start: 1px solid var(--ui-color-line);
+
+		@media (width < 480px) {
+			flex-direction: column-reverse;
+			align-items: stretch;
+		}
+	}
+}

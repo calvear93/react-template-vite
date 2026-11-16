@@ -1,0 +1,95 @@
+/* The look every text control shares: Input, Textarea, Select, InputRut, InputPhone and the
+   fields of the pickers. One height, one radius, a border that reaches 3:1 on every surface
+   and darkens on hover, and the focus ring of the kit over it (a crisp line, never a blurred
+   halo). An invalid field keeps its red border inside the ring. */
+@layer ui.components {
+	.control {
+		display: block;
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-16);
+		font-family: var(--ui-font-body);
+		line-height: 1.4;
+		background-color: var(--ui-color-card);
+		border: 1px solid var(--ui-color-input);
+		border-radius: var(--ui-radius-control);
+		transition:
+			border-color var(--ui-duration-fast) var(--ui-easing-default),
+			box-shadow var(--ui-duration-fast) var(--ui-easing-default);
+		inline-size: 100%;
+		min-block-size: var(--ui-size-control-md);
+		padding-block: var(--ui-space-8);
+		padding-inline: var(--ui-space-12);
+
+		&::placeholder {
+			color: var(--ui-color-placeholder);
+			opacity: 1;
+		}
+
+		&:hover {
+			border-color: var(--ui-color-input-hover);
+		}
+
+		&:focus-visible {
+			border-color: var(--ui-color-ring);
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -1px;
+		}
+
+		&[aria-invalid='true'] {
+			border-color: var(--ui-color-danger-line);
+
+			&:focus-visible {
+				border-color: var(--ui-color-danger-line);
+				outline-offset: 1px;
+			}
+		}
+
+		/* a value to read, copy and send, not to edit: a quiet fill, the border of a field */
+		&[readonly] {
+			background-color: var(--ui-color-muted);
+
+			&:hover {
+				border-color: var(--ui-color-input);
+			}
+		}
+
+		&:disabled {
+			color: var(--ui-color-foreground-soft);
+			background-color: var(--ui-color-disabled-subtle);
+			border-color: var(--ui-color-border);
+			cursor: not-allowed;
+		}
+	}
+
+	.sm {
+		min-block-size: var(--ui-size-control-sm);
+		padding-block: var(--ui-space-4);
+		font-size: var(--ui-font-size-14);
+	}
+
+	.lg {
+		min-block-size: var(--ui-size-control-lg);
+	}
+
+	/* the text under a control: a hint, or what is wrong and how to fix it */
+	.hint,
+	.error {
+		display: block;
+		margin: 6px 0 0;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+		font-family: var(--ui-font-body);
+		line-height: 1.4;
+	}
+
+	.error {
+		color: var(--ui-color-danger-text);
+		font-weight: 600;
+	}
+
+	/* an error is announced when it appears: its node is always there, empty until then */
+	.hint:empty,
+	.error:empty {
+		margin: 0;
+	}
+}

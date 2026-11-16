@@ -1,0 +1,47 @@
+@layer ui.components {
+	.root {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ui-space-8);
+		font-family: var(--ui-font-body);
+	}
+
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ui-space-16);
+		align-items: flex-end;
+		justify-content: space-between;
+	}
+
+	.texts {
+		flex: 1 1 320px;
+		min-inline-size: 0;
+	}
+
+	.title {
+		margin: 0;
+		font-weight: bold;
+		font-size: var(--ui-font-size-30);
+		letter-spacing: -0.02em;
+		overflow-wrap: anywhere;
+
+		@media (width <= 600px) {
+			font-size: var(--ui-font-size-28);
+		}
+	}
+
+	.meta {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-16);
+		line-height: 1.5;
+		max-inline-size: 80ch;
+		margin-block-start: var(--ui-space-8);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ui-space-8);
+	}
+}

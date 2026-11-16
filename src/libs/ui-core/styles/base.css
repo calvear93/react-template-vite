@@ -1,0 +1,86 @@
+/*
+ * Page base of the kit: the body, the headings, links and the focus ring, on tokens only. In the
+ * `ui.base` layer: above the app's reset, below every component and any unlayered app rule.
+ */
+
+@layer ui.base {
+	html {
+		text-size-adjust: 100%;
+		text-rendering: optimizelegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	body {
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-16);
+		font-family: var(--ui-font-body);
+		line-height: 1.5;
+		background-color: var(--ui-color-page);
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		margin: 0 0 var(--ui-space-12);
+		color: var(--ui-color-heading);
+		font-family: var(--ui-font-heading);
+		line-height: 1.2;
+	}
+
+	/* a large sans sets tighter: the bigger the heading, the closer its letters */
+	h1 {
+		font-weight: bold;
+		font-size: var(--ui-font-size-32);
+		letter-spacing: -0.02em;
+	}
+
+	h2 {
+		font-weight: 600;
+		font-size: var(--ui-font-size-24);
+		letter-spacing: -0.015em;
+	}
+
+	h3 {
+		font-weight: 600;
+		font-size: var(--ui-font-size-17);
+	}
+
+	h4 {
+		font-weight: bold;
+		font-size: var(--ui-font-size-14);
+		font-family: var(--ui-font-body);
+	}
+
+	p {
+		margin: 0 0 var(--ui-space-12);
+	}
+
+	a {
+		color: var(--ui-color-link);
+		text-underline-offset: 2px;
+	}
+
+	:focus-visible {
+		outline: var(--ui-ring-width) solid var(--ui-color-ring);
+		outline-offset: 2px;
+	}
+
+	[hidden] {
+		display: none !important;
+	}
+
+	/* a larger text for who asks for it: the sizes of the kit are rem, so all of it grows */
+	:root[data-text='large'] {
+		font-size: 112.5%;
+	}
+
+	/* links always underlined for who asks for it (high contrast does it too) */
+	:root[data-links='underline'] {
+		& a {
+			text-decoration: underline;
+			text-underline-offset: 2px;
+		}
+	}
+}

@@ -1,0 +1,79 @@
+@layer ui.components {
+	@keyframes travel {
+		from {
+			translate: -100% 0;
+		}
+
+		to {
+			translate: 350% 0;
+		}
+	}
+
+	@keyframes breathe {
+		50% {
+			opacity: 0.4;
+		}
+	}
+
+	.root {
+		--ui-progress-fill: var(--ui-color-control-checked);
+
+		font-family: var(--ui-font-body);
+	}
+
+	.danger {
+		--ui-progress-fill: var(--ui-color-danger-line);
+	}
+
+	.label {
+		display: flex;
+		gap: var(--ui-space-8);
+		justify-content: space-between;
+		color: var(--ui-color-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-13);
+		margin-block-end: 6px;
+	}
+
+	.value {
+		color: var(--ui-color-foreground-soft);
+		font-weight: bold;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.indicator {
+		display: block;
+		block-size: 100%;
+		background-color: var(--ui-progress-fill);
+		border-radius: inherit;
+		transition: inline-size var(--ui-duration-normal)
+			var(--ui-easing-default);
+
+		@media (forced-colors: active) {
+			background-color: Highlight;
+		}
+	}
+
+	.track {
+		position: relative;
+		display: block;
+		overflow: hidden;
+		background-color: var(--ui-color-neutral-100);
+		border-radius: var(--ui-radius-full);
+		block-size: var(--ui-space-8);
+
+		@media (forced-colors: active) {
+			border: 1px solid CanvasText;
+		}
+
+		&[data-indeterminate] .indicator {
+			inline-size: 40%;
+			animation: travel 1.4s var(--ui-easing-default) infinite;
+
+			:root[data-motion='reduce'] & {
+				inline-size: 100%;
+				animation: breathe 2s ease infinite;
+			}
+		}
+	}
+}

@@ -1,0 +1,49 @@
+@layer ui.components {
+	@keyframes pulse {
+		0%,
+		100% {
+			opacity: 1;
+		}
+
+		50% {
+			opacity: 0.35;
+		}
+	}
+
+	.root {
+		display: inline-block;
+		flex: none;
+		inline-size: 8px;
+		block-size: 8px;
+		background-color: var(--ui-color-success-strong);
+		border-radius: var(--ui-radius-full);
+
+		@media (forced-colors: active) {
+			background-color: CanvasText;
+		}
+	}
+
+	.warning {
+		background-color: color-mix(
+			in srgb,
+			var(--ui-color-warning-strong) 55%,
+			var(--ui-color-warning-text)
+		);
+	}
+
+	.danger {
+		background-color: var(--ui-color-danger-line);
+	}
+
+	.neutral {
+		background-color: var(--ui-color-foreground-faint);
+	}
+
+	.pulse {
+		animation: pulse 1.4s var(--ui-easing-default) infinite;
+
+		:root[data-motion='reduce'] & {
+			animation: none;
+		}
+	}
+}

@@ -1,0 +1,48 @@
+@layer ui.components {
+	.root {
+		container-type: inline-size;
+		font-family: var(--ui-font-body);
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--ui-space-16) var(--ui-space-24);
+		margin: 0;
+
+		@container (width < 420px) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.pair {
+		min-inline-size: 0;
+	}
+
+	.wide {
+		grid-column: 1 / -1;
+	}
+
+	.label {
+		display: block;
+		color: var(--ui-color-foreground-soft);
+		font-weight: 600;
+		font-size: var(--ui-font-size-12);
+		letter-spacing: 0.01em;
+		margin-block-end: var(--ui-space-4);
+	}
+
+	.value {
+		display: block;
+		margin: 0;
+		color: var(--ui-color-foreground);
+		font-weight: 500;
+		font-size: var(--ui-font-size-14);
+		overflow-wrap: break-word;
+
+		&[data-empty] {
+			color: var(--ui-color-foreground-faint);
+			font-weight: normal;
+		}
+	}
+}

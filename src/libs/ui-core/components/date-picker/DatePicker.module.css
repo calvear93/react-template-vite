@@ -1,0 +1,62 @@
+@layer ui.components {
+	.root {
+		display: block;
+	}
+
+	.field {
+		position: relative;
+		display: block;
+	}
+
+	.input {
+		padding-inline-end: var(--ui-space-48);
+	}
+
+	.opener {
+		position: absolute;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		color: var(--ui-color-foreground-soft);
+		background: none;
+		border: 0;
+		border-radius: calc(var(--ui-radius-control) - 1px);
+		cursor: pointer;
+		inset-block: 1px;
+		inset-inline-end: 1px;
+		inline-size: var(--ui-space-40);
+
+		&:hover {
+			color: var(--ui-color-foreground);
+			background-color: var(--ui-color-hover);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -2px;
+		}
+
+		&[aria-expanded='true'] {
+			color: var(--ui-color-foreground);
+		}
+
+		&:disabled {
+			background: none;
+			cursor: not-allowed;
+			opacity: var(--ui-opacity-disabled);
+		}
+	}
+
+	.popup {
+		padding: var(--ui-space-12);
+	}
+
+	.footer {
+		display: flex;
+		justify-content: space-between;
+		margin-block-start: var(--ui-space-8);
+		padding-block-start: var(--ui-space-8);
+		border-block-start: 1px solid var(--ui-color-line-soft);
+	}
+}

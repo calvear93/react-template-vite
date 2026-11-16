@@ -1,0 +1,139 @@
+@layer ui.components {
+	.root {
+		font-family: var(--ui-font-body);
+	}
+
+	.summary {
+		margin: 0 0 var(--ui-space-8);
+		color: var(--ui-color-foreground-soft);
+		font-weight: 600;
+		font-size: var(--ui-font-size-13);
+	}
+
+	.list {
+		display: flex;
+		align-items: flex-start;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.vertical {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.marker {
+		z-index: 1;
+		display: flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		color: var(--ui-stepper-marker-text);
+		font-weight: bold;
+		font-size: var(--ui-font-size-12);
+		background-color: var(--ui-stepper-marker-fill);
+		border: 1.5px solid var(--ui-stepper-marker-line);
+		border-radius: var(--ui-radius-full);
+		inline-size: 28px;
+		block-size: 28px;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.text {
+		min-inline-size: 0;
+	}
+
+	.title {
+		display: block;
+		color: var(--ui-stepper-title);
+		font-weight: 600;
+		font-size: var(--ui-font-size-13);
+		line-height: 1.3;
+	}
+
+	.description {
+		display: block;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+		margin-block-start: var(--ui-space-2);
+	}
+
+	.step {
+		--ui-stepper-marker-fill: var(--ui-color-muted);
+		--ui-stepper-marker-line: var(--ui-color-input);
+		--ui-stepper-marker-text: var(--ui-color-foreground-soft);
+		--ui-stepper-title: var(--ui-color-foreground-soft);
+		--ui-stepper-connector: var(--ui-color-input);
+
+		position: relative;
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: 6px;
+		align-items: center;
+		min-inline-size: 0;
+		text-align: center;
+
+		@media (forced-colors: active) {
+			&[aria-current='step'] .marker {
+				outline: 2px solid Highlight;
+				outline-offset: 2px;
+			}
+		}
+
+		/* the line to the next step, behind the markers */
+		&:not(:last-child):after {
+			position: absolute;
+			background-color: var(--ui-stepper-connector);
+			content: '';
+			inset-block-start: 13px;
+			inset-inline: calc(50% + 20px) calc(-50% + 20px);
+			block-size: 2px;
+		}
+
+		&[aria-current='step'] {
+			--ui-stepper-marker-fill: var(--ui-color-control-checked);
+			--ui-stepper-marker-line: var(--ui-color-control-checked);
+			--ui-stepper-marker-text: var(
+				--ui-color-control-checked-foreground
+			);
+			--ui-stepper-title: var(--ui-color-secondary-foreground);
+		}
+
+		&[data-state='done'] {
+			--ui-stepper-marker-fill: var(--ui-color-control-checked);
+			--ui-stepper-marker-line: var(--ui-color-control-checked);
+			--ui-stepper-marker-text: var(
+				--ui-color-control-checked-foreground
+			);
+			--ui-stepper-connector: var(--ui-color-control-checked);
+		}
+
+		&[data-state='error'] {
+			--ui-stepper-marker-fill: var(--ui-color-danger-subtle);
+			--ui-stepper-marker-line: var(--ui-color-danger-base);
+			--ui-stepper-marker-text: var(--ui-color-danger-text);
+			--ui-stepper-title: var(--ui-color-danger-text);
+		}
+
+		&[data-state='disabled'] {
+			opacity: var(--ui-opacity-disabled);
+		}
+
+		.vertical > & {
+			flex-direction: row;
+			gap: var(--ui-space-12);
+			align-items: flex-start;
+			padding-block-end: var(--ui-space-20);
+			text-align: start;
+
+			&:not(:last-child):after {
+				inset-block: 30px 2px;
+				inset-inline: 13px auto;
+				inline-size: 2px;
+				block-size: auto;
+			}
+		}
+	}
+}

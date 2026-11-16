@@ -1,0 +1,208 @@
+@layer ui.components {
+	@keyframes spin {
+		to {
+			rotate: 360deg;
+		}
+	}
+
+	.label {
+		display: contents;
+	}
+
+	.root {
+		--ui-button-height: var(--ui-size-control-md);
+		--ui-button-padding-inline: var(--ui-space-16);
+		--ui-button-font-size: var(--ui-font-size-14);
+
+		position: relative;
+		display: inline-flex;
+		gap: var(--ui-space-8);
+		align-items: center;
+		justify-content: center;
+		font-weight: 600;
+		font-size: var(--ui-button-font-size);
+		font-family: var(--ui-font-body);
+		line-height: 1;
+		letter-spacing: 0.01em;
+		white-space: nowrap;
+		text-align: center;
+		text-decoration: none;
+		border: 1px solid transparent;
+		border-radius: var(--ui-radius-control);
+		cursor: pointer;
+		transition:
+			background-color var(--ui-duration-fast) var(--ui-easing-default),
+			border-color var(--ui-duration-fast) var(--ui-easing-default),
+			color var(--ui-duration-fast) var(--ui-easing-default),
+			scale var(--ui-duration-fast) var(--ui-easing-default);
+		min-inline-size: var(--ui-size-touch-min);
+		min-block-size: var(--ui-button-height);
+		padding-block: var(--ui-space-8);
+		padding-inline: var(--ui-button-padding-inline);
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+
+		&:disabled,
+		&[aria-disabled='true']:not([data-loading]) {
+			cursor: not-allowed;
+			opacity: var(--ui-opacity-disabled);
+		}
+
+		&:disabled {
+			pointer-events: none;
+		}
+
+		/* a press is felt: the button gives a little */
+		&:active:not([aria-disabled='true']) {
+			scale: 0.98;
+
+			:root[data-motion='reduce'] & {
+				scale: none;
+			}
+		}
+
+		&[data-loading] {
+			cursor: progress;
+
+			/* the spinner takes the place of what the button says, which keeps its width. The
+			   label has no box of its own (display: contents), so an opacity would not reach
+			   its text: it is hidden, which its text inherits */
+			& .label {
+				visibility: hidden;
+			}
+
+			& .icon {
+				opacity: 0;
+			}
+		}
+	}
+
+	.spinner {
+		position: absolute;
+		inline-size: var(--ui-size-icon-sm);
+		block-size: var(--ui-size-icon-sm);
+		border: 2px solid currentcolor;
+		border-block-start-color: transparent;
+		border-radius: var(--ui-radius-full);
+		animation: spin 0.7s linear infinite;
+
+		:root[data-motion='reduce'] & {
+			animation-duration: 2s;
+		}
+	}
+
+	.solid {
+		color: var(--ui-color-primary-foreground);
+		background-color: var(--ui-color-primary-fill);
+
+		&:hover {
+			background-color: color-mix(
+				in srgb,
+				var(--ui-color-primary-fill) 85%,
+				black
+			);
+		}
+	}
+
+	.filled {
+		color: var(--ui-color-secondary-foreground);
+		background-color: var(--ui-color-secondary);
+
+		&:hover {
+			background-color: color-mix(
+				in srgb,
+				var(--ui-color-secondary) 88%,
+				var(--ui-color-secondary-foreground)
+			);
+		}
+	}
+
+	.outlined {
+		color: var(--ui-color-secondary-foreground);
+		background-color: transparent;
+		border-color: color-mix(
+			in srgb,
+			var(--ui-color-control-checked) 55%,
+			var(--ui-color-border)
+		);
+
+		&:hover {
+			background-color: color-mix(
+				in srgb,
+				var(--ui-color-primary) 7%,
+				transparent
+			);
+			border-color: var(--ui-color-control-checked);
+		}
+	}
+
+	.ghost {
+		color: var(--ui-color-secondary-foreground);
+		background-color: transparent;
+
+		&:hover {
+			background-color: var(--ui-color-hover);
+		}
+	}
+
+	.destructive {
+		color: var(--ui-color-destructive-foreground);
+		background-color: var(--ui-color-destructive-fill);
+
+		&:hover {
+			background-color: color-mix(
+				in srgb,
+				var(--ui-color-destructive-fill) 85%,
+				black
+			);
+		}
+	}
+
+	.link {
+		min-inline-size: 0;
+		padding-inline: 0;
+		color: var(--ui-color-link);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		background-color: transparent;
+
+		&:hover {
+			text-decoration-thickness: 2px;
+		}
+	}
+
+	.inverse {
+		color: var(--ui-color-secondary-foreground);
+		background-color: var(--ui-color-card);
+
+		&:hover {
+			background-color: var(--ui-color-secondary);
+		}
+	}
+
+	.sm {
+		--ui-button-height: var(--ui-size-control-sm);
+		--ui-button-padding-inline: var(--ui-space-12);
+		--ui-button-font-size: var(--ui-font-size-13);
+	}
+
+	.lg {
+		--ui-button-height: var(--ui-size-control-lg);
+		--ui-button-padding-inline: var(--ui-space-20);
+	}
+
+	.iconOnly {
+		inline-size: var(--ui-button-height);
+		min-inline-size: var(--ui-button-height);
+		padding-inline: 0;
+		border-radius: var(--ui-radius-full);
+	}
+
+	.block {
+		display: flex;
+		inline-size: 100%;
+	}
+}

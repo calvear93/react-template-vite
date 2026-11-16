@@ -1,0 +1,7 @@
+@layer ui.components {
+	.root {
+		display: block;
+		min-inline-size: 0;
+		font-family: var(--ui-font-body);
+	}
+}

@@ -1,0 +1,15 @@
+/*
+ * Global styles of #libs/ui-core: the design tokens, the color of the app, the themes and the
+ * page base. Imported once by the barrel (index.ts). Everything lives in cascade layers, so any
+ * unlayered rule of the app (its CSS Modules, UnoCSS utilities) wins over the kit without a
+ * specificity fight. Components add their rules to `ui.components` from their own CSS Modules.
+ */
+
+@layer reset, ui.tokens, ui.base, ui.components;
+
+@import url('./tokens/scale.css');
+@import url('./tokens/color.css');
+@import url('./tokens/primary.css');
+@import url('./themes/dark.css');
+@import url('./themes/contrast.css');
+@import url('./base.css');

@@ -1,0 +1,54 @@
+@layer ui.components {
+	.root {
+		--ui-info-note-fill: var(--ui-color-muted);
+		--ui-info-note-line: var(--ui-color-input);
+		--ui-info-note-icon: var(--ui-color-foreground-soft);
+
+		display: flex;
+		gap: 10px;
+		align-items: flex-start;
+		padding: var(--ui-space-12) 14px;
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-13);
+		font-family: var(--ui-font-body);
+		line-height: 1.5;
+		background-color: var(--ui-info-note-fill);
+		border-radius: var(--ui-radius-control);
+		border-inline-start: 3px solid var(--ui-info-note-line);
+	}
+
+	.info {
+		--ui-info-note-fill: var(--ui-color-info-subtle);
+		--ui-info-note-line: var(--ui-color-info-base);
+		--ui-info-note-icon: var(--ui-color-info-text);
+	}
+
+	.warning {
+		--ui-info-note-fill: var(--ui-color-warning-subtle);
+		--ui-info-note-line: var(--ui-color-warning-base);
+		--ui-info-note-icon: var(--ui-color-warning-text);
+	}
+
+	.icon {
+		margin-block-start: 1px;
+		color: var(--ui-info-note-icon);
+	}
+
+	.content {
+		flex: 1;
+		min-inline-size: 0;
+
+		& > :last-child {
+			margin-block-end: 0;
+		}
+
+		& a {
+			font-weight: 600;
+		}
+	}
+
+	.title {
+		margin: 0 0 var(--ui-space-2);
+		font-weight: bold;
+	}
+}

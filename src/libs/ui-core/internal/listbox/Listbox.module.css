@@ -1,0 +1,126 @@
+/* The options of a picker. The option the keys are on has the ring (the focus is elsewhere);
+   the selected one, a check or a ticked box: never a tint alone. */
+@layer ui.components {
+	.root {
+		padding: 6px;
+		outline: none;
+	}
+
+	.group {
+		& + &,
+		.option + & {
+			margin-block-start: var(--ui-space-4);
+			padding-block-start: var(--ui-space-4);
+			border-block-start: 1px solid var(--ui-color-line-soft);
+		}
+	}
+
+	.heading {
+		padding: 6px 10px var(--ui-space-4);
+		color: var(--ui-color-foreground-soft);
+		font-weight: bold;
+		font-size: var(--ui-font-size-11);
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.option {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		padding: var(--ui-space-8) 10px;
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-14);
+		line-height: 1.4;
+		border-radius: var(--ui-radius-base);
+		cursor: pointer;
+		min-block-size: var(--ui-size-control-sm);
+
+		&:hover {
+			background-color: var(--ui-color-hover);
+		}
+
+		&[aria-selected='true'] {
+			font-weight: 600;
+		}
+
+		&[data-active] {
+			background-color: var(--ui-color-hover);
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -2px;
+
+			@media (forced-colors: active) {
+				outline: 2px solid Highlight;
+				outline-offset: -2px;
+			}
+		}
+
+		&[aria-disabled='true'] {
+			color: var(--ui-color-disabled);
+			background: none;
+			cursor: not-allowed;
+		}
+	}
+
+	.label {
+		flex: 1;
+		min-inline-size: 0;
+		overflow-wrap: anywhere;
+	}
+
+	.check {
+		flex: none;
+		color: var(--ui-color-control-checked);
+
+		@media (forced-colors: active) {
+			color: Highlight;
+		}
+	}
+
+	/* the box of an option of several: the look of a Checkbox, drawn (the option is the control) */
+	.box {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--ui-color-card);
+		border: 1.5px solid var(--ui-color-input);
+		border-radius: var(--ui-space-4);
+		transition:
+			background-color var(--ui-duration-fast) var(--ui-easing-default),
+			border-color var(--ui-duration-fast) var(--ui-easing-default);
+		inline-size: 18px;
+		block-size: 18px;
+
+		&:after {
+			border-block-end: 2px solid
+				var(--ui-color-control-checked-foreground);
+			border-inline-end: 2px solid
+				var(--ui-color-control-checked-foreground);
+			opacity: 0;
+			content: '';
+			inline-size: 5px;
+			block-size: 10px;
+			margin-block-end: 2px;
+			rotate: 45deg;
+		}
+
+		[aria-selected='true'] > & {
+			background-color: var(--ui-color-control-checked);
+			border-color: var(--ui-color-control-checked);
+
+			@media (forced-colors: active) {
+				background-color: Highlight;
+				border-color: Highlight;
+			}
+
+			&:after {
+				opacity: 1;
+			}
+		}
+
+		[aria-disabled='true'] > & {
+			opacity: var(--ui-opacity-disabled);
+		}
+	}
+}

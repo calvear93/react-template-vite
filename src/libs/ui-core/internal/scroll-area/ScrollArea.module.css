@@ -1,0 +1,9 @@
+/* The ring of an area that took the focus to be scrolled: inside its box, whatever clips it. */
+@layer ui.components {
+	.root {
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -2px;
+		}
+	}
+}

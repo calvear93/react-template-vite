@@ -1,0 +1,72 @@
+/*
+ * Colors of the light theme that are not those of the app: the neutral scale, the surfaces and
+ * the status colors. The color of the app and everything that follows it are in primary.css; the
+ * dark theme and the high contrast redefine these tokens (themes/).
+ *
+ * The neutrals are cool, with a breath of the royal blue of the kit: a gray next to a blue reads
+ * warmer than it is, and a neutral of its own temperature sits still.
+ */
+
+@layer ui.tokens {
+	:root {
+		--ui-color-neutral-50: #eef1f8;
+		--ui-color-neutral-100: #d5dbea;
+		--ui-color-neutral-200: #bcc4d6;
+		--ui-color-neutral-300: #7a849b;
+		--ui-color-neutral-400: #5d6780;
+		--ui-color-neutral-500: #343c52;
+		--ui-color-neutral-900: #000000;
+
+		/* surfaces */
+		--ui-color-background: #ffffff;
+		--ui-color-card: #ffffff;
+		--ui-color-popover: #ffffff;
+		--ui-color-muted: var(--ui-color-neutral-50);
+		--ui-color-border: var(--ui-color-neutral-100);
+
+		/* the edge of a control is what tells it from the page: 3:1 on every surface */
+		--ui-color-input: var(--ui-color-neutral-300);
+		--ui-color-input-hover: var(--ui-color-neutral-400);
+		--ui-color-placeholder: #636d85;
+
+		/* a hovered row, item or day: a breath of its own ink, visible on any surface */
+		--ui-color-hover: color-mix(in srgb, currentcolor 8%, transparent);
+		--ui-color-overlay: rgb(11, 15, 26, 0.5);
+		--ui-color-disabled: var(--ui-color-neutral-200);
+		--ui-color-disabled-subtle: var(--ui-color-neutral-50);
+
+		/* the knob of a switch, the text on a solid fill: light in every theme */
+		--ui-color-on-fill: #ffffff;
+		--ui-color-knob: #ffffff;
+		--ui-color-knob-checked: #ffffff;
+
+		/* destructive: a red for accents, a deeper fill for buttons with white text */
+		--ui-color-destructive: #d93848;
+		--ui-color-destructive-foreground: #ffffff;
+		--ui-color-destructive-fill: #c12a3a;
+
+		/* status: strong (lines, icons), base (borders), subtle (fills), text (AA on subtle).
+		   The information is a teal: a blue would be taken for the color of the app */
+		--ui-color-info-strong: #0d7fa8;
+		--ui-color-info-base: #7cc3dc;
+		--ui-color-info-subtle: #d9eff7;
+		--ui-color-info-text: #0b617f;
+		--ui-color-success-strong: #1c8a52;
+		--ui-color-success-base: #84c9a3;
+		--ui-color-success-subtle: #d7efe1;
+		--ui-color-success-text: #136a3d;
+		--ui-color-warning-strong: #e3a008;
+		--ui-color-warning-base: #ecc55a;
+		--ui-color-warning-subtle: #fbefcf;
+		--ui-color-warning-text: #7a5200;
+		--ui-color-danger-strong: #d93848;
+		--ui-color-danger-base: #f0a0a8;
+		--ui-color-danger-subtle: #fbdadd;
+		--ui-color-danger-text: #a41f2d;
+
+		/* the border of an invalid control, a danger graphic: 3:1 on every surface */
+		--ui-color-danger-line: #d02f40;
+
+		color-scheme: light;
+	}
+}

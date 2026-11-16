@@ -1,0 +1,457 @@
+/* The frame of an application: the header across the page, the side bar and the content, the
+   only area that scrolls. Below 900 px the side bar leaves the grid and becomes a panel over
+   the page; folding it to icons is of the desktop only. Folding moves nothing but the edge of
+   the side bar: the icons, the titles and the fold button keep their place, the texts fade. */
+@layer ui.components {
+	.root {
+		--ui-shell-sidebar: 248px;
+
+		position: relative;
+		display: grid;
+		grid-template:
+			'header header' auto
+			'sidebar content' minmax(0, 1fr)
+			/ var(--ui-shell-sidebar) minmax(0, 1fr);
+		block-size: 100dvh;
+		overflow: hidden;
+		font-family: var(--ui-font-body);
+		background-color: var(--ui-color-page);
+		transition: grid-template-columns var(--ui-duration-slow)
+			var(--ui-easing-default);
+
+		@media (width <= 900px) {
+			grid-template:
+				'header' auto
+				'content' minmax(0, 1fr)
+				/ minmax(0, 1fr);
+			transition: none;
+		}
+
+		&[data-folded='true'] {
+			--ui-shell-sidebar: 64px;
+		}
+	}
+
+	.skip {
+		position: absolute;
+		z-index: var(--ui-z-toast);
+		padding: var(--ui-space-8) 14px;
+		color: var(--ui-color-primary-foreground);
+		font-weight: bold;
+		font-size: var(--ui-font-size-13);
+		text-decoration: none;
+		background-color: var(--ui-color-primary-fill);
+		border-radius: var(--ui-radius-full);
+		inset-block-start: var(--ui-space-8);
+		inset-inline-start: var(--ui-space-8);
+		translate: 0 -200%;
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+			translate: 0 0;
+		}
+	}
+
+	/* the logo of the app, whatever it is drawn with: as tall as its place says */
+	.logo {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		border-radius: var(--ui-radius-base);
+
+		& img,
+		& svg {
+			display: block;
+			inline-size: auto;
+			max-inline-size: none;
+			block-size: var(--ui-logo-height, 32px);
+		}
+	}
+
+	.header {
+		position: relative;
+		display: flex;
+		grid-area: header;
+		gap: var(--ui-space-20);
+		align-items: center;
+		min-block-size: 60px;
+		padding: var(--ui-space-8) var(--ui-space-32) var(--ui-space-8)
+			var(--ui-space-12);
+		background-color: var(--ui-color-card);
+		border-block-end: 1px solid var(--ui-color-border);
+
+		@media (width <= 900px) {
+			gap: var(--ui-space-8);
+			padding-inline: var(--ui-space-12);
+		}
+
+		/* the menu button is of the narrow header */
+		& > .menuButton {
+			display: none;
+
+			@media (width <= 900px) {
+				display: inline-flex;
+			}
+		}
+
+		& > .logo {
+			--ui-logo-height: 36px;
+
+			@media (width <= 900px) {
+				--ui-logo-height: 28px;
+			}
+		}
+	}
+
+	/* the name of the application in a notch that hangs from the header at its center; on a
+	   narrow screen it is a plain text next to the logo */
+	.title {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+		align-items: center;
+		justify-content: center;
+		padding: 0 26px var(--ui-space-2);
+		white-space: nowrap;
+		text-align: center;
+		background-color: color-mix(
+			in srgb,
+			var(--ui-color-secondary) 22%,
+			var(--ui-color-card)
+		);
+		border: 1px solid var(--ui-color-line-soft);
+		box-shadow: var(--ui-shadow-sm);
+		inset-block: 0 -10px;
+		inset-inline-start: 50%;
+		max-inline-size: min(560px, 40vw);
+		border-block-start: 0;
+		border-end-start-radius: 16px;
+		border-end-end-radius: 16px;
+		translate: -50% 0;
+
+		@media (width <= 900px) {
+			position: static;
+			flex: 1;
+			align-items: flex-start;
+			min-inline-size: 0;
+			max-inline-size: none;
+			padding: 0;
+			text-align: start;
+			background: none;
+			border: 0;
+			box-shadow: none;
+			translate: none;
+		}
+	}
+
+	.app,
+	.area {
+		max-inline-size: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.app {
+		color: var(--ui-color-secondary-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-17);
+		font-family: var(--ui-font-heading);
+		line-height: 1.2;
+
+		@media (width <= 900px) {
+			color: var(--ui-color-foreground);
+			font-size: var(--ui-font-size-16);
+		}
+	}
+
+	.area {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+		line-height: 1.3;
+	}
+
+	.utilities {
+		display: flex;
+		flex: none;
+		gap: var(--ui-space-12);
+		align-items: center;
+		margin-inline-start: auto;
+	}
+
+	.sidebar {
+		display: flex;
+		flex-direction: column;
+		grid-area: sidebar;
+		overflow: hidden;
+		background-color: var(--ui-color-card);
+		min-inline-size: 0;
+		min-block-size: 0;
+		border-inline-end: 1px solid var(--ui-color-border);
+
+		@media (width <= 900px) {
+			position: fixed;
+			z-index: var(--ui-z-panel);
+			transform: translateX(-100%);
+			visibility: hidden;
+			transition:
+				transform var(--ui-duration-normal) var(--ui-easing-exit),
+				visibility 0s var(--ui-duration-normal);
+			inset-block: 0;
+			inset-inline-start: 0;
+			inline-size: 280px;
+			max-inline-size: 85vw;
+
+			[data-menu-open='true'] > & {
+				box-shadow: var(--ui-shadow-side-start);
+				transform: translateX(0);
+				visibility: visible;
+				transition:
+					transform var(--ui-duration-slow) var(--ui-easing-default),
+					visibility 0s;
+			}
+		}
+	}
+
+	/* the head of the panel of a narrow screen: the logo and the button that closes it */
+	.sidebarHead {
+		display: none;
+		flex: none;
+		gap: var(--ui-space-8);
+		align-items: center;
+		justify-content: space-between;
+		padding: var(--ui-space-12) var(--ui-space-12) 0 var(--ui-space-16);
+
+		@media (width <= 900px) {
+			display: flex;
+		}
+	}
+
+	.navigation {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		padding: var(--ui-space-24) var(--ui-space-12) var(--ui-space-12);
+		overflow: hidden auto;
+
+		@media (width <= 900px) {
+			padding-block-start: var(--ui-space-16);
+		}
+	}
+
+	.section {
+		margin-block-end: var(--ui-space-16);
+	}
+
+	/* folded, a title keeps its line (the links under it do not move) and fades */
+	.sectionTitle {
+		margin: 0 0 var(--ui-space-8);
+		overflow: hidden;
+		color: var(--ui-color-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-14);
+		font-family: var(--ui-font-heading);
+		line-height: 1.25;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		transition: opacity var(--ui-duration-normal) var(--ui-easing-default)
+			60ms;
+		padding-inline: var(--ui-space-4);
+
+		@media (width > 900px) {
+			[data-folded='true'] & {
+				opacity: 0;
+				transition-delay: 0s;
+				transition-duration: var(--ui-duration-fast);
+			}
+		}
+	}
+
+	.items {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ui-space-2);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	/* the wrapper that gives a folded link its hint: only folded, and never in the panel of a
+	   narrow screen, where the names are in sight. Its bubble clears the edge of the side bar
+	   (12px of padding to it, and 8 more) */
+	.itemTip {
+		--ui-tooltip-gap: var(--ui-space-20);
+		--ui-tooltip-display: none;
+
+		display: flex;
+
+		@media (width > 900px) {
+			[data-folded='true'] & {
+				--ui-tooltip-display: block;
+			}
+		}
+	}
+
+	/* 12 + 16 + 12: folded (a side bar of 64 with 12 of padding) the icon is exactly centered */
+	.item {
+		position: relative;
+		display: flex;
+		flex: 1;
+		gap: 10px;
+		align-items: center;
+		padding: 10px var(--ui-space-12);
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-14);
+		text-decoration: none;
+		border-radius: var(--ui-radius-base);
+		transition:
+			color var(--ui-duration-fast) var(--ui-easing-default),
+			background-color var(--ui-duration-fast) var(--ui-easing-default);
+		min-inline-size: 0;
+
+		&:hover {
+			color: var(--ui-color-foreground);
+			background-color: var(--ui-color-hover);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -2px;
+		}
+
+		&[aria-current='page'] {
+			color: var(--ui-color-secondary-foreground);
+			font-weight: 600;
+			background-color: var(--ui-color-secondary);
+
+			/* the current page is not told by a tint alone: a bar at its start */
+			&:before {
+				position: absolute;
+				background-color: var(--ui-color-control-checked);
+				border-radius: var(--ui-radius-full);
+				content: '';
+				inset-block: var(--ui-space-8);
+				inset-inline-start: 0;
+				inline-size: 3px;
+
+				@media (forced-colors: active) {
+					background-color: Highlight;
+				}
+			}
+		}
+	}
+
+	.itemIcon {
+		flex: none;
+	}
+
+	/* folded, the label fades in its place, not removed: the link keeps its name */
+	.itemLabel {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		transition: opacity var(--ui-duration-normal) var(--ui-easing-default)
+			60ms;
+		min-inline-size: 0;
+
+		@media (width > 900px) {
+			[data-folded='true'] & {
+				opacity: 0;
+				transition-delay: 0s;
+				transition-duration: var(--ui-duration-fast);
+			}
+		}
+	}
+
+	/* 16 + 32 + 16: the fold button sits on the column of the icons, folded or not */
+	.foot {
+		display: flex;
+		flex: none;
+		padding: var(--ui-space-8) var(--ui-space-16);
+		border-block-start: 1px solid var(--ui-color-border);
+
+		@media (width <= 900px) {
+			display: none;
+		}
+	}
+
+	.fold {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		color: var(--ui-color-foreground-soft);
+		background: none;
+		border: 0;
+		border-radius: var(--ui-radius-base);
+		cursor: pointer;
+		transition:
+			color var(--ui-duration-fast) var(--ui-easing-default),
+			background-color var(--ui-duration-fast) var(--ui-easing-default);
+		inline-size: 32px;
+		block-size: 32px;
+
+		&:hover {
+			color: var(--ui-color-foreground);
+			background-color: var(--ui-color-hover);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+
+		& svg {
+			transition: rotate var(--ui-duration-slow) var(--ui-easing-default);
+		}
+
+		&[aria-expanded='false'] svg {
+			rotate: 180deg;
+		}
+	}
+
+	/* what dims the page under the panel of a narrow screen; a press on it closes the panel */
+	.veil {
+		display: none;
+
+		@media (width <= 900px) {
+			position: fixed;
+			inset: 0;
+			z-index: calc(var(--ui-z-panel) - 1);
+			display: block;
+			background-color: var(--ui-color-overlay);
+			visibility: hidden;
+			opacity: 0;
+			transition:
+				opacity var(--ui-duration-normal) var(--ui-easing-exit),
+				visibility 0s var(--ui-duration-normal);
+
+			[data-menu-open='true'] > & {
+				visibility: visible;
+				opacity: 1;
+				transition:
+					opacity var(--ui-duration-normal) var(--ui-easing-default),
+					visibility 0s;
+			}
+		}
+	}
+
+	.content {
+		grid-area: content;
+		min-block-size: 0;
+		padding: var(--ui-space-32);
+		overflow-y: auto;
+		background-color: var(--ui-color-page);
+
+		@media (width <= 900px) {
+			padding: var(--ui-space-16);
+		}
+
+		/* it takes the focus by program (a new page, the skip link), never by Tab */
+		&:focus {
+			outline: 2px solid transparent;
+		}
+	}
+}

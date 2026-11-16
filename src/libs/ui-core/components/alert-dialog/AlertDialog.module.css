@@ -1,0 +1,173 @@
+/* The look of the dialogs that ask something: AlertDialog, ChoiceDialog and PromptDialog share
+   this sheet, so they stay one. A compact panel: the icon of its tone, the question, what it
+   means, and the answers. */
+@layer ui.components {
+	.panel {
+		position: relative;
+		max-inline-size: 400px;
+		max-block-size: calc(100dvh - var(--ui-space-32));
+		padding: var(--ui-space-24) 28px;
+		overflow-y: auto;
+		color: var(--ui-color-popover-foreground);
+		background-color: var(--ui-color-popover);
+		border: 1px solid var(--ui-color-line-soft);
+		border-radius: var(--ui-radius-surface);
+		box-shadow: var(--ui-shadow-xl);
+		inline-size: 100%;
+
+		@media (forced-colors: active) {
+			border-color: CanvasText;
+		}
+	}
+
+	/* a list of answers that explain themselves needs more room than a row of buttons */
+	.wide {
+		max-inline-size: 460px;
+	}
+
+	/* what the dialog is about, said by a shape too: its icon in a tinted circle */
+	.icon {
+		--ui-dialog-icon-fill: var(--ui-color-info-subtle);
+		--ui-dialog-icon-ink: var(--ui-color-info-text);
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--ui-dialog-icon-ink);
+		background-color: var(--ui-dialog-icon-fill);
+		border-radius: var(--ui-radius-full);
+		inline-size: var(--ui-space-40);
+		block-size: var(--ui-space-40);
+		margin-block-end: var(--ui-space-12);
+
+		@media (forced-colors: active) {
+			border: 1px solid CanvasText;
+		}
+	}
+
+	.success {
+		--ui-dialog-icon-fill: var(--ui-color-success-subtle);
+		--ui-dialog-icon-ink: var(--ui-color-success-text);
+	}
+
+	.warning {
+		--ui-dialog-icon-fill: var(--ui-color-warning-subtle);
+		--ui-dialog-icon-ink: var(--ui-color-warning-text);
+	}
+
+	.danger {
+		--ui-dialog-icon-fill: var(--ui-color-danger-subtle);
+		--ui-dialog-icon-ink: var(--ui-color-danger-text);
+	}
+
+	.title {
+		margin: 0;
+		color: var(--ui-color-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-20);
+		font-family: var(--ui-font-heading);
+		line-height: 1.3;
+	}
+
+	.description {
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-14);
+		line-height: 1.5;
+		margin-block-start: 6px;
+
+		& > :last-child {
+			margin-block-end: 0;
+		}
+
+		& strong {
+			color: var(--ui-color-danger-text);
+		}
+	}
+
+	/* the text to type, or the text asked for */
+	.field {
+		margin-block-start: var(--ui-space-16);
+	}
+
+	.options {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ui-space-8);
+		margin-block-start: var(--ui-space-16);
+	}
+
+	.option {
+		display: flex;
+		gap: var(--ui-space-12);
+		align-items: center;
+		padding: var(--ui-space-12) 14px;
+		color: var(--ui-color-foreground);
+		font-family: inherit;
+		text-align: start;
+		background-color: var(--ui-color-card);
+		border: 1px solid var(--ui-color-input);
+		border-radius: var(--ui-radius-control);
+		cursor: pointer;
+		transition:
+			border-color var(--ui-duration-fast) var(--ui-easing-default),
+			background-color var(--ui-duration-fast) var(--ui-easing-default);
+		inline-size: 100%;
+		min-block-size: var(--ui-size-touch-min);
+
+		&:hover {
+			background-color: var(--ui-color-hover);
+			border-color: var(--ui-color-control-checked);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+
+		/* the answer that destroys something: its own ink, and its border on hover */
+		&[data-tone='danger'] {
+			color: var(--ui-color-danger-text);
+
+			&:hover {
+				border-color: var(--ui-color-danger-line);
+			}
+		}
+	}
+
+	.optionText {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: var(--ui-space-2);
+		min-inline-size: 0;
+	}
+
+	.optionLabel {
+		font-weight: 600;
+		font-size: var(--ui-font-size-14);
+		line-height: 1.4;
+	}
+
+	.optionDescription {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-13);
+		line-height: 1.4;
+	}
+
+	.optionArrow {
+		color: var(--ui-color-foreground-soft);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ui-space-8);
+		justify-content: flex-end;
+		margin-block-start: var(--ui-space-24);
+
+		@media (width < 480px) {
+			flex-direction: column-reverse;
+			align-items: stretch;
+		}
+	}
+}

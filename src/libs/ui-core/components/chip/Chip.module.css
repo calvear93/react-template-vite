@@ -1,0 +1,79 @@
+@layer ui.components {
+	.root {
+		display: inline-flex;
+		gap: 6px;
+		align-items: center;
+		max-inline-size: 100%;
+		color: var(--ui-color-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-13);
+		font-family: var(--ui-font-body);
+		border: 1px solid var(--ui-color-input);
+		border-radius: var(--ui-radius-full);
+		min-block-size: var(--ui-size-control-sm);
+		padding-inline: var(--ui-space-12);
+
+		@media (forced-colors: active) {
+			border-color: CanvasText;
+		}
+	}
+
+	.label {
+		min-inline-size: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	.count {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.removable {
+		padding-inline-end: var(--ui-space-4);
+	}
+
+	.remove {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		color: inherit;
+		background: transparent;
+		border: 0;
+		border-radius: var(--ui-radius-full);
+		cursor: pointer;
+		inline-size: var(--ui-space-24);
+		block-size: var(--ui-space-24);
+
+		&:hover {
+			background: color-mix(in srgb, currentcolor 15%, transparent);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+	}
+
+	.sm {
+		gap: var(--ui-space-4);
+		color: var(--ui-color-secondary-foreground);
+		font-size: var(--ui-font-size-12);
+		background: var(--ui-color-secondary);
+		border-color: transparent;
+		min-block-size: 0;
+		padding-block: var(--ui-space-2);
+		padding-inline: 10px;
+
+		&.removable {
+			padding-inline-end: var(--ui-space-4);
+		}
+
+		& .remove {
+			margin-block: calc(-1 * var(--ui-space-2));
+		}
+	}
+}

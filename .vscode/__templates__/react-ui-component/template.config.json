@@ -1,0 +1,5 @@
+{
+	"name": "React: UI kit component (src/libs/ui-core/components)",
+	"allowExistingFolder": true,
+	"variables": ["componentName"]
+}

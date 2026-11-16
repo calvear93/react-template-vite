@@ -1,0 +1,25 @@
+@layer ui.components {
+	.root {
+		display: inline-flex;
+
+		& > :is(a, button, span) {
+			margin-inline-start: -1px;
+			border-radius: 0;
+
+			&:first-child {
+				margin-inline-start: 0;
+				border-start-start-radius: var(--ui-radius-control);
+				border-end-start-radius: var(--ui-radius-control);
+			}
+
+			&:last-child {
+				border-start-end-radius: var(--ui-radius-control);
+				border-end-end-radius: var(--ui-radius-control);
+			}
+
+			&:focus-visible {
+				z-index: var(--ui-z-raised);
+			}
+		}
+	}
+}

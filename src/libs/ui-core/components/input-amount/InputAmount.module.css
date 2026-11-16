@@ -1,0 +1,29 @@
+/* The sign of the currency sits inside the field, before the amount, and the field makes room
+   for as many characters as it has; the rule that changes the control goes through the root, so
+   it wins whatever the order of the sheets. */
+@layer ui.components {
+	.root {
+		position: relative;
+		display: block;
+		inline-size: 100%;
+
+		& > .input {
+			padding-inline-start: calc(
+				var(--ui-space-12) + var(--ui-amount-sign, 1) * 1ch +
+					var(--ui-space-8)
+			);
+			font-variant-numeric: tabular-nums;
+		}
+	}
+
+	.prefix {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-16);
+		pointer-events: none;
+		inset-block: 0;
+		inset-inline-start: var(--ui-space-12);
+	}
+}

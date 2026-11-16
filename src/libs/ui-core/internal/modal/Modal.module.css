@@ -1,0 +1,80 @@
+/* The native <dialog> as a full-screen stage painted as the veil: the panel of each
+   component (a centered box, a side panel) is drawn inside it. The veil fades and the panel
+   comes from a few pixels away, both ways: a component moves its panel otherwise through
+   --ui-modal-from / --ui-modal-to / --ui-modal-scale (set on the panel) and takes longer to
+   leave through --ui-modal-leave. The keyframes name only the far end, so a panel at rest
+   carries no transform. */
+@layer ui.components {
+	@keyframes veil {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes unveil {
+		to {
+			opacity: 0;
+		}
+	}
+
+	@keyframes rise {
+		from {
+			translate: var(--ui-modal-from, 0 8px);
+			scale: var(--ui-modal-scale, 0.98);
+		}
+	}
+
+	@keyframes sink {
+		to {
+			translate: var(--ui-modal-to, 0 4px);
+		}
+	}
+
+	.root {
+		position: fixed;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0;
+		padding: var(--ui-space-16);
+		overflow: visible;
+		color: inherit;
+		font-family: var(--ui-font-body);
+		background-color: var(--ui-color-overlay);
+		border: 0;
+		inset: 0;
+		inline-size: 100%;
+		max-inline-size: none;
+		block-size: 100%;
+		max-block-size: none;
+		animation: veil var(--ui-duration-normal) var(--ui-easing-default);
+
+		& > * {
+			animation: rise var(--ui-duration-normal) var(--ui-easing-default);
+		}
+
+		&[data-leaving] {
+			animation: unveil var(--ui-modal-leave, var(--ui-duration-fast))
+				var(--ui-easing-exit) forwards;
+			pointer-events: none;
+
+			& > * {
+				animation: sink var(--ui-modal-leave, var(--ui-duration-fast))
+					var(--ui-easing-exit) forwards;
+			}
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		&::backdrop {
+			background: transparent;
+		}
+	}
+
+	/* the page behind a modal does not scroll */
+	html:has(.root[open]) {
+		overflow: hidden;
+	}
+}

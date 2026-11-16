@@ -1,0 +1,94 @@
+/*
+ * High contrast: data-contrast="more" on <html>, on either theme (the person's choice, or the
+ * system's prefers-contrast while they did not choose). One ink for all text, strong lines, a
+ * thicker focus ring (--ui-ring-width, which every component uses), links always underlined,
+ * the fills a step deeper on the light theme and lighter on the dark one. The browser's own
+ * high contrast (forced-colors) is handled by each component.
+ */
+
+@layer ui.tokens {
+	:root[data-contrast='more'] {
+		--ui-color-foreground: #000000;
+		--ui-color-foreground-soft: #1a1a1a;
+		--ui-color-foreground-faint: #1a1a1a;
+		--ui-color-heading: #000000;
+		--ui-color-page: #ffffff;
+		--ui-color-background: #ffffff;
+		--ui-color-card: #ffffff;
+		--ui-color-border: #4d4d4d;
+		--ui-color-input: #1a1a1a;
+		--ui-color-input-hover: #000000;
+		--ui-color-placeholder: #4d4d4d;
+		--ui-color-line: #4d4d4d;
+		--ui-color-line-soft: #6b6b6b;
+		--ui-color-primary-fill: color-mix(
+			in srgb,
+			var(--ui-color-primary) 60%,
+			black
+		);
+		--ui-color-secondary-foreground: color-mix(
+			in srgb,
+			var(--ui-color-primary) 45%,
+			black
+		);
+		--ui-color-link: var(--ui-color-secondary-foreground);
+		--ui-color-ring: #000000;
+		--ui-ring-width: 3px;
+
+		/* status texts a step deeper: well over AA on their fills */
+		--ui-color-info-text: #084a61;
+		--ui-color-success-text: #0d4f2d;
+		--ui-color-warning-text: #553900;
+		--ui-color-danger-text: #7a1622;
+		--ui-color-danger-line: #a81f2e;
+	}
+
+	:root[data-theme='dark'][data-contrast='more'] {
+		--ui-color-foreground: #ffffff;
+		--ui-color-foreground-soft: #f0f0f0;
+		--ui-color-foreground-faint: #f0f0f0;
+		--ui-color-heading: #ffffff;
+		--ui-color-page: #000000;
+		--ui-color-background: #000000;
+		--ui-color-card: #0b0b0b;
+		--ui-color-popover: #111111;
+		--ui-color-border: #b3b3b3;
+		--ui-color-input: #e0e0e0;
+		--ui-color-input-hover: #ffffff;
+		--ui-color-placeholder: #b3b3b3;
+		--ui-color-line: #b3b3b3;
+		--ui-color-line-soft: #8c8c8c;
+		--ui-color-secondary-foreground: color-mix(
+			in srgb,
+			var(--ui-color-primary) 30%,
+			#ffffff
+		);
+		--ui-color-link: var(--ui-color-secondary-foreground);
+		--ui-color-ring: #ffffff;
+
+		/* on black a deeper fill would sink: fills go light, with a dark text on them */
+		--ui-color-primary-fill: color-mix(
+			in srgb,
+			var(--ui-color-primary) 45%,
+			#ffffff
+		);
+		--ui-color-primary-foreground: #000000;
+		--ui-color-control-checked: var(--ui-color-primary-fill);
+		--ui-color-control-checked-foreground: #000000;
+		--ui-color-knob: #0b0b0b;
+		--ui-color-knob-checked: #0b0b0b;
+		--ui-color-info-text: #c9ecf8;
+		--ui-color-success-text: #c3eed6;
+		--ui-color-warning-text: #f8e7ab;
+		--ui-color-danger-text: #ffd3d7;
+		--ui-color-danger-line: #ffb3ba;
+	}
+}
+
+@layer ui.base {
+	:root[data-contrast='more'] {
+		& a {
+			text-decoration: underline;
+		}
+	}
+}

@@ -1,0 +1,82 @@
+/*
+ * The color of the app: royal blue, and everything that follows it (the inks, the page, the
+ * lines, the shadows). An app with another color sets its own values for the first block, on
+ * :root, after this sheet; the dark theme and the high contrast (themes/) work them out again
+ * from `--ui-color-primary`.
+ */
+
+@layer ui.tokens {
+	:root {
+		/* white on it is 4.85:1: it is a fill as it is, with no deeper one for its text */
+		--ui-color-primary: #4169e1;
+		--ui-color-primary-foreground: #ffffff;
+		--ui-color-primary-fill: var(--ui-color-primary);
+
+		/* its pale tint and the deep blue that is read on it */
+		--ui-color-secondary: #e2e9fc;
+		--ui-color-secondary-foreground: #1f3894;
+
+		/* a gold: what royal blue is worn with. For what must be found at a glance, sparingly */
+		--ui-color-accent: #f0b23c;
+		--ui-color-accent-foreground: #182037;
+		--ui-color-ring: var(--ui-color-primary);
+
+		/* inks: a near black of the blue's own hue, a softer one, a faint one (all AA) */
+		--ui-color-foreground: #182037;
+		--ui-color-foreground-soft: #47516b;
+		--ui-color-foreground-faint: #5d6780;
+		--ui-color-muted-foreground: var(--ui-color-foreground-soft);
+		--ui-color-card-foreground: var(--ui-color-foreground);
+		--ui-color-popover-foreground: var(--ui-color-foreground);
+		--ui-color-heading: #1b2c6b;
+		--ui-color-link: #2c4cc0;
+
+		/* a checked control, the border of a focused one: the fill in light, lighter on the dark */
+		--ui-color-control-checked: var(--ui-color-primary-fill);
+		--ui-color-control-checked-foreground: var(
+			--ui-color-primary-foreground
+		);
+
+		/* the page with a breath of the blue, a second surface, lines in its tint */
+		--ui-color-page: #f5f7fc;
+		--ui-color-surface-2: #eaeffb;
+		--ui-color-line: #cfd7ec;
+		--ui-color-line-soft: #e1e6f4;
+
+		/* elevation: one scale, each step a contact shadow and an ambient one. Shadows of the ink,
+		   never of black: they keep the temperature of the page */
+		--ui-color-shadow: var(--ui-color-foreground);
+		--ui-shadow-xs: 0 1px 2px
+			color-mix(in srgb, var(--ui-color-shadow) 10%, transparent);
+		--ui-shadow-sm:
+			0 1px 2px color-mix(in srgb, var(--ui-color-shadow) 6%, transparent),
+			0 2px 8px -2px
+				color-mix(in srgb, var(--ui-color-shadow) 8%, transparent);
+		--ui-shadow-md:
+			0 2px 4px -1px
+				color-mix(in srgb, var(--ui-color-shadow) 8%, transparent),
+			0 8px 20px -6px
+				color-mix(in srgb, var(--ui-color-shadow) 14%, transparent);
+		--ui-shadow-lg:
+			0 2px 6px -1px
+				color-mix(in srgb, var(--ui-color-shadow) 10%, transparent),
+			0 14px 32px -8px
+				color-mix(in srgb, var(--ui-color-shadow) 18%, transparent);
+		--ui-shadow-xl:
+			0 4px 10px -2px
+				color-mix(in srgb, var(--ui-color-shadow) 12%, transparent),
+			0 28px 64px -16px
+				color-mix(in srgb, var(--ui-color-shadow) 28%, transparent);
+
+		/* a panel at the edge of the page casts inwards: -end is at the right, -start at the left */
+		--ui-shadow-side-end:
+			-2px 0 6px
+				color-mix(in srgb, var(--ui-color-shadow) 8%, transparent),
+			-16px 0 40px -12px
+				color-mix(in srgb, var(--ui-color-shadow) 22%, transparent);
+		--ui-shadow-side-start:
+			2px 0 6px color-mix(in srgb, var(--ui-color-shadow) 8%, transparent),
+			16px 0 40px -12px
+				color-mix(in srgb, var(--ui-color-shadow) 22%, transparent);
+	}
+}

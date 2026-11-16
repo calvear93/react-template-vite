@@ -1,0 +1,23 @@
+/* The panel is a Popup: its surface, shadow and motion come from there. The rule that changes
+   it goes through the root, so it wins whatever the order of the sheets. */
+@layer ui.components {
+	.root {
+		position: relative;
+		display: inline-flex;
+
+		& > .panel {
+			display: flex;
+			flex-direction: column;
+			gap: var(--ui-space-12);
+			padding: var(--ui-space-16);
+			font-size: var(--ui-font-size-14);
+			line-height: 1.5;
+			inline-size: min(320px, calc(100vw - var(--ui-space-16)));
+
+			&:focus-visible {
+				outline: var(--ui-ring-width) solid var(--ui-color-ring);
+				outline-offset: -2px;
+			}
+		}
+	}
+}

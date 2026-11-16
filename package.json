@@ -23,7 +23,8 @@
 	"imports": {
 		"#libs/ioc": "./src/libs/ioc/ioc.builder.tsx",
 		"#libs/router": "./src/libs/router/index.ts",
-		"#libs/feature": "./src/libs/feature/index.ts"
+		"#libs/feature": "./src/libs/feature/index.ts",
+		"#libs/ui-core": "./src/libs/ui-core/index.ts"
 	},
 	"dependencies": {
 		"jotai": "3.0.1",

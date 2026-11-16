@@ -1,0 +1,107 @@
+@layer ui.components {
+	.root {
+		--ui-file-upload-border: var(--ui-color-input);
+		--ui-file-upload-fill: var(--ui-color-card);
+
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ui-space-12);
+		align-items: flex-start;
+		justify-content: space-between;
+		padding: 14px var(--ui-space-16);
+		font-family: var(--ui-font-body);
+		background-color: var(--ui-file-upload-fill);
+		border: 1.5px dashed var(--ui-file-upload-border);
+		border-radius: var(--ui-radius-control);
+		transition: border-color var(--ui-duration-fast)
+			var(--ui-easing-default);
+
+		&[data-state='chosen'] {
+			--ui-file-upload-border: var(--ui-color-success-strong);
+
+			border-style: solid;
+		}
+
+		&[data-state='error'] {
+			--ui-file-upload-border: var(--ui-color-danger-line);
+			--ui-file-upload-fill: var(--ui-color-danger-subtle);
+
+			border-style: solid;
+		}
+
+		&[data-dragging] {
+			--ui-file-upload-border: var(--ui-color-control-checked);
+			--ui-file-upload-fill: var(--ui-color-secondary);
+		}
+
+		/* nothing can be dropped or chosen: the look of a disabled field, its texts still read */
+		&[data-disabled] {
+			--ui-file-upload-border: var(--ui-color-border);
+			--ui-file-upload-fill: var(--ui-color-disabled-subtle);
+
+			cursor: not-allowed;
+		}
+	}
+
+	.body {
+		flex: 1;
+		min-inline-size: 200px;
+	}
+
+	.label {
+		color: var(--ui-color-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-14);
+	}
+
+	.required {
+		margin-inline-start: var(--ui-space-2);
+		color: var(--ui-color-danger-text);
+	}
+
+	.requirements {
+		margin: var(--ui-space-2) 0 0;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+	}
+
+	.file {
+		display: flex;
+		gap: 6px;
+		align-items: center;
+		margin: 6px 0 0;
+		color: var(--ui-color-success-text);
+		font-weight: 600;
+		font-size: var(--ui-font-size-13);
+		overflow-wrap: anywhere;
+
+		[data-state='error'] & {
+			color: var(--ui-color-danger-text);
+			font-weight: normal;
+		}
+	}
+
+	.error {
+		margin: var(--ui-space-4) 0 0;
+		color: var(--ui-color-danger-text);
+		font-weight: 600;
+		font-size: var(--ui-font-size-12);
+	}
+
+	.actions {
+		display: flex;
+		flex: none;
+		gap: var(--ui-space-4);
+		align-items: center;
+	}
+
+	.input {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		white-space: nowrap;
+		clip-path: inset(50%);
+	}
+}

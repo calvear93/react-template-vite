@@ -1,0 +1,50 @@
+@layer ui.components {
+	.root {
+		--ui-avatar-size: 36px;
+
+		position: relative;
+		display: inline-flex;
+		flex: none;
+		overflow: hidden;
+		font-size: var(--ui-font-size-13);
+		font-family: var(--ui-font-body);
+		border-radius: var(--ui-radius-full);
+		inline-size: var(--ui-avatar-size);
+		block-size: var(--ui-avatar-size);
+
+		@media (forced-colors: active) {
+			border: 1px solid CanvasText;
+		}
+	}
+
+	.initials {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--ui-color-secondary-foreground);
+		font-weight: bold;
+		background-color: var(--ui-avatar-fill, var(--ui-color-secondary));
+		user-select: none;
+		inset: 0;
+	}
+
+	.photo {
+		position: relative;
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+	}
+
+	.sm {
+		--ui-avatar-size: 28px;
+
+		font-size: var(--ui-font-size-11);
+	}
+
+	.lg {
+		--ui-avatar-size: 48px;
+
+		font-size: var(--ui-font-size-17);
+	}
+}

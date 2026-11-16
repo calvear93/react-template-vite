@@ -1,0 +1,133 @@
+/*
+ * Scales: type, space, sizes, radii, layers and motion. They do not change with the color of
+ * the app or the theme. Naming: --ui-<category>-<role>[-<variant>].
+ *
+ * One family for everything: the font of the app (the template loads Inter; `--ui-font-body`
+ * names it first and falls back to the system's). Headings are told from the text by their
+ * weight and their size, not by another face.
+ */
+
+@layer ui.tokens {
+	:root {
+		--ui-font-body: 'Inter', system-ui, sans-serif;
+		--ui-font-heading: var(--ui-font-body);
+		--ui-font-size-11: 0.6875rem;
+		--ui-font-size-12: 0.75rem;
+		--ui-font-size-13: 0.8125rem;
+		--ui-font-size-14: 0.875rem;
+		--ui-font-size-16: 1rem;
+		--ui-font-size-17: 1.0625rem;
+		--ui-font-size-18: 1.125rem;
+		--ui-font-size-20: 1.25rem;
+		--ui-font-size-22: 1.375rem;
+		--ui-font-size-24: 1.5rem;
+		--ui-font-size-28: 1.75rem;
+		--ui-font-size-30: 1.875rem;
+		--ui-font-size-32: 2rem;
+		--ui-font-size-36: 2.25rem;
+		--ui-font-size-40: 2.5rem;
+		--ui-font-size-48: 3rem;
+		--ui-font-size-55: 3.4375rem;
+
+		/* typographic roles (they shrink below 1024px) */
+		--ui-heading-display-size: var(--ui-font-size-55);
+		--ui-heading-display-weight: 700;
+		--ui-heading-1-size: var(--ui-font-size-40);
+		--ui-heading-1-weight: 700;
+		--ui-heading-2-size: var(--ui-font-size-32);
+		--ui-heading-2-weight: 700;
+		--ui-heading-3-size: var(--ui-font-size-24);
+		--ui-heading-3-weight: 600;
+		--ui-heading-4-size: var(--ui-font-size-20);
+		--ui-heading-4-weight: 600;
+		--ui-heading-5-size: var(--ui-font-size-18);
+		--ui-heading-5-weight: 600;
+		--ui-heading-6-size: var(--ui-font-size-17);
+		--ui-heading-6-weight: 600;
+		--ui-heading-module-size: var(--ui-font-size-36);
+		--ui-heading-module-weight: 600;
+
+		/* space */
+		--ui-space-2: 2px;
+		--ui-space-4: 4px;
+		--ui-space-8: 8px;
+		--ui-space-12: 12px;
+		--ui-space-16: 16px;
+		--ui-space-20: 20px;
+		--ui-space-24: 24px;
+		--ui-space-32: 32px;
+		--ui-space-40: 40px;
+		--ui-space-48: 48px;
+		--ui-space-56: 56px;
+		--ui-space-64: 64px;
+		--ui-space-80: 80px;
+
+		/* sizes */
+		--ui-size-container-max: 1560px;
+		--ui-size-touch-min: 44px;
+		--ui-size-control-xs: 32px;
+		--ui-size-control-sm: 36px;
+		--ui-size-control-md: 42px;
+		--ui-size-control-lg: 48px;
+		--ui-size-icon-xs: 12px;
+		--ui-size-icon-sm: 16px;
+		--ui-size-icon-md: 20px;
+		--ui-size-icon-lg: 24px;
+		--ui-icon-stroke: 2;
+
+		/* radii */
+		--ui-radius-base: 0.5rem;
+		--ui-radius-control: 10px;
+		--ui-radius-surface: 12px;
+		--ui-radius-full: 9999px;
+
+		/* layers */
+		--ui-z-base: 0;
+		--ui-z-raised: 10;
+		--ui-z-sticky: 20;
+		--ui-z-header: 40;
+		--ui-z-overlay: 50;
+		--ui-z-panel: 60;
+		--ui-z-dialog: 70;
+		--ui-z-toast: 80;
+
+		/* motion: short, and decelerating into place; what leaves accelerates away */
+		--ui-duration-fast: 0.12s;
+		--ui-duration-normal: 0.2s;
+		--ui-duration-slow: 0.28s;
+		--ui-easing-default: cubic-bezier(0.2, 0, 0, 1);
+		--ui-easing-exit: cubic-bezier(0.4, 0, 1, 1);
+
+		/* the focus ring (thicker with high contrast) and what cannot be used */
+		--ui-ring-width: 2px;
+		--ui-opacity-disabled: 0.5;
+
+		@media (width < 1024px) {
+			--ui-heading-display-size: var(--ui-font-size-36);
+			--ui-heading-1-size: var(--ui-font-size-28);
+			--ui-heading-2-size: var(--ui-font-size-24);
+			--ui-heading-3-size: var(--ui-font-size-22);
+			--ui-heading-6-size: var(--ui-font-size-16);
+			--ui-heading-module-size: var(--ui-font-size-28);
+		}
+	}
+
+	/* less motion: every transition and every way in or out that takes its time from these
+	   tokens happens at once. The kit writes data-motion on the root (the person's choice, or
+	   the system's); until it has, the system is asked directly. What must keep moving (a
+	   spinner) or moves without a duration (a press, a lift) says so itself with
+	   :root[data-motion='reduce']. */
+	:root[data-motion='reduce'] {
+		--ui-duration-fast: 0s;
+		--ui-duration-normal: 0s;
+		--ui-duration-slow: 0s;
+	}
+
+	:root:not([data-motion]) {
+		@media (prefers-reduced-motion: reduce) {
+			--ui-duration-fast: 0s;
+			--ui-duration-normal: 0s;
+			--ui-duration-slow: 0s;
+		}
+	}
+}

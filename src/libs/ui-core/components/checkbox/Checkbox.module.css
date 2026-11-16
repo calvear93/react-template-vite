@@ -1,0 +1,131 @@
+@layer ui.components {
+	.root {
+		display: flex;
+		gap: 10px;
+		align-items: flex-start;
+		min-block-size: var(--ui-size-touch-min);
+		padding-block: var(--ui-space-8);
+		font-family: var(--ui-font-body);
+		cursor: pointer;
+
+		&:has(.input:disabled) {
+			cursor: not-allowed;
+			opacity: var(--ui-opacity-disabled);
+		}
+	}
+
+	.input {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		margin: 0;
+		background-color: var(--ui-color-card);
+		border: 1.5px solid var(--ui-color-input);
+		border-radius: var(--ui-space-4);
+		cursor: inherit;
+		transition:
+			background-color var(--ui-duration-fast) var(--ui-easing-default),
+			border-color var(--ui-duration-fast) var(--ui-easing-default);
+		appearance: none;
+		inline-size: 18px;
+		block-size: 18px;
+		margin-block-start: 1px;
+
+		@media (forced-colors: active) {
+			appearance: auto;
+		}
+
+		@supports not selector(:has(*)) {
+			&:disabled,
+			&:disabled + .text {
+				opacity: var(--ui-opacity-disabled);
+			}
+		}
+
+		&:hover {
+			border-color: var(--ui-color-control-checked);
+		}
+
+		&:checked,
+		&:indeterminate {
+			background-color: var(--ui-color-control-checked);
+			border-color: var(--ui-color-control-checked);
+		}
+
+		/* the mark is always there and grows into place: a check, or the dash of a mixed state */
+		&:after {
+			opacity: 0;
+			transition:
+				opacity var(--ui-duration-fast) var(--ui-easing-default),
+				scale var(--ui-duration-fast) var(--ui-easing-default);
+			content: '';
+			inline-size: 5px;
+			block-size: 10px;
+			margin-block-end: 2px;
+			border-block-end: 2px solid
+				var(--ui-color-control-checked-foreground);
+			border-inline-end: 2px solid
+				var(--ui-color-control-checked-foreground);
+			rotate: 45deg;
+			scale: 0.6;
+		}
+
+		&:checked:after,
+		&:indeterminate:after {
+			opacity: 1;
+			scale: 1;
+		}
+
+		&:indeterminate:after {
+			margin: 0;
+			background-color: var(--ui-color-control-checked-foreground);
+			border: 0;
+			inline-size: 10px;
+			block-size: 2px;
+			rotate: none;
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+
+		&[aria-invalid='true'] {
+			border-color: var(--ui-color-danger-line);
+		}
+	}
+
+	.text {
+		min-inline-size: 0;
+	}
+
+	.label {
+		display: block;
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-14);
+		line-height: 1.4;
+	}
+
+	.description {
+		display: block;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-13);
+		line-height: 1.4;
+		margin-block-start: var(--ui-space-2);
+	}
+
+	.sm {
+		min-block-size: 0;
+		padding-block: var(--ui-space-4);
+
+		& .input {
+			inline-size: var(--ui-space-16);
+			block-size: var(--ui-space-16);
+		}
+
+		& .label {
+			font-size: var(--ui-font-size-13);
+		}
+	}
+}

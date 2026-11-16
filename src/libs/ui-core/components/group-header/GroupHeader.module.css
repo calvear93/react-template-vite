@@ -1,0 +1,44 @@
+@layer ui.components {
+	.root {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		margin-block-end: var(--ui-space-12);
+		font-family: var(--ui-font-body);
+	}
+
+	.icon {
+		color: var(--ui-color-secondary-foreground);
+	}
+
+	.title {
+		margin: 0;
+		color: var(--ui-color-foreground);
+		font-weight: bold;
+		font-size: var(--ui-font-size-14);
+		font-family: var(--ui-font-body);
+
+		.highlighted & {
+			font-weight: 600;
+			font-size: var(--ui-font-size-18);
+			font-family: var(--ui-font-heading);
+		}
+	}
+
+	.context {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-13);
+		white-space: nowrap;
+	}
+
+	.rule {
+		flex: 1;
+		min-inline-size: var(--ui-space-16);
+		block-size: 1px;
+		background-color: var(--ui-color-line);
+
+		@media (forced-colors: active) {
+			background-color: CanvasText;
+		}
+	}
+}

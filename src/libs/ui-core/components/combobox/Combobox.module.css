@@ -1,0 +1,73 @@
+@layer ui.components {
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.root {
+		display: block;
+	}
+
+	.field {
+		position: relative;
+		display: block;
+	}
+
+	.input {
+		padding-inline-end: var(--ui-space-40);
+	}
+
+	.indicator {
+		position: absolute;
+		inset-block: 0;
+		inset-inline-end: var(--ui-space-12);
+		display: inline-flex;
+		align-items: center;
+		color: var(--ui-color-foreground-soft);
+		pointer-events: none;
+
+		&[data-searching] {
+			animation: spin 0.9s linear infinite;
+
+			:root[data-motion='reduce'] & {
+				animation-duration: 3s;
+			}
+		}
+	}
+
+	.note:empty {
+		margin: 0;
+	}
+
+	.list {
+		min-inline-size: 14rem;
+		container-type: inline-size;
+	}
+
+	.option {
+		padding: var(--ui-space-8) 10px;
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-14);
+		line-height: 1.4;
+		border-radius: var(--ui-radius-base);
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--ui-color-hover);
+		}
+
+		/* the result the arrows are on: the focus stays in the box, so this is its ring */
+		&[aria-selected='true'] {
+			color: var(--ui-color-secondary-foreground);
+			background-color: var(--ui-color-secondary);
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -2px;
+
+			@media (forced-colors: active) {
+				outline: 2px solid Highlight;
+				outline-offset: -2px;
+			}
+		}
+	}
+}

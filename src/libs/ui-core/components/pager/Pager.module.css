@@ -1,0 +1,45 @@
+@layer ui.components {
+	.root {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ui-space-12);
+		align-items: center;
+		justify-content: space-between;
+		inline-size: 100%;
+		font-family: var(--ui-font-body);
+	}
+
+	.group {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ui-space-12) var(--ui-space-20);
+		align-items: center;
+	}
+
+	.end {
+		margin-inline-start: auto;
+	}
+
+	.summary {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-13);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.option {
+		display: inline-flex;
+		gap: var(--ui-space-8);
+		align-items: center;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-13);
+		white-space: nowrap;
+	}
+
+	.size {
+		inline-size: auto;
+	}
+
+	.jump {
+		inline-size: 5.5em;
+	}
+}

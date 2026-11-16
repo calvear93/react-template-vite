@@ -1,0 +1,81 @@
+@layer ui.components {
+	.root {
+		min-inline-size: 0;
+	}
+
+	/* a pill: the negative block margin keeps the height of the header as without it */
+	.trigger {
+		display: flex;
+		gap: var(--ui-space-12);
+		align-items: center;
+		padding: 6px 10px 6px var(--ui-space-16);
+		color: var(--ui-color-foreground);
+		font-family: var(--ui-font-body);
+		text-align: end;
+		background: none;
+		border: 0;
+		border-radius: var(--ui-radius-full);
+		cursor: pointer;
+		transition: background-color var(--ui-duration-fast)
+			var(--ui-easing-default);
+		min-inline-size: 0;
+		margin-block: -2px;
+
+		@media (width <= 600px) {
+			gap: var(--ui-space-4);
+			padding: var(--ui-space-4);
+		}
+
+		&:hover,
+		&[aria-expanded='true'] {
+			background-color: var(--ui-color-hover);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+	}
+
+	.texts {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		min-inline-size: 0;
+		line-height: 1.25;
+
+		@media (width <= 600px) {
+			display: none;
+		}
+	}
+
+	.name {
+		font-weight: 600;
+		font-size: var(--ui-font-size-13);
+		white-space: nowrap;
+	}
+
+	.role {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+	}
+
+	.chevron {
+		color: var(--ui-color-foreground-soft);
+		transition: rotate var(--ui-duration-fast) var(--ui-easing-default);
+
+		[aria-expanded='true'] > & {
+			rotate: 180deg;
+		}
+	}
+
+	.fullName,
+	.detail {
+		display: block;
+	}
+
+	.detail {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+	}
+}

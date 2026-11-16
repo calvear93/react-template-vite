@@ -1,0 +1,11 @@
+@layer ui.components {
+	.mark {
+		color: inherit;
+		font-weight: 800;
+		background: none;
+
+		@media (forced-colors: active) {
+			text-decoration: underline;
+		}
+	}
+}

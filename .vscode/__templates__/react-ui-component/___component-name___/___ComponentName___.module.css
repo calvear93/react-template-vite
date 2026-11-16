@@ -1,0 +1,6 @@
+/* colors, type and z-index only through tokens (var(--ui-*)); spacing from the scale where it fits */
+@layer ui.components {
+	.root {
+		display: flex;
+	}
+}

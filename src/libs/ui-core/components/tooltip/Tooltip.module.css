@@ -1,0 +1,80 @@
+/* The bubble hangs from its control in the top layer (a Popup): no container clips it. Its
+   box is transparent and touches the control (its padding is the gap), so the pointer can
+   travel onto the bubble without the tooltip going away. It comes in softly from the side of
+   its control and fades away. Whoever wraps it may set --ui-tooltip-gap (the distance) and
+   --ui-tooltip-display (none: no bubble here). */
+@layer ui.components {
+	@keyframes appear {
+		from {
+			opacity: 0;
+			translate: var(--ui-tooltip-from);
+			scale: 0.98;
+		}
+	}
+
+	@keyframes vanish {
+		to {
+			opacity: 0;
+		}
+	}
+
+	.root {
+		display: inline-flex;
+
+		& > .content {
+			--ui-tooltip-from: 0 2px;
+
+			display: var(--ui-tooltip-display, block);
+			padding: var(--ui-tooltip-gap, 6px);
+			overflow: visible;
+			background: none;
+			border: 0;
+			box-shadow: none;
+			animation: appear var(--ui-duration-normal) var(--ui-easing-default)
+				backwards;
+			max-inline-size: min(272px, 80vw);
+
+			&[data-side='bottom'] {
+				--ui-tooltip-from: 0 -2px;
+			}
+
+			&[data-side='left'] {
+				--ui-tooltip-from: 2px 0;
+			}
+
+			&[data-side='right'] {
+				--ui-tooltip-from: -2px 0;
+			}
+
+			/* the pointer may only be passing by: the hint waits a moment for it, unless
+			   another hint was just in sight (data-opened-by='warm') */
+			&[data-opened-by='hover'] {
+				animation-delay: 0.3s;
+			}
+
+			&[data-leaving] {
+				animation: vanish var(--ui-duration-fast) var(--ui-easing-exit)
+					forwards;
+				pointer-events: none;
+			}
+		}
+	}
+
+	.bubble {
+		display: block;
+		padding: 6px 10px;
+		color: var(--ui-color-background);
+		font-weight: normal;
+		font-size: var(--ui-font-size-12);
+		font-family: var(--ui-font-body);
+		line-height: 1.4;
+		text-align: center;
+		background-color: var(--ui-color-foreground);
+		border-radius: var(--ui-radius-base);
+		box-shadow: var(--ui-shadow-md);
+
+		@media (forced-colors: active) {
+			border: 1px solid CanvasText;
+		}
+	}
+}

@@ -1,0 +1,92 @@
+@layer ui.components {
+	.root {
+		position: relative;
+		display: inline-flex;
+	}
+
+	.panel {
+		min-inline-size: 11rem;
+	}
+
+	.header {
+		margin-block-end: var(--ui-space-4);
+		padding: var(--ui-space-8) 10px 10px;
+		font-size: var(--ui-font-size-13);
+		overflow-wrap: anywhere;
+		border-block-end: 1px solid var(--ui-color-line-soft);
+	}
+
+	.item {
+		--ui-menu-item-text: var(--ui-color-foreground);
+		--ui-menu-item-hover-text: var(--ui-color-secondary-foreground);
+		--ui-menu-item-hover-fill: color-mix(
+			in srgb,
+			var(--ui-color-secondary) 70%,
+			var(--ui-color-popover)
+		);
+
+		display: flex;
+		gap: var(--ui-space-8);
+		align-items: center;
+		padding: var(--ui-space-8) 10px;
+		color: var(--ui-menu-item-text);
+		font-size: var(--ui-font-size-14);
+		font-family: var(--ui-font-body);
+		line-height: 1.4;
+		text-align: start;
+		text-decoration: none;
+		background: none;
+		border: 0;
+		border-radius: var(--ui-radius-base);
+		cursor: pointer;
+		inline-size: 100%;
+
+		&:hover,
+		&:focus {
+			color: var(--ui-menu-item-hover-text);
+			background-color: var(--ui-menu-item-hover-fill);
+			outline: none;
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: -2px;
+		}
+
+		&[aria-disabled='true'] {
+			color: var(--ui-color-foreground-soft);
+			background: none;
+			cursor: not-allowed;
+			opacity: var(--ui-opacity-disabled);
+		}
+	}
+
+	.danger {
+		--ui-menu-item-text: var(--ui-color-danger-text);
+		--ui-menu-item-hover-text: var(--ui-color-danger-text);
+		--ui-menu-item-hover-fill: var(--ui-color-danger-subtle);
+	}
+
+	.icon {
+		inline-size: 18px;
+		block-size: 18px;
+		opacity: 0.85;
+	}
+
+	.groupLabel {
+		padding: 6px 10px;
+		color: var(--ui-color-foreground-soft);
+		font-weight: 600;
+		font-size: var(--ui-font-size-12);
+	}
+
+	.separator {
+		block-size: 1px;
+		margin: var(--ui-space-4) -6px;
+		background-color: var(--ui-color-line-soft);
+
+		@media (forced-colors: active) {
+			background-color: CanvasText;
+		}
+	}
+}

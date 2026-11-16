@@ -1,0 +1,98 @@
+@layer ui.components {
+	.root {
+		margin: 0;
+		padding: 0;
+		font-family: var(--ui-font-body);
+		list-style: none;
+	}
+
+	.item {
+		--ui-timeline-marker-fill: var(--ui-color-card);
+		--ui-timeline-marker-edge: var(--ui-color-input);
+		--ui-timeline-marker-text: var(--ui-color-foreground-soft);
+		--ui-timeline-line: var(--ui-color-border);
+
+		display: flex;
+		gap: 14px;
+
+		&[data-state='done'] {
+			--ui-timeline-marker-fill: var(--ui-color-control-checked);
+			--ui-timeline-marker-edge: var(--ui-color-control-checked);
+			--ui-timeline-marker-text: var(
+				--ui-color-control-checked-foreground
+			);
+			--ui-timeline-line: var(--ui-color-control-checked);
+		}
+
+		&[data-state='current'] {
+			--ui-timeline-marker-fill: var(--ui-color-warning-subtle);
+			--ui-timeline-marker-edge: var(--ui-color-warning-text);
+			--ui-timeline-marker-text: var(--ui-color-warning-text);
+		}
+
+		&:last-child {
+			--ui-timeline-line: transparent;
+		}
+	}
+
+	.rail {
+		display: flex;
+		flex: none;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.marker {
+		display: flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		inline-size: 30px;
+		block-size: 30px;
+		color: var(--ui-timeline-marker-text);
+		background-color: var(--ui-timeline-marker-fill);
+		border: 1.5px solid var(--ui-timeline-marker-edge);
+		border-radius: var(--ui-radius-full);
+
+		@media (forced-colors: active) {
+			border-color: CanvasText;
+		}
+	}
+
+	.connector {
+		flex: 1;
+		inline-size: 2px;
+		min-block-size: var(--ui-space-20);
+		margin-block: 3px;
+		background-color: var(--ui-timeline-line);
+	}
+
+	.body {
+		flex: 1;
+		min-inline-size: 0;
+		padding-block: var(--ui-space-4) var(--ui-space-16);
+	}
+
+	.title {
+		color: var(--ui-color-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-14);
+	}
+
+	.date {
+		margin: var(--ui-space-2) 0 0;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+	}
+
+	.detail {
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-13);
+		line-height: 1.6;
+		margin-block-start: var(--ui-space-4);
+
+		& > :last-child {
+			margin-block-end: 0;
+		}
+	}
+}

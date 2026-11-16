@@ -1,0 +1,200 @@
+/* The `cards` variant changes the options through custom properties of the group, so every
+   rule of an option stays in one place. */
+@layer ui.components {
+	.root {
+		--ui-radio-size: var(--ui-space-20);
+		--ui-radio-option-padding: var(--ui-space-8) 0;
+		--ui-radio-option-min-size: var(--ui-size-touch-min);
+		--ui-radio-option-fill: transparent;
+		--ui-radio-option-border: transparent;
+		--ui-radio-option-border-hover: transparent;
+		--ui-radio-checked-fill: transparent;
+		--ui-radio-checked-border: transparent;
+		--ui-radio-checked-label: var(--ui-color-foreground);
+		--ui-radio-label-weight: normal;
+		--ui-radio-input-ring: var(--ui-color-ring);
+		--ui-radio-option-ring: transparent;
+
+		min-inline-size: 0;
+		margin: 0;
+		padding: 0;
+		font-family: var(--ui-font-body);
+		border: 0;
+	}
+
+	/* each option a compact card: the chosen one whole in the brand's pair, the focus ring
+	   around the card instead of the radio */
+	.cards {
+		--ui-radio-size: 18px;
+		--ui-radio-option-padding: 10px var(--ui-space-12);
+		--ui-radio-option-min-size: 0;
+		--ui-radio-option-fill: var(--ui-color-card);
+		--ui-radio-option-border: var(--ui-color-line);
+		--ui-radio-option-border-hover: var(--ui-color-input-hover);
+		--ui-radio-checked-fill: color-mix(
+			in srgb,
+			var(--ui-color-secondary) 40%,
+			var(--ui-color-card)
+		);
+		--ui-radio-checked-border: var(--ui-color-control-checked);
+		--ui-radio-checked-label: var(--ui-color-secondary-foreground);
+		--ui-radio-label-weight: 600;
+
+		/* the ring goes around the card where the browser can tell which card holds the
+		   focus; elsewhere it stays on the radio */
+		@supports selector(:has(*)) {
+			--ui-radio-input-ring: transparent;
+			--ui-radio-option-ring: var(--ui-color-ring);
+		}
+	}
+
+	.legend {
+		padding: 0;
+		color: var(--ui-color-foreground-soft);
+		font-weight: 600;
+		font-size: var(--ui-font-size-14);
+		line-height: 1.4;
+		margin-block-end: 6px;
+	}
+
+	.mark {
+		margin-inline-start: var(--ui-space-2);
+		color: var(--ui-color-danger-text);
+	}
+
+	.options {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ui-space-4);
+
+		.horizontal & {
+			flex-flow: row wrap;
+			gap: var(--ui-space-4) var(--ui-space-24);
+		}
+
+		.cards & {
+			display: grid;
+			grid-template-columns: repeat(
+				auto-fit,
+				minmax(min(var(--ui-radio-card-min, 180px), 100%), 1fr)
+			);
+			gap: var(--ui-space-8);
+		}
+	}
+
+	.label {
+		display: block;
+		color: var(--ui-color-foreground);
+		font-weight: var(--ui-radio-label-weight);
+		font-size: var(--ui-font-size-14);
+		line-height: 1.4;
+	}
+
+	.description {
+		display: block;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-13);
+		line-height: 1.35;
+		margin-block-start: var(--ui-space-2);
+	}
+
+	.option {
+		display: flex;
+		gap: 10px;
+		align-items: flex-start;
+		padding: var(--ui-radio-option-padding);
+		background-color: var(--ui-radio-option-fill);
+		border: 1px solid var(--ui-radio-option-border);
+		border-radius: var(--ui-radius-control);
+		cursor: pointer;
+		transition:
+			border-color var(--ui-duration-fast) var(--ui-easing-default),
+			background-color var(--ui-duration-fast) var(--ui-easing-default);
+		min-block-size: var(--ui-radio-option-min-size);
+
+		&:hover {
+			border-color: var(--ui-radio-option-border-hover);
+		}
+
+		&:has(.input:checked) {
+			background-color: var(--ui-radio-checked-fill);
+			border-color: var(--ui-radio-checked-border);
+			box-shadow: inset 0 0 0 1px var(--ui-radio-checked-border);
+
+			& .label {
+				color: var(--ui-radio-checked-label);
+			}
+		}
+
+		&:has(.input:focus-visible) {
+			outline: var(--ui-ring-width) solid var(--ui-radio-option-ring);
+			outline-offset: 2px;
+		}
+
+		&:has(.input:disabled) {
+			cursor: not-allowed;
+			opacity: var(--ui-opacity-disabled);
+		}
+	}
+
+	.input {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		margin: 0;
+		background-color: var(--ui-color-card);
+		border: 1.5px solid var(--ui-color-input);
+		border-radius: var(--ui-radius-full);
+		cursor: inherit;
+		transition: border-color var(--ui-duration-fast)
+			var(--ui-easing-default);
+		appearance: none;
+		inline-size: var(--ui-radio-size);
+		block-size: var(--ui-radio-size);
+
+		@media (forced-colors: active) {
+			appearance: auto;
+		}
+
+		@supports not selector(:has(*)) {
+			&:disabled,
+			&:disabled + .text {
+				opacity: var(--ui-opacity-disabled);
+			}
+		}
+
+		&:hover,
+		&:checked {
+			border-color: var(--ui-color-control-checked);
+		}
+
+		/* the dot is always there and grows into place */
+		&:after {
+			background-color: var(--ui-color-control-checked);
+			border-radius: var(--ui-radius-full);
+			transition: scale var(--ui-duration-fast) var(--ui-easing-default);
+			content: '';
+			inline-size: 50%;
+			block-size: 50%;
+			scale: 0;
+		}
+
+		&:checked:after {
+			scale: 1;
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-radio-input-ring);
+			outline-offset: 2px;
+		}
+
+		[data-invalid] &:not(:checked) {
+			border-color: var(--ui-color-danger-line);
+		}
+	}
+
+	.text {
+		min-inline-size: 0;
+	}
+}

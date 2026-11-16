@@ -1,0 +1,129 @@
+/*
+ * Dark theme: data-theme="dark" on <html> (theme.store.ts writes it). It redefines tokens only,
+ * so every component follows: the neutral scale turned over, on a night blue rather than a dead
+ * gray, with surfaces in steps wide enough to read without a shadow.
+ */
+
+@layer ui.tokens {
+	:root[data-theme='dark'] {
+		--ui-color-neutral-50: #192033;
+		--ui-color-neutral-100: #2a334b;
+		--ui-color-neutral-200: #3d4763;
+		--ui-color-neutral-300: #8d98b3;
+		--ui-color-neutral-400: #b2bbd1;
+		--ui-color-neutral-500: #e4e9f5;
+		--ui-color-neutral-900: #ffffff;
+
+		/* surfaces: page, card, raised */
+		--ui-color-background: #0d111c;
+		--ui-color-card: #141a2b;
+		--ui-color-popover: #1b2338;
+		--ui-color-muted: #192033;
+		--ui-color-border: #2a334b;
+		--ui-color-input: #6b7692;
+		--ui-color-input-hover: #8d98b3;
+		--ui-color-placeholder: #8d98b3;
+		--ui-color-overlay: rgb(3, 5, 12, 0.72);
+		--ui-color-disabled: #3d4763;
+		--ui-color-disabled-subtle: #192033;
+
+		/* a knob painted with the card would vanish on the dark track; on the light track of
+		   a switch that is on, a dark one */
+		--ui-color-knob: #e4e9f5;
+		--ui-color-knob-checked: #0b0f1a;
+
+		/* status: tinted dark fills, light texts (AA on their fill and on the card) */
+		--ui-color-info-strong: #4fc3e8;
+		--ui-color-info-base: #1f6f8c;
+		--ui-color-info-subtle: #0d2c3a;
+		--ui-color-info-text: #9fdcf2;
+		--ui-color-success-strong: #57c488;
+		--ui-color-success-base: #2a7a52;
+		--ui-color-success-subtle: #0f2e1f;
+		--ui-color-success-text: #97dfb8;
+		--ui-color-warning-strong: #f2c94c;
+		--ui-color-warning-base: #8a7222;
+		--ui-color-warning-subtle: #30270a;
+		--ui-color-warning-text: #f3d98a;
+		--ui-color-danger-strong: #ff7f8a;
+		--ui-color-danger-base: #a33a47;
+		--ui-color-danger-subtle: #3b141a;
+		--ui-color-danger-text: #ffb3ba;
+		--ui-color-danger-line: #ff7f8a;
+
+		/* white text needs a deep fill here: the light text color would fail as one */
+		--ui-color-destructive-fill: #b3283a;
+
+		/* the color of the app on the dark, whatever it is: its pale tint becomes a deep one, its
+		   deep blue a light one; the color itself stays (the fills keep their white text) */
+		--ui-color-secondary: color-mix(
+			in srgb,
+			var(--ui-color-primary) 26%,
+			#0e131f
+		);
+		--ui-color-secondary-foreground: color-mix(
+			in srgb,
+			var(--ui-color-primary) 42%,
+			#ffffff
+		);
+		--ui-color-control-checked: color-mix(
+			in srgb,
+			var(--ui-color-primary) 64%,
+			#ffffff
+		);
+		--ui-color-control-checked-foreground: #0b0f1a;
+		--ui-color-ring: var(--ui-color-control-checked);
+		--ui-color-accent: #f2c35f;
+		--ui-color-accent-foreground: #0b0f1a;
+		--ui-color-foreground: #e4e9f5;
+		--ui-color-foreground-soft: #b2bbd1;
+		--ui-color-foreground-faint: #909bb6;
+		--ui-color-heading: var(--ui-color-secondary-foreground);
+		--ui-color-link: var(--ui-color-secondary-foreground);
+		--ui-color-page: color-mix(
+			in srgb,
+			var(--ui-color-primary) 4%,
+			#090d17
+		);
+		--ui-color-surface-2: color-mix(
+			in srgb,
+			var(--ui-color-primary) 10%,
+			#121829
+		);
+		--ui-color-line: color-mix(
+			in srgb,
+			var(--ui-color-primary) 18%,
+			#2a334b
+		);
+		--ui-color-line-soft: color-mix(
+			in srgb,
+			var(--ui-color-primary) 12%,
+			#212940
+		);
+
+		/* elevation on the dark: shadows of black (a shadow of the light ink would glow), with a
+		   lit top edge, since a shadow alone hardly shows on a near-black page */
+		--ui-color-shadow: #000000;
+		--ui-shadow-xs: 0 1px 2px rgb(0, 0, 0, 0.5);
+		--ui-shadow-sm:
+			inset 0 1px 0 rgb(255, 255, 255, 0.04), 0 1px 2px rgb(0, 0, 0, 0.5),
+			0 2px 8px -2px rgb(0, 0, 0, 0.4);
+		--ui-shadow-md:
+			inset 0 1px 0 rgb(255, 255, 255, 0.05),
+			0 2px 4px -1px rgb(0, 0, 0, 0.5), 0 8px 20px -6px rgb(0, 0, 0, 0.55);
+		--ui-shadow-lg:
+			inset 0 1px 0 rgb(255, 255, 255, 0.06), 0 0 0 1px rgb(0, 0, 0, 0.4),
+			0 4px 8px -2px rgb(0, 0, 0, 0.5),
+			0 16px 36px -8px rgb(0, 0, 0, 0.65);
+		--ui-shadow-xl:
+			inset 0 1px 0 rgb(255, 255, 255, 0.07), 0 0 0 1px rgb(0, 0, 0, 0.5),
+			0 8px 16px -4px rgb(0, 0, 0, 0.55),
+			0 32px 72px -16px rgb(0, 0, 0, 0.75);
+		--ui-shadow-side-end:
+			-2px 0 6px rgb(0, 0, 0, 0.5), -16px 0 40px -12px rgb(0, 0, 0, 0.7);
+		--ui-shadow-side-start:
+			2px 0 6px rgb(0, 0, 0, 0.5), 16px 0 40px -12px rgb(0, 0, 0, 0.7);
+
+		color-scheme: dark;
+	}
+}

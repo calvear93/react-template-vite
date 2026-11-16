@@ -1,0 +1,83 @@
+@layer ui.components {
+	.root {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ui-space-4);
+		align-items: center;
+		font-family: var(--ui-font-body);
+	}
+
+	.control {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--ui-color-foreground);
+		font-weight: 500;
+		font-size: var(--ui-font-size-13);
+		font-family: inherit;
+		text-decoration: none;
+		background-color: var(--ui-color-card);
+		border: 1px solid var(--ui-color-input);
+		border-radius: var(--ui-radius-base);
+		cursor: pointer;
+		transition:
+			color var(--ui-duration-fast) var(--ui-easing-default),
+			border-color var(--ui-duration-fast) var(--ui-easing-default);
+		min-inline-size: 34px;
+		block-size: 34px;
+		padding-inline: var(--ui-space-8);
+		font-variant-numeric: tabular-nums;
+
+		/* a larger target than the box, for a finger */
+		&:after {
+			position: absolute;
+			inset: -2px;
+			content: '';
+		}
+
+		&:hover {
+			border-color: var(--ui-color-control-checked);
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+
+		&:disabled {
+			cursor: default;
+			opacity: var(--ui-opacity-disabled);
+			pointer-events: none;
+		}
+	}
+
+	.current {
+		color: var(--ui-color-primary-foreground);
+		font-weight: bold;
+		background-color: var(--ui-color-primary-fill);
+		border-color: var(--ui-color-primary-fill);
+		cursor: default;
+
+		@media (forced-colors: active) {
+			outline: 2px solid Highlight;
+		}
+
+		&:disabled {
+			opacity: 1;
+		}
+	}
+
+	.gap {
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-13);
+		padding-inline: var(--ui-space-4);
+	}
+
+	.position {
+		color: var(--ui-color-foreground);
+		font-size: var(--ui-font-size-13);
+		padding-inline: var(--ui-space-8);
+		font-variant-numeric: tabular-nums;
+	}
+}

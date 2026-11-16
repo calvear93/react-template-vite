@@ -1,0 +1,23 @@
+@layer ui.components {
+	.root {
+		flex: none;
+		inline-size: var(--ui-size-icon-md);
+		block-size: var(--ui-size-icon-md);
+		stroke-width: var(--ui-icon-stroke);
+	}
+
+	.xs {
+		inline-size: var(--ui-size-icon-xs);
+		block-size: var(--ui-size-icon-xs);
+	}
+
+	.sm {
+		inline-size: var(--ui-size-icon-sm);
+		block-size: var(--ui-size-icon-sm);
+	}
+
+	.lg {
+		inline-size: var(--ui-size-icon-lg);
+		block-size: var(--ui-size-icon-lg);
+	}
+}

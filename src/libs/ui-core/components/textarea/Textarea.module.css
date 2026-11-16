@@ -1,0 +1,27 @@
+@layer ui.components {
+	.root {
+		min-block-size: 96px;
+		line-height: 1.5;
+		resize: vertical;
+
+		&:disabled {
+			resize: none;
+		}
+	}
+
+	.sm {
+		min-block-size: var(--ui-space-64);
+		font-size: var(--ui-font-size-14);
+	}
+
+	.lg {
+		min-block-size: 128px;
+	}
+
+	.autoGrow {
+		@supports (field-sizing: content) {
+			field-sizing: content;
+			resize: none;
+		}
+	}
+}

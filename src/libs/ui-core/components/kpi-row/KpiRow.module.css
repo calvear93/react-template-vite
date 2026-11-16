@@ -1,0 +1,114 @@
+@layer ui.components {
+	.root {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+		gap: var(--ui-space-12);
+		font-family: var(--ui-font-body);
+	}
+
+	.item {
+		display: block;
+		padding: var(--ui-space-16) 18px;
+		color: inherit;
+		font-family: inherit;
+		text-align: start;
+		text-decoration: none;
+		background-color: var(--ui-color-card);
+		border: 1px solid var(--ui-color-line-soft);
+		border-radius: var(--ui-radius-surface);
+		box-shadow: var(--ui-shadow-sm);
+		min-inline-size: 0;
+
+		@media (forced-colors: active) {
+			border-color: CanvasText;
+		}
+	}
+
+	.actionable {
+		cursor: pointer;
+		transition:
+			border-color var(--ui-duration-normal) ease-out,
+			box-shadow var(--ui-duration-normal) ease-out,
+			translate var(--ui-duration-fast) ease-out;
+
+		&:hover {
+			border-color: var(--ui-color-secondary);
+			box-shadow: var(--ui-shadow-md);
+			translate: 0 -2px;
+		}
+
+		&:focus-visible {
+			outline: var(--ui-ring-width) solid var(--ui-color-ring);
+			outline-offset: 2px;
+		}
+
+		/* with less motion the card does not lift: its border and shadow still answer */
+		:root[data-motion='reduce'] &:hover {
+			translate: none;
+		}
+	}
+
+	.head {
+		display: flex;
+		gap: var(--ui-space-8);
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.label {
+		display: block;
+		color: var(--ui-color-foreground-soft);
+		font-weight: 600;
+		font-size: var(--ui-font-size-12);
+		letter-spacing: 0.02em;
+	}
+
+	.badge {
+		display: inline-flex;
+		flex: none;
+		padding: var(--ui-space-2) 10px;
+		color: var(--ui-color-info-text);
+		font-weight: bold;
+		font-size: var(--ui-font-size-11);
+		background-color: var(--ui-color-info-subtle);
+		border-radius: var(--ui-radius-full);
+	}
+
+	.success {
+		color: var(--ui-color-success-text);
+		background-color: var(--ui-color-success-subtle);
+	}
+
+	.warning {
+		color: var(--ui-color-warning-text);
+		background-color: var(--ui-color-warning-subtle);
+	}
+
+	.value {
+		display: block;
+		color: var(--ui-color-foreground);
+		font-weight: 600;
+		font-size: var(--ui-font-size-24);
+		font-family: var(--ui-font-heading);
+		line-height: 1.1;
+		margin-block: var(--ui-space-4) var(--ui-space-2);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.sub {
+		display: block;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+		margin-block-start: 6px;
+	}
+
+	.link {
+		display: inline-flex;
+		gap: var(--ui-space-4);
+		align-items: center;
+		color: var(--ui-color-link);
+		font-weight: bold;
+		font-size: var(--ui-font-size-13);
+		margin-block-start: var(--ui-space-12);
+	}
+}
