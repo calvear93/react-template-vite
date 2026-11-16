@@ -66,7 +66,7 @@ The sources are merged in this order; each one wins over the previous ones:
 	"$schema": "../node_modules/@calvear/env/schemas/env.schema.json",
 	"|DEFAULT|": {
 		"BASE_URL": "/",
-		"FONT_FAMILY": "Quicksand",
+		"FONT_FAMILY": "Inter",
 		"APP": {
 			"ENV": "[[ENV]]",
 			"NAME": "[[NAME]]",
@@ -108,6 +108,10 @@ validated against it before the command runs. `pnpm env:schema` rebuilds it from
   `PROD`). Everything `APP_*` is written into the bundle and is public.
 - **The rest is for the build:** `vite.config.ts` reads `BASE_URL`, `PORT`, `FONT_FAMILY`,
   `FONT_WEIGHTS` and `SERVICE_WORKER` from `process.env` (base path, dev server, fonts, PWA).
+- **`APP_LOCALE`** is the language and the region of the app, as BCP 47 (`en`, `en-GB`,
+  `es-CL`): `App.tsx` gives it to the UI kit (`UiProvider locale`), which writes its dates, its
+  numbers and its own texts in it. `FONT_FAMILY` is the font the kit names first
+  (`--ui-font-body`): change both together.
 - **Types:** `src/env.d.ts` registers `appsettings.json` and `settings/schema.json` in
   `@calvear/env`, which types `import.meta.env` (the `APP_*` variables) and `process.env` (every
   variable, for `vite.config.ts`) by itself: a new variable in `appsettings.json` is typed without

@@ -4,14 +4,15 @@ These are the canonical, tool-agnostic instructions for every AI assistant in th
 `CLAUDE.md` and `GEMINI.md` only import this file, and the skills live in [`.ai/`](.ai/README.md).
 Precedence: user instructions, then this file, then existing code patterns.
 
-This is a **React 19 SPA template on Vite**: IoC, feature flags, a typed router, Atomic Design,
-and a PWA.
+This is a **React 19 SPA template on Vite**: IoC, feature flags, a typed router, a UI kit
+(`#libs/ui-core`), Atomic Design, and a PWA.
 
 ## Stack
 
 - **Core:** React 19 with the **React Compiler** on, TypeScript 6 (strict), Vite 8.
 - **App libs:** react-router 8 via `#libs/router`, Zod 4, jotai 3.
-- **Styling:** UnoCSS + CSS Modules.
+- **Styling:** the UI kit `#libs/ui-core` (React + CSS, `--ui-*` tokens, no runtime dependency),
+  CSS Modules on its tokens, UnoCSS utilities for layout.
 - **Build:** vite-plugin-pwa, `@calvear/env`.
 - **Tests:** Vitest 5 + Testing Library (happy-dom).
 - **Runtime:** Node ≥ 24, pnpm ≥ 12.
@@ -40,7 +41,8 @@ src/app/components/{atoms,molecules,organisms}/   shared UI (Atomic Design)
 src/app/layouts/<name>/         <Name>.layout.tsx (templates)
 src/app/pages/<name>/           <Name>.page.tsx (+ .module.css, .spec.tsx, components/, store/)
 src/app/store/                  app-wide jotai stores (*.store.ts)
-src/libs/{ioc,feature,router}   #libs/* (each has a README: the API reference)
+src/libs/{ioc,feature,router,ui-core}   #libs/* (each has a README: the API reference);
+                                ui-core is the UI kit, its live catalog is the /ui route
 env/                            appsettings.json + <env>.env.json (see env/README.md)
 .vscode/__templates__/          scaffolds: start every new file from one
 ```
@@ -59,6 +61,10 @@ store and specs).
   `process.env` is build-time only (`vite.config.ts`, `uno.config.ts`).
 - **Services:** data access is a service bound in `app.ioc.ts` and resolved with `useInjection`,
   never a raw `fetch` in a component. Validate external data with Zod.
+- **Build the UI from the kit:** every element comes from `#libs/ui-core`
+  ([`ui-core`](.ai/skills/ui-core.md) says which); an app component composes kit components,
+  never redraws one. Colors, sizes and spacing only through its `--ui-*` tokens. Dates, numbers
+  and amounts are written by its functions, in the language of the app (`APP_LOCALE`).
 - **UI states:** every async UI handles loading, empty and error.
 - **Structure and state:** follow [`structure-state`](.ai/skills/structure-state.md) for
   Atomic Design levels, page and layout files, and jotai stores.

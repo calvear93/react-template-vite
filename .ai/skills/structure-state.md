@@ -45,5 +45,7 @@ export const xStore = atom(
 ## Styling
 
 - CSS Modules hold component styles. Stylelint enforces property order and nesting.
-- UnoCSS utilities go in `className` (theme color `text-primary`; icons `i-mdi-*`).
+- Elements come from the UI kit ([`ui-core`](ui-core.md)); a CSS Module of the app styles with its
+  `--ui-*` tokens. UnoCSS utilities go in `className`, for layout (the theme colors, `text-primary`
+  or `bg-card`, are those of the kit; icons are its `Icon`).
 - Global styles live only in `src/app/styles/`.

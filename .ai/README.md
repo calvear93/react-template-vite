@@ -9,6 +9,7 @@ file is the **only** catalogue.
 | [`ways-of-working`](skills/ways-of-working.md) | Always, before a non-trivial task (process + DoD)     |
 | [`structure-state`](skills/structure-state.md) | Creating components, pages, layouts, stores or styles |
 | [`app-libs`](skills/app-libs.md)               | Using IoC, feature flags or routes                    |
+| [`ui-core`](skills/ui-core.md)                 | Building or changing any screen, or the UI kit itself |
 | [`testing`](skills/testing.md)                 | Writing or fixing tests                               |
 
 How each tool gets here:

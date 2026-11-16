@@ -12,9 +12,10 @@ Layouts provide a consistent structure for your application by wrapping page com
 
 The main application layout that provides:
 
-- **Header**: Application title and navigation
+- **Shell**: the `AppShell` of the UI kit (`#libs/ui-core`): the header with the name of the app
+  and its environment, and the side menu
 - **Main Content Area**: Where page content is rendered
-- **Footer**: Application footer information
+- **Settings**: the `SettingsDialog` of the kit (theme, contrast, motion, text size, language)
 
 ## Usage
 
@@ -96,7 +97,7 @@ export const routes: RouteDefinition[] = [
 ### Application Layout (Current)
 
 - **Use Case**: Main application pages
-- **Components**: Header, Footer, Main content area
+- **Components**: AppShell (header and menu), main content area, SettingsDialog
 - **Best For**: Standard pages, dashboards, content pages
 
 ### Authentication Layout
