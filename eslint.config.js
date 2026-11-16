@@ -1,4 +1,3 @@
-import unocss from '@unocss/eslint-config/flat';
 import vitest from '@vitest/eslint-plugin';
 import testingLibraryJestDom from 'eslint-plugin-jest-dom';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
@@ -836,17 +835,6 @@ export default [
 		files: [REACT_GLOB],
 		plugins: { 'jsx-a11y': jsxA11y },
 		rules: jsxA11y.configs.recommended.rules,
-	},
-	// #endregion
-
-	// #region unocss
-	{
-		files: [REACT_GLOB],
-		plugins: unocss.plugins,
-		rules: {
-			'unocss/order': WARN,
-			'unocss/order-attributify': WARN,
-		},
 	},
 	// #endregion
 

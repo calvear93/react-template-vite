@@ -1,7 +1,6 @@
 /*
  * Modern minimal CSS reset.
  *
- * Replaces UnoCSS preset-wind4's Preflight (disabled in `uno.config.ts`).
  * It lives in the `reset` cascade layer, below every layer of #libs/ui-core (its page base and
  * its components) and below any unlayered rule: an unlayered reset would beat the whole kit.
  * App-specific base styles (viewport sizing) live in `app.css`, which imports this file.

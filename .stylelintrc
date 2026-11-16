@@ -14,17 +14,11 @@
 	"rules": {
 		"alpha-value-notation": "number",
 		"at-rule-disallowed-list": ["debug"],
-		"at-rule-no-deprecated": [
-			true,
-			{
-				"ignoreAtRules": ["apply"]
-			}
-		],
+		"at-rule-no-deprecated": true,
 		"at-rule-no-unknown": [
 			true,
 			{
 				"ignoreAtRules": [
-					"apply",
 					"each",
 					"function",
 					"if",
@@ -32,20 +26,11 @@
 					"layer",
 					"mixin",
 					"property",
-					"responsive",
-					"return",
-					"screen",
-					"tailwind",
-					"variants"
+					"return"
 				]
 			}
 		],
-		"at-rule-prelude-no-invalid": [
-			true,
-			{
-				"ignoreAtRules": ["apply"]
-			}
-		],
+		"at-rule-prelude-no-invalid": true,
 		"block-no-empty": true,
 		"color-function-notation": "legacy",
 		"color-hex-length": "long",
@@ -60,12 +45,7 @@
 		"declaration-no-important": null,
 		"font-family-name-quotes": "always-unless-keyword",
 		"font-family-no-duplicate-names": true,
-		"font-family-no-missing-generic-family-keyword": [
-			true,
-			{
-				"ignoreFontFamilies": ["Material Design Icons"]
-			}
-		],
+		"font-family-no-missing-generic-family-keyword": true,
 		"font-weight-notation": "named-where-possible",
 		"function-calc-no-unspaced-operator": true,
 		"function-linear-gradient-no-nonstandard-direction": true,
@@ -73,7 +53,7 @@
 		"function-no-unknown": [
 			true,
 			{
-				"ignoreFunctions": ["map-get", "theme"]
+				"ignoreFunctions": ["map-get"]
 			}
 		],
 		"function-url-quotes": "always",

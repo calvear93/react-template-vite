@@ -1,7 +1,5 @@
 {
 	"recommendations": [
-		"antfu.iconify",
-		"antfu.unocss",
 		"clinyong.vscode-css-modules",
 		"dbaeumer.vscode-eslint",
 		"esbenp.prettier-vscode",

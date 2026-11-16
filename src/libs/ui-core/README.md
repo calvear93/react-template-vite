@@ -2,7 +2,7 @@
 
 A UI kit in React 19 and plain CSS: design tokens on a royal blue, light / dark / high-contrast
 themes, icons and some sixty components that write in the language of their user. No Tailwind,
-no UnoCSS and no runtime dependency besides React. The live catalog is the `/ui` route of the
+no utility framework and no runtime dependency besides React. The live catalog is the `/ui` route of the
 app (`src/app/pages/ui-catalog/`): open it before building a screen.
 
 ## Setup
@@ -34,15 +34,14 @@ import { UiProvider } from '#libs/ui-core';
 ```
 
 Every rule of the kit lives in a cascade layer; the app's reset is in `reset`, below them. So
-**any unlayered rule wins over the kit** — an app CSS Module or a UnoCSS utility passed through
-`className` overrides a component without a specificity fight. If a project turns on UnoCSS's
-`outputToCssLayers`, add its layers after `ui.components` in `styles/index.css`.
+**any unlayered rule wins over the kit** — an app CSS Module passed through `className`
+overrides a component without a specificity fight. A project that adds a utility framework
+which writes to cascade layers puts those layers after `ui.components` in `styles/index.css`.
 
 ## Tokens
 
 All custom properties are `--ui-<category>-<role>[-<variant>]`. Use them in the app's CSS Modules
-(`var(--ui-color-primary-fill)`) and, for utilities, through the semantic keys of `uno.config.ts`
-(`bg-primary`, `text-foreground`, …). **Never a hex, a raw size or a z-index in a component.**
+(`var(--ui-color-primary-fill)`). **Never a hex, a raw size or a z-index in a component.**
 
 | Category                | Tokens                                                                                                                                                                                 |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

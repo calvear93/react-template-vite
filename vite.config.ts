@@ -1,5 +1,4 @@
 import react from '@vitejs/plugin-react';
-import uno from 'unocss/vite';
 import { normalizePath, type UserConfigExport } from 'vite';
 import { VitePWA as pwa } from 'vite-plugin-pwa';
 import fonts from 'vite-plugin-webfont-dl';
@@ -65,7 +64,6 @@ export default {
 	},
 	plugins: [
 		react({ compiler: true }),
-		uno(),
 		fonts(
 			[
 				`https://fonts.googleapis.com/css2?family=${FONT_FAMILY}:wght@${FONT_WEIGHTS}&display=swap`,

@@ -12,7 +12,7 @@ This is a **React 19 SPA template on Vite**: IoC, feature flags, a typed router,
 - **Core:** React 19 with the **React Compiler** on, TypeScript 6 (strict), Vite 8.
 - **App libs:** react-router 8 via `#libs/router`, Zod 4, jotai 3.
 - **Styling:** the UI kit `#libs/ui-core` (React + CSS, `--ui-*` tokens, no runtime dependency),
-  CSS Modules on its tokens, UnoCSS utilities for layout.
+  CSS Modules on its tokens.
 - **Build:** vite-plugin-pwa, `@calvear/env`.
 - **Tests:** Vitest 5 + Testing Library (happy-dom).
 - **Runtime:** Node ≥ 24, pnpm ≥ 12.
@@ -58,7 +58,7 @@ store and specs).
 - **Config:** never hardcode URLs or keys. Use `import.meta.env.APP_*` directly, since Vite
   inlines it at build time. Only `APP_*` vars reach the browser, and everything there is
   **public**: no secrets in a SPA. `process` doesn't exist in the browser (lint-enforced);
-  `process.env` is build-time only (`vite.config.ts`, `uno.config.ts`).
+  `process.env` is build-time only (`vite.config.ts`).
 - **Services:** data access is a service bound in `app.ioc.ts` and resolved with `useInjection`,
   never a raw `fetch` in a component. Validate external data with Zod.
 - **Build the UI from the kit:** every element comes from `#libs/ui-core`
