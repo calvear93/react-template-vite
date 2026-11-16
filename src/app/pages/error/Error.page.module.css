@@ -1,7 +1,24 @@
 .page {
 	display: flex;
 	flex-direction: column;
-	flex-grow: 1;
-	padding-top: 0.5em;
+	gap: var(--ui-space-12);
+	align-items: center;
+	justify-content: center;
+	min-block-size: 100dvh;
+	padding: var(--ui-space-32);
+	text-align: center;
 	overflow-wrap: break-word;
+}
+
+.icon {
+	color: var(--ui-color-danger-line);
+}
+
+.title {
+	margin: 0;
+}
+
+.text {
+	margin: 0;
+	color: var(--ui-color-foreground-soft);
 }

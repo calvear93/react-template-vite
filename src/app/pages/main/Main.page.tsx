@@ -1,4 +1,4 @@
-import { Link } from '#libs/router';
+import { Badge, Button, Card, Icon, Page, PageHeader } from '#libs/ui-core';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import Logo from '../../assets/logo.svg';
@@ -16,23 +16,41 @@ export const MainPage = () => {
 
 	// jsx
 	return (
-		<section className={styles.page}>
+		<Page>
 			<title>Main Page</title>
 
-			<Link to='/detail'>Go To Detail</Link>
-			<Link to='/detail/123'>Go To Detail 123</Link>
+			<PageHeader
+				actions={
+					<>
+						<Button href='/detail' variant='outlined'>
+							Go To Detail
+						</Button>
+						<Button href='/detail/123'>Go To Detail 123</Button>
+					</>
+				}
+				meta={<Badge tone='info'>{import.meta.env.APP_ENV}</Badge>}
+				title='Hello world'
+			/>
 
-			<h1 className='text-primary font-bold underline'>
-				hello world
-				<div className='i-mdi-alarm text-size-4xl text-orange-400' />
-			</h1>
+			<div className={styles.cards}>
+				<Card
+					description='What the sample store says of the last request.'
+					title='Store'
+				>
+					<p className={styles.status}>
+						<Icon name='check-circle' size='sm' />
+						{message}
+					</p>
+				</Card>
 
-			<h2>{import.meta.env.APP_ENV}</h2>
-			<h3 className='text-green-700 font-bold'>{message}</h3>
-
-			<img alt='logo' src={Logo} width='10%' />
-			<img alt='vite logo' src={viteLogoUrl} width='10%' />
-		</section>
+				<Card description='Served from src/app/assets.' title='Assets'>
+					<div className={styles.logos}>
+						<img alt='logo' src={Logo} />
+						<img alt='vite logo' src={viteLogoUrl} />
+					</div>
+				</Card>
+			</div>
+		</Page>
 	);
 };
 

@@ -1,4 +1,12 @@
-import { Link, useLoaderData, useParams } from '#libs/router';
+import { useLoaderData, useParams } from '#libs/router';
+import {
+	Badge,
+	Button,
+	DataGrid,
+	InfoNote,
+	Page,
+	PageHeader,
+} from '#libs/ui-core';
 import { useInjection } from '../../app.ioc.ts';
 import Logo from '../../assets/logo.svg';
 import { FetchBox } from './components/FetchBox.tsx';
@@ -11,21 +19,34 @@ export const DetailPage = () => {
 
 	// jsx
 	return (
-		<section className={styles.page}>
+		<Page className={styles.page} narrow>
 			<title>Detail Page</title>
 
-			<Link to='/'>Go To Main</Link>
+			<PageHeader
+				actions={
+					<Button href='/' icon='arrow-left' variant='outlined'>
+						Go To Main
+					</Button>
+				}
+				meta={<Badge tone='info'>{import.meta.env.APP_ENV}</Badge>}
+				title='Detail'
+			/>
 
 			<h2>{import.meta.env.APP_ENV}</h2>
 			{id && <h2>ID: {id}</h2>}
-			<h4>message: {aMessage}</h4>
 
-			<span data-testid='injected-data'>
-				Injected example data: <b>{example}</b>
-			</span>
+			<DataGrid
+				entries={[{ label: 'Message of the loader', value: aMessage }]}
+			/>
+
+			<InfoNote>
+				<span data-testid='injected-data'>
+					Injected example data: <b>{example}</b>
+				</span>
+			</InfoNote>
 
 			<FetchBox logoSrc={Logo} />
-		</section>
+		</Page>
 	);
 };
 

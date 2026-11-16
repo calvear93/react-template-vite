@@ -1,3 +1,4 @@
+import { Button, Card } from '#libs/ui-core';
 import { useAtom } from 'jotai';
 import { asyncStore } from '../store/async.store.ts';
 import type { FetchBoxProps } from './FetchBox.tsx';
@@ -7,13 +8,20 @@ export const FetchBox_v2a = ({ logoSrc }: FetchBoxProps) => {
 	const [{ content, loading }, dispatchFetch] = useAtom(asyncStore);
 
 	return (
-		<div className={styles.box}>
-			<img alt='logo' className={styles.logo} src={logoSrc} />
-
-			<button className={styles.button} onClick={dispatchFetch}>
-				Fetch
-			</button>
-			{loading ? <h4>Fetching Data</h4> : <h4>{content.anyProp}</h4>}
-		</div>
+		<Card
+			actions={
+				<Button loading={loading} onClick={dispatchFetch}>
+					Fetch
+				</Button>
+			}
+			title='Fetch box'
+		>
+			<div className={styles.box}>
+				<img alt='logo' className={styles.logo} src={logoSrc} />
+				<h4 className={styles.result}>
+					{loading ? 'Fetching Data' : content.anyProp}
+				</h4>
+			</div>
+		</Card>
 	);
 };

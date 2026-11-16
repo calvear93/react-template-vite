@@ -1,7 +1,25 @@
-.page {
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: var(--ui-space-24);
+}
+
+.status {
 	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	padding-top: 0.5em;
-	overflow-wrap: break-word;
+	gap: var(--ui-space-8);
+	align-items: center;
+	margin: 0;
+	color: var(--ui-color-success-text);
+	font-weight: 600;
+}
+
+.logos {
+	display: flex;
+	gap: var(--ui-space-24);
+	align-items: center;
+
+	& img {
+		block-size: 56px;
+		inline-size: auto;
+	}
 }

@@ -1,9 +1,10 @@
 import { createRouter } from '#libs/router';
+import { Spinner } from '#libs/ui-core';
 import { routes } from './app.routes.tsx';
 
 // creates a router
 const Router = createRouter({
-	loading: <h1>Loading</h1>,
+	loading: <Spinner block showLabel />,
 	options: { basename: import.meta.env.BASE_URL },
 	routes: routes.app,
 });

@@ -53,6 +53,11 @@ export default {
 							priority: 20,
 							test: /src\/libs\/feature/u,
 						},
+						{
+							name: 'libs-ui-core',
+							priority: 20,
+							test: /src\/libs\/ui-core/u,
+						},
 					],
 				},
 			},

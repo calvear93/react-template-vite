@@ -1,8 +1,12 @@
+import { FeatureProvider } from '#libs/feature';
 import { createRouter } from '#libs/router';
-import { render, screen } from '@testing-library/react';
+import { UiProvider } from '#libs/ui-core';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeAll, describe, expect, test } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
+import { featureHandler } from '../app/app.features.ts';
 import { routes } from '../app/app.routes.tsx';
+import { RouterLink } from '../app/components/atoms/router-link/RouterLink.tsx';
 
 describe('App', () => {
 	const env = import.meta.env.APP_ENV;
@@ -14,31 +18,55 @@ describe('App', () => {
 			type: 'memory',
 		});
 
-		render(<AppRouter />);
+		render(
+			<FeatureProvider handler={featureHandler}>
+				<UiProvider link={RouterLink}>
+					<AppRouter />
+				</UiProvider>
+			</FeatureProvider>,
+		);
 
 		// waits for lazy loading
 		await screen.findByText('Go To Detail');
 	});
 
-	// tests
-	test('has header (banner role) with content "App"', () => {
-		const header = screen.getByRole('banner');
-
-		expect(header.innerHTML).toBe('App');
+	afterAll(() => {
+		cleanup();
 	});
 
-	test('has footer (contentinfo role) with content "Footer"', () => {
-		const footer = screen.getByRole('contentinfo');
+	// tests
+	test('has a header (banner role) with the name of the app', () => {
+		const header = within(screen.getByRole('banner'));
 
-		expect(footer.innerHTML).toBe('Footer');
+		expect(header.getByText(import.meta.env.APP_NAME)).toBeVisible();
+	});
+
+	test('has the menu of the app, the home page marked as the current one', () => {
+		const menu = within(
+			screen.getByRole('navigation', { name: 'Main menu' }),
+		);
+
+		expect(menu.getByRole('link', { name: 'Home' })).toHaveAttribute(
+			'aria-current',
+			'page',
+		);
+		expect(menu.getByRole('link', { name: 'Detail' })).not.toHaveAttribute(
+			'aria-current',
+		);
 	});
 
 	test('navigates to detail page', async () => {
 		const anchor = screen.getByRole('link', { name: 'Go To Detail' });
 		await userEvent.click(anchor);
 
-		const asyncMessage = await screen.findByText(env);
+		const asyncMessage = await screen.findByRole('heading', {
+			level: 2,
+			name: env,
+		});
 
-		expect(asyncMessage.tagName).toBe('H2');
+		expect(asyncMessage).toBeVisible();
+		expect(
+			screen.getByRole('link', { name: 'Go To Main' }),
+		).toHaveAttribute('href', '/');
 	});
 });

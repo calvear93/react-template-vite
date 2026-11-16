@@ -1,11 +1,12 @@
 import { withFeatures } from '#libs/feature';
+import { EmptyState, Spinner } from '#libs/ui-core';
 import { lazy } from 'react';
 import { FetchBox_v2a } from './FetchBox.v2a.tsx';
 
 // feature managing example
 export const FetchBox = withFeatures<FetchBoxProps>({
-	fallback: <h1>No Features Enabled</h1>,
-	loading: <h2>Loading Feature</h2>,
+	fallback: <EmptyState headingLevel={2} title='No Features Enabled' />,
+	loading: <Spinner block label='Loading Feature' showLabel />,
 	features: {
 		FEATURE_FETCHBOX_V2ALPHA: FetchBox_v2a,
 		// lazy load chunk
