@@ -25,11 +25,7 @@
 			var(--ui-color-primary) 60%,
 			black
 		);
-		--ui-color-link: color-mix(
-			in srgb,
-			var(--ui-color-primary) 45%,
-			black
-		);
+		--ui-color-link: color-mix(in srgb, var(--ui-color-primary) 45%, black);
 		--ui-color-ring: #000000;
 		--ui-ring-width: 3px;
 

@@ -1,30 +1,42 @@
 /*
- * Glass: what floats over the page (the bar of the app, a menu, a toast) lets a little of what
- * is under it through, blurred, and catches the light on its top edge. A material, used
- * sparingly: a surface that holds text stays nearly opaque, and a card, a field or a dialog
- * is never glass.
+ * Glass: what floats over the page (the bar and the side bar of the app, a menu, a toast, a
+ * dialog) lets a little of what is under it through, blurred, and catches the light on its
+ * edge. A material, used sparingly: a surface that holds text keeps most of its color, and a
+ * card, a field or a table is never glass.
  *
  * A component mixes its own surface with these: `color-mix(in srgb, <surface>
  * var(--ui-material-popup), transparent)`, `backdrop-filter: var(--ui-material-filter)` and
  * `box-shadow: var(--ui-material-edge), <its shadow>`. Where glass must not be (more contrast
  * asked for, less transparency asked for, forced colors, a browser without backdrop-filter)
  * these tokens make every one of them opaque again: no component has a rule of its own for it.
+ *
+ * Glass needs something to show: `--ui-material-glow` is how much of the color of the app the
+ * shell breathes into the page behind it, in two wide stains. None on a pure black page, whose
+ * pixels are meant to be off.
  */
 
 @layer ui.tokens {
 	:root {
-		/* how much of its own color a surface keeps: a bar over the page, what pops up */
-		--ui-material-bar: 74%;
-		--ui-material-popup: 82%;
-		--ui-material-filter: blur(22px) saturate(1.6);
+		/* how much of its own color a surface keeps: a bar over the page, what pops up, and
+		   a panel that holds a whole task (a dialog, a drawer) */
+		--ui-material-bar: 62%;
+		--ui-material-popup: 72%;
+		--ui-material-panel: 88%;
+		--ui-material-filter: blur(28px) saturate(1.8);
 
 		/* the page behind a dialog: out of focus, hardly */
 		--ui-material-veil: blur(3px);
-		--ui-material-edge: inset 0 1px 0 rgb(255, 255, 255, 0.55);
+
+		/* the light it catches: on its top edge, and a hairline all around */
+		--ui-material-edge:
+			inset 0 1px 0 rgb(255, 255, 255, 0.65),
+			inset 0 0 0 0.5px rgb(255, 255, 255, 0.4);
+		--ui-material-glow: 10%;
 
 		@supports not (backdrop-filter: blur(1px)) {
 			--ui-material-bar: 100%;
 			--ui-material-popup: 100%;
+			--ui-material-panel: 100%;
 			--ui-material-filter: none;
 			--ui-material-veil: none;
 		}
@@ -32,30 +44,43 @@
 		@media (prefers-reduced-transparency: reduce) {
 			--ui-material-bar: 100%;
 			--ui-material-popup: 100%;
+			--ui-material-panel: 100%;
 			--ui-material-filter: none;
 			--ui-material-veil: none;
+			--ui-material-glow: 0%;
 		}
 
 		@media (forced-colors: active) {
 			--ui-material-bar: 100%;
 			--ui-material-popup: 100%;
+			--ui-material-panel: 100%;
 			--ui-material-filter: none;
 			--ui-material-veil: none;
 			--ui-material-edge: 0 0 0 0 transparent;
+			--ui-material-glow: 0%;
 		}
 
 		/* on the dark the light that catches the edge is faint. Only the edge: how much
 		   shows through is said above, where asking for less transparency undoes it */
 		&[data-theme='dark'] {
-			--ui-material-edge: inset 0 1px 0 rgb(255, 255, 255, 0.08);
+			--ui-material-edge:
+				inset 0 1px 0 rgb(255, 255, 255, 0.1),
+				inset 0 0 0 0.5px rgb(255, 255, 255, 0.06);
+		}
+
+		/* a black page stays black: no glow behind it */
+		&[data-dark='black'] {
+			--ui-material-glow: 0%;
 		}
 
 		&[data-contrast='more'] {
 			--ui-material-bar: 100%;
 			--ui-material-popup: 100%;
+			--ui-material-panel: 100%;
 			--ui-material-filter: none;
 			--ui-material-veil: none;
 			--ui-material-edge: 0 0 0 0 transparent;
+			--ui-material-glow: 0%;
 		}
 	}
 }

@@ -8,10 +8,15 @@
 		max-block-size: calc(100dvh - var(--ui-space-32));
 		padding: var(--ui-space-24) 28px;
 		color: var(--ui-color-popover-foreground);
-		background-color: var(--ui-color-popover);
+		background-color: color-mix(
+			in srgb,
+			var(--ui-color-popover) var(--ui-material-panel),
+			transparent
+		);
 		border: 1px solid var(--ui-color-line-soft);
 		border-radius: var(--ui-radius-surface);
-		box-shadow: var(--ui-shadow-xl);
+		box-shadow: var(--ui-material-edge), var(--ui-shadow-xl);
+		backdrop-filter: var(--ui-material-filter);
 
 		@media (forced-colors: active) {
 			border-color: CanvasText;

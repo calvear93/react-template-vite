@@ -9,10 +9,15 @@
 		padding: var(--ui-space-24) 28px;
 		overflow-y: auto;
 		color: var(--ui-color-popover-foreground);
-		background-color: var(--ui-color-popover);
+		background-color: color-mix(
+			in srgb,
+			var(--ui-color-popover) var(--ui-material-panel),
+			transparent
+		);
 		border: 1px solid var(--ui-color-line-soft);
 		border-radius: var(--ui-radius-surface);
-		box-shadow: var(--ui-shadow-xl);
+		box-shadow: var(--ui-material-edge), var(--ui-shadow-xl);
+		backdrop-filter: var(--ui-material-filter);
 		inline-size: 100%;
 
 		@media (forced-colors: active) {

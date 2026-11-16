@@ -1,10 +1,13 @@
 /* The frame of an application: the header across the page, the side bar and the content, the
-   only area that scrolls: it does so under the header, which is glass. Below 900 px the side bar leaves the grid and becomes a panel over
+   only area that scrolls: it does so under the header, which is glass. The side bar is a panel
+   of glass too, afloat over the page, and behind it all the page breathes a little of the color
+   of the app: what the glass has to show. Below 900 px the side bar leaves the grid and becomes a panel over
    the page; folding it to icons is of the desktop only. Folding moves nothing but the edge of
    the side bar: the icons, the titles and the fold button keep their place, the texts fade. */
 @layer ui.components {
 	.root {
-		--ui-shell-sidebar: 248px;
+		/* the side bar and the air around it: 8 + 248 + 8 */
+		--ui-shell-sidebar: 264px;
 		--ui-shell-header: 56px;
 
 		position: relative;
@@ -29,7 +32,35 @@
 		}
 
 		&[data-folded='true'] {
-			--ui-shell-sidebar: 64px;
+			--ui-shell-sidebar: 80px;
+		}
+
+		/* two wide stains of the color of the app, far behind everything: at the head of the
+		   side bar and at the far corner of the page */
+		&:before {
+			position: absolute;
+			background:
+				radial-gradient(
+					55% 50% at 8% 0%,
+					color-mix(
+						in srgb,
+						var(--ui-color-primary) var(--ui-material-glow),
+						transparent
+					),
+					transparent 72%
+				),
+				radial-gradient(
+					50% 55% at 100% 100%,
+					color-mix(
+						in srgb,
+						var(--ui-color-primary) var(--ui-material-glow),
+						transparent
+					),
+					transparent 70%
+				);
+			content: '';
+			pointer-events: none;
+			inset: 0;
 		}
 	}
 
@@ -172,18 +203,31 @@
 	}
 
 	.sidebar {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		grid-area: sidebar;
+		margin: var(--ui-space-8);
 		overflow: hidden;
-		background-color: var(--ui-color-surface-2);
+		background-color: color-mix(
+			in srgb,
+			var(--ui-color-card) var(--ui-material-bar),
+			transparent
+		);
+		border: 1px solid var(--ui-color-line-soft);
+		border-radius: var(--ui-radius-surface);
+		box-shadow: var(--ui-material-edge), var(--ui-shadow-md);
+		backdrop-filter: var(--ui-material-filter);
 		min-inline-size: 0;
 		min-block-size: 0;
-		border-inline-end: 1px solid var(--ui-color-line-soft);
 
+		/* the panel of a narrow screen comes from the edge, and is flush with it */
 		@media (width <= 900px) {
 			position: fixed;
 			z-index: var(--ui-z-panel);
+			margin: 0;
+			border: 0;
+			border-radius: 0;
 			transform: translateX(-100%);
 			visibility: hidden;
 			transition:
@@ -430,12 +474,12 @@
 
 	/* from the top of the frame: the page scrolls under the header, and starts below it */
 	.content {
+		position: relative;
 		grid-area: content;
 		grid-row: 1 / -1;
-		min-block-size: 0;
 		padding: var(--ui-space-32);
 		overflow-y: auto;
-		background-color: var(--ui-color-page);
+		min-block-size: 0;
 		padding-block-start: calc(var(--ui-shell-header) + var(--ui-space-32));
 		scroll-padding-block-start: var(--ui-shell-header);
 

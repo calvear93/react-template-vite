@@ -69,9 +69,14 @@
 		font-family: var(--ui-font-body);
 		line-height: 1.4;
 		text-align: center;
-		background-color: var(--ui-color-foreground);
+		background-color: color-mix(
+			in srgb,
+			var(--ui-color-foreground) var(--ui-material-panel),
+			transparent
+		);
 		border-radius: var(--ui-radius-base);
 		box-shadow: var(--ui-shadow-md);
+		backdrop-filter: var(--ui-material-filter);
 
 		@media (forced-colors: active) {
 			border: 1px solid CanvasText;

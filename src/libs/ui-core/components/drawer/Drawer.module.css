@@ -14,7 +14,12 @@
 		inline-size: 100%;
 		max-inline-size: 480px;
 		color: var(--ui-color-foreground);
-		background-color: var(--ui-color-popover);
+		background-color: color-mix(
+			in srgb,
+			var(--ui-color-popover) var(--ui-material-panel),
+			transparent
+		);
+		backdrop-filter: var(--ui-material-filter);
 	}
 
 	/* it slides from its side, and back to it */
