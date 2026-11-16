@@ -1,0 +1,15 @@
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--ui-space-8) var(--ui-space-16);
+	align-items: center;
+	font-size: var(--ui-font-size-14);
+}
+
+.field {
+	display: inline-flex;
+	gap: var(--ui-space-8);
+	align-items: center;
+	color: var(--ui-color-foreground-soft);
+	font-weight: 600;
+}

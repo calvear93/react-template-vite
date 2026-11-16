@@ -1,0 +1,99 @@
+.swatch,
+.icon,
+.space {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ui-space-8);
+	margin: 0;
+	color: var(--ui-color-foreground-soft);
+	font-size: var(--ui-font-size-12);
+
+	& code {
+		overflow-wrap: anywhere;
+	}
+}
+
+.color,
+.shape {
+	display: block;
+	block-size: var(--ui-space-56);
+	background-color: var(--ui-color-card);
+	border: 1px solid var(--ui-color-line);
+	border-radius: var(--ui-radius-control);
+}
+
+.shape {
+	inline-size: var(--ui-space-80);
+	background-color: var(--ui-color-surface-2);
+}
+
+.headings {
+	& > :last-child {
+		margin-block-end: 0;
+	}
+}
+
+.scale {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ui-space-8);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	& li {
+		display: flex;
+		gap: var(--ui-space-16);
+		align-items: baseline;
+	}
+
+	& code {
+		flex: none;
+		color: var(--ui-color-foreground-soft);
+		font-size: var(--ui-font-size-12);
+		inline-size: var(--ui-space-24);
+	}
+}
+
+.space {
+	align-items: center;
+}
+
+.bar {
+	display: block;
+	block-size: var(--ui-space-32);
+	background-color: var(--ui-color-primary-fill);
+	border-radius: var(--ui-space-2);
+}
+
+.icon {
+	align-items: center;
+	color: var(--ui-color-foreground);
+	text-align: center;
+}
+
+/* a dot that crosses its track in the time of the token, on hover */
+.motion {
+	position: relative;
+	display: block;
+	background-color: var(--ui-color-surface-2);
+	border-radius: var(--ui-radius-full);
+	inline-size: var(--ui-space-80);
+	block-size: var(--ui-space-24);
+
+	&:after {
+		position: absolute;
+		background-color: var(--ui-color-control-checked);
+		border-radius: var(--ui-radius-full);
+		transition: translate var(--ui-easing-default);
+		transition-duration: inherit;
+		content: '';
+		inset-block: var(--ui-space-4);
+		inset-inline-start: var(--ui-space-4);
+		inline-size: var(--ui-space-16);
+	}
+
+	.swatch:hover > &:after {
+		translate: 56px 0;
+	}
+}

@@ -1,0 +1,26 @@
+.inline {
+	display: inline-flex;
+	gap: var(--ui-space-8);
+	align-items: center;
+	font-size: var(--ui-font-size-14);
+}
+
+.brandSurface {
+	display: inline-flex;
+	padding: var(--ui-space-8) var(--ui-space-12);
+	background-color: var(--ui-color-primary-fill);
+	border-radius: var(--ui-radius-surface);
+}
+
+.skeleton {
+	display: flex;
+	gap: var(--ui-space-16);
+	align-items: center;
+}
+
+.lines {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: var(--ui-space-8);
+}

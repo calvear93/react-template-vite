@@ -35,5 +35,12 @@ export const routes = {
 				},
 			],
 		},
+		{
+			// sample: the live catalog of the UI kit (#libs/ui-core). A project that does
+			// not want it deletes this route and src/app/pages/ui-catalog/
+			ErrorBoundary: ErrorPage,
+			path: 'ui/:section?',
+			lazy: () => import('./pages/ui-catalog/UiCatalog.page.tsx'),
+		},
 	],
 } satisfies Record<string, RouteDefinition[]>;
