@@ -13,6 +13,7 @@ import {
 	THEME_STORAGE_KEY,
 } from '../../theme/theme.constants.ts';
 import {
+	setAccent,
 	setContrast,
 	setMotion,
 	setPureBlack,
@@ -87,6 +88,7 @@ describe(SettingsDialog, () => {
 		setTextSize('normal');
 		setUnderlineLinks(false);
 		setPureBlack(false);
+		setAccent(null);
 		localStorage.clear();
 	});
 
@@ -219,6 +221,31 @@ describe(SettingsDialog, () => {
 		await userEvent.click(choice('Animaciones', AUTO));
 
 		expect(localStorage.getItem(MOTION_STORAGE_KEY)).toBeNull();
+	});
+
+	test('offers the accents as colors to pick, each by its name', async () => {
+		render(<Opener />);
+
+		const accents = within(
+			screen.getByRole('radiogroup', { name: 'Color de acento' }),
+		);
+
+		// one radio per color, in the order they are offered, each found by its name
+		expect(accents.getAllByRole('radio')).toStrictEqual(
+			['Azul', 'Morado', 'Rosa', 'Naranja', 'Verde', 'Grafito'].map(
+				(name) => accents.getByRole('radio', { name }),
+			),
+		);
+		expect(accents.getByRole('radio', { name: 'Azul' })).toBeChecked();
+
+		await userEvent.click(accents.getByRole('radio', { name: 'Morado' }));
+
+		expect(root).toHaveAttribute('data-accent', 'purple');
+		expect(accents.getByRole('radio', { name: 'Morado' })).toBeChecked();
+
+		await userEvent.click(accents.getByRole('radio', { name: 'Azul' }));
+
+		expect(root).not.toHaveAttribute('data-accent');
 	});
 
 	test('paints the dark theme in pure black from a switch, which a light theme has no use for', async () => {

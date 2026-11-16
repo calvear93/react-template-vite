@@ -3,6 +3,9 @@ import {
 	writePreference as write,
 } from '../internal/preference.ts';
 import {
+	type Accent,
+	ACCENT_STORAGE_KEY,
+	ACCENTS,
 	BLACK_STORAGE_KEY,
 	CONTRAST_STORAGE_KEY,
 	type ContrastPreference,
@@ -19,7 +22,8 @@ import {
 
 /**
  * The appearance of the page: the theme (auto follows the system, light, dark), whether its
- * dark is a pure black (for OLED screens) and the contrast (more, normal, or the system's while
+ * dark is a pure black (for OLED screens), the accent (the app's own, or one the person chose:
+ * data-accent) and the contrast (more, normal, or the system's while
  * the person did not choose). It lives on <html> as data-theme="light|dark", data-dark="black"
  * and data-contrast="more", which the tokens read (styles/), and the choices are remembered per
  * browser. A blocked storage keeps them for the page only.
@@ -28,6 +32,8 @@ import {
  * them in step afterwards. Importing it has no side effect: UiProvider starts the sync.
  */
 export interface ThemeSnapshot {
+	/** The accent the person chose; `null` while the color is the app's own. */
+	accent: Accent | null;
 	contrast: ContrastPreference;
 	highContrast: boolean;
 	/** The motion the person chose; `null` while they follow the system. */
@@ -54,7 +60,11 @@ let snapshot: ThemeSnapshot | undefined;
 const isTheme = (value: unknown): value is ThemePreference =>
 	THEMES.includes(value as ThemePreference);
 
+const isAccent = (value: unknown): value is Accent =>
+	ACCENTS.includes(value as Accent);
+
 const compute = (): ThemeSnapshot => {
+	const storedAccent = read(ACCENT_STORAGE_KEY);
 	const storedTheme = read(THEME_STORAGE_KEY);
 	const theme = isTheme(storedTheme) ? storedTheme : 'auto';
 	const storedContrast = read(CONTRAST_STORAGE_KEY);
@@ -76,6 +86,7 @@ const compute = (): ThemeSnapshot => {
 		(theme === 'auto' && matchMedia(DARK_QUERY).matches);
 
 	return {
+		accent: isAccent(storedAccent) ? storedAccent : null,
 		contrast,
 		motion,
 		pureBlack: read(BLACK_STORAGE_KEY) === 'true',
@@ -119,6 +130,7 @@ const apply = () => {
 		'dark',
 		next.resolvedTheme === 'dark' && next.pureBlack ? 'black' : undefined,
 	);
+	mark('accent', next.accent ?? undefined);
 	mark('contrast', next.highContrast ? 'more' : undefined);
 	// always said, either way: the stylesheet stops asking the system once the kit knows
 	mark('motion', next.reducedMotion ? 'reduce' : 'full');
@@ -160,6 +172,17 @@ export const subscribeTheme = (listener: () => void) => {
  */
 export const setTheme = (theme: ThemePreference) => {
 	write(THEME_STORAGE_KEY, theme === 'auto' ? null : theme);
+	apply();
+};
+
+/**
+ * Chooses the accent of the app for this person and remembers it; `null` is the app's own
+ * color again.
+ *
+ * @param accent - one of `ACCENTS`, or null
+ */
+export const setAccent = (accent: Accent | null) => {
+	write(ACCENT_STORAGE_KEY, accent);
 	apply();
 };
 

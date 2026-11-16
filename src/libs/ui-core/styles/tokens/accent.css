@@ -1,0 +1,40 @@
+/*
+ * The accents a person can choose for the app, as a Mac offers them: data-accent on <html>
+ * (theme.store.ts writes it; absent, the color is the app's own, `--ui-accent-default`). Each
+ * one is a color white text reads on (4.5:1 or more): the link, the ring, what is chosen and the
+ * dark theme's lighter one are all worked out from it (primary.css, themes/).
+ *
+ * No red: it is the color of what went wrong and of what destroys. To add one, give it a token
+ * and a block here, a name in the texts (`settings.accent…`), and list it in `ACCENTS`
+ * (theme.constants.ts) and in the pre-paint script.
+ */
+
+@layer ui.tokens {
+	:root {
+		--ui-accent-purple: #7a56c8;
+		--ui-accent-pink: #c93a79;
+		--ui-accent-orange: #b9560a;
+		--ui-accent-green: #1e8449;
+		--ui-accent-graphite: #5f6168;
+
+		&[data-accent='purple'] {
+			--ui-color-primary: var(--ui-accent-purple);
+		}
+
+		&[data-accent='pink'] {
+			--ui-color-primary: var(--ui-accent-pink);
+		}
+
+		&[data-accent='orange'] {
+			--ui-color-primary: var(--ui-accent-orange);
+		}
+
+		&[data-accent='green'] {
+			--ui-color-primary: var(--ui-accent-green);
+		}
+
+		&[data-accent='graphite'] {
+			--ui-color-primary: var(--ui-accent-graphite);
+		}
+	}
+}

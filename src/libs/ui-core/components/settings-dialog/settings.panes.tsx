@@ -1,12 +1,18 @@
+import { type CSSProperties, useId } from 'react';
 import { useLocale } from '../../format/locale.hook.ts';
 import { type UiTexts } from '../../i18n/en.ts';
 import { cx } from '../../internal/cx.ts';
-import { type ThemePreference } from '../../theme/theme.constants.ts';
+import {
+	type Accent,
+	ACCENTS,
+	type ThemePreference,
+} from '../../theme/theme.constants.ts';
 import { useTheme } from '../../theme/theme.hook.ts';
 import { RadioGroup } from '../radio-group/RadioGroup.tsx';
 import { SegmentedControl } from '../segmented-control/SegmentedControl.tsx';
 import { Select } from '../select/Select.tsx';
 import { Switch } from '../switch/Switch.tsx';
+import { VisuallyHidden } from '../visually-hidden/VisuallyHidden.tsx';
 import { SettingsGroup, SettingsRow } from './SettingsGroup.tsx';
 import styles from './SettingsDialog.module.css';
 
@@ -27,6 +33,62 @@ export const SETTINGS_LANGUAGES: readonly SettingsLanguage[] = [
 
 /** The language of a locale: `es` for `es-CL`. */
 const languageOf = (locale: string) => new Intl.Locale(locale).language;
+
+/** The name of each accent, among the texts of the settings. */
+const ACCENT_NAMES = {
+	graphite: 'accentGraphite',
+	green: 'accentGreen',
+	orange: 'accentOrange',
+	pink: 'accentPink',
+	purple: 'accentPurple',
+} as const satisfies Record<Accent, keyof SettingsLabels>;
+
+/**
+ * The accents as colors to pick: one radio each, drawn as its color and named by it. The
+ * first one is the color of the app.
+ */
+const AccentPicker = ({ texts }: { texts: SettingsLabels }) => {
+	const name = useId();
+	const { accent, setAccent } = useTheme();
+	const options = [
+		{ label: texts.accentDefault, token: 'default', value: null },
+		...ACCENTS.map((value) => ({
+			label: texts[ACCENT_NAMES[value]],
+			token: value,
+			value,
+		})),
+	];
+
+	return (
+		<div
+			aria-label={texts.accent}
+			className={styles.accents}
+			role='radiogroup'
+		>
+			{options.map(({ label, token, value }) => (
+				<label className={styles.accent} key={token} title={label}>
+					<input
+						checked={accent === value}
+						className={styles.accentInput}
+						name={name}
+						onChange={() => setAccent(value)}
+						type='radio'
+					/>
+					<span
+						aria-hidden
+						className={styles.swatch}
+						style={
+							{
+								'--ui-swatch': `var(--ui-accent-${token})`,
+							} as CSSProperties
+						}
+					/>
+					<VisuallyHidden>{label}</VisuallyHidden>
+				</label>
+			))}
+		</div>
+	);
+};
 
 /** A small picture of the application in a theme. */
 const Sample = ({ tone }: { tone: 'dark' | 'light' }) => (
@@ -58,7 +120,7 @@ const ThemeCard = ({
 
 /**
  * The category «Appearance» of a SettingsDialog: the theme and whether its dark is a pure
- * black, the size of the text and the language.
+ * black, the accent, the size of the text and the language.
  *
  * @returns the options of the appearance
  */
@@ -112,6 +174,9 @@ export const AppearanceSettings = ({
 						disabled={theme === 'light'}
 						onChange={(event) => setPureBlack(event.target.checked)}
 					/>
+				</SettingsRow>
+				<SettingsRow group hint={texts.accentHint} label={texts.accent}>
+					<AccentPicker texts={texts} />
 				</SettingsRow>
 			</SettingsGroup>
 

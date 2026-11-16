@@ -147,6 +147,13 @@ export const UI_TEXTS_ES: UiTexts = {
 		search: 'Buscar',
 	},
 	settings: {
+		accent: 'Color de acento',
+		accentDefault: 'Azul',
+		accentGraphite: 'Grafito',
+		accentGreen: 'Verde',
+		accentOrange: 'Naranja',
+		accentPink: 'Rosa',
+		accentPurple: 'Morado',
 		accessibility: 'Accesibilidad',
 		animations: 'Animaciones',
 		appearance: 'Apariencia',
@@ -178,6 +185,8 @@ export const UI_TEXTS_ES: UiTexts = {
 		theme: 'Tema',
 		title: 'Configuración',
 		underlineLinks: 'Subrayar enlaces',
+		accentHint:
+			'El color de los botones, los enlaces y lo que está elegido.',
 		accessibilityHint:
 			'Ajustes para leer y usar la aplicación con más comodidad.',
 		animationsHint:

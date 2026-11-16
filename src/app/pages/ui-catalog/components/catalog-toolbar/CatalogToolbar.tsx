@@ -1,4 +1,6 @@
 import {
+	type Accent,
+	ACCENTS,
 	Checkbox,
 	Select,
 	type ThemePreference,
@@ -14,6 +16,15 @@ const THEME_NAMES = {
 	dark: 'Dark',
 	light: 'Light',
 } as const satisfies Record<ThemePreference, string>;
+
+/** The accents a person can choose instead of the blue of the app, by their name. */
+const ACCENT_NAMES = {
+	graphite: 'Graphite',
+	green: 'Green',
+	orange: 'Orange',
+	pink: 'Pink',
+	purple: 'Purple',
+} as const satisfies Record<Accent, string>;
 
 /** The languages of the catalog, each named in itself, by the locale it sets. */
 const LANGUAGES = [
@@ -35,10 +46,13 @@ const languageOf = (locale: string) => new Intl.Locale(locale).language;
 export const CatalogToolbar = () => {
 	const languageId = useId();
 	const themeId = useId();
+	const accentId = useId();
 	const { locale, setLocale } = useLocale();
 	const {
+		accent,
 		highContrast,
 		pureBlack,
+		setAccent,
 		setContrast,
 		setPureBlack,
 		setTheme,
@@ -89,6 +103,28 @@ export const CatalogToolbar = () => {
 					}))}
 					size='sm'
 					value={theme}
+				/>
+			</span>
+
+			<span className={styles.field}>
+				<label htmlFor={accentId}>Accent</label>
+				<Select
+					id={accentId}
+					onChange={({ target }) =>
+						setAccent(
+							ACCENTS.find((name) => name === target.value) ??
+								null,
+						)
+					}
+					options={[
+						{ label: 'Blue', value: '' },
+						...ACCENTS.map((name) => ({
+							label: ACCENT_NAMES[name],
+							value: name,
+						})),
+					]}
+					size='sm'
+					value={accent ?? ''}
 				/>
 			</span>
 

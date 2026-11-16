@@ -3,19 +3,23 @@
  * paints what is done (a solid button), what is on or chosen (a checked box, the current tab),
  * where the focus is, a link. Pages, cards and quiet fills are neutral.
  *
- * An app with another color sets its own values for the first block, on :root, after this
- * sheet; the dark theme and the high contrast (themes/) work them out again from
- * `--ui-color-primary`.
+ * An app with another color sets `--ui-accent-default` on :root, after this sheet: the link,
+ * the ring and what is chosen follow it here, and the dark theme and the high contrast (themes/)
+ * work theirs out from `--ui-color-primary`. A person may choose another accent (accent.css),
+ * which takes its place.
  */
 
 @layer ui.tokens {
 	:root {
 		/* white on it is 4.85:1: it is a fill as it is, with no deeper one for its text */
-		--ui-color-primary: #4169e1;
+		--ui-accent-default: #4169e1;
+		--ui-color-primary: var(--ui-accent-default);
 		--ui-color-primary-foreground: #ffffff;
 		--ui-color-primary-fill: var(--ui-color-primary);
 		--ui-color-ring: var(--ui-color-primary);
-		--ui-color-link: #2c4cc0;
+
+		/* a text in the color of the app: a step deeper, to be read on every surface */
+		--ui-color-link: color-mix(in srgb, var(--ui-color-primary) 78%, black);
 
 		/* a gold: what royal blue is worn with. For what must be found at a glance, sparingly */
 		--ui-color-accent: #f0b23c;
@@ -53,12 +57,14 @@
 		--ui-shadow-xs: 0 1px 2px
 			color-mix(in srgb, var(--ui-color-shadow) 8%, transparent);
 		--ui-shadow-sm:
-			0 0 0 0.5px color-mix(in srgb, var(--ui-color-shadow) 6%, transparent),
+			0 0 0 0.5px
+				color-mix(in srgb, var(--ui-color-shadow) 6%, transparent),
 			0 1px 2px color-mix(in srgb, var(--ui-color-shadow) 5%, transparent),
 			0 2px 10px -2px
 				color-mix(in srgb, var(--ui-color-shadow) 6%, transparent);
 		--ui-shadow-md:
-			0 0 0 0.5px color-mix(in srgb, var(--ui-color-shadow) 8%, transparent),
+			0 0 0 0.5px
+				color-mix(in srgb, var(--ui-color-shadow) 8%, transparent),
 			0 2px 6px -1px
 				color-mix(in srgb, var(--ui-color-shadow) 7%, transparent),
 			0 10px 28px -8px

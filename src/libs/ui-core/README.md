@@ -72,19 +72,28 @@ information color is a teal, so it is never taken for the color of the app; `acc
 for what must be found at a glance, sparingly.
 
 **Glass.** What floats over the page lets a little of it through, blurred: the bar of
-`AppShell` (the page scrolls under it), menus and every other popup, toasts, and the page behind
-a dialog (out of focus, hardly). It is one material in the tokens (`--ui-material-bar`,
-`--ui-material-popup`: how much of its own color a surface keeps; `--ui-material-filter`,
-`--ui-material-veil`, `--ui-material-edge`), mixed by each of those components with its own
-surface. Cards, fields, tables, tooltips and the panel of a dialog are never glass. It turns
-itself off — the tokens become opaque, no component has a rule for it — with more contrast
-(`data-contrast='more'`), when the system asks for less transparency, with forced colors and in
-a browser without `backdrop-filter`.
+`AppShell` (the page scrolls under it) and its side bar, a panel afloat over the page; menus and
+every other popup; toasts and tooltips; the panel of a dialog and of a drawer, and the page
+behind them (out of focus, hardly). It is one material in the tokens (`--ui-material-bar`,
+`--ui-material-popup`, `--ui-material-panel`: how much of its own color a surface keeps;
+`--ui-material-filter`, `--ui-material-veil`, `--ui-material-edge`), mixed by each of those
+components with its own surface. Cards, fields and tables are never glass. Behind it all the
+shell breathes a little of the color of the app into the page (`--ui-material-glow`): what the
+glass has to show. Glass and glow turn themselves off — the tokens become opaque, no component
+has a rule for it — with more contrast (`data-contrast='more'`), when the system asks for less
+transparency, with forced colors and in a browser without `backdrop-filter`; a pure black page
+has no glow.
 
-**Another color.** `styles/tokens/primary.css` holds the color of the app and what follows it. An
-app with its own sets, on `:root` and after the kit's sheet, `--ui-color-primary` (and
-`--ui-color-primary-fill`, when white on it is under 4.5:1) and `--ui-color-link`; the dark theme
-and the high contrast work the rest out from `--ui-color-primary`.
+**Accents.** A person may choose the accent of the app among six, as on a Mac: the color of the
+app (royal blue here), purple, pink, orange, green and graphite — no red, which is the color of
+what went wrong. Each is a color white text reads on; the link, the ring, what is chosen and the
+dark theme's lighter one are worked out from it. `styles/tokens/accent.css` holds them
+(`--ui-accent-purple` …), `ACCENTS` lists them, and `data-accent` on `<html>` says which.
+
+**Another color.** An app with its own sets `--ui-accent-default` on `:root`, after the kit's
+sheet (and `--ui-color-primary-fill`, when white on it is under 4.5:1): the link, the ring and
+what is chosen follow it, in every theme. It is the first of the accents a person can choose;
+name it for them with `labels={{ accentDefault: '…' }}` on `SettingsDialog`.
 
 **Contrast.** Text reaches 4.5:1; the borders of controls, the graphics that say a state and the
 focus ring, 3:1 — in light, dark and both with high contrast. Two colors are **not** for text
@@ -99,6 +108,7 @@ level also carries a light top edge and the surfaces step up (page → card → 
 | --------------------- | ------------------------------------------ | ---------------- |
 | `data-theme`          | `light`, `dark` (always the resolved one)  | the theme store  |
 | `data-dark`           | `black` on a dark page (absent otherwise)  | the theme store  |
+| `data-accent`         | `purple`, `pink`, … (absent: the app's)    | the theme store  |
 | `data-contrast`       | `more` (absent otherwise)                  | the theme store  |
 | `data-motion`         | `reduce`, `full` (always the resolved one) | the theme store  |
 | `data-text`           | `large` (absent otherwise)                 | the theme store  |
@@ -110,7 +120,7 @@ const { theme, resolvedTheme, highContrast, reducedMotion, system } =
 	useTheme();
 const { setTheme, setContrast, setMotion, setTextSize, setUnderlineLinks } =
 	useTheme();
-const { pureBlack, setPureBlack } = useTheme();
+const { accent, pureBlack, setAccent, setPureBlack } = useTheme();
 
 setTheme('auto'); // 'auto' follows the system · 'light' · 'dark'
 setContrast('more'); // 'more' · 'normal' · null follows the system (prefers-contrast)
@@ -118,6 +128,7 @@ setMotion('reduce'); // 'reduce' · 'full' · null follows the system (prefers-r
 setTextSize('large'); // 'large' · 'normal'
 setUnderlineLinks(true);
 setPureBlack(true); // the dark theme on a black page (OLED screens); `pureBlack` says it
+setAccent('purple'); // one of `ACCENTS`; null is the color of the app again; `accent` says it
 ```
 
 `SettingsDialog` is where a person chooses all of it, and their language; `system` says what the
@@ -145,7 +156,7 @@ before the first paint (a dark page never flashes white, nothing animates for wh
 to); until it has run, the tokens ask the system directly.
 
 - The preferences are remembered per browser (`localStorage`: `ui.theme`, `ui.contrast`,
-  `ui.motion`, `ui.text`, `ui.links`, `ui.black`, `ui.locale`). A blocked storage keeps the choice for the
+  `ui.motion`, `ui.text`, `ui.links`, `ui.black`, `ui.accent`, `ui.locale`). A blocked storage keeps the choice for the
   page.
 - **Pure black** is a choice for the dark theme, not a theme: with it a dark page (chosen, or
   the system's at night) is black, each surface over it a step of near black told by its line. A
@@ -402,7 +413,7 @@ Every format takes an optional `locale` last (see [Language](#language)).
 | Amounts     | `maskAmount`, `parseAmount`, `formatAmount`, `isAmountText`, `amountShape`, `AMOUNT_MAX_DIGITS`                                                                                                                                                               |
 | Names, more | `shortName`, `initials`, `formatNumber`                                                                                                                                                                                                                       |
 | RUT (Chile) | `formatRut`, `normalizeRut`, `maskRut`, `RUT_MAX_LENGTH`, `rutStatus`, `cleanRut`, `checkDigit`                                                                                                                                                               |
-| Preferences | `useTheme()` (theme, pure black, contrast, motion, text size, links, what the system asks), `THEMES`, the `*_STORAGE_KEY`s                                                                                                                                    |
+| Preferences | `useTheme()` (theme, pure black, accent, contrast, motion, text size, links, what the system asks), `ACCENTS`, `THEMES`, the `*_STORAGE_KEY`s                                                                                                                 |
 
 ### Known limits
 
@@ -462,7 +473,7 @@ Every format takes an optional `locale` last (see [Language](#language)).
 - Not verified with a real screen reader, nor in Safari or Firefox (developed against Chromium);
   forced colors were checked in Chromium's emulation only.
 - Glass has no setting of its own: it follows the system («reduce transparency») and the
-  contrast chosen. Text over it is measured on a surface that keeps at least 74 % of its color.
+  contrast chosen. Text over it is on a surface that keeps at least 62 % of its color, over a blur.
 - Charts are not part of the kit.
 
 ## Conventions for components

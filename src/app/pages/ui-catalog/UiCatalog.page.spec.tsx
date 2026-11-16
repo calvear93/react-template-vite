@@ -222,6 +222,21 @@ describe(UiCatalogPage, () => {
 		expect(root.dataset.contrast).toBeUndefined();
 	});
 
+	test('changes the accent of the page, and back to the one of the app', async () => {
+		renderAt('/ui');
+
+		const accent = () => screen.getByRole('combobox', { name: 'Accent' });
+
+		await userEvent.selectOptions(accent(), 'Green');
+
+		expect(root.dataset.accent).toBe('green');
+
+		await userEvent.selectOptions(accent(), 'Blue');
+
+		expect(root.dataset.accent).toBeUndefined();
+		expect(accent()).toHaveDisplayValue('Blue');
+	});
+
 	test('paints the dark theme in pure black, and back', async () => {
 		renderAt('/ui');
 

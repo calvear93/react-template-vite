@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { mockMatchMedia } from '../__mocks__/match-media.mock.ts';
 import initScript from '../../../../public/ui-theme-init.js?raw';
 import {
+	ACCENT_STORAGE_KEY,
 	BLACK_STORAGE_KEY,
 	CONTRAST_STORAGE_KEY,
 	LINKS_STORAGE_KEY,
@@ -11,6 +12,7 @@ import {
 } from './theme.constants.ts';
 import {
 	getThemeSnapshot,
+	setAccent,
 	setContrast,
 	setMotion,
 	setPureBlack,
@@ -41,6 +43,7 @@ describe('theme store', () => {
 		setTextSize('normal');
 		setUnderlineLinks(false);
 		setPureBlack(false);
+		setAccent(null);
 		delete root.dataset.motion;
 		delete root.dataset.theme;
 		localStorage.clear();
@@ -214,6 +217,19 @@ describe('theme store', () => {
 		stop();
 	});
 
+	test('wears the accent chosen and remembers it, until the one of the app is back', () => {
+		setAccent('purple');
+
+		expect(root.dataset.accent).toBe('purple');
+		expect(localStorage.getItem(ACCENT_STORAGE_KEY)).toBe('purple');
+		expect(getThemeSnapshot().accent).toBe('purple');
+
+		setAccent(null);
+
+		expect(root.dataset.accent).toBeUndefined();
+		expect(localStorage.getItem(ACCENT_STORAGE_KEY)).toBeNull();
+	});
+
 	test('keeps the same snapshot until something changes', () => {
 		const before = getThemeSnapshot();
 
@@ -257,7 +273,7 @@ describe('theme store', () => {
 			written
 				.takeRecords()
 				.filter(({ attributeName }) =>
-					/^data-(?:contrast|dark|links|motion|text|theme)$/u.test(
+					/^data-(?:accent|contrast|dark|links|motion|text|theme)$/u.test(
 						attributeName ?? '',
 					),
 				),
@@ -296,6 +312,7 @@ describe('theme store', () => {
 
 		// a fresh page has nothing written on its root yet
 		beforeEach(() => {
+			delete root.dataset.accent;
 			delete root.dataset.contrast;
 			delete root.dataset.dark;
 			delete root.dataset.links;
@@ -324,10 +341,12 @@ describe('theme store', () => {
 			localStorage.setItem(TEXT_STORAGE_KEY, 'huge');
 			localStorage.setItem(LINKS_STORAGE_KEY, 'yes');
 			localStorage.setItem(BLACK_STORAGE_KEY, 'yes');
+			localStorage.setItem(ACCENT_STORAGE_KEY, 'crimson');
 
 			const store = await freshStore();
 
 			expect(store.getThemeSnapshot()).toMatchObject({
+				accent: null,
 				contrast: null,
 				motion: null,
 				pureBlack: false,
@@ -383,6 +402,17 @@ describe('theme store', () => {
 			{
 				dark: true,
 				stored: { [MOTION_STORAGE_KEY]: 'reduce' },
+				system: false,
+			},
+			// an accent: the one chosen, and none for a color the kit does not know
+			{
+				dark: false,
+				stored: { [ACCENT_STORAGE_KEY]: 'green' },
+				system: false,
+			},
+			{
+				dark: true,
+				stored: { [ACCENT_STORAGE_KEY]: 'crimson' },
 				system: false,
 			},
 			// pure black: on a dark page, chosen or the system's, and never on a light one

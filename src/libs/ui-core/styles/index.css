@@ -10,6 +10,7 @@
 @import url('./tokens/scale.css');
 @import url('./tokens/color.css');
 @import url('./tokens/primary.css');
+@import url('./tokens/accent.css');
 @import url('./tokens/material.css');
 @import url('./themes/dark.css');
 @import url('./themes/contrast.css');
