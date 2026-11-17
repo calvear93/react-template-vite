@@ -110,6 +110,11 @@ export const UI_TEXTS_ES: UiTexts = {
 		selected: (count: number, formatted: string) =>
 			`${formatted} ${count === 1 ? 'seleccionada' : 'seleccionadas'}`,
 	},
+	onDemand: {
+		failed: 'No se pudo cargar esta parte de la aplicación',
+		failedHint:
+			'Revise su conexión e intente de nuevo; si persiste, recargue la página.',
+	},
 	pager: {
 		go: 'Ir',
 		jump: 'Ir a página',

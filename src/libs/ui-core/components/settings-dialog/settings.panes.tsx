@@ -13,23 +13,11 @@ import { SegmentedControl } from '../segmented-control/SegmentedControl.tsx';
 import { Select } from '../select/Select.tsx';
 import { Switch } from '../switch/Switch.tsx';
 import { VisuallyHidden } from '../visually-hidden/VisuallyHidden.tsx';
+import { type SettingsLanguage } from './settings.languages.ts';
 import { SettingsGroup, SettingsRow } from './SettingsGroup.tsx';
 import styles from './SettingsDialog.module.css';
 
 type SettingsLabels = UiTexts['settings'];
-
-/** A language a person can choose: its name, in that language, and its locale. */
-export interface SettingsLanguage {
-	label: string;
-	/** A BCP 47 locale: `en`, `es-CL`. */
-	value: string;
-}
-
-/** The languages the kit speaks, each named in itself. */
-export const SETTINGS_LANGUAGES: readonly SettingsLanguage[] = [
-	{ label: 'English', value: 'en' },
-	{ label: 'Español', value: 'es' },
-];
 
 /** The language of a locale: `es` for `es-CL`. */
 const languageOf = (locale: string) => new Intl.Locale(locale).language;

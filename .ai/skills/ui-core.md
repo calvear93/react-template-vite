@@ -84,6 +84,10 @@ under `src/libs/**`: non-trivial, with a change record.
   a `SegmentedControl` a `group` of `radio`s. The dialogs of `useDialogs()` are an `alertdialog`
   (notice, confirmation, choice) or a `dialog` with one `textbox` (prompt); `SettingsDialog` is a
   `dialog` whose categories are `tab`s.
+- Those dialogs and that window are loaded on demand in a browser. A spec finds them at once
+  (`getByRole`): the setup file `__mocks__/preload.setup.ts` loads them before each spec file.
+  The path where they are not there yet is tested with fresh modules (`vi.resetModules()` and a
+  `vi.doMock` of the part): see `Dialogs.loading.spec.tsx`.
 - A spec of what is drawn again counts something each row reads when it is drawn (a getter on
   its data), never the calls to a function the React Compiler may keep: see
   `internal/listbox/Listbox.spec.tsx`.

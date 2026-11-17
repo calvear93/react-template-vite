@@ -32,6 +32,8 @@ export default {
 		setupFiles: [
 			'@testing-library/react/dont-cleanup-after-each',
 			'@testing-library/jest-dom/vitest',
+			// the parts of the UI kit a browser loads on demand, there from the start
+			'src/libs/ui-core/__mocks__/preload.setup.ts',
 		],
 	},
 } satisfies ViteUserConfig;

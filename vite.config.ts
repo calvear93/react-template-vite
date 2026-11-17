@@ -45,6 +45,14 @@ const UI_IMPORTS =
  */
 const UI_LAYERS = readLayers('src/libs/ui-core/styles/index.css');
 
+/**
+ * The modules of the UI kit that are loaded on demand (`internal/on-demand.ts`):
+ * each part with the modules only it uses, its stylesheet too. A new part adds its
+ * modules here; the build fails when one is missing (see kitOnDemand).
+ */
+const UI_ON_DEMAND =
+	/src\/libs\/ui-core\/components\/(?:alert-dialog\/(?:AlertDialog|ChoiceDialog|PromptDialog|Question)|settings-dialog\/(?:SettingsDialog\.module|SettingsGroup|SettingsWindow|settings\.panes))\./u;
+
 export default {
 	base: BASE_PATH,
 	clearScreen: false,
@@ -71,6 +79,18 @@ export default {
 							name: 'store',
 							priority: 100,
 							test: /node_modules\/jotai/u,
+						},
+						// what the kit loads on demand (`onDemand()`: the dialogs of
+						// useDialogs() and the window of SettingsDialog) is a chunk of its
+						// own, which no page waits for. Only the modules named: what they
+						// import stays with the pages that use it too. Left to the
+						// groups below, they would go in the chunk the pages share,
+						// which the first page waits for
+						{
+							includeDependenciesRecursively: false,
+							name: 'ui-core-on-demand',
+							priority: 30,
+							test: UI_ON_DEMAND,
 						},
 						// what the entry needs of the UI kit (the shell, the providers
 						// and what they import) is one chunk, by a rule: see kitShell.
@@ -119,6 +139,7 @@ export default {
 	},
 	plugins: [
 		kitLayers(),
+		kitOnDemand(),
 		react({ compiler: true }),
 		fonts(
 			[
@@ -272,4 +293,46 @@ function readLayers(path: string) {
 		);
 
 	return statement[0];
+}
+
+/**
+ * Checks `UI_ON_DEMAND` against the module graph, and fails the build when it
+ * misses a module: a part loaded with `onDemand()` (imported on demand from the
+ * kit), or a module that the modules of those parts alone import. Left out of the
+ * list, either would go in a chunk the pages wait for, and nothing would say so.
+ */
+function kitOnDemand(): PluginOption {
+	return {
+		apply: 'build',
+		name: 'kit-on-demand',
+		buildEnd(error) {
+			if (error) return;
+
+			const missing = [...this.getModuleIds()].filter((id) => {
+				if (!UI_KIT.test(id) || UI_ON_DEMAND.test(id)) return false;
+
+				const { dynamicImporters = [], importers = [] } =
+					this.getModuleInfo(id) ?? {};
+
+				return (
+					dynamicImporters.some((importer) =>
+						UI_KIT.test(importer),
+					) ||
+					(importers.length > 0 &&
+						importers.every((importer) =>
+							UI_ON_DEMAND.test(importer),
+						))
+				);
+			});
+
+			if (missing.length > 0)
+				this.error(
+					`loaded on demand but not in UI_ON_DEMAND (vite.config.ts): ${missing
+						.map((id) => id.replace(/^.*src\/libs\/ui-core\//u, ''))
+						.join(
+							', ',
+						)}. Add them to it: left out, they go in a chunk the pages wait for`,
+				);
+		},
+	};
 }

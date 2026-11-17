@@ -65,7 +65,7 @@ export * from './components/separator/Separator.tsx';
 export {
 	SETTINGS_LANGUAGES,
 	type SettingsLanguage,
-} from './components/settings-dialog/settings.panes.tsx';
+} from './components/settings-dialog/settings.languages.ts';
 export * from './components/settings-dialog/SettingsDialog.tsx';
 export * from './components/settings-dialog/SettingsGroup.tsx';
 export * from './components/skeleton/Skeleton.tsx';

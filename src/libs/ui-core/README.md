@@ -497,7 +497,12 @@ Every format takes an optional `locale` last (see [Language](#language)).
   it (`combobox.hook.ts`, `app-shell.hook.ts`), and what several share in `internal/` (never
   exported): `Modal`, `Popup` + `position.ts`, `HiddenInput`, `useControllableState`,
   `useFormReset`, `useMaskedCaret`, `insertedRange`, `undoChange`, `writeInput`, `defined`,
-  `readPreference` / `writePreference`, `useOutsidePress`, `useDebouncedCallback`.
+  `readPreference` / `writePreference`, `useOutsidePress`, `useDebouncedCallback`,
+  `onDemand` + `useOnDemand` (`on-demand.ts`: a part no first screen shows, fetched when it is
+  needed or once the page is painted and the browser idle — the dialogs of `useDialogs()`, the
+  window of `SettingsDialog`; a new part also names its modules in `UI_ON_DEMAND` of
+  `vite.config.ts` (the build fails when one is missing), and nothing loaded with the entry may
+  import them).
 - The build splits the kit by rule, not by size (`vite.config.ts`): what the entry needs is one
   chunk, what two pages or more use another, what one page alone uses stays in that page's chunk.
   A module of the kit must not rely on being imported for a side effect: only the barrel and the
@@ -517,6 +522,13 @@ and contrast), `mockPopover()` (the top-layer path of a popup; without it the fi
 runs) and `mockRect()` (geometry: placement is tested in `internal/position.spec.ts`). Each one
 restores itself when the test ends, whatever its outcome: call its `restore()` only to take it
 away before that.
+
+What a browser loads on demand (the dialogs of `useDialogs()`, the window of `SettingsDialog`) is
+there from the start in a spec: `__mocks__/preload.setup.ts`, a setup file of `vitest.config.ts`,
+loads it before each spec file, so a dialog opens at once (`getByRole`). The path where it is not
+there yet — a question asked before its dialog arrived, a load that fails — is tested with fresh
+modules: `vi.resetModules()`, a `vi.doMock` of the part, and a dynamic import of what is under
+test (`Dialogs.loading.spec.tsx`, `SettingsDialog.loading.spec.tsx`).
 
 A spec runs as the kit is by itself: English, US dollars. One that reads Spanish texts or Chilean
 formats says so once, at its top, with `inChile()` (`__mocks__/locale.mock.ts`); one that needs

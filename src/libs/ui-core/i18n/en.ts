@@ -111,6 +111,11 @@ export const UI_TEXTS_EN = {
 		search: 'Search',
 		selected: (count: number, formatted: string) => `${formatted} selected`,
 	},
+	onDemand: {
+		failed: 'This part of the application could not be loaded',
+		failedHint:
+			'Check your connection and try again; if it persists, reload the page.',
+	},
 	pager: {
 		go: 'Go',
 		jump: 'Go to page',

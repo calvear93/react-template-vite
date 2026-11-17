@@ -1,29 +1,8 @@
-import {
-	type KeyboardEvent,
-	type ReactNode,
-	useId,
-	useRef,
-	useState,
-} from 'react';
+import { type ReactNode } from 'react';
 import { type UiTexts } from '../../i18n/en.ts';
-import { useTexts } from '../../i18n/texts.hook.ts';
 import { type IconName } from '../../icon/icon.registry.ts';
-import { Icon } from '../../icon/Icon.tsx';
-import { cx } from '../../internal/cx.ts';
-import { defined } from '../../internal/defined.ts';
-import { Modal } from '../../internal/modal/Modal.tsx';
-import { moveRovingFocus } from '../../internal/roving-focus.ts';
-import { ScrollArea } from '../../internal/scroll-area/ScrollArea.tsx';
-import { Button } from '../button/Button.tsx';
-import {
-	AccessibilitySettings,
-	AppearanceSettings,
-	SETTINGS_LANGUAGES,
-	type SettingsLanguage,
-} from './settings.panes.tsx';
-import styles from './SettingsDialog.module.css';
-
-const TABS = '[role="tab"]';
+import { useSettingsWindow } from './settings-dialog.hook.ts';
+import { type SettingsLanguage } from './settings.languages.ts';
 
 /**
  * The window where a person sets how the application looks and behaves: its
@@ -35,6 +14,9 @@ const TABS = '[role="tab"]';
  * Every change applies at once and is remembered in the browser: there is nothing
  * to save. The categories are tabs: the arrows move through them and choose;
  * below 640px they become a row above the options.
+ *
+ * Its window is loaded on demand: when it first opens, or ahead once the browser
+ * is idle. `defaultSection` is read at that first opening.
  *
  * @example
  * ```tsx
@@ -61,138 +43,10 @@ const TABS = '[role="tab"]';
  *
  * @returns settings dialog
  */
-export const SettingsDialog = ({
-	className,
-	defaultSection,
-	labels,
-	languages = SETTINGS_LANGUAGES,
-	onOpenChange,
-	open,
-	sections = [],
-}: SettingsDialogProps) => {
-	const id = useId();
-	const texts = { ...useTexts().settings, ...defined(labels) };
-	const tab = useRef<HTMLButtonElement>(null);
-	const all: readonly SettingsSection[] = [
-		{
-			id: 'appearance',
-			content: <AppearanceSettings languages={languages} texts={texts} />,
-			description: texts.appearanceHint,
-			icon: 'sun',
-			label: texts.appearance,
-		},
-		{
-			id: 'accessibility',
-			content: <AccessibilitySettings texts={texts} />,
-			description: texts.accessibilityHint,
-			icon: 'contrast',
-			label: texts.accessibility,
-		},
-		...sections,
-	];
-	const [chosen, setChosen] = useState(defaultSection);
-	const current = all.find((section) => section.id === chosen) ?? all[0];
+export const SettingsDialog = (props: SettingsDialogProps) => {
+	const loaded = useSettingsWindow(props.open, props.onOpenChange);
 
-	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-		const container = event.currentTarget.closest('[role="tablist"]');
-		// a column on a wide screen, a row on a narrow one: either pair of arrows moves
-		const next =
-			moveRovingFocus(event, {
-				container,
-				orientation: 'vertical',
-				selector: TABS,
-			}) ??
-			moveRovingFocus(event, {
-				container,
-				orientation: 'horizontal',
-				selector: TABS,
-			});
-
-		if (next?.dataset.section !== undefined)
-			setChosen(next.dataset.section);
-	};
-
-	return (
-		<Modal
-			aria-labelledby={`${id}-title`}
-			initialFocus={tab}
-			onOpenChange={onOpenChange}
-			open={open}
-		>
-			<div className={cx(styles.window, className)}>
-				<div className={styles.sidebar}>
-					<h2 className={styles.title} id={`${id}-title`}>
-						{texts.title}
-					</h2>
-					<div
-						aria-label={texts.sections}
-						aria-orientation='vertical'
-						className={styles.tabs}
-						role='tablist'
-					>
-						{all.map((section) => (
-							<button
-								aria-controls={`${id}-panel`}
-								aria-selected={section === current}
-								className={styles.tab}
-								data-section={section.id}
-								id={`${id}-tab-${section.id}`}
-								key={section.id}
-								onClick={() => setChosen(section.id)}
-								onKeyDown={handleKeyDown}
-								ref={section === current ? tab : undefined}
-								role='tab'
-								tabIndex={section === current ? 0 : -1}
-								type='button'
-							>
-								<Icon name={section.icon} size='sm' />
-								<span>{section.label}</span>
-							</button>
-						))}
-					</div>
-				</div>
-
-				<div className={styles.body}>
-					<ScrollArea
-						aria-labelledby={`${id}-tab-${current.id}`}
-						className={styles.panel}
-						id={`${id}-panel`}
-						role='tabpanel'
-					>
-						{/* keyed: another category comes in afresh */}
-						<div className={styles.pane} key={current.id}>
-							<header className={styles.header}>
-								<h3 className={styles.heading}>
-									{current.label}
-								</h3>
-								{current.description && (
-									<p className={styles.description}>
-										{current.description}
-									</p>
-								)}
-							</header>
-							{current.content}
-						</div>
-					</ScrollArea>
-
-					<div className={styles.footer}>
-						<Button onClick={() => onOpenChange(false)}>
-							{texts.done}
-						</Button>
-					</div>
-				</div>
-
-				<button
-					aria-label={texts.close}
-					className={styles.close}
-					onClick={() => onOpenChange(false)}
-					type='button'
-				>
-					<Icon name='close' size='sm' />
-				</button>
-			</div>
-		</Modal>
-	);
+	return loaded ? <loaded.SettingsWindow {...props} /> : null;
 };
 
 /** A category of a SettingsDialog. */
