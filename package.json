@@ -57,7 +57,7 @@
 		"eslint-plugin-regexp": "3.3.3",
 		"eslint-plugin-sonarjs": "4.2.2",
 		"eslint-plugin-testing-library": "7.16.2",
-		"eslint-plugin-unicorn": "79.0.0",
+		"eslint-plugin-unicorn": "80.0.0",
 		"globals": "17.14.0",
 		"happy-dom": "21.0.4",
 		"oxc-transform-react": "0.156.0",
@@ -73,14 +73,14 @@
 		"vite-plugin-pwa": "2.0.0",
 		"vite-plugin-webfont-dl": "3.14.1",
 		"vitest": "5.1.0",
-		"vitest-mock-extended": "5.1.1"
+		"vitest-mock-extended": "6.0.1"
 	},
 	"type": "module",
 	"engines": {
 		"node": ">=24",
 		"pnpm": ">=12"
 	},
-	"packageManager": "pnpm@12.18.0",
+	"packageManager": "pnpm@12.21.0",
 	"license": "MIT",
 	"repository": "https://github.com/calvear93/react-template-vite",
 	"keywords": [
