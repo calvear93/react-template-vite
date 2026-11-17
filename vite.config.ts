@@ -38,21 +38,6 @@ export default {
 							test: /node_modules\/jotai/u,
 						},
 						{
-							name: 'libs-router',
-							priority: 20,
-							test: /src\/libs\/router/u,
-						},
-						{
-							name: 'libs-ioc',
-							priority: 20,
-							test: /src\/libs\/ioc/u,
-						},
-						{
-							name: 'libs-feature',
-							priority: 20,
-							test: /src\/libs\/feature/u,
-						},
-						{
 							name: 'libs-ui-core',
 							priority: 20,
 							test: /src\/libs\/ui-core/u,
