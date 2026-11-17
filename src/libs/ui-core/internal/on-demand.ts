@@ -106,7 +106,9 @@ const whenIdle = (task: () => void) => {
  * fetched when it is needed, or ahead once the page is painted and the browser is
  * idle: its code and its styles stay out of what the first paint waits for. Unlike
  * `lazy()`, nothing suspends: who needs the part reads it with `useOnDemand()`,
- * draws nothing until it is there, and decides what a failed load means.
+ * draws nothing until it is there, and decides what a failed load means. Its
+ * modules are named in `../vite/on-demand.modules.ts`, so that the build puts them
+ * in a chunk of their own (and fails when one is missing).
  *
  * @example
  * ```tsx

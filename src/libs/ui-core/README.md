@@ -500,12 +500,14 @@ Every format takes an optional `locale` last (see [Language](#language)).
   `readPreference` / `writePreference`, `useOutsidePress`, `useDebouncedCallback`,
   `onDemand` + `useOnDemand` (`on-demand.ts`: a part no first screen shows, fetched when it is
   needed or once the page is painted and the browser idle — the dialogs of `useDialogs()`, the
-  window of `SettingsDialog`; a new part also names its modules in `UI_ON_DEMAND` of
-  `vite.config.ts` (the build fails when one is missing), and nothing loaded with the entry may
-  import them).
-- The build splits the kit by rule, not by size (`vite.config.ts`): what the entry needs is one
-  chunk, what two pages or more use another, what one page alone uses stays in that page's chunk.
-  A module of the kit must not rely on being imported for a side effect: only the barrel and the
+  window of `SettingsDialog`; a new part also names its modules in `UI_ON_DEMAND`
+  (`vite/on-demand.modules.ts`; the build fails when one is missing), and nothing loaded with the
+  entry may import them).
+- The build rules of the kit are its own Vite plugin, `uiCore()` in `vite/ui-core.plugin.ts`,
+  which `vite.config.ts` calls (never exported by the barrel: it runs in Node, at build time). It
+  splits the kit by rule, not by size: what the entry needs is one chunk (`vite/kit-shell.ts`),
+  what two pages or more use another, what one page alone uses stays in that page's chunk. A
+  module of the kit must not rely on being imported for a side effect: only the barrel and the
   stylesheets are kept for one. `kitLayers` writes the order of the cascade layers at the top of
   every stylesheet of the kit: the first one a browser reads decides it.
 - A rule that changes what the stylesheet of another module sets (`control.control`) goes through a
