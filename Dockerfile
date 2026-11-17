@@ -26,9 +26,12 @@ WORKDIR ${APP_DIR}
 
 # installs pnpm
 RUN npm i -g pnpm@${PNPM_VER}
+# the dependencies first, from the files that name them alone: a change in the
+# sources reuses this layer instead of installing them again
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ${APP_DIR}
+RUN pnpm install --frozen-lockfile
 # prepares source files
 COPY . ${APP_DIR}
-RUN pnpm install --frozen-lockfile
 # builds the app
 ENV NODE_ENV=production
 RUN pnpm build:${ENV}
@@ -44,10 +47,7 @@ ARG APP_DIR
 ARG OUT_DIR
 # static assets dir
 WORKDIR '/usr/share/nginx/html'
-# retrieves build app
-RUN rm -rf ./*
-COPY --from=builder ${APP_DIR}${OUT_DIR} .
-COPY --from=builder ${APP_DIR}'nginx.conf' '/etc/nginx/conf.d/default.conf'
+# what does not depend on the build goes first: a new build reuses these layers
 # alpine security updates
 RUN apk --no-cache -U upgrade
 # runs as the image's unprivileged nginx user: the server listens on 8080,
@@ -55,6 +55,10 @@ RUN apk --no-cache -U upgrade
 # places nginx writes to ("user" only applies when the master is root)
 RUN sed -i -e '/^user /d' -e 's#^pid .*#pid /tmp/nginx.pid;#' /etc/nginx/nginx.conf \
 	&& chown -R nginx:nginx /var/cache/nginx
+# retrieves build app
+RUN rm -rf ./*
+COPY --from=builder ${APP_DIR}${OUT_DIR} .
+COPY --from=builder ${APP_DIR}'nginx.conf' '/etc/nginx/conf.d/default.conf'
 USER nginx
 
 # exec command
