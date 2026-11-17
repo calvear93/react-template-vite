@@ -12,10 +12,11 @@ import {
 	StatusDot,
 } from '#libs/ui-core';
 import { useState } from 'react';
+import { DEMO_WORKERS } from '../catalog.fixture.ts';
 import { Example } from '../components/example/Example.tsx';
 import styles from './actions.section.module.css';
 
-const PEOPLE = ['Anna Schmidt', 'John Carter', 'Mary Jane Wilson'];
+const PEOPLE = DEMO_WORKERS.slice(0, 3);
 
 const ViewExample = () => {
 	const [view, setView] = useState<'cards' | 'table'>('table');

@@ -9,7 +9,7 @@ export interface DemoReport {
 	worker: string;
 }
 
-const WORKERS = [
+export const DEMO_WORKERS = [
 	'Anna Schmidt',
 	'John Carter',
 	'Mary Jane Wilson',
@@ -19,7 +19,8 @@ const WORKERS = [
 	'Sofia Rossi',
 ];
 
-const STATES = ['open', 'review', 'closed'] as const;
+/** The states of a report, in the order a report goes through them. */
+export const DEMO_STATES = ['open', 'review', 'closed'] as const;
 
 /** 57 reports, the same on every load. */
 export const DEMO_REPORTS: readonly DemoReport[] = Array.from(
@@ -29,8 +30,8 @@ export const DEMO_REPORTS: readonly DemoReport[] = Array.from(
 		date: `2026-${String(1 + (index % 11)).padStart(2, '0')}-${String(1 + ((index * 7) % 28)).padStart(2, '0')}`,
 		days: (index * 13) % 46,
 		folio: `INC-2026-${String(1482 - index).padStart(6, '0')}`,
-		state: STATES[index % STATES.length],
-		worker: WORKERS[index % WORKERS.length],
+		state: DEMO_STATES[index % DEMO_STATES.length],
+		worker: DEMO_WORKERS[index % DEMO_WORKERS.length],
 	}),
 );
 

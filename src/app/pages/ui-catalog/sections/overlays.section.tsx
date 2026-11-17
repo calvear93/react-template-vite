@@ -16,14 +16,14 @@ import {
 	useLocale,
 } from '#libs/ui-core';
 import { useState } from 'react';
+import { DEMO_STATES, REPORT_STATES } from '../catalog.fixture.ts';
 import { Example } from '../components/example/Example.tsx';
 import styles from './overlays.section.module.css';
 
-const STATES = [
-	{ label: 'Open', value: 'open' },
-	{ label: 'In review', value: 'review' },
-	{ label: 'Closed', value: 'closed' },
-];
+const STATES = DEMO_STATES.map((value) => ({
+	label: REPORT_STATES[value].label,
+	value,
+}));
 
 const NOT_ASKED = 'Not asked yet';
 

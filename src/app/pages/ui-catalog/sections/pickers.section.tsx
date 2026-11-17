@@ -32,24 +32,32 @@ import styles from './pickers.section.module.css';
 const fold = (text: string) =>
 	text.normalize('NFD').replaceAll(/\p{M}/gu, '').toLowerCase();
 
-const findCities = (query: string) =>
-	DEMO_CITIES.filter((city) => fold(city.name).includes(fold(query)));
+const findCities = (query: string) => {
+	const sought = fold(query);
+
+	return DEMO_CITIES.filter((city) => fold(city.name).includes(sought));
+};
 
 /** A search that takes its time, as a real one does; “error” fails. */
 const findPeople = async (query: string, signal: AbortSignal) => {
 	const wait = Promise.withResolvers<undefined>();
 	const timer = setTimeout(() => wait.resolve(undefined), 350);
+	const sought = fold(query);
 
-	signal.addEventListener('abort', () => {
-		clearTimeout(timer);
-		wait.resolve(undefined);
-	});
+	signal.addEventListener(
+		'abort',
+		() => {
+			clearTimeout(timer);
+			wait.resolve(undefined);
+		},
+		{ once: true },
+	);
 	await wait.promise;
 
-	if (fold(query) === 'error') throw new Error('Demo: the search failed');
+	if (sought === 'error') throw new Error('Demo: the search failed');
 
 	return DEMO_PEOPLE.filter((person) =>
-		fold(`${person.name} ${person.email}`).includes(fold(query)),
+		fold(`${person.name} ${person.email}`).includes(sought),
 	);
 };
 
