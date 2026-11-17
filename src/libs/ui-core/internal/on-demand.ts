@@ -8,6 +8,12 @@ import { type UiTexts } from '../i18n/en.ts';
  * it waits.
  */
 const IDLE_TIMEOUT = 2000;
+/**
+ * How long a stylesheet asked for again is waited for, in milliseconds: one that
+ * neither arrives nor fails by then does not hold the code any longer, which comes
+ * without it.
+ */
+const STYLESHEET_WAIT = 10_000;
 /** The paint that first shows something of the page, as the browser names it. */
 const FIRST_PAINT = 'first-contentful-paint';
 
@@ -23,16 +29,24 @@ const note = ({ target }: Event) => {
 		lost.add(target);
 };
 
-/** Asks for a stylesheet again, in its place; settles when it arrived, or failed again. */
+/**
+ * Asks for a stylesheet again, in its place; settles when it arrived, failed again,
+ * or after `STYLESHEET_WAIT` without an answer.
+ */
 const reload = (link: HTMLLinkElement) =>
 	new Promise<void>((resolve) => {
 		const fresh = document.createElement('link');
+		const timer = setTimeout(resolve, STYLESHEET_WAIT);
+		const done = () => {
+			clearTimeout(timer);
+			resolve();
+		};
 
 		for (const { name, value } of link.attributes)
 			fresh.setAttribute(name, value);
 
-		fresh.addEventListener('load', () => resolve());
-		fresh.addEventListener('error', () => resolve());
+		fresh.addEventListener('load', done);
+		fresh.addEventListener('error', done);
 		link.replaceWith(fresh);
 	});
 
@@ -40,7 +54,8 @@ const reload = (link: HTMLLinkElement) =>
  * A bundler asks for the stylesheet of a chunk once (the preload helper of Vite
  * remembers it, arrived or not): after a load that failed offline, the code would
  * come back without its styles. Each stylesheet that failed is asked for again
- * before the code is, and waited for; one that fails again does not hold the code.
+ * before the code is, and waited for, up to `STYLESHEET_WAIT`; one that fails
+ * again, or does not answer, does not hold the code.
  */
 const recoverStylesheets = () => {
 	const links = [...lost].filter((link) => link.isConnected);

@@ -8,6 +8,8 @@ import { onDemand, tellNotLoaded, useOnDemand } from './on-demand.ts';
 const PART = { name: 'part' };
 const OFFLINE = new Error('offline');
 const IDLE = 2000;
+/** How long a stylesheet asked for again is waited for. */
+const STYLESHEET_WAIT = 10_000;
 
 /** An importer that fails once, as offline, and then loads. */
 const flaky = () =>
@@ -399,6 +401,26 @@ describe(onDemand, () => {
 			settle(stylesheets()[0], 'load');
 
 			await expect(Promise.all([again, other])).resolves.toStrictEqual([
+				PART,
+				PART,
+			]);
+		});
+
+		test('stops waiting for one that never answers, and loads without it', async () => {
+			const { importer, source } = await lose();
+			const other = vi.fn(() => Promise.resolve(PART));
+			const again = source.load();
+			const next = onDemand(other).load();
+
+			// asked for again, the stylesheet neither arrives nor fails
+			await vi.advanceTimersByTimeAsync(STYLESHEET_WAIT - 1);
+
+			expect(importer).toHaveBeenCalledOnce();
+			expect(other).not.toHaveBeenCalled();
+
+			await vi.advanceTimersByTimeAsync(1);
+
+			await expect(Promise.all([again, next])).resolves.toStrictEqual([
 				PART,
 				PART,
 			]);
