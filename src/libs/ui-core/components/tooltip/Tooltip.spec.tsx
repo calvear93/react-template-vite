@@ -7,15 +7,39 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
-import { afterEach, describe, expect, test, vi } from 'vitest';
+import {
+	afterAll,
+	afterEach,
+	beforeAll,
+	describe,
+	expect,
+	test,
+	vi,
+} from 'vitest';
 import { mockPopover } from '../../__mocks__/popover.mock.ts';
 import { Tooltip } from './Tooltip.tsx';
 
 const HINT = 'Se descarga como PDF';
+/** How long the pointer rests on a control before its hint shows. */
+const WAIT = 300;
 
 const control = () => screen.getByRole('button', { name: 'Descargar' });
 // the description is always in the page; the bubble only while it shows
 const bubbles = () => screen.queryAllByText(HINT).length - 1;
+const opened = () =>
+	screen.getAllByText(HINT).at(-1)?.parentElement?.dataset.openedBy;
+
+const pass = (time: number) => {
+	act(() => {
+		vi.advanceTimersByTime(time);
+	});
+};
+
+/** The pointer comes to the control and rests on it for as long as a cold hint waits. */
+const rest = async () => {
+	await userEvent.hover(control());
+	pass(WAIT);
+};
 
 const renderTip = (side?: 'bottom' | 'left' | 'right' | 'top') =>
 	render(
@@ -29,7 +53,20 @@ const renderTip = (side?: 'bottom' | 'left' | 'right' | 'top') =>
 
 describe(Tooltip, () => {
 	// hooks
-	afterEach(cleanup);
+	beforeAll(() => {
+		// the clock of the hints (their wait, and how long ago one was in sight) is the test's
+		vi.useFakeTimers({ advanceTimeDelta: 1, shouldAdvanceTime: true });
+	});
+
+	afterEach(() => {
+		cleanup();
+		// the hint of a test is long gone for the next one: every test starts cold
+		vi.advanceTimersByTime(1000);
+	});
+
+	afterAll(() => {
+		vi.useRealTimers();
+	});
 
 	// tests
 	test.each([undefined, 'top', 'bottom', 'left', 'right'] as const)(
@@ -40,7 +77,7 @@ describe(Tooltip, () => {
 			expect(control()).toHaveAccessibleDescription(HINT);
 			expect(bubbles()).toBe(0);
 
-			await userEvent.hover(control());
+			await rest();
 
 			expect(bubbles()).toBe(1);
 			expect(control()).toHaveAccessibleDescription(HINT);
@@ -87,7 +124,7 @@ describe(Tooltip, () => {
 		);
 
 		await userEvent.tab();
-		await userEvent.hover(control());
+		await rest();
 
 		expect(control()).toHaveFocus();
 		expect(control()).not.toHaveAttribute('aria-describedby');
@@ -110,7 +147,7 @@ describe(Tooltip, () => {
 	test('shows on hover and goes away when the pointer leaves', async () => {
 		renderTip();
 
-		await userEvent.hover(control());
+		await rest();
 
 		expect(bubbles()).toBe(1);
 
@@ -138,7 +175,7 @@ describe(Tooltip, () => {
 		expect(bubbles()).toBe(0);
 		expect(control()).toHaveFocus();
 
-		await userEvent.hover(control());
+		await rest();
 
 		expect(bubbles()).toBe(1);
 	});
@@ -159,7 +196,7 @@ describe(Tooltip, () => {
 	test('does not show for the focus a press gives, and steps aside when its control is pressed', async () => {
 		renderTip();
 
-		await userEvent.hover(control());
+		await rest();
 
 		expect(bubbles()).toBe(1);
 
@@ -220,39 +257,105 @@ describe(Tooltip, () => {
 		expect(bubbles()).toBe(0);
 	});
 
-	test('waits a moment for a pointer passing by, but not when another hint was just in sight', async () => {
-		const now = vi.spyOn(performance, 'now').mockReturnValue(10_000);
-		const opened = () =>
-			screen.getAllByText(HINT).at(-1)?.parentElement?.dataset.openedBy;
-
+	test('waits a moment for a pointer passing by, with no bubble in the page until then', () => {
 		renderTip();
-		await userEvent.hover(control());
+		fireEvent.mouseEnter(control());
 
-		expect(opened()).toBe('hover');
+		// nothing is drawn, nor placed, while the pointer may only be passing by
+		expect(bubbles()).toBe(0);
 
 		// it left before its hint reached the screen: the next one waits too
-		now.mockReturnValue(10_100);
-		await userEvent.unhover(control());
-		now.mockReturnValue(10_200);
-		await userEvent.hover(control());
+		pass(100);
+		fireEvent.mouseLeave(control());
+		pass(100);
+		fireEvent.mouseEnter(control());
+		pass(WAIT - 1);
 
+		expect(bubbles()).toBe(0);
+
+		pass(1);
+
+		expect(bubbles()).toBe(1);
 		expect(opened()).toBe('hover');
+	});
+
+	test('does not wait when another hint was just in sight', async () => {
+		renderTip();
+		await rest();
 
 		// this one was read: the next hint, right after, shows at once
-		now.mockReturnValue(11_000);
-		await userEvent.unhover(control());
-		now.mockReturnValue(11_200);
-		await userEvent.hover(control());
+		fireEvent.mouseLeave(control());
+		pass(200);
+		fireEvent.mouseEnter(control());
 
+		expect(bubbles()).toBe(1);
 		expect(opened()).toBe('warm');
 
-		now.mockReturnValue(11_300);
-		await userEvent.unhover(control());
-		now.mockReturnValue(12_000);
-		await userEvent.hover(control());
+		// a while later the pointer is passing by again
+		pass(100);
+		fireEvent.mouseLeave(control());
+		pass(700);
+		fireEvent.mouseEnter(control());
+
+		expect(bubbles()).toBe(0);
+
+		pass(WAIT);
 
 		expect(opened()).toBe('hover');
+	});
 
-		now.mockRestore();
+	test.each([
+		{
+			how: 'the pointer leaves',
+			leave: () => fireEvent.mouseLeave(control()),
+		},
+		{
+			how: 'its control is pressed',
+			leave: () => fireEvent.pointerDown(control()),
+		},
+		{
+			how: 'Escape is pressed',
+			leave: () => fireEvent.keyDown(control(), { key: 'Escape' }),
+		},
+		{
+			how: 'its control loses the focus',
+			leave: () => fireEvent.blur(control()),
+		},
+	])('does not show once $how before the wait is over', ({ leave }) => {
+		renderTip();
+		fireEvent.mouseEnter(control());
+		pass(WAIT - 1);
+		leave();
+		pass(1000);
+
+		expect(bubbles()).toBe(0);
+		expect(vi.getTimerCount()).toBe(0);
+	});
+
+	test('forgets the hint it was waiting to show when it leaves the page', () => {
+		const { unmount } = renderTip();
+
+		fireEvent.mouseEnter(control());
+
+		expect(vi.getTimerCount()).toBe(1);
+
+		unmount();
+
+		expect(vi.getTimerCount()).toBe(0);
+	});
+
+	test('shows at once for the focus that comes while the pointer waits, and stays when the pointer leaves', async () => {
+		renderTip();
+		fireEvent.mouseEnter(control());
+		await userEvent.tab();
+
+		expect(bubbles()).toBe(1);
+		expect(opened()).toBe('focus');
+
+		// the wait of the pointer is over: the hint is still the one of the focus
+		pass(WAIT);
+		fireEvent.mouseLeave(control());
+
+		expect(bubbles()).toBe(1);
 	});
 });

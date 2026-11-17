@@ -37,8 +37,9 @@
 		}
 
 		/* compact, so «September» fits beside the year; cut with an ellipsis before it could
-		   push the calendar wider */
-		& select {
+		   push the calendar wider. Through the wrapper of each one: over the rules of Select
+		   itself, whichever stylesheet the page loads first */
+		& > :is(.month, .year) > select {
 			overflow: hidden;
 			font-weight: 600;
 			white-space: nowrap;

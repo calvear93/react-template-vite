@@ -15,13 +15,13 @@ import styles from './Tooltip.module.css';
 /** A hint that follows another one this soon shows at once: the person is reading hints. */
 const WARM_FOR = 400;
 
-/** How long the pointer rests on a control before its hint shows (the delay of the stylesheet). */
+/** How long the pointer rests on a control before its hint shows. */
 const HOVER_DELAY = 300;
 
 /** When a hint that was in sight went away, whichever tooltip of the page it was. */
 const seen = { at: Number.NEGATIVE_INFINITY };
 
-/** What opened the hint: the focus and a warm pointer show it at once, a cold pointer after a moment. */
+/** What opened the hint: the focus and a warm pointer at once, a cold pointer once it has rested. */
 type OpenedBy = 'focus' | 'hover' | 'warm';
 
 /**
@@ -59,7 +59,8 @@ export const Tooltip = ({
 	const anchor = useRef<HTMLSpanElement>(null);
 	// a press focuses the control too: that focus does not ask for the hint
 	const isPressed = useRef(false);
-	const openedAt = useRef(0);
+	// the wait of a cold pointer: until it is over there is no bubble, nothing drawn nor placed
+	const waiting = useRef<ReturnType<typeof setTimeout>>(undefined);
 	const [openedBy, setOpenedBy] = useState<OpenedBy>();
 	const isDescription = describes && !disabled;
 	const describedBy =
@@ -67,21 +68,33 @@ export const Tooltip = ({
 			.filter(Boolean)
 			.join(' ') || undefined;
 
+	const forget = () => {
+		clearTimeout(waiting.current);
+		waiting.current = undefined;
+	};
+
 	const open = (by: OpenedBy) => {
-		openedAt.current = performance.now();
+		forget();
 		setOpenedBy(by);
 	};
 
 	const close = () => {
-		const now = performance.now();
-		const wasInSight =
-			openedBy !== 'hover' || now - openedAt.current >= HOVER_DELAY;
+		forget();
 
 		// only a hint that reached the screen warms the next one up
-		if (openedBy !== undefined && wasInSight) seen.at = now;
+		if (openedBy !== undefined) seen.at = performance.now();
 
 		setOpenedBy(undefined);
 	};
+
+	// the pointer may only be passing by: its hint opens once it has rested on the control
+	const wait = () => {
+		forget();
+		waiting.current = setTimeout(() => open('hover'), HOVER_DELAY);
+	};
+
+	// a control that leaves the page takes the hint it was waiting for with it
+	useEffect(() => () => clearTimeout(waiting.current), []);
 
 	// a control that loses the focus without saying so (it was replaced, or removed) leaves
 	// its hint behind: while it is open by focus, the focus of the page is what keeps it
@@ -120,12 +133,10 @@ export const Tooltip = ({
 				if (event.key === 'Escape') close();
 			}}
 			onMouseEnter={() => {
-				if (openedBy === undefined)
-					open(
-						performance.now() - seen.at < WARM_FOR
-							? 'warm'
-							: 'hover',
-					);
+				if (openedBy !== undefined) return;
+
+				if (performance.now() - seen.at < WARM_FOR) open('warm');
+				else wait();
 			}}
 			onMouseLeave={() => {
 				if (openedBy !== 'focus') close();

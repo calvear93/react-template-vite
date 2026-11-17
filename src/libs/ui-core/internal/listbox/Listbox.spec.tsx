@@ -1,25 +1,30 @@
 import { cleanup, render, screen, within } from '@testing-library/react';
-import { afterEach, describe, expect, test, vi } from 'vitest';
-import { highlightParts } from '../highlight-parts.ts';
+import { afterEach, describe, expect, test } from 'vitest';
 import { Listbox } from './Listbox.tsx';
 
-// every option draws its label through highlightParts: its calls count the options drawn
-vi.mock(import('../highlight-parts.ts'), async (original) => {
-	const actual = await original();
-
-	return { ...actual, highlightParts: vi.fn(actual.highlightParts) };
-});
+// an option asks whether it is disabled each time it is drawn, and at no other moment: what
+// was asked tells the options drawn, whatever the React Compiler keeps of each of them
+const asked: string[] = [];
 
 const OPTIONS = Array.from({ length: 30 }, (_, index) => ({
 	label: `Comuna ${index}`,
 	value: `c${index}`,
+	get disabled() {
+		asked.push(`Comuna ${index}`);
+
+		return false;
+	},
 }));
 
-const drawn = () => vi.mocked(highlightParts).mock.calls.map(([text]) => text);
+const drawn = () => [...new Set(asked)];
+
+const forget = () => {
+	asked.length = 0;
+};
 
 afterEach(() => {
 	cleanup();
-	vi.mocked(highlightParts).mockClear();
+	forget();
 });
 
 describe(Listbox, () => {
@@ -50,7 +55,7 @@ describe(Listbox, () => {
 
 		expect(drawn()).toHaveLength(30);
 
-		vi.mocked(highlightParts).mockClear();
+		forget();
 		rerender(<Listbox active={4} id='list' items={OPTIONS} values={[]} />);
 
 		expect(drawn()).toStrictEqual(['Comuna 3', 'Comuna 4']);
@@ -71,7 +76,7 @@ describe(Listbox, () => {
 			/>,
 		);
 
-		vi.mocked(highlightParts).mockClear();
+		forget();
 		rerender(
 			<Listbox
 				active={-1}
@@ -94,7 +99,7 @@ describe(Listbox, () => {
 			<Listbox active={0} id='list' items={OPTIONS} values={[]} />,
 		);
 
-		vi.mocked(highlightParts).mockClear();
+		forget();
 		rerender(
 			<Listbox
 				active={0}

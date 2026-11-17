@@ -75,6 +75,8 @@ export const useCombobox = <T>({
 		selected ? getLabel(selected) : '',
 	);
 	const [items, setItems] = useState<readonly T[]>([]);
+	// what the results in sight were found for: it is what they mark, whatever is typed since
+	const [searched, setSearched] = useState('');
 	const [active, setActive] = useState(-1);
 	const [isOpen, setIsOpen] = useState(false);
 	const [note, setNote] = useState<ComboboxNote>('none');
@@ -101,6 +103,7 @@ export const useCombobox = <T>({
 			if (mine.signal.aborted) return;
 
 			setItems(found);
+			setSearched(query);
 			setActive(found.length > 0 ? 0 : -1);
 			setIsOpen(found.length > 0);
 			setNote(found.length > 0 ? 'none' : 'empty');
@@ -243,6 +246,7 @@ export const useCombobox = <T>({
 		isOpen,
 		items,
 		note,
+		searched,
 		selected,
 		text,
 	};

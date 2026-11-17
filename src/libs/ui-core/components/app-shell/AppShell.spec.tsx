@@ -40,12 +40,21 @@ const navigation = () =>
 const link = (name: string) => within(navigation()).getByRole('link', { name });
 const texts = (text: string) => screen.getAllByText(text).length;
 
+/** The pointer comes to a link of the menu and rests on it for as long as its hint waits. */
+const rest = async (name: string) => {
+	await userEvent.hover(link(name));
+	act(() => {
+		vi.advanceTimersByTime(300);
+	});
+};
+
 describe(AppShell, () => {
 	// hooks
 	afterEach(() => {
 		cleanup();
 		localStorage.clear();
 		vi.restoreAllMocks();
+		vi.useRealTimers();
 	});
 
 	// tests
@@ -187,6 +196,7 @@ describe(AppShell, () => {
 	});
 
 	test('shows the name of a folded link on focus and on hover, without saying it twice', async () => {
+		vi.useFakeTimers({ shouldAdvanceTime: true });
 		localStorage.setItem(SHELL_FOLDED_STORAGE_KEY, 'true');
 		render(shell());
 
@@ -197,15 +207,16 @@ describe(AppShell, () => {
 		expect(texts('Usuarios')).toBe(2);
 		expect(link('Usuarios')).not.toHaveAttribute('aria-describedby');
 
-		await userEvent.hover(link('Órdenes'));
+		await rest('Órdenes');
 
 		expect(texts('Órdenes')).toBe(2);
 	});
 
 	test('shows no hint while its links have their names in sight', async () => {
+		vi.useFakeTimers({ shouldAdvanceTime: true });
 		render(shell());
 
-		await userEvent.hover(link('Usuarios'));
+		await rest('Usuarios');
 		act(() => link('Órdenes').focus());
 
 		expect(texts('Usuarios')).toBe(1);

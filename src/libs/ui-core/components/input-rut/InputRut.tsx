@@ -18,6 +18,7 @@ import { useTexts } from '../../i18n/texts.hook.ts';
 import { cx } from '../../internal/cx.ts';
 import { defined } from '../../internal/defined.ts';
 import { useFieldControl } from '../../internal/field/use-field-control.hook.ts';
+import { HiddenInput } from '../../internal/hidden-input/HiddenInput.tsx';
 import { mergeRefs } from '../../internal/merge-refs.ts';
 import { undoChange } from '../../internal/undo-change.ts';
 import { useFormReset } from '../../internal/use-form-reset.hook.ts';
@@ -146,11 +147,10 @@ export const InputRut = ({
 				value={text}
 			/>
 			{name && (
-				<input
+				<HiddenInput
 					disabled={props.disabled}
 					form={props.form}
 					name={name}
-					type='hidden'
 					value={normalizeRut(text)}
 				/>
 			)}

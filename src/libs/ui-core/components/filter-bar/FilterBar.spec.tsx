@@ -40,6 +40,7 @@ describe(FilterBar, () => {
 	afterEach(() => {
 		cleanup();
 		vi.useRealTimers();
+		vi.restoreAllMocks();
 	});
 
 	// tests
@@ -203,5 +204,38 @@ describe(FilterBar, () => {
 
 		expect(search()).toHaveValue('');
 		expect(applied).toHaveLength(0);
+	});
+
+	test('listens to its composite fields once, not again with every render', () => {
+		const changes = (calls: unknown[][]) =>
+			calls.filter(([type]) => type === 'change').length;
+		const add = vi.spyOn(HTMLFormElement.prototype, 'addEventListener');
+		const remove = vi.spyOn(
+			HTMLFormElement.prototype,
+			'removeEventListener',
+		);
+		const bar = (autoSubmit: boolean, delay: number) => (
+			<FilterBar
+				aria-label='Filtros'
+				autoSubmit={autoSubmit}
+				delay={delay}
+				onSubmit={vi.fn()}
+			>
+				<input aria-label='Buscar' name='q' type='search' />
+			</FilterBar>
+		);
+		const { rerender } = render(bar(true, 300));
+
+		rerender(bar(true, 400));
+		rerender(bar(true, 500));
+
+		expect(changes(add.mock.calls)).toBe(1);
+		expect(changes(remove.mock.calls)).toBe(0);
+
+		// it stops listening once its filters no longer apply by themselves
+		rerender(bar(false, 500));
+
+		expect(changes(add.mock.calls)).toBe(1);
+		expect(changes(remove.mock.calls)).toBe(1);
 	});
 });

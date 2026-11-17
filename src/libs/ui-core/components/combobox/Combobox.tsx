@@ -239,7 +239,7 @@ export const Combobox = <T,>({
 						isActive={index === box.active}
 						item={item}
 						key={keyOf(item)}
-						query={box.text}
+						query={box.searched}
 						renderOption={renderOption}
 					/>
 				))}
@@ -261,6 +261,6 @@ export interface ComboboxProps<T>
 	size?: 'lg' | 'md' | 'sm';
 	/** What tells an item from the others, and what `name` sends. Default: its label. */
 	getKey?: (item: T) => string;
-	/** Draws a result. Default: its label, with what was typed marked in it. */
+	/** Draws a result; `query` is the text it was found for. Default: its label, with that text marked in it. */
 	renderOption?: (item: T, query: string) => ReactNode;
 }

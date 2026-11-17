@@ -1,4 +1,10 @@
-import { type KeyboardEvent, useEffect, useRef } from 'react';
+import {
+	type KeyboardEvent,
+	memo,
+	useEffect,
+	useEffectEvent,
+	useRef,
+} from 'react';
 import {
 	isTimeWithin,
 	timeParts,
@@ -30,6 +36,49 @@ interface TimeOption {
 	label: string;
 	value: string;
 }
+
+/** The arrows move through the list a row is in, and stop at its ends. */
+const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+	moveRovingFocus(event, {
+		container: event.currentTarget.parentElement,
+		loop: false,
+		orientation: 'vertical',
+		selector: OPTIONS,
+	});
+};
+
+const Row = ({
+	isDisabled,
+	isSelected,
+	isStop,
+	label,
+}: {
+	isDisabled: boolean;
+	isSelected: boolean;
+	isStop: boolean;
+	label: string;
+}) => (
+	<button
+		aria-selected={isSelected}
+		className={styles.option}
+		disabled={isDisabled}
+		onKeyDown={handleKeyDown}
+		role='option'
+		tabIndex={isStop ? 0 : -1}
+		type='button'
+	>
+		{label}
+	</button>
+);
+
+/**
+ * An option of a list of times. Memoized by hand, the one exception to the React
+ * Compiler doing it: the compiler keeps a `.map` as a whole, not each of its
+ * elements, and a list by the minute would draw its 1,440 rows again for each
+ * time picked. It takes nothing that is made again with every render: what it
+ * shows and no handler, its list hears the presses for all of its rows.
+ */
+const TimeRow = memo(Row);
 
 /**
  * A column of options to pick one from: a `listbox` that is one Tab stop, the
@@ -71,14 +120,26 @@ const TimeList = ({
 		wantsFocus.current = false;
 	}, []);
 
-	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-		moveRovingFocus(event, {
-			container: list.current,
-			loop: false,
-			orientation: 'vertical',
-			selector: OPTIONS,
-		});
-	};
+	/** A press on a row: its place among the rows of the list tells its option. */
+	const pick = useEffectEvent((event: MouseEvent) => {
+		const row = (event.target as Element).closest(OPTIONS);
+		const rows = [...(event.currentTarget as Element).children];
+		const option = row && options[rows.indexOf(row)];
+
+		if (option && !option.disabled) onPick(option.value);
+	});
+
+	// one listener for the presses of every row, set on the list itself (its rows are what
+	// takes the focus): a handler on each row would be another one with every render, and
+	// every row drawn again for it
+	useEffect(() => {
+		const node = list.current;
+		const handleClick = (event: MouseEvent) => pick(event);
+
+		node?.addEventListener('click', handleClick);
+
+		return () => node?.removeEventListener('click', handleClick);
+	}, []);
 
 	return (
 		<div
@@ -88,19 +149,13 @@ const TimeList = ({
 			role='listbox'
 		>
 			{options.map((option) => (
-				<button
-					aria-selected={option.value === selected}
-					className={styles.option}
-					disabled={option.disabled}
+				<TimeRow
+					isDisabled={option.disabled}
+					isSelected={option.value === selected}
+					isStop={option === stop}
 					key={option.value}
-					onClick={() => onPick(option.value)}
-					onKeyDown={handleKeyDown}
-					role='option'
-					tabIndex={option === stop ? 0 : -1}
-					type='button'
-				>
-					{option.label}
-				</button>
+					label={option.label}
+				/>
 			))}
 		</div>
 	);

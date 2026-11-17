@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { inChile } from '../../__mocks__/locale.mock.ts';
 import { Field } from '../field/Field.tsx';
+import { FilterBar } from '../filter-bar/FilterBar.tsx';
 import { InputRut } from './InputRut.tsx';
 
 inChile();
@@ -25,9 +26,38 @@ const Controlled = ({ initial = '' }: { initial?: string }) => {
 	);
 };
 
+type Applied = Record<string, FormDataEntryValue>[];
+
+/** A valid RUT as its form sends it: what the filters below are applied with. */
+const SENT = '11111111-1';
+
+const Filters = ({ applied }: { applied: Applied }) => {
+	const [rut, setRut] = useState<string>();
+
+	return (
+		<>
+			<FilterBar
+				aria-label='Filtros'
+				autoSubmit
+				delay={300}
+				onSubmit={(data) => applied.push(Object.fromEntries(data))}
+			>
+				<InputRut aria-label='RUT' name='rut' value={rut} />
+				<button type='reset'>Limpiar</button>
+			</FilterBar>
+			<button onClick={() => setRut(SENT)} type='button'>
+				otro
+			</button>
+		</>
+	);
+};
+
 describe(InputRut, () => {
 	// hooks
-	afterEach(cleanup);
+	afterEach(() => {
+		cleanup();
+		vi.useRealTimers();
+	});
 
 	// tests
 	test('formats the RUT while it is typed and tells its normalized value', async () => {
@@ -214,6 +244,53 @@ describe(InputRut, () => {
 			);
 
 			expect(input).toHaveValue('');
+		});
+	});
+
+	describe('in a FilterBar that applies by itself', () => {
+		test('applies its RUT once it is typed whole, and not while it is not one', async () => {
+			vi.useFakeTimers({ shouldAdvanceTime: true });
+
+			const applied: Applied = [];
+
+			render(<Filters applied={applied} />);
+			await userEvent.type(screen.getByRole('textbox'), '11111111');
+			await vi.advanceTimersByTimeAsync(300);
+
+			expect(applied).toHaveLength(0);
+
+			await userEvent.type(screen.getByRole('textbox'), '1');
+			await vi.advanceTimersByTimeAsync(300);
+
+			expect(applied).toStrictEqual([{ rut: SENT }]);
+		});
+
+		test('applies again once its RUT is cleared with the reset button', async () => {
+			vi.useFakeTimers({ shouldAdvanceTime: true });
+
+			const applied: Applied = [];
+
+			render(<Filters applied={applied} />);
+			await userEvent.type(screen.getByRole('textbox'), '111111111');
+			await vi.advanceTimersByTimeAsync(300);
+			await userEvent.click(
+				screen.getByRole('button', { name: 'Limpiar' }),
+			);
+			await vi.advanceTimersByTimeAsync(300);
+
+			expect(applied).toStrictEqual([{ rut: SENT }, { rut: '' }]);
+		});
+
+		test('applies a RUT that is given from outside, as every field with a hidden input does', async () => {
+			vi.useFakeTimers({ shouldAdvanceTime: true });
+
+			const applied: Applied = [];
+
+			render(<Filters applied={applied} />);
+			await userEvent.click(screen.getByRole('button', { name: 'otro' }));
+			await vi.advanceTimersByTimeAsync(300);
+
+			expect(applied).toStrictEqual([{ rut: SENT }]);
 		});
 	});
 

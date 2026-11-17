@@ -136,6 +136,31 @@ describe(Combobox, () => {
 		).toHaveTextContent('Ñuñ');
 	});
 
+	test('keeps marked what its results were found for while more is typed, until the new ones come', async () => {
+		vi.useFakeTimers({ shouldAdvanceTime: true });
+
+		const marked = async (name: string) =>
+			within(await option(name)).getByRole('mark').textContent;
+
+		renderBox({ delay: 1000 });
+
+		await userEvent.type(box(), 'san');
+		await vi.advanceTimersByTimeAsync(1000);
+
+		await expect(marked(SANTIAGO.name)).resolves.toBe('San');
+
+		// more letters, their search still to come: the results in sight are those of «san»
+		await userEvent.type(box(), 'ti');
+
+		await expect(marked(SANTIAGO.name)).resolves.toBe('San');
+		await expect(marked(SAN_BERNARDO.name)).resolves.toBe('San');
+
+		await vi.advanceTimersByTimeAsync(1000);
+
+		await expect(marked(SANTIAGO.name)).resolves.toBe('Santi');
+		expect(names()).toStrictEqual([SANTIAGO.name]);
+	});
+
 	test('waits for the typing to stop before it searches', async () => {
 		vi.useFakeTimers({ shouldAdvanceTime: true });
 

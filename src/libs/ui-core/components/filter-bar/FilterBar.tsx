@@ -3,6 +3,7 @@ import {
 	type ComponentProps,
 	type SubmitEvent,
 	useEffect,
+	useEffectEvent,
 	useRef,
 } from 'react';
 import { cx } from '../../internal/cx.ts';
@@ -71,6 +72,12 @@ export const FilterBar = ({
 
 	const typed = useDebouncedCallback(apply, delay);
 
+	// a composite control (DatePicker, Combobox) tells of its new value from its
+	// hidden input, with a native event React does not turn into `onChange`
+	const applyHidden = useEffectEvent((event: Event) => {
+		if (isHidden(event.target)) apply();
+	});
+
 	useEffect(() => {
 		const node = form.current;
 
@@ -79,16 +86,12 @@ export const FilterBar = ({
 		// the list starts with the filters as they are: not something to apply
 		applied.current ??= serialize(new FormData(node));
 
-		// a composite control (DatePicker, Combobox) tells of its new value from its
-		// hidden input, with a native event React does not turn into `onChange`
-		const handleHiddenChange = (event: Event) => {
-			if (isHidden(event.target)) apply();
-		};
+		const handleHiddenChange = (event: Event) => applyHidden(event);
 
 		node.addEventListener('change', handleHiddenChange);
 
 		return () => node.removeEventListener('change', handleHiddenChange);
-	});
+	}, [autoSubmit]);
 
 	const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
 		const data = new FormData(event.currentTarget);

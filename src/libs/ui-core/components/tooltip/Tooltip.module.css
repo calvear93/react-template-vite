@@ -46,12 +46,6 @@
 				--ui-tooltip-from: -2px 0;
 			}
 
-			/* the pointer may only be passing by: the hint waits a moment for it, unless
-			   another hint was just in sight (data-opened-by='warm') */
-			&[data-opened-by='hover'] {
-				animation-delay: 0.3s;
-			}
-
 			&[data-leaving] {
 				animation: vanish var(--ui-duration-fast) var(--ui-easing-exit)
 					forwards;

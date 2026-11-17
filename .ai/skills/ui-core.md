@@ -84,6 +84,9 @@ under `src/libs/**`: non-trivial, with a change record.
   a `SegmentedControl` a `group` of `radio`s. The dialogs of `useDialogs()` are an `alertdialog`
   (notice, confirmation, choice) or a `dialog` with one `textbox` (prompt); `SettingsDialog` is a
   `dialog` whose categories are `tab`s.
+- A spec of what is drawn again counts something each row reads when it is drawn (a getter on
+  its data), never the calls to a function the React Compiler may keep: see
+  `internal/listbox/Listbox.spec.tsx`.
 - A test that changes the language (`setLocale`, `configureLocale`) undoes it in its cleanup
   (`setLocale(null)`, `configureLocale({})`).
 - Vitest does not apply CSS: assert roles, names, ARIA and `data-*`, never a class or a color.

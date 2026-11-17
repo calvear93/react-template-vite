@@ -23,7 +23,9 @@
 		}
 	}
 
-	.select {
+	/* through its wrapper: these win over the control's own (`control.control`, the same
+	   layer) whichever of the two stylesheets the page loads first */
+	.root > .select {
 		cursor: pointer;
 		appearance: none;
 		padding-inline-end: var(--ui-space-40);
