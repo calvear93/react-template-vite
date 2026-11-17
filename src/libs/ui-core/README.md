@@ -498,6 +498,14 @@ Every format takes an optional `locale` last (see [Language](#language)).
   exported): `Modal`, `Popup` + `position.ts`, `HiddenInput`, `useControllableState`,
   `useFormReset`, `useMaskedCaret`, `insertedRange`, `undoChange`, `writeInput`, `defined`,
   `readPreference` / `writePreference`, `useOutsidePress`, `useDebouncedCallback`.
+- The build splits the kit by rule, not by size (`vite.config.ts`): what the entry needs is one
+  chunk, what two pages or more use another, what one page alone uses stays in that page's chunk.
+  A module of the kit must not rely on being imported for a side effect: only the barrel and the
+  stylesheets are kept for one. `kitLayers` writes the order of the cascade layers at the top of
+  every stylesheet of the kit: the first one a browser reads decides it.
+- A rule that changes what the stylesheet of another module sets (`control.control`) goes through a
+  parent (`.root > .select`, the selects of `Calendar`): both are in `ui.components`, and with one
+  class each the stylesheet read last would win, which the chunks decide, not the imports.
 - CSS authoring: nest `@media` / `@container` / `@supports` inside the rule they change, and
   variants through a custom property of the component rather than a more specific selector.
 
