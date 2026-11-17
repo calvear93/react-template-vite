@@ -55,6 +55,25 @@ describe('link storages to feature handler', () => {
 		expect(handler.get(feature2)).toBe(true);
 	});
 
+	test('reads only the values of its own keys', () => {
+		const prefix = 'feat:';
+		const handler = new FeatureHandler();
+
+		localStorage.setItem('session.token', 'a value of another library');
+		localStorage.setItem(`${prefix}FEATURE_V1`, '1');
+
+		const getItem = vi.spyOn(localStorage, 'getItem');
+
+		linkStorageToFeatureHandler(handler, prefix);
+
+		expect(getItem).toHaveBeenCalledWith(`${prefix}FEATURE_V1`);
+		expect(getItem).not.toHaveBeenCalledWith('session.token');
+		expect(handler.get('FEATURE_V1')).toBe(true);
+		expect(handler.get('session.token')).toBe(false);
+
+		getItem.mockRestore();
+	});
+
 	test('when no prefix match, skips', () => {
 		const prefix = 'feat:';
 		const feature = 'FEATURE_V1';

@@ -99,4 +99,24 @@ describe(createContainer, () => {
 
 		expect(target).toHaveTextContent('test');
 	});
+
+	test('a dependency bound after the provider mounted is resolved', () => {
+		const LATE_TOKEN = 'late_token';
+		const TestComponent = () => (
+			<h1 data-testid='late-id'>{useInjection<string>(LATE_TOKEN)}</h1>
+		);
+		const tree = () => (
+			<InversionOfControlProvider>
+				<TestComponent />
+			</InversionOfControlProvider>
+		);
+		const { rerender } = render(tree());
+
+		expect(screen.getByTestId('late-id')).toHaveTextContent('');
+
+		container.bind(LATE_TOKEN, 'late');
+		rerender(tree());
+
+		expect(screen.getByTestId('late-id')).toHaveTextContent('late');
+	});
 });

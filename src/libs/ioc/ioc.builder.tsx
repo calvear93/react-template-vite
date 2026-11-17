@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext } from 'react';
 
 // React context for the IoC container
 const IoCContext = createContext<Map<unknown, unknown> | null>(null);
@@ -56,14 +56,10 @@ export const createContainer = () => {
 			children,
 			values,
 		}: InversionOfControlProviderProps) => {
-			const contextContainer = useMemo(() => {
-				// if values is provided, use only those values (don't merge with global container)
-				// if values is not provided, use the global container
-				return new Map(values ?? container);
-			}, [values]);
-
+			// its values alone when given (never merged with the global container),
+			// the global container itself otherwise: what is bound later is found too
 			return (
-				<IoCContext.Provider value={contextContainer}>
+				<IoCContext.Provider value={values ?? container}>
 					{children}
 				</IoCContext.Provider>
 			);

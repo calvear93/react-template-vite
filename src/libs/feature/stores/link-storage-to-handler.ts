@@ -37,9 +37,14 @@ const getStorageFeatures = (
 ): Record<string, boolean> => {
 	const features: Record<string, boolean> = {};
 
-	for (const [key, value] of Object.entries(storage)) {
+	// key by key: only the value of a feature is read, never what another library
+	// keeps in the same storage (the tokens of a session, for one)
+	for (let index = 0; index < storage.length; index++) {
+		const key = storage.key(index);
 		const feature = getStorageKey(key, prefix);
-		if (feature) features[feature] = coerceStorageBoolean(value);
+
+		if (key && feature)
+			features[feature] = coerceStorageBoolean(storage.getItem(key));
 	}
 
 	return features;

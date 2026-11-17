@@ -152,4 +152,4 @@ it('renders the user name', () => {
 
 ## 🧠 How it works
 
-`createContainer()` closes over a single `Map`. `bind`/`resolve`/`unbind` are thin `Map` operations. `InversionOfControlProvider` publishes a `Map` through React Context (`useMemo`-stabilized): with no `values`, it shares the global container; with `values`, it isolates a fresh map. `useInjection` reads the nearest provider's map, falling back to the global container when rendered outside a provider — which is why components keep working in isolation.
+`createContainer()` closes over a single `Map`. `bind`/`resolve`/`unbind` are thin `Map` operations. `InversionOfControlProvider` publishes a `Map` through React Context: with no `values`, it hands down the global container itself (the same object at every render, and a dependency bound after it mounted is found too); with `values`, only those. `useInjection` reads the nearest provider's map, falling back to the global container when rendered outside a provider — which is why components keep working in isolation.
